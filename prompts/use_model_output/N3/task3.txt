@@ -3,8 +3,8 @@ Your task is to convert N3 logic rules into a solidity smart contract.
 You will be given a set of N3 logic rules for each task.
 You must follow the following rules:
 
-Rule 1. The smart contract should follow all of the logic expressed in the logic rules.
-Rule 2. The smart contract must cover every single condition described by the logic rules.
+Rule 1. The smart contract should cover all of the logic expressed in the logic rules.
+Rule 2. The smart contract must implement every single condition described by the logic rules.
 Rule 3. The smart contract must always return some output as a result of the input’s conditions.
 Rule 4. The smart contract’s input must include every parameter considered in the logic rules.
 Rule 5. You can create structs to encapsulate necessary parameters to produce cleaner code.
