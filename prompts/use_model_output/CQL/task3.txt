@@ -8,5 +8,3 @@ Rule 2. The smart contract must cover every single condition described by the na
 Rule 3. The smart contract must always return some output as a result of the input’s conditions.
 Rule 4. The smart contract’s input must include every parameter considered in the named expressions.
 Rule 5. You can create structs to encapsulate necessary parameters to produce cleaner code.
-
-Respond with “I am ready” if you understand, and repeat your given task and the rules before we start.

@@ -1,0 +1,58 @@
+pragma solidity ^0.8.0;
+
+contract OsteoporosisMedicareCoverage {
+    
+    struct Patient {
+        bool hasOsteoporosis;
+        bool meetsCriteriaForMedicareHomeHealthBenefit;
+        bool hasBoneFracture;
+        bool relatedToPostMenopausalOsteoporosis;
+        bool certifiedByDoctor;
+        bool meetsRequirement1;
+        bool meetsRequirement2;
+        bool meetsRequirement3;
+        bool meetsRequirement4;
+        bool meetsAllRequirements;
+    }
+    
+    struct Doctor {
+        bool certifiesPatientCannotSelfAdminister;
+        bool certifiesPatientCannotLearnToSelfAdminister;
+    }
+    
+    struct FamilyOrCaregivers {
+        bool ableToAdministerInjection;
+        bool willingToAdministerInjection;
+    }
+    
+    struct Medicare {
+        bool coversCostOfHomeHealthNurseOrAide;
+        bool eligibleForCoverage;
+        bool coversInjectableOsteoporosisDrugs;
+    }
+    
+    function checkEligibility(Patient memory patient, Doctor memory doctor, 
+        FamilyOrCaregivers memory familyOrCaregivers, Medicare memory medicare) 
+        public view returns(bool) {
+            if(patient.hasOsteoporosis &&
+               patient.meetsCriteriaForMedicareHomeHealthBenefit &&
+               patient.hasBoneFracture &&
+               patient.relatedToPostMenopausalOsteoporosis &&
+               patient.certifiedByDoctor &&
+               doctor.certifiesPatientCannotSelfAdminister &&
+               doctor.certifiesPatientCannotLearnToSelfAdminister &&
+               (!familyOrCaregivers.ableToAdministerInjection || 
+                !familyOrCaregivers.willingToAdministerInjection) &&
+               medicare.coversCostOfHomeHealthNurseOrAide &&
+               medicare.eligibleForCoverage &&
+               patient.meetsRequirement1 &&
+               patient.meetsRequirement2 &&
+               patient.meetsRequirement3 &&
+               patient.meetsRequirement4 &&
+               patient.meetsAllRequirements &&
+               medicare.coversInjectableOsteoporosisDrugs) {
+                   return true;
+            }
+            return false;
+    }
+}

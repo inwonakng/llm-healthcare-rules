@@ -1,0 +1,74 @@
+pragma solidity ^0.8.0;
+
+contract InjectableOsteoporosisDrugs {
+    
+    struct Patient {
+        bool isWoman;
+        bool hasOsteoporosis;
+        bool meetsCriteriaForHomeHealthBenefit;
+        bool hasBoneFracture;
+        bool isRelatedToPostMenopausalOsteoporosis;
+        bool cantGiveSelfInjection;
+        bool cantLearnToSelfInject;
+        bool familyOrCaregiversUnavailable;
+        bool familyOrCaregiversUnwilling;
+    }
+    
+    function checkEligibility(bool _isWoman, bool _hasOsteoporosis, bool _meetsCriteriaForHomeHealthBenefit, 
+                              bool _hasBoneFracture, bool _isRelatedToPostMenopausalOsteoporosis, bool _cantGiveSelfInjection, 
+                              bool _cantLearnToSelfInject, bool _familyOrCaregiversUnavailable, bool _familyOrCaregiversUnwilling) public view returns (bool) {
+        
+        if (!_isWoman) {
+            return false;
+        }
+        if (!_hasOsteoporosis) {
+            return false;
+        }
+        if (!_meetsCriteriaForHomeHealthBenefit) {
+            return false;
+        }
+        if (!_hasBoneFracture) {
+            return false;
+        }
+        if (!_isRelatedToPostMenopausalOsteoporosis) {
+            return false;
+        }
+        if (!_cantGiveSelfInjection) {
+            return false;
+        }
+        if (!_cantLearnToSelfInject) {
+            return false;
+        }
+        if (!(_familyOrCaregiversUnavailable || _familyOrCaregiversUnwilling)) {
+            return false;
+        }
+        
+        return true;
+    }
+    
+    function provideInjection(bool _isWoman, bool _hasOsteoporosis, bool _meetsCriteriaForHomeHealthBenefit, 
+                              bool _hasBoneFracture, bool _isRelatedToPostMenopausalOsteoporosis, bool _cantGiveSelfInjection, 
+                              bool _cantLearnToSelfInject, bool _familyOrCaregiversUnavailable, bool _familyOrCaregiversUnwilling) public view returns (bool) {
+        
+        Patient memory patient = Patient(
+            _isWoman, 
+            _hasOsteoporosis, 
+            _meetsCriteriaForHomeHealthBenefit, 
+            _hasBoneFracture, 
+            _isRelatedToPostMenopausalOsteoporosis, 
+            _cantGiveSelfInjection, 
+            _cantLearnToSelfInject, 
+            _familyOrCaregiversUnavailable, 
+            _familyOrCaregiversUnwilling
+        );
+        
+        if (!checkEligibility(patient.isWoman, patient.hasOsteoporosis, patient.meetsCriteriaForHomeHealthBenefit, 
+                              patient.hasBoneFracture, patient.isRelatedToPostMenopausalOsteoporosis, 
+                              patient.cantGiveSelfInjection, patient.cantLearnToSelfInject, 
+                              patient.familyOrCaregiversUnavailable, patient.familyOrCaregiversUnwilling)) {
+            return false;
+        }
+        
+        return true;
+    }
+}

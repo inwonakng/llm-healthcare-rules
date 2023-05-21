@@ -1,0 +1,31 @@
+pragma solidity 0.8.7;
+
+contract IVIGCoverage {
+    struct IVIGInfo {
+        bool hasPrimaryImmuneDeficiencyDisease;
+        bool isMedicallyAppropriate;
+        bool isAtHome;
+    }
+    
+    function isIVIGCovered(bool hasPrimaryImmuneDeficiencyDisease, bool isMedicallyAppropriate, bool isAtHome) external pure returns (string memory) {
+        IVIGInfo memory info = IVIGInfo({
+            hasPrimaryImmuneDeficiencyDisease: hasPrimaryImmuneDeficiencyDisease,
+            isMedicallyAppropriate: isMedicallyAppropriate,
+            isAtHome: isAtHome
+        });
+        
+        if (!info.hasPrimaryImmuneDeficiencyDisease) {
+            return "IVIG is not covered";
+        }
+        
+        if (!info.isMedicallyAppropriate) {
+            return "IVIG is not medically appropriate";
+        }
+        
+        if (!info.isAtHome) {
+            return "IVIG not provided at home";
+        }
+        
+        return "IVIG is covered by Medicare, including the IVIG itself, if you have a diagnosis of primary immune deficiency disease, and your doctor decides that it’s medically appropriate for you to get the IVIG in your home.";
+    }
+}

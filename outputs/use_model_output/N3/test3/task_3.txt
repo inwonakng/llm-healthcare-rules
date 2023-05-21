@@ -1,0 +1,75 @@
+pragma solidity ^0.8.0;
+
+contract Medicare {
+
+    struct PartA {
+        bool coverage;
+        bool benefit;
+        float premium;
+    }
+    
+    struct PartB {
+        bool coverage;
+        float premium;
+        PartD partD;
+    }
+    
+    struct PartD {
+        bool benefit;
+    }
+    
+    struct TransplantDrugTherapy {
+        bool coverage;
+        bool partAandBNeeded;
+    }
+    
+    struct ImmunosuppressiveDrugs {
+        bool benefit;
+        int thirtySixMonthsLimit;
+        bool benefitForLostPartA;
+    }
+    
+    struct ESRD {
+        bool coverage;
+        bool benefit;
+        bool premium;
+    }
+
+    PartA public partA;
+    PartB public partB;
+    PartD public partD;
+    TransplantDrugTherapy public transplantDrugTherapy;
+    ImmunosuppressiveDrugs public immunosuppressiveDrugs;
+    ESRD public esrd;
+
+    constructor(float _partAPremium, float _partBPremium, float _partDPremium, float _partDDeductible, int _month, bool _partAandBNeeded, bool _partBNotCoveringImmunosuppressiveDrugs, bool _coverageForImmunosuppressiveDrugs, int _thirtySixMonthsLimit, bool _benefitForLostPartA, bool _coverageDecision, bool _benefitDecision, bool _premiumDecision) {
+        partA = PartA({
+            coverage: true,
+            benefit: true,
+            premium: _partAPremium
+        });
+        partD = PartD({
+            benefit: true
+        });
+        partB = PartB({
+            coverage: true,
+            premium: _partBPremium,
+            partD: partD
+        });
+        transplantDrugTherapy = TransplantDrugTherapy({
+            coverage: true,
+            partAandBNeeded: _partAandBNeeded
+        });
+        immunosuppressiveDrugs = ImmunosuppressiveDrugs({
+            benefit: true,
+            thirtySixMonthsLimit: _thirtySixMonthsLimit,
+            benefitForLostPartA: _benefitForLostPartA
+        });
+        esrd = ESRD({
+            coverage: _coverageDecision,
+            benefit: _benefitDecision,
+            premium: _premiumDecision
+        });
+    }
+
+}

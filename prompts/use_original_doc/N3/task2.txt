@@ -7,5 +7,3 @@ Rule 1. Convert the natural language text into logic rules using N3 syntax.
 Rule 2. The logic rules should cover every single requirement described in the natural language text.
 Rule 3. Every logic rule must contribute to a final decision which fits the natural language text.
 Rule 4. The natural language text must be expressed in a single set of logical rules.
-
-Respond with “I am ready” if you understand, and repeat your given task and the rules before we start.

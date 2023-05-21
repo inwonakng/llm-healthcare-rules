@@ -7,5 +7,3 @@ Rule 1. Convert the description of the decision process and a list of requiremen
 Rule 2. The named expressions should cover every single requirement described in the list.
 Rule 3. Every named expression must contribute to a final decision which fits the description of the decision process.
 Rule 4. The list of requirements must be expressed in a single CQL library.
-
-Respond with “I am ready” if you understand, and repeat your given task and the rules before we start.

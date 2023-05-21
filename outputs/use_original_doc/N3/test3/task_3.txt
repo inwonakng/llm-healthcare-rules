@@ -1,0 +1,100 @@
+pragma solidity ^0.8.0;
+
+contract MedicareCoverage {
+    
+    struct OrganTransplant {
+        bool medicareHelpedPay;
+        bool hasPartA;
+        bool hasPartBForDrugs;
+        bool originalMedicare;
+        bool esrd;
+    }
+    
+    OrganTransplant organTransplant;
+    
+    bool haveDrugCoverage;
+    bool haveOtherHealthCoverage;
+    bool qualifyForBenefit;
+    bool signUpForBenefit;
+    
+    uint deductible;
+    uint premium;
+    uint deductibleMet;
+    uint percentageCoverage;
+    
+    function updateTransplantDetails(bool medicareHelpedPay, bool hasPartA, bool hasPartBForDrugs, bool originalMedicare, bool esrd) public {
+        organTransplant.medicareHelpedPay = medicareHelpedPay;
+        organTransplant.hasPartA = hasPartA;
+        organTransplant.hasPartBForDrugs = hasPartBForDrugs;
+        organTransplant.originalMedicare = originalMedicare;
+        organTransplant.esrd = esrd;
+    }
+    
+    function updateCoverageDetails(bool haveDrugCoverage, bool haveOtherHealthCoverage, bool qualifyForBenefit, bool signUpForBenefit) public {
+        haveDrugCoverage = haveDrugCoverage;
+        haveOtherHealthCoverage = haveOtherHealthCoverage;
+        qualifyForBenefit = qualifyForBenefit;
+        signUpForBenefit = signUpForBenefit;
+    }
+    
+    function signForBenefit() public view returns (string memory) {
+        if (qualifyForBenefit && !signUpForBenefit) {
+            return "To sign up, call Social Security at 1-877-465-0355. TTY users can call 1-800-325-0788.";
+        }
+    }
+    
+    function calculateCoverage(uint year) public view returns (string memory, uint) {
+        if (year >= 2023 && haveDrugCoverage && organTransplant.hasPartA && organTransplant.hasPartBForDrugs) {
+            deductible = 226;
+            premium = 97.10;
+            percentageCoverage = 20;
+            return ("You'll pay a monthly premium of $97.10 and $226 deductible if you sign up for the immunosuppressive drug benefit. Once you’ve met the deductible, you’ll pay 20% of the Medicare-approved amount for your immunosuppressive drugs.", deductible);
+        }
+    }
+    
+    function isCoverageAvailable() public view returns (bool) {
+        if (organTransplant.medicareHelpedPay && organTransplant.hasPartA && organTransplant.hasPartBForDrugs) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    function isEsrdCoverage() public view returns (bool) {
+        if (organTransplant.esrd && isCoverageAvailable()) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+    
+    function isLossOfA() public view returns (bool) {
+        if (!organTransplant.hasPartA && isCoverageAvailable() && !haveOtherHealthCoverage) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    function isDrugCoverageAvailable() public view returns (bool) {
+        if (haveDrugCoverage) {
+            if (organTransplant.hasPartBForDrugs) {
+                return true;
+            } else if (organTransplant.originalMedicare) {
+                return false;
+            } else if (organTransplant.esrd) {
+                if (block.timestamp >= 3 years after kidney transplant) {
+                    return false;
+                } else {
+                    return true;
+                }
+            }
+        }
+    }
+    
+    function getBenefitDetails() public view returns (string memory) {
+        if (isLossOfA() && qualifyForBenefit) {
+            return "This benefit only covers your immunosuppressive drugs and no other items or services. It isn’t a substitute for full health coverage.";
+        }
+    }
+}

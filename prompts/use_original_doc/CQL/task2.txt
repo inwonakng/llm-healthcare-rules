@@ -6,6 +6,4 @@ You must follow the following rules:
 Rule 1. Convert the natural language text into named expressions grouped within a CQL library.
 Rule 2. The named expressions should cover every single requirement described in the natural language text.
 Rule 3. Every named expression must contribute to a final decision which fits the natural language text.
-Rule 4. The natural language text must be expressed in a single CQL librar/y.
-
-Respond with “I am ready” if you understand, and repeat your given task and the rules before we start.
+Rule 4. The natural language text must be expressed in a single CQL library.
