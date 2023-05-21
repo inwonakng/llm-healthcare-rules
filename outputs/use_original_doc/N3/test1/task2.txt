@@ -1,0 +1,31 @@
+{
+  { ?person a :Patient. } => {
+    ?person :hasCondition :Osteoporosis.
+    ?person :meetsCriteriaForBenefit :HomeHealthBenefit.
+  }.
+
+  {
+    ?person :hasCondition :Osteoporosis.
+    ?person :hasFracture ?fracture.
+    ?fracture :certifiedBy ?doctor.
+    ?doctor :certifiesRelationTo :PostMenopausalOsteoporosis.
+  } => {
+    ?person :meetsFractureCondition true.
+  }.
+
+  {
+    ?person :hasCondition :Osteoporosis.
+    ?person :cannotSelfAdminister true.
+    ?person :cannotLearnInjection true.
+    ?doctor :certifiesInabilityToAdminister ?person.
+  } => {
+    ?person :meetsInjectionCondition true.
+  }.
+
+  {
+    ?person :meetsInjectionCondition true.
+    ?person :familyOrCaregiversUnavailableOrUnwilling true.
+  } => {
+    ?person :medicareCoversInjection true.
+  }.
+}
