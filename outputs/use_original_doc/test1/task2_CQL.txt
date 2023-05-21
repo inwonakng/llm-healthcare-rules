@@ -1,0 +1,64 @@
+library "OsteoporosisCoverageLibrary"
+
+using FHIR version '4.0.1'
+
+-- Named expressions for Injectable Osteoporosis Drugs coverage
+
+-- Named expression for condition: Woman with osteoporosis meeting Medicare home health benefit criteria
+define WomanWithOsteoporosis:
+    exists (
+        [Condition: "Osteoporosis"]
+            where subject.gender = 'female'
+            and subject.birthDate <= Today() - 65 years
+    ) and
+    exists (
+        [Coverage: "Medicare Home Health Benefit"]
+    )
+
+-- Named expression for condition: Bone fracture related to post-menopausal osteoporosis
+define FractureRelatedToOsteoporosis:
+    exists (
+        [Condition: "Bone Fracture"]
+            where subject.gender = 'female'
+            and subject.birthDate <= Today() - 55 years
+            and diagnosis.code in ["Post-Menopausal Osteoporosis"]
+    ) and
+    exists (
+        [Encounter: "Doctor Certification"]
+            where encounter.period.start <= Today()
+            and encounter.period.end >= Today()
+            and practitioner.role in ["Doctor"]
+            and practitioner.specialty in ["Orthopedics"]
+    )
+
+-- Named expression for condition: Inability to self-administer injectable drug
+define InabilityToSelfAdminister:
+    exists (
+        [Encounter: "Doctor Certification"]
+            where encounter.period.start <= Today()
+            and encounter.period.end >= Today()
+            and practitioner.role in ["Doctor"]
+            and diagnosis.code in ["Inability to self-administer injectable drug"]
+    )
+
+-- Named expression for coverage decision: Medicare covers injectable osteoporosis drugs
+define MedicareCoverage:
+    WomanWithOsteoporosis and
+    FractureRelatedToOsteoporosis and
+    InabilityToSelfAdminister
+
+-- Named expression for additional coverage: Home health nurse or aide for injection administration
+define AdditionalCoverage:
+    exists (
+        [Coverage: "Home Health Nurse or Aide"]
+    ) and
+    not exists (
+        [Caregiver: "Family or Caregivers"]
+            where relationship in ["Family", "Caregiver"]
+    )
+
+-- Final decision: Medicare coverage with home health nurse or aide for injection administration
+define FinalDecision:
+    MedicareCoverage or AdditionalCoverage
+
+end library
