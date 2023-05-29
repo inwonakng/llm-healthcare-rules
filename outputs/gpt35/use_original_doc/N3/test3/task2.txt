@@ -1,0 +1,108 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix ex: <http://example.com/> .
+@prefix medicare: <http://example.com/medicare#> .
+@prefix partA: <http://example.com/partA#> .
+@prefix partB: <http://example.com/partB#> .
+@prefix partD: <http://example.com/partD#> .
+@prefix immunosuppressiveDrug: <http://example.com/immunosuppressiveDrug#> .
+@prefix kidneyTransplant: <http://example.com/kidneyTransplant#> .
+@prefix coverageBenefit: <http://example.com/coverageBenefit#> .
+@prefix fullHealthCoverage: <http://example.com/fullHealthCoverage#> .
+@prefix socialSecurity: <http://example.com/socialSecurity#> .
+@prefix premium: <http://example.com/premium#> .
+@prefix deductible: <http://example.com/deductible#> .
+@prefix costPercentage: <http://example.com/costPercentage#> .
+
+# Rule 1: Medicare covers transplant drug therapy if Medicare helped pay for your organ transplant.
+medicare:transplantDrugTherapyCoverageRule rdf:type rdf:Statement ;
+    rdf:subject medicare:organTransplant ;
+    rdf:predicate medicare:covers ;
+    rdf:object medicare:transplantDrugTherapy .
+
+# Rule 2: You must have Part A at the time of the covered transplant.
+partA:requirementAtTransplantRule rdf:type rdf:Statement ;
+    rdf:subject partA:coverage ;
+    rdf:predicate partA:requiredAt ;
+    rdf:object kidneyTransplant:coveredTransplant .
+
+# Rule 3: You must have Part B at the time you get immunosuppressive drugs.
+partB:requirementAtImmunosuppressiveDrugRule rdf:type rdf:Statement ;
+    rdf:subject partB:coverage ;
+    rdf:predicate partB:requiredAt ;
+    rdf:object immunosuppressiveDrug:drugs .
+
+# Rule 4: Medicare drug coverage (Part D) covers immunosuppressive drugs if Part B doesn’t cover them.
+partD:coverageIfPartBNotCoveredRule rdf:type rdf:Statement ;
+    rdf:subject partD:coverage ;
+    rdf:predicate partD:covers ;
+    rdf:object immunosuppressiveDrug:drugs ;
+    rdfs:comment "If Part B doesn’t cover immunosuppressive drugs." .
+
+# Rule 5: If you have Original Medicare, you may join a Medicare drug plan to get Medicare drug coverage.
+medicareDrugPlan:joinableWithOriginalMedicareRule rdf:type rdf:Statement ;
+    rdf:subject medicareDrugPlan:plan ;
+    rdf:predicate medicareDrugPlan:joinableWith ;
+    rdf:object medicare:originalMedicare .
+
+# Rule 6: If you only have Medicare because of End-Stage Renal Disease (ESRD), your Medicare coverage, including immunosuppressive drug coverage, ends 36 months after a successful kidney transplant.
+medicareCoverageEndsAfter36MonthsRule rdf:type rdf:Statement ;
+    rdf:subject kidneyTransplant:successfulTransplant ;
+    rdf:predicate medicare:coverageEndsAfter ;
+    rdf:object "36 months" ;
+    rdfs:comment "If you only have Medicare because of End-Stage Renal Disease (ESRD)." .
+
+# Rule 7: Medicare offers a benefit that may help you, if you lose Part
+
+ A coverage 36 months after a kidney transplant, and you don’t have certain types of other health coverage.
+medicareBenefit:availableIfLostPartACoverageRule rdf:type rdf:Statement ;
+    rdf:subject medicareBenefit:benefit ;
+    rdf:predicate medicareBenefit:availableIf ;
+    rdf:object "lost Part A coverage 36 months after a kidney transplant" ;
+    rdfs:comment "If you don’t have certain types of other health coverage." .
+
+# Rule 8: This benefit only covers your immunosuppressive drugs and no other items or services.
+medicareBenefit:coversImmunosuppressiveDrugsOnlyRule rdf:type rdf:Statement ;
+    rdf:subject medicareBenefit:benefit ;
+    rdf:predicate medicareBenefit:covers ;
+    rdf:object immunosuppressiveDrug:drugs ;
+    rdfs:comment "No other items or services are covered." .
+
+# Rule 9: It isn’t a substitute for full health coverage.
+medicareBenefit:notSubstituteForFullCoverageRule rdf:type rdf:Statement ;
+    rdf:subject medicareBenefit:benefit ;
+    rdf:predicate medicareBenefit:notSubstituteFor ;
+    rdf:object fullHealthCoverage:coverage .
+
+# Rule 10: If you qualify, you can sign up for this benefit any time after your Part A coverage ends.
+medicareBenefit:signUpAfterPartACoverageEndsRule rdf:type rdf:Statement ;
+    rdf:subject medicareBenefit:benefit ;
+    rdf:predicate medicareBenefit:signUp ;
+    rdf:object "any time after your Part A coverage ends" .
+
+# Rule 11: To sign up, call Social Security at 1-877-465-0355. TTY users can call 1-800-325-0788.
+socialSecurity:contactRule rdf:type rdf:Statement ;
+    rdf:subject socialSecurity:contact ;
+    rdf:predicate socialSecurity:call ;
+    rdf:object "1-877-465-0355" ;
+    rdfs:comment "TTY users can call 1-800-325-0788." .
+
+# Rule 12: In 2023, you’ll pay a monthly premium of $97.10* and $226 deductible if you sign up for the immunosuppressive drug benefit.
+premium:costIn2023Rule rdf:type rdf:Statement ;
+    rdf:subject premium:monthlyPremium ;
+    rdf:predicate premium:costs ;
+    rdf:object "$97.10*" ;
+    rdfs:comment "If you sign up for the immunosuppressive drug benefit." .
+
+deductible:costIn2023Rule rdf:type rdf:Statement ;
+    rdf:subject deductible:deductible ;
+    rdf:predicate deductible:costs ;
+    rdf:object "$226" ;
+    rdfs:comment "If you sign up for the immunosuppressive drug benefit." .
+
+# Rule 13: Once you’ve met the deductible, you’ll pay 20% of the Medicare-approved amount for your immunosuppressive drugs.
+costPercentage:paymentRule rdf:type rdf:Statement ;
+    rdf:subject costPercentage:percentage ;
+    rdf:predicate costPercentage:payment ;
+    rdf:object "20%" ;
+    rdfs:comment "Once you've met the deductible." .

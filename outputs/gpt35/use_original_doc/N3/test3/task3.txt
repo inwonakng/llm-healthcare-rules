@@ -1,0 +1,84 @@
+Here's a Solidity smart contract that follows the given natural language text:
+
+```solidity
+pragma solidity ^0.8.0;
+
+contract MedicareTransplantCoverage {
+    struct MedicareCoverage {
+        bool partA; // Whether the beneficiary has Part A coverage
+        bool partB; // Whether the beneficiary has Part B coverage
+        bool partD; // Whether the beneficiary has Part D coverage
+        bool originalMedicare; // Whether the beneficiary has Original Medicare
+        bool esrd; // Whether the beneficiary has End-Stage Renal Disease (ESRD)
+        bool successfulTransplant; // Whether the beneficiary had a successful kidney transplant
+        bool lostPartACoverage; // Whether the beneficiary lost Part A coverage 36 months after a kidney transplant
+        bool noOtherHealthCoverage; // Whether the beneficiary has certain types of other health coverage
+
+        bool isEligibleForBenefit; // Whether the beneficiary is eligible for the immunosuppressive drug benefit
+        bool hasSignedUp; // Whether the beneficiary has signed up for the benefit
+        bool isQualified; // Whether the beneficiary qualifies for the benefit
+
+        bool isActive; // Whether the beneficiary's coverage is currently active
+        uint coverageEndTimestamp; // Timestamp when the beneficiary's coverage ends
+
+        uint monthlyPremium; // Monthly premium amount
+        uint deductible; // Deductible amount
+        uint coinsuranceRate; // Coinsurance rate for immunosuppressive drugs
+    }
+
+    mapping(address => MedicareCoverage) public beneficiaries;
+
+    constructor() {
+        beneficiaries[msg.sender].isActive = true; // Assuming the deployer of the contract is a beneficiary
+    }
+
+    function enrollForBenefit() external {
+        MedicareCoverage storage coverage = beneficiaries[msg.sender];
+
+        require(coverage.partA, "Must have Part A coverage");
+        require(coverage.successfulTransplant, "Must have had a successful kidney transplant");
+
+        coverage.isEligibleForBenefit = true;
+    }
+
+    function signUpForBenefit() external {
+        MedicareCoverage storage coverage = beneficiaries[msg.sender];
+
+        require(coverage.isEligibleForBenefit, "Not eligible for the benefit");
+
+        coverage.hasSignedUp = true;
+    }
+
+    function qualifyForBenefit() external {
+        MedicareCoverage storage coverage = beneficiaries[msg.sender];
+
+        require(coverage.hasSignedUp, "Must have signed up for the benefit");
+        require(coverage.lostPartACoverage, "Must have lost Part A coverage 36 months after a kidney transplant");
+        require(!coverage.noOtherHealthCoverage, "Must not have certain types of other health coverage");
+
+        coverage.isQualified = true;
+    }
+
+    function endCoverage() external {
+        MedicareCoverage storage coverage = beneficiaries[msg.sender];
+
+        coverage.isActive = false;
+        coverage.coverageEndTimestamp = block.timestamp;
+    }
+
+    function calculateCost(uint totalAmount) external view returns (uint) {
+        MedicareCoverage storage coverage = beneficiaries[msg.sender];
+
+        require(coverage.isActive, "Coverage is not active");
+
+        if (totalAmount <= coverage.deductible) {
+            return totalAmount; // No coinsurance required
+        } else {
+            uint coinsuranceAmount = (totalAmount - coverage.deductible) * coverage.coinsuranceRate / 100;
+            return coverage.deductible + coinsuranceAmount;
+        }
+    }
+}
+```
+
+Please note that this is a simplified implementation that focuses on the logic described in the text. Some details, such as phone number validation and error messages, are omitted for brevity. Additionally, the smart contract assumes that the caller's address represents the beneficiary.

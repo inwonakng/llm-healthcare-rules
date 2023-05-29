@@ -1,0 +1,49 @@
+Here are the logic rules in N3 syntax based on the description of the decision process and the list of requirements:
+
+1. Eligibility for Medicare home health benefit:
+   ```
+   { ?person rdf:type :Patient.
+     ?person :hasCondition :Osteoporosis.
+     ?person :hasCoverage :Medicare.
+     ?person :hasBenefit :HomeHealth } => {
+       ?person :isEligibleForBenefit :MedicareHomeHealth.
+   }.
+   ```
+
+2. Certification of bone fracture related to post-menopausal osteoporosis:
+   ```
+   { ?person rdf:type :Patient.
+     ?person :hasCondition :Osteoporosis.
+     ?person :hasFracture :BoneFracture.
+     ?boneFracture :relatedTo :PostMenopausalOsteoporosis.
+     ?doctor rdf:type :Doctor.
+     ?doctor :certifies ?boneFracture } => {
+       ?person :isCertifiedForFracture :BoneFractureCertification.
+   }.
+   ```
+
+3. Certification of inability to self-administer the injection:
+   ```
+   { ?person rdf:type :Patient.
+     ?person :hasCondition :Osteoporosis.
+     ?person :hasInability :SelfAdministration.
+     ?doctor rdf:type :Doctor.
+     ?doctor :certifies ?person } => {
+       ?person :isCertifiedForInability :SelfAdministrationCertification.
+   }.
+   ```
+
+4. Coverage by home health nurse or aide if family/caregivers are unable or unwilling to administer the injection:
+   ```
+   { ?person rdf:type :Patient.
+     ?person :hasCoverage :Medicare.
+     ?person :isEligibleForBenefit :MedicareHomeHealth.
+     { ?person :hasFamilyOrCaregivers ?familyOrCaregivers.
+       ?familyOrCaregivers :isAbleOrWillingTo :AdministerInjection } UNION
+       NOT EXISTS { ?person :hasFamilyOrCaregivers ?familyOrCaregivers }.
+     ?person :requiresService :HomeHealthInjection } => {
+       ?person :isCoveredByService :HomeHealthInjection.
+   }.
+   ```
+
+These logic rules satisfy the given requirements and contribute to a final decision in accordance with the description of the decision process.
