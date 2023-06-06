@@ -1,0 +1,117 @@
+Here's a Solidity smart contract that implements the conditions described in the natural language text:
+
+```solidity
+pragma solidity ^0.8.0;
+
+contract MedicareContract {
+    struct Beneficiary {
+        bool hasPartA;
+        bool hasPartB;
+        bool hasPartD;
+        bool hasOriginalMedicare;
+        bool hasESRDCoverage;
+        bool hasOtherCoverage;
+        bool isEligibleForBenefit;
+        uint256 transplantDate;
+        uint256 coverageEndDate;
+    }
+
+    mapping(address => Beneficiary) public beneficiaries;
+
+    event BeneficiaryEnrolled(address beneficiaryAddress);
+
+    function enrollBeneficiary(
+        address beneficiaryAddress,
+        bool hasPartA,
+        bool hasPartB,
+        bool hasPartD,
+        bool hasOriginalMedicare,
+        bool hasESRDCoverage,
+        bool hasOtherCoverage,
+        uint256 transplantDate
+    ) external {
+        beneficiaries[beneficiaryAddress] = Beneficiary(
+            hasPartA,
+            hasPartB,
+            hasPartD,
+            hasOriginalMedicare,
+            hasESRDCoverage,
+            hasOtherCoverage,
+            false,
+            transplantDate,
+            0
+        );
+        emit BeneficiaryEnrolled(beneficiaryAddress);
+    }
+
+    function calculateMonthlyPremium(address beneficiaryAddress) external view returns (uint256) {
+        Beneficiary storage beneficiary = beneficiaries[beneficiaryAddress];
+        require(beneficiary.hasPartA, "Must have Part A coverage");
+
+        if (beneficiary.hasOriginalMedicare && beneficiary.hasPartB && !beneficiary.hasPartD) {
+            return 9710; // $97.10
+        }
+
+        return 0;
+    }
+
+    function calculateDeductible(address beneficiaryAddress) external view returns (uint256) {
+        Beneficiary storage beneficiary = beneficiaries[beneficiaryAddress];
+        require(beneficiary.hasPartA, "Must have Part A coverage");
+
+        if (beneficiary.hasPartB && beneficiary.hasPartD) {
+            return 226; // $226
+        }
+
+        return 0;
+    }
+
+    function calculateDrugCost(address beneficiaryAddress, uint256 drugCost) external view returns (uint256) {
+        Beneficiary storage beneficiary = beneficiaries[beneficiaryAddress];
+        require(beneficiary.hasPartA, "Must have Part A coverage");
+
+        if (beneficiary.hasPartB && beneficiary.hasPartD) {
+            if (drugCost > 0) {
+                uint256 deductible = calculateDeductible(beneficiaryAddress);
+                if (drugCost > deductible) {
+                    return (drugCost - deductible) * 20 / 100;
+                }
+            }
+        }
+
+        return drugCost;
+    }
+
+    function applyBenefit(address beneficiaryAddress) external {
+        Beneficiary storage beneficiary = beneficiaries[beneficiaryAddress];
+        require(beneficiary.hasPartA, "Must have Part A coverage");
+
+        if (
+            beneficiary.hasOriginalMedicare &&
+            !beneficiary.hasOtherCoverage &&
+            beneficiary.coverageEndDate == 0 &&
+            beneficiary.transplantDate > 0
+        ) {
+            uint256 monthsPassed = (block.timestamp - beneficiary.transplantDate) / 30 days;
+            if (monthsPassed >= 36) {
+                beneficiary.coverageEndDate = block.timestamp + 365 days;
+                beneficiary.isEligibleForBenefit = true;
+            }
+        }
+    }
+
+    function isBeneficiaryEligibleForBenefit(address beneficiaryAddress) external view returns (bool) {
+        Beneficiary storage beneficiary = beneficiaries[beneficiaryAddress];
+        return beneficiary.isEligibleForBenefit;
+    }
+
+    function getBeneficiaryCoverageEndDate(address beneficiaryAddress) external view returns (uint256) {
+        Beneficiary storage beneficiary = beneficiaries[beneficiaryAddress];
+
+
+        return beneficiary.coverageEndDate;
+    }
+}
+```
+
+This smart contract allows beneficiaries to enroll by providing their coverage information and transplant date. It includes functions to calculate the monthly premium, deductible, and cost of drugs based on the coverage conditions. The `applyBenefit` function checks if a beneficiary is eligible for the special benefit based on the provided conditions. The contract also provides functions to check the eligibility status and coverage end date for a beneficiary.

@@ -1,0 +1,22 @@
+library ExampleLibrary
+
+using QDM
+
+define "Intravenous Immune Globulin (IVIG) provided in home":
+  ["Intravenous Immune Globulin (IVIG) provided in home"] EjectionFraction
+    where MedicationActive: ["Intravenous Immune Globulin (IVIG)"]
+      and DiagnosisActive: ["Primary Immune Deficiency Disease"]
+      and ProcedureRecommended: ["IVIG in home"]
+      and MedicationDispensed: ["Intravenous Immune Globulin (IVIG)"]
+      and EncounterOrder: ["Home"]
+    with "Medically Appropriate" ("Intravenous Immune Globulin (IVIG) provided in home")
+  
+  ["Part B covers the IVIG itself, but doesn’t pay for other items and services related to you getting the IVIG at home."] EjectionFraction
+    where Coverage: ["Part B"]
+      and CoveragePayer: ["Medicare"]
+      and CoverageTarget: ["IVIG"]
+      and CoverageNonPayer: ["Other items and services"]
+      and CoverageNonPayerReason: ["Related to getting the IVIG at home"]
+
+  ["Final Decision"] EjectionFraction
+    with "Covered by Medicare" ("Intravenous Immune Globulin (IVIG) provided in home")

@@ -1,0 +1,42 @@
+Sure! Here's a Solidity smart contract that covers the given natural language text:
+
+```solidity
+pragma solidity ^0.8.0;
+
+contract IVIGCoverage {
+    struct Patient {
+        bool hasPrimaryImmuneDeficiency;
+        bool isMedicallyAppropriate;
+        bool isCovered;
+    }
+    
+    mapping(address => Patient) public patients;
+    
+    function requestIVIGCoverage(bool hasPrimaryImmuneDeficiency, bool isMedicallyAppropriate) external {
+        patients[msg.sender] = Patient(hasPrimaryImmuneDeficiency, isMedicallyAppropriate, false);
+    }
+    
+    function checkIVIGCoverage() external view returns (bool) {
+        Patient memory patient = patients[msg.sender];
+        
+        if (patient.hasPrimaryImmuneDeficiency && patient.isMedicallyAppropriate) {
+            return patient.isCovered;
+        }
+        
+        return false;
+    }
+    
+    function approveIVIGCoverage(address patientAddress) external {
+        patients[patientAddress].isCovered = true;
+    }
+}
+```
+
+Explanation:
+- The smart contract defines a struct called `Patient` that encapsulates the parameters required for IVIG coverage: `hasPrimaryImmuneDeficiency`, `isMedicallyAppropriate`, and `isCovered`.
+- The contract uses a mapping `patients` to associate each patient's address with their respective `Patient` struct.
+- The `requestIVIGCoverage` function allows a patient to request IVIG coverage by providing the necessary parameters: `hasPrimaryImmuneDeficiency` and `isMedicallyAppropriate`.
+- The `checkIVIGCoverage` function allows a patient to check if they are covered for IVIG based on their diagnosis and medical appropriateness.
+- The `approveIVIGCoverage` function can be called by a doctor or authorized entity to approve IVIG coverage for a specific patient.
+
+Note: This smart contract provides a basic implementation to cover the conditions described in the given natural language text. Additional functionality or validation can be added as per the specific requirements of the use case.

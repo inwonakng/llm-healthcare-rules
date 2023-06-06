@@ -1,0 +1,22 @@
+library "OsteoporosisDrugCoverage":
+    
+    expression "MeetCriteriaForMedicareHomeHealthBenefit":
+        $gender = 'female' and $diagnosis = 'osteoporosis' and $medicareBenefit = 'home health'
+    
+    expression "FractureRelatedToOsteoporosis":
+        $fracture = 'bone' and $cause = 'post-menopausal osteoporosis'
+    
+    expression "InabilityToSelf-Inject":
+        $doctorCertifiedInability = true
+    
+    expression "UnableOrUnwillingCaregivers":
+        $caregivers = 'family' or $caregivers = 'caregivers' and $abilityToInject = 'unwilling'
+    
+    decision "MedicareCoversInjectableOsteoporosisDrugs":
+        MeetCriteriaForMedicareHomeHealthBenefit() and
+        FractureRelatedToOsteoporosis() and
+        InabilityToSelf-Inject() and
+        (UnableOrUnwillingCaregivers() or Exists("HomeHealthNurseOrAideToProvideInjection"))
+    
+    expression "HomeHealthNurseOrAideToProvideInjection":
+        Exists("home health nurse") or Exists("home health aide")

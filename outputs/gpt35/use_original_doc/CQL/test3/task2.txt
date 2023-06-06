@@ -1,0 +1,72 @@
+library "MedicareCoverage" version '1.0'
+
+using FHIR version '4.0.1'
+
+context Patient
+
+define "MedicareCoversTransplantDrugTherapy":
+    exists ([Condition: code in {"Z94.0"}] during 36 months prior to "covered transplant date")
+
+define "HasPartAAtTimeOfCoveredTransplant":
+    exists ([Encounter: class in {"inpatient"}, period.start <= "covered transplant date"] during 1)
+
+define "HasPartBAtTimeOfImmunosuppressiveDrugs":
+    exists ([Encounter: code in {"OUTPATIENT"}, period.start <= "immunosuppressive drugs date"] during 1)
+
+define "MedicareDrugCoverageCoversImmunosuppressiveDrugs":
+    not exists ([Coverage: type in {"Part D"}, code in {"immunosuppressive drugs"}] during 1)
+
+define "HasOriginalMedicare":
+    not exists ([Coverage: type in {"Part C"}] during 1)
+
+define "HasMedicareDueToEndStageRenalDisease":
+    exists ([Condition: code in {"N18.6"}] during 1)
+
+define "EndStageRenalDiseaseSuccessfulKidneyTransplant":
+    exists ([Procedure: code in {"302803005"}, outcome = "successful"] during 1)
+
+define "MedicareCoverageEndsAfter36Months":
+    exists ([Encounter: class in {"inpatient"}, period.start >= "successful kidney transplant date + 36 months"] during 1)
+
+define "HasLostPartACoverageAfter36Months":
+    exists ([Encounter: class in {"inpatient"}, period.start >= "successful kidney transplant date + 36 months", period.start <= "current date"] during 1)
+
+define "HasNoOtherHealthCoverage":
+    not exists ([Coverage: type in {"group health plan", "TRICARE", "Medicaid"}, code in {"immunosuppressive drugs"}] during 1)
+
+define "CanSignUpForBenefit":
+    (HasLostPartACoverageAfter36Months or HasNoOtherHealthCoverage) and "Part A coverage end date" <= "current date"
+
+define "MonthlyPremium":
+    if "current date" >= "2023-01-01" then 97.10 else null
+
+define "Deductible":
+    if "current date" >= "2023-01-01" then 226 else null
+
+define "ImmunosuppressiveDrugsPayment":
+    if "current date" >= "2023-01-01" then 0.2 * "Medicare-approved amount for immunosuppressive drugs" else null
+
+define "FinalDecision":
+    if "current date" >= "2023-01-01" and CanSignUpForBenefit then
+        "Medicare offers a benefit that may help you if you lose Part A coverage 36 months after a kidney transplant, and you don’t have certain types of other health coverage (like a group health plan, TRICARE, or Medicaid that covers immunosuppressive drugs). This benefit only covers your immunosuppressive drugs and no other items or services. It isn’t a substitute for full health coverage. If you qualify, you can sign up for this benefit any time after your Part A coverage ends. To sign up, call Social Security at 1-877-465-0355. TTY users can call 1-800-325-0788."
+    else
+        null
+
+define "MedicareCoverageLibrary":
+    ["MedicareCoversTransplantDrugTherapy",
+    "HasPartAAtTimeOfCoveredTransplant",
+    "HasPartBAtTimeOfImmunos
+
+uppressiveDrugs",
+    "MedicareDrugCoverageCoversImmunosuppressiveDrugs",
+    "HasOriginalMedicare",
+    "HasMedicareDueToEndStageRenalDisease",
+    "EndStageRenalDiseaseSuccessfulKidneyTransplant",
+    "MedicareCoverageEndsAfter36Months",
+    "HasLostPartACoverageAfter36Months",
+    "HasNoOtherHealthCoverage",
+    "CanSignUpForBenefit",
+    "MonthlyPremium",
+    "Deductible",
+    "ImmunosuppressiveDrugsPayment",
+    "FinalDecision"]
