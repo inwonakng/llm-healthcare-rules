@@ -1,0 +1,19 @@
+Here is a set of N3 logic rules that represent the given natural language text:
+
+```
+@prefix : <http://example.org#> .
+
+:InjectableOsteoporosisDrug
+    :coveredByMedicare true;
+    :conditions [
+        :womanWithOsteoporosis true;
+        :meetsCriteriaForMedicareHomeHealthBenefit true;
+        :boneFractureRelatedToPostMenopausalOsteoporosis true;
+        :doctorCertifiesInabilityToSelfInject true
+    ];
+    :homeHealthNurseOrAideCovered [
+        :familyOrCaregiversUnableOrUnwillingToInject true
+    ] .
+```
+
+This set of rules states that an injectable osteoporosis drug is covered by Medicare if the patient is a woman with osteoporosis who meets the criteria for the Medicare home health benefit, has a bone fracture related to post-menopausal osteoporosis that a doctor certifies, and the doctor certifies that the patient cannot give herself the injection or learn how to do so. In addition, if the patient's family or caregivers are unable or unwilling to give the injection, Medicare will cover a home health nurse or aide to provide it. Is there anything else you would like to know?
