@@ -1,0 +1,61 @@
+```solidity
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.4;
+
+contract MedicareCoverage {
+    
+    struct Patient {
+        bool isWoman;
+        bool hasOsteoporosis;
+        bool meetsHomeHealthBenefit;
+        bool hasRelatedBoneFracture;
+        bool unableSelfInject;
+    }
+
+    struct InjectableDrug {
+        bool isCoveredByMedicare;
+    }
+    
+    struct HomeHealthNurseOrAide {
+        bool isAvailable;
+        bool isWilling;
+    }
+    
+    mapping(address => Patient) public patients;
+    mapping(address => InjectableDrug) public drugs;
+    mapping(address => HomeHealthNurseOrAide) public caregivers;
+    
+    function checkEligibility(address _patient, address _drug, address _caregiver) public view returns (string memory) {
+        Patient memory patient = patients[_patient];
+        InjectableDrug memory drug = drugs[_drug];
+        HomeHealthNurseOrAide memory caregiver = caregivers[_caregiver];
+        
+        if (patient.isWoman && 
+            patient.hasOsteoporosis && 
+            patient.meetsHomeHealthBenefit &&
+            patient.hasRelatedBoneFracture &&
+            patient.unableSelfInject)
+        {
+            // Checking if the Injectable osteoporosis drugs is covered by medicare
+            if(drug.isCoveredByMedicare) {
+                // Checking if any caregivers are available or willing to inject the drug
+                if(caregiver.isAvailable && caregiver.isWilling) {
+                    return "Medicare will cover the injectable osteoporosis drug.";
+                } 
+                else {
+                    return "Medicare coverage is available but no caregivers can assist with the injection.";
+                }
+            }
+            else {
+                return "Medicare will not cover the injectable osteoporosis drug.";
+            }
+        } 
+        else {
+            return "The patient does not meet the criteria for Medicare coverage of injectable osteoporosis drugs.";
+        }
+    }
+}
+```
+The above solidity code encapsulates the conditions necessary for a woman with osteoporosis to be covered by Medicare for injectable drugs. Structs `Patient`, `InjectableDrug`, and `HomeHealthNurseOrAide` are used to store necessary information. `checkEligibility` function checks whether the patient is eligible for the coverage or not.
+
+By inputting an address of patient, drug, and caregiver, the function will return whether Medicare will cover the injectable osteoporosis drug based on provided conditions.

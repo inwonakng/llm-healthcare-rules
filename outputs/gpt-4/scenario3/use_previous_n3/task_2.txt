@@ -1,0 +1,75 @@
+```
+@prefix : <http://example.org/> .
+
+{
+  :Patient :hasMedicare :True;
+          :receivedTransplant :True;
+          :receivedAidForTransplantFromMedicare :True. 
+} => {
+  :Patient :eligibleForTransplantDrugTherapyCoverage :True.
+}.
+
+{
+  :Patient :enrolledInMedicarePartA :True;
+          :transplantTime :True;
+          :enrolledInMedicarePartB :True;
+          :receivedImmunosuppressiveDrugs :True.
+} => {
+  :Patient :eligibleForTransplantDrugTherapyCoverage :True.
+}.
+
+{
+  :Patient :hasMedicarePartD :True.  
+} => {
+  :Patient :coveredForImmunosuppressiveDrugs :True.
+}.
+
+{
+  :Patient :hasOriginalMedicare :True.  
+} => {
+  :Patient :eligibleToJoinMedicareDrugPlan :True.
+}.
+
+{
+  :Patient :hasMedicareDueToESRD :True;
+          :kidneyTransplantSuccess :True;
+          :monthsAfterKidneyTransplant 36.
+} => {
+  :Patient :terminateMedicareCoverage :True.
+}.
+
+{
+  :Patient :losePartAAfter36Months :True;
+          :noOtherHealthCoverage :True.
+} => {
+  :Patient :eligibleForSpecificBenefit :True.
+}.
+
+{
+  :Patient :eligibleForSpecificBenefit :True.  
+} => {
+  :Patient :coverageForImmunosuppressiveDrugs :True;
+           :fullHealthCoverage :False.
+}.
+
+{
+  :Patient :hasMedicarePartA :False;  
+          :eligibleForSpecificBenefit :True.
+} => {
+  :Patient :canEnrollForBenefit :True.
+}.
+
+{
+  :Patient :enrollInImmunosuppressiveDrugBenefit :True;
+          :year 2023.
+} => {
+  :Patient :monthlyPremium "$97.10";
+           :deductible "$226".
+}.
+
+{
+  :Patient :meetDeductible :True.  
+} => {
+  :Patient :paymentForDrugs "20% of Medicare-approved amount".
+}.
+```

@@ -1,0 +1,252 @@
+```n3
+@prefix : <http://example.com/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+# Rule 1
+:MedicareCoversTransplantDrugTherapy rdf:type rdf:Statement ;
+    rdf:subject :Medicare ;
+    rdf:predicate :covers ;
+    rdf:object :TransplantDrugTherapy ;
+    .
+
+# Rule 2
+:PartARequirement rdf:type rdf:Statement ;
+    rdf:subject :Person ;
+    rdf:predicate :hasPart ;
+    rdf:object :PartA ;
+    .
+
+# Rule 3
+:PartBRequirement rdf:type rdf:Statement ;
+    rdf:subject :Person ;
+    rdf:predicate :hasPart ;
+    rdf:object :PartB ;
+    .
+
+# Rule 4
+:ImmuneDrugCoverageByPartD rdf:type rdf:Statement ;
+    rdf:subject :Medicare ;
+    rdf:predicate :hasCoverage ;
+    rdf:object :ImmunosuppressiveDrugs ;
+    .
+
+# Rule 5
+:OrganTransplant rdf:type rdf:Class ;
+    rdfs:subClassOf rdf:MedicalProcedure ;
+    .
+
+# Rule 6
+:KidneyTransplantRequirement rdf:type rdf:Statement ;
+    rdf:subject :Person ;
+    rdf:predicate :hasMedicalProcedure ;
+    rdf:object :KidneyTransplant ;
+    .
+
+# Rule 7
+:CoverageAfterKidneyTransplantRequirement rdf:type rdf:Statement ;
+    rdf:subject :Person ;
+    rdf:predicate :hasCoverage ;
+    rdf:object :ImmunosuppressiveDrugs ;
+    .
+
+# Rule 8
+:PartialMedicareCoverageBenefit rdf:type rdf:Statement ;
+    rdf:subject :Person ;
+    rdf:predicate :hasBenefit ;
+    rdf:object :ImmunosuppressiveDrugs ;
+    .
+
+# Rule 8 continued
+:PartialMedicareCoverageBenefit rdf:type rdf:Statement ;
+    rdf:subject :Person ;
+    rdf:predicate :hasBenefit ;
+    rdf:object :ItemsAndServices ;
+    rdf:object :FullHealthCoverage ;
+    .
+
+# Rule 9
+:EligibilityRequirement rdf:type rdf:Statement ;
+    rdf:subject :Person ;
+    rdf:predicate :isEligible ;
+    rdf:object :PartialMedicareCoverageBenefit ;
+    .
+
+# Rule 10
+:SignUpBenefit rdf:type rdf:Statement ;
+    rdf:subject :Person ;
+    rdf:predicate :canSignUp ;
+    rdf:object :PartialMedicareCoverageBenefit ;
+    .
+
+# Rule 11
+:PhoneNumber rdf:type rdf:Class ;
+    .
+
+# Rule 12
+:CallSocialSecurity rdf:type rdf:Statement ;
+    rdf:subject :Person ;
+    rdf:predicate :canCall ;
+    rdf:object :PhoneNumber ;
+    .
+
+# Rule 12 continued
+:CallSocialSecurity rdf:type rdf:Statement ;
+    rdf:subject :PhoneNumber ;
+    rdf:predicate :providesService ;
+    rdf:object :PartialMedicareCoverageBenefit ;
+    .
+
+# Rule 13
+:MonthlyPremium rdf:type rdf:Class ;
+    .
+
+# Rule 13 continued
+:PremiumAmount rdf:type rdf:Statement ;
+    rdf:subject :MonthlyPremium ;
+    rdf:predicate :hasAmount ;
+    rdf:object "$97.10*" ;
+    .
+
+# Rule 14
+:Deductible rdf:type rdf:Class ;
+    .
+
+# Rule 14 continued
+:DeductibleAmount rdf:type rdf:Statement ;
+    rdf:subject :Deductible ;
+    rdf:predicate :hasAmount ;
+    rdf:object "$226" ;
+    .
+
+# Rule 15
+:ImmunosuppressiveDrugCoverage rdf:type rdf:Class ;
+    .
+
+# Rule 15 continued
+:CoveragePercentageAmount rdf:type rdf:Statement ;
+    rdf:subject :ImmunosuppressiveDrugCoverage ;
+    rdf:predicate :coversPercentage ;
+    rdf:object "20%" ;
+    .
+
+# Rule 16
+:MedicareOffersCoverage rdf:type rdf:Statement ;
+    rdf:subject :Medicare ;
+    rdf:predicate :offersCoverage ;
+    rdf:object :ImmunosuppressiveDrugs ;
+    .
+
+# Rule 17
+:PersonHasMetDeductible rdf:type rdf:Statement ;
+    rdf:subject :Person ;
+    rdf:predicate :hasMet ;
+    rdf:object :Deductible ;
+    .
+
+# Rule 18
+:PersonPaysPercentage rdf:type rdf:Statement ;
+    rdf:subject :Person ;
+    rdf:predicate :paysPercentage ;
+    rdf:object :CoveragePercentageAmount ;
+    .
+
+# Rule 19
+:PartACoverage rdf:type rdf:Class ;
+    .
+
+# Rule 20
+:PartAEnds rdf:type rdf:Statement ;
+    rdf:subject :Person ;
+    rdf:predicate :ends ;
+    rdf:object :PartACoverage ;
+    rdf:object :KidneyTransplant ;
+    .
+
+# Rule 21
+:HealthCoverage rdf:type rdf:Class ;
+    .
+
+# Rule 21 continued
+:OtherHealthCoverage rdf:type rdf:Statement ;
+    rdf:subject :Person ;
+    rdf:predicate :hasCoverage ;
+    rdf:object :HealthCoverage ;
+    .
+
+# Rule 21 continued
+:CoverageType rdf:type rdf:Class ;
+    .
+
+# Rule 21 continued
+:GroupHealthPlan rdf:type rdf:Statement ;
+    rdf:subject :Person ;
+    rdf:predicate :hasCoverage ;
+    rdf:object :CoverageType ;
+    .
+
+# Rule 21 continued
+:TRICARE rdf:type rdf:Statement ;
+    rdf:subject :Person ;
+    rdf:predicate :hasCoverage ;
+    rdf:object :CoverageType ;
+    .
+
+# Rule 21 continued
+:Medicaid rdf:type rdf:Statement ;
+    rdf:subject :Person ;
+    rdf:predicate :hasCoverage ;
+    rdf:object :CoverageType ;
+    .
+
+# Rule 21 continued
+:CoverageType rdf:type rdf:Class ;
+    .
+
+# Rule 22
+:BenefitNotSubstitute rdf:type rdf:Statement ;
+    rdf:subject :PartialMedicareCoverageBenefit ;
+    rdf:predicate :isNotSubstitute ;
+    rdf:object :FullHealthCoverage ;
+    .
+
+# Rule 23
+:SignUpAfterPartACoverageEnds rdf:type rdf:Statement ;
+    rdf:subject :Person ;
+    rdf:predicate :canSignUp ;
+    rdf:object :PartialMedicareCoverageBenefit ;
+    .
+
+# Rule 24
+:MedicarePremiumCoverageYear rdf:type rdf:Class ;
+    .
+
+# Rule 24 continued
+:CoverageYearAmount rdf:type rdf:Statement ;
+    rdf:subject :MedicarePremiumCoverageYear ;
+    rdf:predicate :hasAmount ;
+    rdf:object "2023" ;
+    .
+
+# Rule 24 continued
+:CoverageYearAmount rdf:type rdf:Statement ;
+    rdf:subject :MedicarePremiumCoverageYear ;
+    rdf:predicate :hasPremium ;
+    rdf:object :MonthlyPremium ;
+    .
+
+# Rule 24 continued
+:CoverageYearAmount rdf:type rdf:Statement ;
+    rdf:subject :MedicarePremiumCoverageYear ;
+    rdf:predicate :hasDeductible ;
+    rdf:object :Deductible ;
+    .
+
+# Rule 25
+:PersonQualifies rdf:type rdf:Statement ;
+    rdf:subject :Person ;
+    rdf:predicate :qualifies ;
+    rdf:object :MedicarePremiumCoverageYear ;
+    .
+
+```

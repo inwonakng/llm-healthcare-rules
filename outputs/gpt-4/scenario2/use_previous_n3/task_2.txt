@@ -1,0 +1,24 @@
+```@prefix : <http://healthcare.com/> .
+
+{
+    :Patient a :PatientWithPrimaryImmuneDeficiency;
+              :AdministeredAtHome true;
+              :MedicallyAppropriate true.
+} => {
+    :Medicare :CoverIVIG true.
+}.
+
+{
+    :Medicare a :MedicarePartB.
+} => {
+    :Medicare :CoverIVIGCosts true.
+}.
+
+{
+    :Patient a :PatientWithPrimaryImmuneDeficiency;
+              :AdministeredAtHome true;
+    :Medicare a :MedicarePartB.
+} => {
+    :Medicare :CoverIVIGAdditionalServices false.
+}.
+```

@@ -1,0 +1,59 @@
+struct TransplantPatient {
+    bool partA;  // Flag indicating if the patient has Part A at the time of the covered transplant
+    bool partB;  // Flag indicating if the patient has Part B at the time of getting immunosuppressive drugs
+    bool partD;  // Flag indicating if the patient has Part D (Medicare drug coverage)
+    bool originalMedicare;  // Flag indicating if the patient has Original Medicare
+
+    bool esrd;  // Flag indicating if the patient has Medicare due to End-Stage Renal Disease (ESRD)
+    bool successfulKidneyTransplant;  // Flag indicating if the patient had a successful kidney transplant
+    
+    bool partALoss;  // Flag indicating if the patient loses Part A coverage after 36 months post kidney transplant
+    bool otherHealthCoverage;  // Flag indicating if the patient has certain types of other health coverage
+    
+    uint premium;  // Monthly premium for immunosuppressive drug benefit in 2023
+    uint deductible;  // Deductible amount for immunosuppressive drug benefit in 2023
+}
+
+contract MedicareCoverage {
+    
+    mapping(address => TransplantPatient) public patients;
+    
+    function enrollInMedicareCoverage(bool partA, bool partB, bool partD, bool originalMedicare, bool esrd) public {
+        patients[msg.sender] = TransplantPatient(partA, partB, partD, originalMedicare, esrd, false, false, false, false, 97.10, 226);
+    }
+    
+    function kidneyTransplantSuccess() public {
+        require(patients[msg.sender].esrd, "Only patients with End-Stage Renal Disease can have a kidney transplant.");
+        patients[msg.sender].successfulKidneyTransplant = true;
+    }
+    
+    function losePartACoverage() public {
+        require(patients[msg.sender].successfulKidneyTransplant, "Only patients who had a successful kidney transplant can lose Part A coverage.");
+        patients[msg.sender].partALoss = true;
+    }
+    
+    function haveOtherHealthCoverage(bool coverage) public {
+        require(patients[msg.sender].partALoss, "Only patients who lose Part A coverage can have other health coverage.");
+        patients[msg.sender].otherHealthCoverage = coverage;
+    }
+    
+    function getImmunosuppressiveDrugsCost() public view returns (uint) {
+        TransplantPatient storage patient = patients[msg.sender];
+        
+        require(patient.successfulKidneyTransplant, "Patient must have had a successful kidney transplant.");
+        
+        uint cost = 0;
+        
+        if (patient.partB && !patient.partD) {
+            cost = patient.premium;
+            if (cost > patient.deductible) {
+                cost -= patient.deductible;
+            } else {
+                cost = 0;
+            }
+            cost += patient.premium * 20 / 100;  // 20% of the Medicare-approved amount for drugs
+        }
+        
+        return cost;
+    }
+}

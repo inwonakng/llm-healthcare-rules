@@ -1,0 +1,23 @@
+```N3
+@prefix : <#>.
+
+:Person a :Woman;
+  :hasOsteoporosis True;
+  :meetsMedicareHomeHealthBenefitCriteria True;
+  :docCertifiesFractureRelatedToOsteoporosis PostMenopausal;
+  :docCertifiesCantSelfAdministerInjection True.
+
+:FamilyOrCaregiver a :Person;
+   :ableToAdministerInjection False;
+   :willingToAdministerInjection False.
+
+{ :Person :hasOsteoporosis True;
+   :meetsMedicareHomeHealthBenefitCriteria True;
+   :docCertifiesFractureRelatedToOsteoporosis PostMenopausal;
+   :docCertifiesCantSelfAdministerInjection True;
+ } => { :Person :medicareCoversInjectableOsteoporosisDrugs True }.
+
+{ :FamilyOrCaregiver :ableToAdministerInjection False;
+   :willingToAdministerInjection False;
+  :Person :medicareCoversInjectableOsteoporosisDrugs True; } => { :Person :medicareCoversHomeHealthNurseOrAide True }.
+```

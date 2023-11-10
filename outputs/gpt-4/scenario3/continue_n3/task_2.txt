@@ -1,0 +1,39 @@
+1.
+```
+{?individual medicare:hasPartA true. ?individual medicare:hasTransplant true} => {?individual medicare:canCoverTransplantDrug true}.
+```
+
+2.
+```
+{?individual medicare:hasPartB true. ?individual medicare:gettingImmunosuppressiveDrugs true} => {?individual medicare:canCoverImmunosuppressiveDrugs true}.
+```
+
+3.
+```
+{?individual medicare:hasPartB false. ?individual medicare:hasPartD true} => {?individual medicare:canCoverImmunosuppressiveDrugs true}.
+```
+
+4.
+```
+{?individual medicare:hasOriginalMedicare true} => {?individual medicare:canJoinDrugPlan true}.
+```
+
+5.
+```
+{?individual medicare:hasESRD true. ?individual medicare:kidneyTransplantSuccessful true. ?individual measure:monthsPassedAfterKidneyTransplant 36} => {?individual medicare:coverageEnds true}.
+```
+
+6.
+```
+{?individual medicare:hasPartA false. ?individual medicare:monthsSinceKidneyTransplant 36. ?individual medicare:hasOtherHealthCoverage false} => {?individual medicare:canCoverImmunosuppressiveDrugsOnly true}.
+```
+
+7.
+```
+{?individual medicare:hasQualifiedForImmunosuppressiveDrugsOnlyCoverage true. ?individual medicare:hasPartA false} => {?individual medicare:canSignUPanyTime true}.
+```
+
+8.
+```
+{?individual medicare:enrollImmunosuppressiveCoverage true. ?individual finance:monthlyPremium 97.10. ?individual finance:deductible 226} => {?individual finance:payableAfterDeductible part_of:medicare-approved_amount[mul 0.2]}.
+```

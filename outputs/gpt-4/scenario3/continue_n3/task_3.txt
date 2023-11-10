@@ -1,0 +1,59 @@
+Here is a basic outline of a smart contract based on the provided text:
+
+```solidity
+// SPDX-License-Identifier: MIT
+pragma solidity >=0.4.22 <0.9.0;
+
+contract Medicare {
+    struct Individual {
+        bool hasPartA;
+        bool hasPartB;
+        bool hasPartD;
+        bool hasOriginalMedicare;
+        bool hasESRD;
+        bool kidneyTransplantSuccessful;
+        uint monthsPassedAfterKidneyTransplant;
+        bool hasOtherHealthCoverage;
+        bool hasQualifiedForImmunosuppressiveDrugsOnlyCoverage;
+        bool enrollImmunosuppressiveCoverage;
+        uint monthlyPremium;
+        uint deductible;
+        bool gettingImmunosuppressiveDrugs;
+    }
+
+    function canCoverTransplantDrug(Individual memory individual) public pure returns(bool) {
+        return individual.hasPartA && individual.gettingImmunosuppressiveDrugs;
+    }
+
+    function canCoverImmunosuppressiveDrugs(Individual memory individual) public pure returns(bool) {
+        if (individual.hasPartD ) {
+            return true;
+        } else if (individual.hasPartB) {
+            return true;
+        }
+        return false;
+    }
+
+    function canJoinDrugPlan(Individual memory individual) public pure returns(bool) {
+        return individual.hasOriginalMedicare;
+    }
+
+    function coverageEnds(Individual memory individual) public pure returns(bool) {
+        return individual.hasESRD && individual.kidneyTransplantSuccessful && individual.monthsPassedAfterKidneyTransplant >= 36;
+    }
+
+    function canCoverImmunosuppressiveDrugsOnly(Individual memory individual) public pure returns(bool) {
+        return !individual.hasPartA && individual.monthsPassedAfterKidneyTransplant >= 36 && !individual.hasOtherHealthCoverage;
+    }
+
+    function canSignUpAnytime(Individual memory individual)  public pure returns(bool) {
+        return !individual.hasPartA && individual.hasQualifiedForImmunosuppressiveDrugsOnlyCoverage;
+    }
+
+    function payableAfterDeductible(Individual memory individual) public pure returns(uint) {
+        require(individual.enrollImmunosuppressiveCoverage && individual.monthlyPremium == 97.10 ether && individual.deductible == 226 ether, "Conditions not met!");
+        return individual.deductible + ((individual.monthlyPremium * 20) / 100);
+    }
+}
+```
+This smart contract covers all conditions described in the given text. However, this is a high level and simplistic representation and real Solidity code may have more checks and error handling.

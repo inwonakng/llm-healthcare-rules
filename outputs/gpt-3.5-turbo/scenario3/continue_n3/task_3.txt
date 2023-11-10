@@ -1,0 +1,161 @@
+```solidity
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+contract MedicareCoverage {
+    struct Person {
+        bool hasPartA;
+        bool hasPartB;
+        bool isEligible;
+        bool hasMetDeductible;
+    }
+    
+    struct Coverage {
+        uint256 premiumAmount;
+        uint256 deductibleAmount;
+        uint256 coveragePercentage;
+    }
+    
+    mapping(address => Person) public persons;
+    
+    Coverage public coverage2023;
+    
+    constructor() {
+        coverage2023 = Coverage({
+            premiumAmount: 9710,
+            deductibleAmount: 226,
+            coveragePercentage: 20
+        });
+    }
+    
+    function setPersonPartA(address _person, bool _hasPartA) external {
+        persons[_person].hasPartA = _hasPartA;
+    }
+    
+    function setPersonPartB(address _person, bool _hasPartB) external {
+        persons[_person].hasPartB = _hasPartB;
+    }
+    
+    function setPersonEligibility(address _person, bool _isEligible) external {
+        persons[_person].isEligible = _isEligible;
+    }
+    
+    function setPersonDeductible(address _person, bool _hasMetDeductible) external {
+        persons[_person].hasMetDeductible = _hasMetDeductible;
+    }
+    
+    function getCoveragePremium() external view returns (uint256) {
+        return coverage2023.premiumAmount;
+    }
+    
+    function getCoverageDeductible() external view returns (uint256) {
+        return coverage2023.deductibleAmount;
+    }
+    
+    function getCoveragePercentage() external view returns (uint256) {
+        return coverage2023.coveragePercentage;
+    }
+    
+    function checkCoverage(address _person) external view returns (bool) {
+        Person memory person = persons[_person];
+        
+        if (person.hasPartA && person.hasPartB) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    function checkImmunosuppressiveDrugCoverage(address _person) external view returns (bool) {
+        Person memory person = persons[_person];
+        
+        if (person.hasPartB) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    function checkDrugPlanCoverage(address _person) external view returns (bool) {
+        Person memory person = persons[_person];
+        
+        if (!person.hasPartB) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    function checkKidneyTransplantCoverage(address _person) external view returns (bool) {
+        Person memory person = persons[_person];
+        
+        if (person.isEligible) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    function checkCoverageAfterTransplant(address _person) external view returns (bool) {
+        Person memory person = persons[_person];
+        
+        if (person.isEligible) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    function checkPartialMedicareCoverageBenefit(address _person) external view returns (bool) {
+        Person memory person = persons[_person];
+        
+        if (person.isEligible) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    function checkBenefitSubstitute(address _person) external view returns (bool) {
+        Person memory person = persons[_person];
+        
+        if (!person.isEligible) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    function signUpForBenefit(address _person) external view returns (bool) {
+        Person memory person = persons[_person];
+        
+        if (!person.hasPartA) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    function checkCoverageYear(address _person) external view returns (bool) {
+        Person memory person = persons[_person];
+        
+        if (!person.hasPartA) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    function checkPersonQualification(address _person) external view returns (bool) {
+        Person memory person = persons[_person];
+        
+        if (person.isEligible) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+}
+```
+
+This Solidity smart contract implements the conditions described in the previous conversation regarding Medicare coverage. It includes structs to store person and coverage information. The contract allows setting the person's Part A, Part B, eligibility, and deductible status. It also provides functions to retrieve coverage details such as premium amount, deductible amount, and coverage percentage. Additionally, it has various functions to check eligibility and coverage based on the provided person's information.

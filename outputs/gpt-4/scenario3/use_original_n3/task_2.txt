@@ -1,0 +1,32 @@
+```@prefix : <http://www.medical.org#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+:Patient rdf:type :Patient;
+         :hasMedicarePartA :yes;
+         :hasMedicarePartB :yes;
+         :hasMedicarePartD :yes;
+         :hasMedicareBecauseOfESRD :yes;
+         :hasGroupHealthPlan :yes;
+         :hasOtherHealthCoverage :yes;
+         :hasSuccessfulKidneyTransplant :yes;
+         :isInOriginalMedicare :yes.
+         
+:Patient :MedicareCoversTransplantDrugTherapy true IF :MedicareHelpedPayForOrganTransplant true AND :hasMedicarePartA :yes AND :hasMedicarePartB :yes AND :hasMedicarePartD :yes.
+
+:Patient :HasPartDCoveringImmunosuppresiveDrugs true IF :PartBDontCoverTheyImmunosupressiveDrugs true.
+
+:Patient :CanJoinMedicareDrugPlan true IF :isInOriginalMedicare :yes.
+
+:Patient :MedicareCoverageAfterKidneyTransplant :EndsAfter36Months IF :hasSuccessfulKidneyTransplant :yes AND :hasMedicareBecauseOfESRD :yes.
+
+:Patient :CanSignUpForImmunosuppresiveDrugBenefit true IF :MedicareCoverageAfterKidneyTransplant :EndsAfter36Months AND :hasGroupHealthPlan :no AND :hasOtherHealthCoverage :no.
+
+:Patient :ImmunosuppresiveDrugBenefit rdf:type :ImmunosuppresiveDrugBenefit;
+                             :hasPremium :97.10;
+                             :hasDeductible :226;                            
+                             :IsNotSubstituteForFullHealthCoverage :true.
+
+:Patient :MustPay :DeductibleAnd20PercentOfApprovedAmount IF :SignUpForImmunosuppresiveDrugBenefit :yes.
+
+
+```

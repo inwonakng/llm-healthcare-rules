@@ -1,0 +1,23 @@
+pragma solidity ^0.8.0;
+
+contract IVIGCoverage {
+    struct Patient {
+        string diagnosis;
+        bool isMedicallyAppropriate;
+        bool isCovered;
+    }
+
+    mapping(address => Patient) public patients;
+
+    function getIVIGCoverage(address patientAddress) public view returns (bool) {
+        Patient storage patient = patients[patientAddress];
+        
+        if (keccak256(bytes(patient.diagnosis)) == keccak256(bytes("primary immune deficiency disease")) && patient.isMedicallyAppropriate) {
+            patient.isCovered = true;
+        } else {
+            patient.isCovered = false;
+        }
+        
+        return patient.isCovered;
+    }
+}

@@ -1,0 +1,145 @@
+```solidity
+pragma solidity ^0.8.0;
+
+contract MedicareCoverage {
+    
+    struct Coverage {
+        bool paidForOrganTransplant;
+        bool coversTransplantDrugTherapy;
+        bool mustHavePartA;
+        bool mustHavePartB;
+        bool canUsePartD;
+        bool hasOriginalMedicare;
+        bool canJoinMedicareDrugPlan;
+        bool onlyDueToESRD;
+        bool endsAfter36Months;
+        bool includesImmunosuppressiveDrugCoverage;
+        bool losesPartACoverage;
+        bool losesAfter36Months;
+        bool otherHealthCoverage;
+        bool providesBenefit;
+        bool coversImmunosuppressiveDrugs;
+        bool substituteForFullCoverage;
+        bool canApplyAfterPartAEnds;
+    }
+    
+    struct Person {
+        Coverage medicareCoverage;
+        bool canSignUpBenefit;
+        bool canReceiveBenefit;
+        bool finalDecision;
+    }
+    
+    mapping(address => Person) public people;
+
+    function applyCoverage(bool _paidForOrganTransplant, 
+                           bool _coversTransplantDrugTherapy, 
+                           bool _mustHavePartA, 
+                           bool _mustHavePartB, 
+                           bool _canUsePartD,
+                           bool _hasOriginalMedicare, 
+                           bool _canJoinMedicareDrugPlan, 
+                           bool _onlyDueToESRD, 
+                           bool _endsAfter36Months, 
+                           bool _includesImmunosuppressiveDrugCoverage, 
+                           bool _losesPartACoverage, 
+                           bool _losesAfter36Months, 
+                           bool _otherHealthCoverage, 
+                           bool _providesBenefit, 
+                           bool _coversImmunosuppressiveDrugs, 
+                           bool _substituteForFullCoverage, 
+                           bool _canApplyAfterPartAEnds) public {
+        
+        Coverage memory coverage = Coverage({
+            paidForOrganTransplant: _paidForOrganTransplant,
+            coversTransplantDrugTherapy: _coversTransplantDrugTherapy,
+            mustHavePartA: _mustHavePartA,
+            mustHavePartB: _mustHavePartB,
+            canUsePartD: _canUsePartD,
+            hasOriginalMedicare: _hasOriginalMedicare,
+            canJoinMedicareDrugPlan: _canJoinMedicareDrugPlan,
+            onlyDueToESRD: _onlyDueToESRD,
+            endsAfter36Months: _endsAfter36Months,
+            includesImmunosuppressiveDrugCoverage: _includesImmunosuppressiveDrugCoverage,
+            losesPartACoverage: _losesPartACoverage,
+            losesAfter36Months: _losesAfter36Months,
+            otherHealthCoverage: _otherHealthCoverage,
+            providesBenefit: _providesBenefit,
+            coversImmunosuppressiveDrugs: _coversImmunosuppressiveDrugs,
+            substituteForFullCoverage: _substituteForFullCoverage,
+            canApplyAfterPartAEnds: _canApplyAfterPartAEnds
+        });
+        
+        Person storage person = people[msg.sender];
+        person.medicareCoverage = coverage;
+        
+        if (coverage.coversTransplantDrugTherapy && coverage.paidForOrganTransplant) {
+            person.medicareCoverage.coversTransplantDrugTherapy = true;
+        } else {
+            person.medicareCoverage.coversTransplantDrugTherapy = false;
+        }
+        
+        if (coverage.coversTransplantDrugTherapy && coverage.mustHavePartA) {
+            person.medicareCoverage.mustHavePartA = true;
+        } else {
+            person.medicareCoverage.mustHavePartA = false;
+        }
+        
+        if (coverage.coversTransplantDrugTherapy && coverage.mustHavePartB) {
+            person.medicareCoverage.mustHavePartB = true;
+        } else if (coverage.coversTransplantDrugTherapy && !coverage.mustHavePartB) {
+            person.medicareCoverage.canUsePartD = true;
+        } else {
+            person.medicareCoverage.mustHavePartB = false;
+            person.medicareCoverage.canUsePartD = false;
+        }
+        
+        if (coverage.coversTransplantDrugTherapy && coverage.hasOriginalMedicare) {
+            person.medicareCoverage.canJoinMedicareDrugPlan = true;
+        } else {
+            person.medicareCoverage.canJoinMedicareDrugPlan = false;
+        }
+        
+        if (coverage.onlyDueToESRD && coverage.coversTransplantDrugTherapy && coverage.endsAfter36Months) {
+            person.medicareCoverage.includesImmunosuppressiveDrugCoverage = false;
+        }
+        
+        if (coverage.losesPartACoverage && coverage.losesAfter36Months && coverage.coversTransplantDrugTherapy && !coverage.otherHealthCoverage) {
+            person.medicareCoverage.providesBenefit = true;
+        }
+        
+        if (person.medicareCoverage.providesBenefit) {
+            person.medicareCoverage.coversImmunosuppressiveDrugs = true;
+        }
+        
+        if (person.medicareCoverage.providesBenefit) {
+            person.medicareCoverage.substituteForFullCoverage = false;
+        }
+        
+        if (person.medicareCoverage.providesBenefit && person.medicareCoverage.canApplyAfterPartAEnds) {
+            person.canSignUpBenefit = true;
+        }
+        
+        person.finalDecision = false;
+    }
+    
+    function contactSocialSecurity() public view returns (string memory) {
+        if (people[msg.sender].canSignUpBenefit) {
+            return "Please contact Social Security at 1-877-465-0355.";
+        } else if (people[msg.sender].canReceiveBenefit) {
+            return "Please contact Social Security at 1-800-325-0788. TTY users can call 1-800-325-0788.";
+        } else {
+            return "You are not eligible for any Medicare benefits.";
+        }
+    }
+    
+    function receiveBenefit() public view returns (string memory) {
+        if (people[msg.sender].canReceiveBenefit && people[msg.sender].finalDecision) {
+            return "Congratulations! You are eligible to receive the Medicare benefit.";
+        } else {
+            return "Sorry, you are not eligible to receive the Medicare benefit.";
+        }
+    }
+    
+}
+```

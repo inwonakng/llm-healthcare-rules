@@ -1,0 +1,56 @@
+```n3
+@prefix : <http://example.com/> .
+
+# Rule 1
+{
+    ?patient a :Woman ;
+             :hasCondition :Osteoporosis ;
+             :fulfillsCriteria :MedicareHomeHealthBenefit .
+} => {
+    ?patient :EligibleForMedicareCoverage true .
+}.
+
+# Rule 2
+{
+    ?patient :hasCondition :Fracture;
+              :associatedWith :PostMenopausalOsteoporosis;
+              :confirmedBy  ?doctor .
+} => {
+    ?patient :HasOsteoporosisFracture true .
+}.
+
+# Rule 3
+{
+    ?doctor :Certifies {
+        ?patient :UnableToAdministerOsteoporosisInjection true .
+    }
+} => {
+    ?patient :NeedsAssistanceForInjection true .
+}.
+
+{
+    ?doctor :Certifies {
+        ?patient :CannotLearnToAdministerOsteoporosisInjection true .
+    }
+} => {
+    ?patient :NeedsAssistanceForInjection true .
+}.
+
+# Rule 4
+{
+    ?patient :NeedsAssistanceForInjection true;
+              :FamilyOrCaregivers :UnableOrUnwillingToAdministerInjection true.
+} => {
+    :Medicare :CoverHomeHealthNurseOrAideExpense true .
+}.
+
+# Final decision
+{
+    ?patient :EligibleForMedicareCoverage true;
+              :HasOsteoporosisFracture true;
+              :NeedsAssistanceForInjection true.
+    :Medicare :CoverHomeHealthNurseOrAideExpense true.
+} => {
+     :Medicare :ProvidesCoverageForInjectableOsteoporosisDrugs true.
+}.
+```

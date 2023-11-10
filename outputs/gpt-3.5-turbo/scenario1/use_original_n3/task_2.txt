@@ -1,0 +1,79 @@
+### N3 logic rules:
+
+For a person to be covered for injectable osteoporosis drugs by Medicare:
+- They must be a woman with osteoporosis who meets the criteria for the Medicare home health benefit.
+- They must have a bone fracture that a doctor certifies was related to post-menopausal osteoporosis.
+- Their doctor must certify that they cannot give themselves the injection or learn how to give the drug by injection.
+
+In addition, if the person's family or caregivers are unable or unwilling to give them the drug by injection, Medicare will cover the home health nurse or aide to provide the injection.
+
+```n3
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
+@prefix medicare: <http://example.org/medicare#>.
+@prefix osteoporosis: <http://example.org/osteoporosis#>.
+@prefix doctor: <http://example.org/doctor#>.
+
+medicare:CoversInjectableOsteoporosisDrugs 
+    rdf:type medicare:CoverageCondition;
+    rdfs:comment "Medicare covers injectable osteoporosis drugs if certain conditions are met.";
+
+    medicare:requiresWomanWithOsteoporosisAndEligibleForMedicareHomeHealthBenefit true;
+    medicare:requiresBoneFractureRelatedToPostMenopausalOsteoporosis true;
+    medicare:requiresPatientInabilityToSelf-AdministerOrLearnInjectionFromDoctor true;
+    medicare:requiresInabilityOrUnwillingnessOfFamilyOrCaregiversToAdministerInjection true.
+
+doctor:CertifiesBoneFractureRelatedToPostMenopausalOsteoporosis
+    rdf:type osteoporosis:Certification;
+    rdfs:comment "The doctor certifies that the bone fracture is related to post-menopausal osteoporosis.".
+
+doctor:CertifiesPatientInabilityToSelf-AdministerOrLearnInjection
+    rdf:type osteoporosis:Certification;
+    rdfs:comment "The doctor certifies that the patient is unable to self-administer the injection or learn the injection technique.".
+
+osteoporosis:Patient
+    rdf:type osteoporosis:Person;
+    rdfs:comment "The person is a patient with osteoporosis.".
+
+medicare:CoveringHomeHealthNurseOrAide
+    rdf:type medicare:CoverageCondition;
+    rdfs:comment "Medicare covers the home health nurse or aide to provide the injection if family or caregivers are unable or unwilling to administer it.".
+
+medicare:CoversHomeHealthNurseOrAide
+    rdf:type medicare:CoverageCondition;
+    rdfs:comment "Medicare covers the home health nurse or aide to provide the injection.".
+
+medicare:requiresWomanWithOsteoporosisAndEligibleForMedicareHomeHealthBenefit a medicare:CoverageCondition;
+    rdf:type medicare:Requirements;
+    rdfs:comment "The person must be a woman with osteoporosis who meets the criteria for the Medicare home health benefit.".
+
+medicare:requiresBoneFractureRelatedToPostMenopausalOsteoporosis a medicare:CoverageCondition;
+    rdf:type medicare:Requirements;
+    rdfs:comment "The person must have a bone fracture that a doctor certifies was related to post-menopausal osteoporosis.".
+
+medicare:requiresPatientInabilityToSelf-AdministerOrLearnInjectionFromDoctor a medicare:CoverageCondition;
+    rdf:type medicare:Requirements;
+    rdfs:comment "The person's doctor must certify that they cannot give themselves the injection or learn how to give the drug by injection.".
+
+medicare:requiresInabilityOrUnwillingnessOfFamilyOrCaregiversToAdministerInjection a medicare:CoverageCondition;
+    rdf:type medicare:Requirements;
+    rdfs:comment "Medicare will cover the home health nurse or aide to provide the injection if the person's family or caregivers are unable or unwilling to give the drug by injection.".
+
+osteoporosis:Certification
+    rdf:type rdfs:Class;
+    rdfs:comment "A certification related to osteoporosis.".
+
+medicare:CoverageCondition a rdfs:Class;
+    rdfs:comment "A condition for Medicare coverage.".
+
+medicare:Requirements a rdfs:Class;
+    rdfs:comment "Requirements for Medicare coverage.".
+
+osteoporosis:Person a rdfs:Class;
+    rdfs:comment "A person with osteoporosis.".
+
+medicare:CoversInjectableOsteoporosisDrugs a medicare:CoverageCondition;
+    rdf:type medicare:CoverageCondition;
+    rdfs:comment "Medicare covers injectable osteoporosis drugs if certain conditions are met.".
+```

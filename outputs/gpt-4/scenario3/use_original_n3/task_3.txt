@@ -1,0 +1,78 @@
+```solidity
+pragma solidity ^0.8.4;
+
+contract MedicareCoverage {
+
+    enum MedicarePart { NONE, A, B, D }
+    enum HealthPlan { NONE, GROUP, TRICARE, MEDICAID }
+
+    struct Patient {
+        bool isTransplantPaidByMedicare;
+        MedicarePart partAtTransplant;
+        MedicarePart partWhenReceivedImmunosuppressiveDrugs;
+        MedicarePart currentMedicarePart;
+        HealthPlan otherHealthCoverages;
+        bool isESRD;
+        bool isTransplantSuccessful;
+        uint transplantTime;
+        uint immunosuppressiveBenefitPremiumsPaid;
+        bool isImmunosuppressiveBenefitActive;
+    }
+
+    mapping(address => Patient) patients;
+
+    uint256 constant MONTHLY_PREMIUM = 9710; // in wei
+    uint256 constant ANNUAL_DEDUCTIBLE = 226 ether; // in wei
+
+    function addPatient(address _patientAddress) public {
+        patients[_patientAddress] = Patient(false, MedicarePart.NONE, MedicarePart.NONE, MedicarePart.NONE, HealthPlan.NONE, false, false, 0, 0, false);
+    }
+    
+    function updateTransplantInfo(address _patientAddress, bool _isTransplantPaidByMedicare, MedicarePart _partAtTransplant) public {
+        Patient storage patient = patients[_patientAddress];
+        patient.isTransplantPaidByMedicare = _isTransplantPaidByMedicare;
+        patient.partAtTransplant = _partAtTransplant;
+        patient.transplantTime = block.timestamp;
+    }
+
+    function updateImmunosuppressiveDrugsInfo(address _patientAddress, MedicarePart _partWhenReceived) public {
+        patients[_patientAddress].partWhenReceivedImmunosuppressiveDrugs = _partWhenReceived;
+    }
+    
+    function updatePatientPart(address _patientAddress, MedicarePart _currentPart, HealthPlan _otherHealthCoverages) public {
+        Patient storage patient = patients[_patientAddress];
+        patient.currentMedicarePart = _currentPart;
+        patient.otherHealthCoverages = _otherHealthCoverages;
+    }
+    
+    function notifyTransplantSuccess(address _patientAddress, bool _isESRD) public {
+        Patient storage patient = patients[_patientAddress];
+        patient.isTransplantSuccessful = true;
+        patient.isESRD = _isESRD;
+    }
+    
+    function payPremium(address _patientAddress) public payable {
+        require(msg.value == MONTHLY_PREMIUM, "You need to pay the exact monthly premium.");
+        patients[_patientAddress].immunosuppressiveBenefitPremiumsPaid += msg.value;
+    }
+
+    function activateImmunosuppressiveBenefit(address _patientAddress) public {
+        Patient storage patient = patients[_patientAddress];
+        require(patient.immunosuppressiveBenefitPremiumsPaid >= ANNUAL_DEDUCTIBLE, "You must meet the annual deductible before you can activate this benefit.");
+        patient.isImmunosuppressiveBenefitActive = true;
+    }
+
+    function isEligibleForImmunosuppressiveBenefit(address _patientAddress) public view returns (bool) {
+        Patient memory patient = patients[_patientAddress];
+        if (patient.isTransplantPaidByMedicare && patient.partAtTransplant == MedicarePart.A && (patient.partWhenReceivedImmunosuppressiveDrugs == MedicarePart.B || patient.currentMedicarePart == MedicarePart.D)) {
+            if(!(patient.isESRD && patient.isTransplantSuccessful && block.timestamp < patient.transplantTime + 36 * 30 days)){
+                if(patient.otherHealthCoverages == HealthPlan.NONE && block.timestamp > patient.transplantTime + 36 * 30 days){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+}
+```
+Please note that Solidity doesn't provide a straightforward way to handle dates and time periods like months or years. In this script, we use block timestamp to store the time of the organ transplant and then compare current `block.timestamp` with patient's `transplantTime`. Keep in mind that `block.timestamp` could be manipulated by miners within a certain degree. If precision is paramount, consider using an external Oracle for timekeeping.

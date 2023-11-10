@@ -1,0 +1,31 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+### Rule 1: The patient must be a woman with osteoporosis
+{?patient rdf:type :Patient .
+?patient :hasGender :female .
+?patient :hasCondition :osteoporosis .}
+
+### Rule 2: The patient must meet the criteria for the Medicare home health benefit
+{?patient rdf:type :Patient .
+?patient :meetsCriterion :medicareHomeHealthBenefit .}
+
+### Rule 3: The patient must have a bone fracture certified by a doctor as related to post-menopausal osteoporosis
+{?patient rdf:type :Patient .
+?patient :hasCondition :postMenopausalOsteoporosis .
+?patient :hasCertifiedFracture ?fracture .
+?fracture rdf:type :BoneFracture .}
+
+### Rule 4: The patient's doctor must certify that they are unable to self-administer the injection or learn how to do so
+{?patient rdf:type :Patient .
+?patient :hasDoctor ?doctor .
+?doctor :certifiesInability ?patient .
+?doctor :certifiesInabilityToLearn ?patient .}
+
+### Rule 5: If family or caregivers are unable or unwilling to administer the drug, Medicare will cover the home health nurse or aide to provide the injection
+{?patient rdf:type :Patient .
+?patient :hasFamilyOrCaregiver ?familyOrCaregiver .
+?familyOrCaregiver :unableOrUnwillingToAdminister ?drug .
+?patient :hasHealthCover :medicare .
+?medicare :willCover ?injection .
+?injection :providedBy :homeHealthNurseOrAide .}

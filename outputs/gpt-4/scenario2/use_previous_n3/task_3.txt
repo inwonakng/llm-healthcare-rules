@@ -1,0 +1,50 @@
+```solity
+pragma solidity ^0.8.6;
+
+contract MedicareCoverage {
+    
+    // Structs 
+    struct Medicare {
+        bool isPartB;
+        bool coverIVIG;
+        bool coverIVIGCosts;
+        bool coverIVIGAdditionalServices;
+    }
+
+    struct Patient {
+        bool hasPrimaryImmuneDeficiency;
+        bool administeredAtHome;
+        bool medicallyAppropriate;
+    }
+    
+    // Functions
+    function updateMedicarePart (boolean partB) public {
+        Medicare.isPartB = partB;
+        if(partB) {
+            Medicare.coverIVIGCosts = true;
+            Medicare.coverIVIGAdditionalServices = false;
+        }
+    }
+    
+    function updatePatientData(boolean hasPrimaryImmuneDeficiency, boolean administeredAtHome, boolean medicallyAppropriate) public {
+        Patient.hasPrimaryImmuneDeficiency = hasPrimaryImmuneDeficiency;
+        Patient.administeredAtHome = administeredAtHome;
+        Patient.medicallyAppropriate = medicallyAppropriate;
+        if(hasPrimaryImmuneDeficiency && administeredAtHome && medicallyAppropriate) {
+            Medicare.coverIVIG = true;
+        }
+    }
+    
+    function isIVIGCovered () public view returns (boolean) {
+        return Medicare.coverIVIG;
+    }
+    
+    function isIVIGCostCovered () public view returns (boolean) {
+        return Medicare.coverIVIGCosts;
+    }
+    
+    function isIVIGAdditionalServicesCovered () public view returns (boolean) {
+        return Medicare.coverIVIGAdditionalServices;
+    }
+}
+```

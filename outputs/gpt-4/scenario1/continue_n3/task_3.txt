@@ -1,0 +1,50 @@
+Surely, let's create a smart contract in solidity based on the conversation:
+
+```solidity
+pragma solidity ^0.8.0;
+
+contract MedicareCoverage {
+
+    struct Patient {
+        bool isWoman;
+        bool hasOsteoporosis;
+        bool meetsMedicareCriteria;
+        bool certifiedFracture;
+        bool unableSelfAdminister;
+    }
+
+    struct CareGiver {
+        bool unableAdministerInjection;
+    }
+
+    event EligibleForCoverage(address indexed patientAddress);
+    event NotEligibleForCoverage(address indexed patientAddress);
+
+    mapping(address => Patient) public patients;
+    mapping(address => CareGiver) public caregivers;
+
+    function addPatient(address _patientAddress, bool _isWoman, bool _hasOsteoporosis, bool _meetsMedicareCriteria, bool _certifiedFracture, bool _unableSelfAdminister) public {
+        patients[_patientAddress] = Patient(_isWoman, _hasOsteoporosis, _meetsMedicareCriteria, _certifiedFracture, _unableSelfAdminister);
+    }
+
+    function addCareGiver(address _caregiverAddress, bool _unableAdministerInjection) public {
+        caregivers[_caregiverAddress] = CareGiver(_unableAdministerInjection);
+    }
+
+    function checkEligibility(address _patientAddress, address _caregiverAddress) public {
+        Patient memory patient = patients[_patientAddress];
+        CareGiver memory caregiver = caregivers[_caregiverAddress];
+        
+        if(patient.isWoman && patient.hasOsteoporosis && patient.meetsMedicareCriteria && patient.certifiedFracture && patient.unableSelfAdminister) {
+            emit EligibleForCoverage(_patientAddress);
+        } else {
+            emit NotEligibleForCoverage(_patientAddress);
+        }
+
+        if(patient.unableSelfAdminister || caregiver.unableAdministerInjection) {
+            // Can include nurse/aid coverage in extended coverage
+        }
+    }
+}
+```
+This contract has a `Patient` and `CareGiver` struct to encapsulate necessary parameters. The `addPatient` and `addCareGiver` functions are used to add a patient and caregiver respectively, while the `checkEligibility` function checks the eligibility of the given patient for Medicare coverage which is broadcasted by the `EligibleForCoverage` and `NotEligibleForCoverage` events.

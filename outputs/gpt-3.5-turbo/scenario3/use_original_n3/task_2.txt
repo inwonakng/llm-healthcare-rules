@@ -1,0 +1,105 @@
+```n3
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix ex: <http://example.org/ns#> .
+
+ex:MedicareDrugCoverage a rdfs:Class .
+ex:TransplantDrugTherapy a rdfs:Class .
+ex:ImmunosuppressiveDrugs a rdfs:Class .
+ex:PartA a rdfs:Class .
+ex:PartB a rdfs:Class .
+ex:OriginalMedicare a rdfs:Class .
+ex:EndStageRenalDisease a rdfs:Class .
+ex:KidneyTransplant a rdfs:Class .
+
+ex:TransplantDrugTherapyCoverage rdf:type ex:MedicareDrugCoverage .
+ex:TransplantDrugTherapyCoverage rdf:type ex:TransplantDrugTherapy .
+ex:ImmunosuppressiveDrugCoverage rdf:type ex:MedicareDrugCoverage .
+ex:ImmunosuppressiveDrugCoverage rdf:type ex:ImmunosuppressiveDrugs .
+ex:PartACoverage rdf:type ex:PartA .
+ex:PartBCoverage rdf:type ex:PartB .
+ex:OriginalMedicareCoverage rdf:type ex:OriginalMedicare .
+ex:EndStageRenalDiseaseCoverage rdf:type ex:EndStageRenalDisease .
+ex:KidneyTransplantCoverage rdf:type ex:KidneyTransplant .
+
+ex:MedicareCoversTransplantDrugTherapy rdf:type rdf:Rule .
+{
+  ?p a ex:TransplantDrugTherapyCoverage .
+  ?p a ex:MedicareCoversTransplantDrugTherapy.
+} => {
+  ?p rdf:type ex:MedicareDrugCoverage .
+} .
+
+ex:PartARequired rdf:type rdf:Rule .
+{
+  ?p a ex:TransplantDrugTherapyCoverage .
+  ?p a ex:PartACoverage .
+} => {
+  ?p a ex:PartARequired .
+} .
+
+ex:PartBRequired rdf:type rdf:Rule .
+{
+  ?p a ex:ImmunosuppressiveDrugCoverage .
+  ?p a ex:PartBCoverage .
+} => {
+  ?p a ex:PartBRequired .
+} .
+
+ex:MedicareCoversImmunosuppressiveDrugs rdf:type rdf:Rule .
+{
+  ?p a ex:MedicareDrugCoverage .
+  ?p a ex:ImmunosuppressiveDrugCoverage .
+  NOT EXISTS { ?p a ex:PartBRequired . }
+} => {
+  ?p rdf:type ex:MedicareCoversImmunosuppressiveDrugs .
+} .
+
+ex:MedicareDrugPlanRequiredForOriginalMedicare rdf:type rdf:Rule .
+{
+  ?p a ex:OriginalMedicareCoverage .
+  ?p a ex:MedicareCoversImmunosuppressiveDrugs .
+} => {
+  ?p a ex:MedicareDrugPlanRequiredForOriginalMedicare .
+} .
+
+ex:MedicareCoverageEndsAfterSuccessfulKidneyTransplant rdf:type rdf:Rule .
+{
+  ?p a ex:EndStageRenalDiseaseCoverage .
+  ?p a ex:KidneyTransplantCoverage .
+} => {
+  ?p a ex:MedicareCoverageEndsAfterSuccessfulKidneyTransplant .
+} .
+
+ex:MedicareBenefitForLostPartACoverage rdf:type rdf:Rule .
+{
+  ?p a ex:KidneyTransplantCoverage .
+  ?p a ex:MedicareCoverageEndsAfterSuccessfulKidneyTransplant .
+  ?p a ex:MedicareBenefitForLostPartACoverage .
+} => {
+  ?p rdf:type ex:MedicareDrugCoverage .
+} .
+
+ex:BenefitOnlyCoversImmunosuppressiveDrugs rdf:type rdf:Rule .
+{
+  ?p a ex:MedicareBenefitForLostPartACoverage .
+} => {
+  ?p rdf:type ex:BenefitOnlyCoversImmunosuppressiveDrugs .
+} .
+
+ex:BenefitNotSubstituteForFullCoverage rdf:type rdf:Rule .
+{
+  ?p a ex:BenefitOnlyCoversImmunosuppressiveDrugs .
+} => {
+  ?p rdf:type ex:BenefitNotSubstituteForFullCoverage .
+} .
+
+ex:BenefitSignUpPossibleAfterPartACoverageEnds rdf:type rdf:Rule .
+{
+  ?p a ex:BenefitOnlyCoversImmunosuppressiveDrugs .
+  ?p a ex:BenefitSignUpPossibleAfterPartACoverageEnds .
+} => {
+  ?p rdf:type ex:MedicareDrugCoverage .
+} .
+
+```

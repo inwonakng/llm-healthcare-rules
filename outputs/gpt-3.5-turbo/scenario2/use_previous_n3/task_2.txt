@@ -1,0 +1,64 @@
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix : <http://example.org/> .
+
+:MedicareCoverage a rdf:Property ;
+    rdfs:label "Medicare coverage of IVIG" .
+
+:DoctorDeterminesMedicallyAppropriate a rdf:Property ;
+    rdfs:label "Doctor determines medically appropriate" .
+
+:PrimaryImmuneDeficiencyDisease a rdf:Class ;
+    rdfs:label "Primary immune deficiency disease" .
+
+:IVIGCoverageLocation a rdf:Property ;
+    rdfs:label "IVIG coverage location" .
+
+:MedicarePartBCoversIVIG a rdf:Property ;
+    rdfs:label "Medicare Part B covers IVIG" .
+
+:OtherItemsAndServicesNotCovered a rdf:Property ;
+    rdfs:label "Other items and services not covered" .
+
+:Diagnosis a rdf:Class ;
+    rdfs:label "Diagnosis" .
+
+:IVIG a rdf:Class ;
+    rdfs:label "Intravenous Immune Globulin" .
+
+:Home a rdf:Class ;
+    rdfs:label "Home location" .
+
+:MedicareCoverage rdfs:domain :IVIG .
+:MedicareCoverage rdfs:range :PrimaryImmuneDeficiencyDisease .
+
+:DoctorDeterminesMedicallyAppropriate rdfs:domain :IVIG .
+:DoctorDeterminesMedicallyAppropriate rdfs:range :Home .
+
+:IVIGCoverageLocation rdfs:domain :IVIG .
+:IVIGCoverageLocation rdfs:range :Home .
+
+:MedicarePartBCoversIVIG rdfs:domain :IVIG .
+
+:OtherItemsAndServicesNotCovered rdfs:domain :IVIG .
+
+:Diagnosis rdfs:subClassOf :PrimaryImmuneDeficiencyDisease .
+
+IVIGCoverageLocation(?ivig, ?home) :-
+    :IVIGCoverageLocation :is true .
+
+MedicarePartBCoversIVIG(?ivig) :-
+    :MedicarePartBCoversIVIG rdfs:domain ?ivig .
+
+OtherItemsAndServicesNotCovered(?ivig) :-
+    :OtherItemsAndServicesNotCovered rdfs:doman ?ivig .
+
+DoctorDeterminesMedicallyAppropriate(?ivig, ?home) :-
+    :DoctorDeterminesMedicallyAppropriate rdfs:domain ?ivig .
+
+MedicareCoverage(?ivig, ?diagnosis) :-
+    :MedicareCoverage rdfs:domain ?ivig .
+    ?diagnosis a :PrimaryImmuneDeficiencyDisease .
+
+Diagnosis(?diagnosis) :-
+    :Diagnosis rdfs:range ?diagnosis .

@@ -1,0 +1,43 @@
+Solidity Smart Contract:
+
+```solidity
+pragma solidity ^0.8.0;
+
+contract MedicareCoverage {
+    struct Patient {
+        bool hasPrimaryImmuneDeficiency;
+        bool IVIGAppropriateForHomeUse;
+        bool onIVIGTreatment;
+    }
+
+    struct MedicarePartB {
+        bool coversIVIG;
+        bool coversOtherServicesAndItems;
+    }
+
+    mapping(address => Patient) public patients;
+    mapping(address => MedicarePartB) public medicarePartB;
+
+    function determineCoverage(address _patientAddress) public view returns (string memory){
+        Patient memory patient = patients[_patientAddress];
+        MedicarePartB memory coverage = medicarePartB[_patientAddress];
+
+        require(patient.hasPrimaryImmuneDeficiency, "Patient does not have primary immune deficiency disease.");
+        
+        if(patient.IVIGAppropriateForHomeUse && patient.onIVIGTreatment){
+            coverage.coversIVIG = true;
+            coverage.coversOtherServicesAndItems = false;
+            return "Medicare Part B covers IVIG but does not cover other services and items for home IVIG treatment.";
+        } else {
+            return "Medicare Part B does not provide any coverage.";
+        }
+    }
+    
+    function setPatientDetails(address _patientAddress, bool _hasPrimaryImmuneDeficiency, bool _IVIGAppropriateForHomeUse, bool _onIVIGTreatment) public {
+        Patient storage patient = patients[_patientAddress];
+        patient.hasPrimaryImmuneDeficiency = _hasPrimaryImmuneDeficiency;
+        patient.IVIGAppropriateForHomeUse = _IVIGAppropriateForHomeUse;
+        patient.onIVIGTreatment = _onIVIGTreatment;
+    }
+}
+```
