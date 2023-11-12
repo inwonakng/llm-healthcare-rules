@@ -35,11 +35,32 @@ def run(
     document = open(DOC_PATH/f'{doc_name}.txt').read()
     prompt = Prompt.load_from_file(TEMPLATE_PATH/'tasks.yaml')
     
-    modes_to_run = all_modes
-    if mode != 'all':
-        if not mode in all_modes:
-            raise Exception(f'Unknown mode {mode}')
-        modes_to_run = [ mode ]
+    modes_to_run = []
+    
+    for mo in mode.split('|'):
+        if mo == 'all':
+            modes_to_run += all_modes
+        elif mo == 'n3': 
+            modes_to_run += [m for m in all_modes if 'n3' in m]
+        elif mo == 'cql': 
+            modes_to_run += [m for m in all_modes if 'cql' in m]
+        elif mo == 'unittest': 
+            modes_to_run += [m for m in all_modes if 'unittest' in m]
+        elif mo == 'n3_unittest': 
+            modes_to_run += [m for m in all_modes if 'n3_unittest' in m]
+        elif mo == 'cql_unittest': 
+            modes_to_run += [m for m in all_modes if 'cql_unittest' in m]
+        elif mo == 'use_original': 
+            modes_to_run += [m for m in all_modes if 'use_original' in m]
+        elif mo == 'use_previous': 
+            modes_to_run += [m for m in all_modes if 'use_previous' in m]
+        elif mo == 'continue': 
+            modes_to_run += [m for m in all_modes if 'continue' in m]
+        else:
+            if not mode in all_modes:
+                raise Exception(f'Unknown mode {mode}')
+            modes_to_run = [ mode ]
+    modes_to_run = list(set(modes_to_run))
     
     with progress_bar() as progress:    
         run_task = progress.add_task(f'{model} -- {doc_name}', total=len(modes_to_run))
