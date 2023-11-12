@@ -1,61 +1,27 @@
-```solidity
+```
 pragma solidity ^0.8.0;
 
 contract OsteoporosisDrugs {
     
     struct Patient {
-        bool isWoman;
-        bool hasOsteoporosis;
-        bool meetsCriteriaForHomeHealthBenefit;
-        bool hasFracture;
-        bool hasCertification;
+        bool isEligibleHomeHealthBenefit;
+        bool hasBoneFracture;
+        bool isCertifiedByDoctor;
+        bool isFamilyOrCaregiversUnable;
+        bool isFamilyOrCaregiversUnwilling;
     }
     
-    struct Doctor {
-        bool canCertifyInability;
-    }
-    
-    struct Family {
-        bool unableOrUnwilling;
-    }
-    
-    struct HomeHealthCare {
-        bool provided;
-    }
-    
-    function qualifyForCoverage(
-        bool isWoman,
-        bool hasOsteoporosis,
-        bool meetsCriteriaForHomeHealthBenefit,
-        bool hasFracture,
-        bool hasCertification,
-        bool canCertifyInability,
-        bool unableOrUnwilling,
-        bool provided
-    ) public view returns (bool) {
-        
-        Patient memory patient = Patient(isWoman, hasOsteoporosis, meetsCriteriaForHomeHealthBenefit, hasFracture, hasCertification);
-        Doctor memory doctor = Doctor(canCertifyInability);
-        Family memory family = Family(unableOrUnwilling);
-        HomeHealthCare memory homeHealthCare = HomeHealthCare(provided);
-        
-        if (patient.isWoman && patient.hasOsteoporosis && patient.meetsCriteriaForHomeHealthBenefit &&
-            patient.hasFracture && patient.hasCertification && doctor.canCertifyInability) {
-            
-            if (family.unableOrUnwilling && homeHealthCare.provided) {
-                return true;
-            }
-            
+    function isCoveredByMedicare(bool isEligibleHomeHealthBenefit, bool hasBoneFracture, bool isCertifiedByDoctor, bool isFamilyOrCaregiversUnable, bool isFamilyOrCaregiversUnwilling) public pure returns(bool) {
+        if(isEligibleHomeHealthBenefit && hasBoneFracture && isCertifiedByDoctor && (isFamilyOrCaregiversUnable || isFamilyOrCaregiversUnwilling)) {
+            return true;
+        } else {
+            return false;
         }
-        
-        return false;
     }
+    
 }
 ```
-
-The smart contract above translates the natural language text into a Solidity smart contract.
-
 Explanation:
-- The contract contains 4 structs: Patient, Doctor, Family, and HomeHealthCare to encapsulate the necessary parameters.
-- The function `qualifyForCoverage` takes in all the required parameters and checks if the patient qualifies for coverage based on the conditions mentioned in the text.
-- The function returns `true` if all the conditions are met, and `false` otherwise.
+- The smart contract has a struct called "Patient" which encapsulates the necessary conditions for Medicare coverage of injectable osteoporosis drugs.
+- The function "isCoveredByMedicare" checks if the patient meets all the conditions for Medicare coverage based on the input parameters.
+- The function returns "true" if all the conditions are met and "false" otherwise.

@@ -1,8 +1,7 @@
-Summary:
-
-The text outlines the requirements for Medicare coverage for injectable osteoporosis drugs.
-
-1. The patient must be a woman with osteoporosis who qualifies for the Medicare home health benefit.
-2. The patient must have suffered a bone fracture that a doctor certifies is related to post-menopausal osteoporosis.
-3. A doctor must certify that the patient is incapable of self-administering the injection or learning to do so.
-4. Medicare will provide coverage for a home health nurse or aide to administer the injection if the patient's family or caregivers are either unable or unwilling to administer the drug by injection. This is the final decision once all the previous three requirements (1, 2 and 3) are met.
+```
+1. Medicare will cover the cost of injectable osteoporosis drugs under certain conditions. 
+2. The person receiving the medication must be a woman with osteoporosis who qualifies for the Medicare home health benefit. 
+3. The woman must have suffered a bone fracture that a doctor confirms was caused by post-menopausal osteoporosis.
+4. A doctor must certify that the woman is incapable of administering the injection to herself and cannot be taught to do so.
+5. If the conditions in requirements 2 to 4 are met, Medicare will also cover the cost of a home health nurse or aide to provide the injection. This is only applicable if the family or caregivers cannot or do not want to administer the drug by injection.
+```

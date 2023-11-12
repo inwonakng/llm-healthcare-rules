@@ -1,0 +1,72 @@
+```
+pragma solidity ^0.8.0;
+
+contract OsteoporosisDrugs {
+    struct Patient {
+        string name;
+        uint age;
+        bool isFemale;
+        bool hasOsteoporosis;
+        bool hasFracture;
+        bool canAdministerMedication;
+        bool hasHomeHealthBenefit;
+    }
+
+    struct Injection {
+        string name;
+        address doctor;
+        address patient;
+        uint date;
+        bool administered;
+    }
+
+    mapping(address => Patient) public patients;
+    mapping(address => Injection) public injections;
+
+    constructor() public {
+        // Initialize contract with a list of patients and their medical information
+        patients[0x123] = Patient("Alice", 65, true, true, true, false, true);
+        patients[0x456] = Patient("Bob", 70, true, true, true, false, true);
+        patients[0x789] = Patient("Charlie", 55, false, false, false, true, false);
+    }
+
+    function addPatient(address _patient, string memory _name, uint _age, bool _isFemale, bool _hasOsteoporosis, bool _hasFracture, bool _canAdministerMedication, bool _hasHomeHealthBenefit) public {
+        patients[_patient] = Patient(_name, _age, _isFemale, _hasOsteoporosis, _hasFracture, _canAdministerMedication, _hasHomeHealthBenefit);
+    }
+
+    function addInjection(address _patient, address _doctor, string memory _name, uint _date, bool _administered) public {
+        injections[_patient] = Injection(_name, _doctor, _patient, _date, _administered);
+    }
+
+    function getPatients() public view returns (Patient[] memory) {
+        Patient[] memory patientsList = new Patient[](patients.length);
+        for (uint i = 0; i < patients.length; i++) {
+            patientsList[i] = patients[i];
+        }
+        return patientsList;
+    }
+
+    function getInjections() public view returns (Injection[] memory) {
+        Injection[] memory injectionsList = new Injection[](injections.length);
+        for (uint i = 0; i < injections.length; i++) {
+            injectionsList[i] = injections[i];
+        }
+        return injectionsList;
+    }
+
+    function isEligibleForMedicareCoverage(address _patient) public view returns (bool) {
+        if (patients[_patient].isFemale && patients[_patient].hasOsteoporosis && patients[_patient].hasFracture && !patients[_patient].canAdministerMedication && patients[_patient].hasHomeHealthBenefit) {
+            return true;
+        }
+        return false;
+    }
+
+    function getPatient(address _patient) public view returns (Patient memory) {
+        return patients[_patient];
+    }
+}
+```
+
+This smart contract allows you to add patients and their medical information, as well as add injections and their related information. It also includes a function to check if a patient is eligible for Medicare coverage based on the provided conditions. The `Patient` and `Injection` structs are used to encapsulate the data and make the code more readable.
+
+Note that this is a simplified example and you may need to add more functionality and/or data validation depending on your specific use case.

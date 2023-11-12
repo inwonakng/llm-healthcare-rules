@@ -1,0 +1,29 @@
+```
+pragma solidity ^0.8.7;
+
+contract IVIGCoverage {
+
+    struct Patient {
+        bool hasPrimaryImmuneDeficiencyDisease;
+        bool isMedicallyAppropriateForIVIGAtHome;
+    }
+    
+    function checkCoverage(bool hasPrimaryImmuneDeficiencyDisease, bool isMedicallyAppropriateForIVIGAtHome) public view returns(bool) {
+        // Requirement 1: The patient must have primary immune deficiency disease
+        if (!hasPrimaryImmuneDeficiencyDisease) {
+            return false;
+        }
+        
+        // Requirement 2: The doctor must determine that receiving IVIG at home is medically appropriate for the patient
+        if (!isMedicallyAppropriateForIVIGAtHome) {
+            return false;
+        }
+        
+        // Other items and services related to receiving IVIG at home are not covered by Medicare, so no need to check
+        
+        // Requirement 3: Medicare covers IVIG itself
+        return true;
+    }
+}
+```
+```

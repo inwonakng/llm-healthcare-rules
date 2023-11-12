@@ -1,0 +1,35 @@
+```
+pragma solidity ^0.4.24;
+
+// Data structures to model the patient and her medical condition
+struct Patient {
+    uint id;
+    bool isWoman;
+    bool hasOsteoporosis;
+    bool meetsHomeHealthBenefitCriteria;
+    bool hasPostMenopausalBoneFracture;
+    bool canSelfAdminister;
+}
+
+struct NurseOrAide {
+    bool canAdministerDrugs;
+}
+
+contract InjectableOsteoporosisDrug {
+    mapping (uint => Patient) public patients;
+    mapping (uint => NurseOrAide) public caregivers;
+
+    // Function to validate if medicare covers the treatment
+    function isMedicareCovered(uint _patientId, uint _caregiverId) public view returns (bool) {
+        Patient storage patient = patients[_patientId];
+        NurseOrAide storage caregiver = caregivers[_caregiverId];
+
+        // Check all conditions necessary for the medicare to cover the treatment
+        if (patient.isWoman && patient.hasOsteoporosis && patient.meetsHomeHealthBenefitCriteria && patient.hasPostMenopausalBoneFracture && !patient.canSelfAdminister && caregiver.canAdministerDrugs) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+}
+```

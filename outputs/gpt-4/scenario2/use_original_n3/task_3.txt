@@ -2,47 +2,36 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-contract MedicareCoverage {
-   
+contract Medicare {
+
     struct Patient {
-        address id;
-        bool hasPrimaryImmuneDeficiencyDisease;
-        bool isMedicallyAppropriateForHomeIVIG;
-    }
-   
-    mapping(address => Patient) public patients;
-
-    function setPatient(address _patientId, bool _hasDisease, bool _isMedicallyAppropriate) public {
-        Patient memory newPatient =
-        Patient({
-            id: _patientId, 
-            hasPrimaryImmuneDeficiencyDisease: _hasDisease,
-            isMedicallyAppropriateForHomeIVIG:_isMedicallyAppropriate
-        });
-
-        patients[_patientId] = newPatient;
+        string name;
+        bool hasPrimaryImmuneDeficiency;
+        bool isIVIGAppropriate;
     }
 
-    enum PartBItems { IVIG, OtherItems }
+    mapping (address => Patient) patients;
 
-    function isCoveredByMedicare(address _patientId, PartBItems _requestedItem) public view returns (string memory) {
-        
-        Patient memory patient = patients[_patientId];
+    function insertPatientDetails(address _patientAddress, string memory _name, bool _hasPrimaryImmuneDeficiency, bool _isIVIGAppropriate) public {
+        Patient memory patient = Patient(_name, _hasPrimaryImmuneDeficiency, _isIVIGAppropriate);
+        patients[_patientAddress] = patient;
+    }
 
-        if (!patient.hasPrimaryImmuneDeficiencyDisease || !patient.isMedicallyAppropriateForHomeIVIG) {
-            return "Medicare coverage of IVIG is not applicable as per the conditions";
-        }
-
-        if (_requestedItem == PartBItems.IVIG) {
-            return "Part B covers IVIG at home";
-        } else if (_requestedItem == PartBItems.OtherItems) {
-            return "Part B does not cover other items and services related to IVIG at home";
+    function isIVIGCovered(address _patientAddress) public view returns (string memory) {
+        if (patients[_patientAddress].hasPrimaryImmuneDeficiency && patients[_patientAddress].isIVIGAppropriate) {
+            return "Part B covers the IVIG";
         } else {
-            return "Item is not present under Part B";
+            return "IVIG is not covered";
+        }
+    }
+
+    function isOtherItemsCovered(address _patientAddress) public view returns (string memory) {
+        if (patients[_patientAddress].hasPrimaryImmuneDeficiency && patients[_patientAddress].isIVIGAppropriate) {
+            return "Other items and services related to IVIG at home are not covered";
+        } else {
+            return "Patient does not qualify for IVIG coverage";
         }
     }
 }
 ```
-The above smart contract in Solidity encapsulates the requirements given in the natural language text. The struct Patient is used to store patient information. The setPatient function accepts patientId, boolean for the presence of primary immune deficiency disease, and boolean for if it's medically appropriate for the patient to get IVIG at home. The enum PartBItems has two items: IVIG and OtherItems to represent the items stated in the natural language text. 
-
-The function isCoveredByMedicare checks the Medicare coverage for the patient. If the patient doesn't have a primary immune deficiency disease or if it's not medically appropriate for IVIG at home, Medicare coverage is not applicable. If the patient requested item is 'IVIG' then the contract states that Part B covers it, if the requested items are other items associated with IVIG at home then Part B does not cover it, and finally if the item does not fall under any category in the enum it states 'Item is not present under Part B'.
+This Solidity smart contract encapsulates the rules specified. We use a mapping to associate address to Patient struct. Patients are identified by their Ethereum address and have attributes representing details in natural language text (hasPrimaryImmuneDeficiency, isIVIGAppropriate). A function to set those details (`insertPatientDetails`) is provided. We have two view functions `isIVIGCovered`, `isOtherItemsCovered` that check patient's eligibility for IVIG coverage and other items services relating to IVIG at home respectively.

@@ -1,79 +1,83 @@
-### N3 logic rules:
+```
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
 
-For a person to be covered for injectable osteoporosis drugs by Medicare:
-- They must be a woman with osteoporosis who meets the criteria for the Medicare home health benefit.
-- They must have a bone fracture that a doctor certifies was related to post-menopausal osteoporosis.
-- Their doctor must certify that they cannot give themselves the injection or learn how to give the drug by injection.
+# Rule 1: Injectable osteoporosis drugs are covered by Medicare if all conditions are met
 
-In addition, if the person's family or caregivers are unable or unwilling to give them the drug by injection, Medicare will cover the home health nurse or aide to provide the injection.
+{ ?patient rdf:type :Person } 
+=> 
+{ ?patient :meetsCondition1 true .
+  ?patient :meetsCondition2 true .
+  ?patient :meetsCondition3 true .
+  ?patient :meetsCondition4 true .
+} .
 
-```n3
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
-@prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
-@prefix medicare: <http://example.org/medicare#>.
-@prefix osteoporosis: <http://example.org/osteoporosis#>.
-@prefix doctor: <http://example.org/doctor#>.
+# Rule 2: Condition 1 - The patient must be a woman with osteoporosis who meets the criteria for the Medicare home health benefit
 
-medicare:CoversInjectableOsteoporosisDrugs 
-    rdf:type medicare:CoverageCondition;
-    rdfs:comment "Medicare covers injectable osteoporosis drugs if certain conditions are met.";
+{ ?patient rdf:type :Person ;
+           rdf:type :Woman ;
+           :hasCondition :Osteoporosis ;
+           :meetsBenefitCriteria true .
+} 
+=> 
+{ ?patient :meetsCondition1 true .
+} .
 
-    medicare:requiresWomanWithOsteoporosisAndEligibleForMedicareHomeHealthBenefit true;
-    medicare:requiresBoneFractureRelatedToPostMenopausalOsteoporosis true;
-    medicare:requiresPatientInabilityToSelf-AdministerOrLearnInjectionFromDoctor true;
-    medicare:requiresInabilityOrUnwillingnessOfFamilyOrCaregiversToAdministerInjection true.
+# Rule 3: Condition 2 - The patient must have a bone fracture that a doctor certifies was related to post-menopausal osteoporosis
 
-doctor:CertifiesBoneFractureRelatedToPostMenopausalOsteoporosis
-    rdf:type osteoporosis:Certification;
-    rdfs:comment "The doctor certifies that the bone fracture is related to post-menopausal osteoporosis.".
+{ ?patient rdf:type :Person ;
+           rdf:type :Woman ;
+           :hasCondition :Osteoporosis ;
+           :hasBoneFracture :Fracture ;
+           :hasCertification :Certification1 .
+} 
+=> 
+{ ?patient :meetsCondition2 true .
+} .
 
-doctor:CertifiesPatientInabilityToSelf-AdministerOrLearnInjection
-    rdf:type osteoporosis:Certification;
-    rdfs:comment "The doctor certifies that the patient is unable to self-administer the injection or learn the injection technique.".
+# Rule 4: Condition 3 - The doctor must certify that the patient can't give herself the injection or learn how to give herself the drug by injection
 
-osteoporosis:Patient
-    rdf:type osteoporosis:Person;
-    rdfs:comment "The person is a patient with osteoporosis.".
+{ ?patient rdf:type :Person ;
+           rdf:type :Woman ;
+           :hasCondition :Osteoporosis ;
+           :hasDoctor :Doctor ;
+           :hasCertification :Certification2 .
+} 
+=> 
+{ ?patient :meetsCondition3 true .
+} .
 
-medicare:CoveringHomeHealthNurseOrAide
-    rdf:type medicare:CoverageCondition;
-    rdfs:comment "Medicare covers the home health nurse or aide to provide the injection if family or caregivers are unable or unwilling to administer it.".
+# Rule 5: Condition 4 - Medicare will cover the home health nurse or aide to provide the injection if the patient's family or caregivers are unable or unwilling to give the drug by injection
 
-medicare:CoversHomeHealthNurseOrAide
-    rdf:type medicare:CoverageCondition;
-    rdfs:comment "Medicare covers the home health nurse or aide to provide the injection.".
+{ ?patient rdf:type :Person ;
+           rdf:type :Woman ;
+           :hasCondition :Osteoporosis ;
+           :hasCoveredDrug :Drug ;
+           :hasFamilyOrCaregivers :FamilyCaregivers ;
+           :unableOrUnwilling :true .
+}
+=> 
+{ ?patient :meetsCondition4 true .
+} .
 
-medicare:requiresWomanWithOsteoporosisAndEligibleForMedicareHomeHealthBenefit a medicare:CoverageCondition;
-    rdf:type medicare:Requirements;
-    rdfs:comment "The person must be a woman with osteoporosis who meets the criteria for the Medicare home health benefit.".
+# Final Decision: Medicare covers injectable osteoporosis drugs for the patient if all conditions are met
 
-medicare:requiresBoneFractureRelatedToPostMenopausalOsteoporosis a medicare:CoverageCondition;
-    rdf:type medicare:Requirements;
-    rdfs:comment "The person must have a bone fracture that a doctor certifies was related to post-menopausal osteoporosis.".
+{ ?patient rdf:type :Person ;
+           rdf:type :Woman ;
+           :hasCondition :Osteoporosis ;
+           :hasBoneFracture :Fracture ;
+           :hasDoctor :Doctor ;
+           :hasFamilyOrCaregivers :FamilyCaregivers ;
+           :unableOrUnwilling :true ;
+           :meetsBenefitCriteria true ;
+           :meetsCondition1 true ;
+           :meetsCondition2 true ;
+           :meetsCondition3 true ;
+           :meetsCondition4 true .
+}
+=> 
+{ ?patient :coveredByMedicare true .
+} .
 
-medicare:requiresPatientInabilityToSelf-AdministerOrLearnInjectionFromDoctor a medicare:CoverageCondition;
-    rdf:type medicare:Requirements;
-    rdfs:comment "The person's doctor must certify that they cannot give themselves the injection or learn how to give the drug by injection.".
-
-medicare:requiresInabilityOrUnwillingnessOfFamilyOrCaregiversToAdministerInjection a medicare:CoverageCondition;
-    rdf:type medicare:Requirements;
-    rdfs:comment "Medicare will cover the home health nurse or aide to provide the injection if the person's family or caregivers are unable or unwilling to give the drug by injection.".
-
-osteoporosis:Certification
-    rdf:type rdfs:Class;
-    rdfs:comment "A certification related to osteoporosis.".
-
-medicare:CoverageCondition a rdfs:Class;
-    rdfs:comment "A condition for Medicare coverage.".
-
-medicare:Requirements a rdfs:Class;
-    rdfs:comment "Requirements for Medicare coverage.".
-
-osteoporosis:Person a rdfs:Class;
-    rdfs:comment "A person with osteoporosis.".
-
-medicare:CoversInjectableOsteoporosisDrugs a medicare:CoverageCondition;
-    rdf:type medicare:CoverageCondition;
-    rdfs:comment "Medicare covers injectable osteoporosis drugs if certain conditions are met.".
 ```

@@ -1,0 +1,31 @@
+```
+library MedicareCoverageTransplantDrugTherapy
+
+using QUICK
+
+define coverageRequirement: Medicare helped pay for organ transplant and PartARequirement and PartBRequirement
+
+define PartARequirement: "Must have Part A at the time of the covered transplant"
+
+define PartBRequirement: "Must have Part B at the time you get immunosuppressive drugs"
+
+define immunosuppressiveDrugCoverage: Medicare drug coverage (Part D) covers immunosuppressive drugs if Part B doesn't cover them
+
+define joinDrugPlan: "If you have Original Medicare, you may join a Medicare drug plan to get Medicare drug coverage"
+
+define ESRDtermination: "Medicare coverage, including immunosuppressive drug coverage, ends 36 months after a successful kidney transplant for individuals with Medicare due to End-Stage Renal Disease (ESRD)"
+
+define limitedDrugCoverageBenefit: Medicare offers a benefit that may help if you lose Part A coverage 36 months after a kidney transplant and don't have certain types of other health coverage
+
+define limitedBenefitCoverage: "This benefit only covers your immunosuppressive drugs and no other items or services. It isn't a substitute for full health coverage"
+
+define signUpBenefit: "If you qualify, you can sign up for this benefit any time after your Part A coverage ends. To sign up, call Social Security at 1-877-465-0355. TTY users can call 1-800-325-0788"
+
+define immunosuppressiveDrugPremiumFee: "In 2023, you'll pay a monthly premium of $97.10* and $226 deductible if you sign up for the immunosuppressive drug benefit"
+
+define immunosuppressiveDrugPayment: "Once you've met the deductible, you'll pay 20% of the Medicare-approved amount for your immunosuppressive drugs"
+
+define decision: "The monthly premium for the immunosuppressive drug benefit in 2023 is $97.10* with a $226 deductible, followed by a 20% payment of the Medicare-approved amount once the deductible is met"
+
+end library
+```

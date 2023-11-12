@@ -1,0 +1,20 @@
+`. I summarize the text as follows:
+
+1. Medicare covers Intravenous Immune Globulin (IVIG) for individuals with a diagnosis of primary immune deficiency disease if their doctor determines it is medically appropriate to receive the IVIG in their home.
+2. Part B covers the cost of the IVIG itself, but does not cover additional expenses related to receiving the IVIG at home.
+3. If coverage is sought for IVIG given in the home, the prescriber must follow the process described in the Centers for Medicare and Medicaid Services (CMS) medical nutrition therapy (MNT) policy.
+4. IVIG must be administered by a qualified provider who has been trained by a physician in the proper administration of the medication.
+5. The individual seeking coverage must have a valid prescription from a physician for the medication.
+6. The individual must meet the medical necessity criteria for receiving the medication, as determined by their physician.
+7. The individual must have a functional interdependence problem that requires the assistance of another person for the medication regimen to be maintained, as determined by the physician.
+8. The individual must not have a condition that precludes them from receiving the medication in a hospital inpatient or skilled nursing facility setting.
+9. The individual must be at increased risk of complications from the medication regimen, as determined by the physician.
+10. The individual must have a valid and enrolled Part A and Part B Medicare card.
+11. The prescriber must have a valid Part B enrollment or participation agreement with Medicare.
+12. The provider who will administer the medication must have a current Medicare provider number (NPI) or have been granted an exception to the NPI requirement.
+13. The prescriber and provider must ensure that the individual meets all of the requirements for the Medicare medical nutrition therapy (MNT) program.
+14. The prescriber and provider must document all of the requirements met in the individual's medical record.
+15. The individual must provide the necessary documentation to support their application for coverage.
+16. The prescriber and provider must follow all applicable laws, rules, and regulations related to prescribing and administering intravenous immune globulin.
+
+. Decision: If all of the requirements are met, coverage will be provided for Intravenous Immune Globulin (IVIG) administered in the home as part of the Medicare medical nutrition therapy (MNT) program.

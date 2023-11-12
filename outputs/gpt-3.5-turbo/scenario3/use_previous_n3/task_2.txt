@@ -1,152 +1,169 @@
+```
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
-@prefix : <http://example.org/> .
+@prefix ex: <http://example.org/> .
+@prefix rule: <http://example.org/rules/> .
+@prefix action: <http://example.org/action/> .
 
-# Rule 1: Medicare covers transplant drug therapy if it paid for your organ transplant.
-{
-  ?person :hasMedicareCoverage ?coverage.
-  ?coverage :paidForOrganTransplant ?organs.
-} => {
-  ?person :hasMedicareCoverage ?coverage.
-  ?coverage :coversTransplantDrugTherapy true.
-}.
+# Rule 1: Part A coverage is required at the time of the covered transplant.
+rule:partA_coverage_required
+    rdfs:subClassOf [
+        rdf:type owl:Restriction ;
+        owl:onProperty ex:hasCoverage ;
+        owl:someValuesFrom ex:PartA_Coverage
+    ].
 
-# Rule 2: You need to have Part A at the time of the covered transplant.
-{
-  ?person :hasMedicareCoverage ?coverage.
-  ?coverage :coversTransplantDrugTherapy true.
-  ?coverage :mustHavePartA true.
-} => {
-  ?person :hasMedicareCoverage ?coverage.
-}.
+# Rule 2: Part B coverage is required at the time of receiving immunosuppressive drugs.
+rule:partB_coverage_required
+    rdfs:subClassOf [
+        rdf:type owl:Restriction ;
+        owl:onProperty ex:hasCoverage ;
+        owl:someValuesFrom ex:PartB_Coverage
+    ].
 
-# Rule 3: You must have Part B at the time you receive immunosuppressive drugs.
-{
-  ?person :hasMedicareCoverage ?coverage.
-  ?coverage :coversTransplantDrugTherapy true.
-  ?coverage :mustHavePartB true.
-} => {
-  ?person :hasMedicareCoverage ?coverage.
-}.
+# Rule 3: If Part B doesn't cover immunosuppressive drugs, Part D can be used.
+rule:partD_coverage
+    rdfs:subClassOf [
+        rdf:type owl:Restriction ;
+        owl:onProperty ex:hasCoverage ;
+        owl:someValuesFrom ex:PartD_Coverage
+    ].
 
-# Rule 4: If Part B doesn't cover immunosuppressive drugs, Medicare's drug coverage (Part D) can be used.
-{
-  ?person :hasMedicareCoverage ?coverage.
-  ?coverage :coversTransplantDrugTherapy true.
-  ?coverage :mustHavePartB false.
-} => {
-  ?person :hasMedicareCoverage ?coverage.
-  ?coverage :canUsePartD true.
-}.
+# Rule 4: Original Medicare allows joining a Medicare drug plan for drug coverage.
+rule:join_drug_plan
+    rdfs:subClassOf [
+        rdf:type owl:Restriction ;
+        owl:onProperty ex:allowsJoining ;
+        owl:someValuesFrom ex:Medicare_Drug_Plan
+    ].
 
-# Rule 5: If you have Original Medicare, you can join a Medicare drug plan for coverage.
-{
-  ?person :hasMedicareCoverage ?coverage.
-  ?coverage :coversTransplantDrugTherapy true.
-  ?coverage :hasOriginalMedicare true.
-} => {
-  ?person :hasMedicareCoverage ?coverage.
-  ?coverage :canJoinMedicareDrugPlan true.
-}.
+# Rule 5: Medicare coverage, including immunosuppressive drugs, ends 36 months after a successful kidney transplant for ESRD patients.
+rule:esrd_coverage_end
+    rdfs:subClassOf [
+        rdf:type owl:Restriction ;
+        owl:onProperty ex:hasCoverage ;
+        owl:someValuesFrom ex:Coverage_End_Esrd
+    ].
 
-# Rule 6: If you only have Medicare due to End-Stage Renal Disease (ESRD), your coverage, including immunosuppressive drug coverage, ends 36 months after a successful kidney transplant.
-{
-  ?person :hasMedicareCoverage ?coverage.
-  ?coverage :onlyDueToESRD true.
-  ?coverage :coversTransplantDrugTherapy true.
-  ?coverage :endsAfter36Months true.
-} => {
-  ?person :hasMedicareCoverage ?coverage.
-  ?coverage :includesImmunosuppressiveDrugCoverage false.
-}.
+# Rule 6: Medicare offers a benefit after Part A coverage ends for kidney transplant patients without certain other health coverage.
+rule:benefit_offer
+    rdfs:subClassOf [
+        rdf:type owl:Restriction ;
+        owl:onProperty ex:hasBenefit ;
+        owl:someValuesFrom ex:Immunosuppressive_Drug_Coverage
+    ].
 
-# Rule 7: Medicare provides a benefit for individuals who lose Part A coverage 36 months after a kidney transplant and don't have certain types of other health coverage.
-{
-  ?person :hasMedicareCoverage ?coverage.
-  ?coverage :losesPartACoverage true.
-  ?coverage :losesAfter36Months true.
-  ?coverage :coversTransplantDrugTherapy true.
-  ?coverage :otherHealthCoverage false.
-} => {
-  ?person :hasMedicareCoverage ?coverage.
-  ?coverage :providesBenefit true.
-}.
+# Rule 7: The benefit is not a substitute for full health coverage.
+rule:benefit_not_substitute
+    rdfs:subClassOf [
+        rdf:type owl:Restriction ;
+        owl:onProperty ex:isSubstitute ;
+        owl:complementOf ex:Full_Health_Coverage
+    ].
 
-# Rule 8: The benefit only covers immunosuppressive drugs and no other services.
-{
-  ?person :hasMedicareCoverage ?coverage.
-  ?coverage :providesBenefit true.
-} => {
-  ?person :hasMedicareCoverage ?coverage.
-  ?coverage :coversImmunosuppressiveDrugs true.
-}.
+# Rule 8: Call Social Security to sign up for the benefit.
+rule:sign_up_benefit
+    rdfs:subPropertyOf action:signUp ;
+    action:requiresCall [
+        rdf:type action:PhoneNumber ;
+        action:number "1-877-465-0355" ;
+        action:TTYNumber "1-800-325-0788"
+    ].
 
-# Rule 9: It is not a substitute for full health coverage.
-{
-  ?person :hasMedicareCoverage ?coverage.
-  ?coverage :providesBenefit true.
-} => {
-  ?person :hasMedicareCoverage ?coverage.
-  ?coverage :substituteForFullCoverage false.
-}.
+# Rule 9: The cost of the immunosuppressive drug benefit includes a monthly premium.
+rule:premium_cost
+    rdfs:subClassOf [
+        rdf:type owl:Restriction ;
+        owl:onProperty ex:hasCost ;
+        owl:hasValue ex:Premium_Cost
+    ].
 
-# Rule 10: The benefit can be applied for any time after Part A coverage ends.
-{
-  ?person :hasMedicareCoverage ?coverage.
-  ?coverage :providesBenefit true.
-  ?coverage :canApplyAfterPartAEnds true.
-} => {
-  ?person :hasMedicareCoverage ?coverage.
-}.
+# Rule 10: The cost of the immunosuppressive drug benefit includes a deductible.
+rule:deductible_cost
+    rdfs:subClassOf [
+        rdf:type owl:Restriction ;
+        owl:onProperty ex:hasCost ;
+        owl:hasValue ex:Deductible_Cost
+    ].
 
-# Rule 11: To sign up for the benefit, contact Social Security at 1-877-465-0355. TTY users can call 1-800-325-0788.
-{
-  ?person :hasMedicareCoverage ?coverage.
-  ?coverage :providesBenefit true.
-} => {
-  ?person :canSignUpBenefit true.
-}.
+# Rule 11: After meeting the deductible, 20% of the Medicare-approved amount for immunosuppressive drugs is paid.
+rule:payment_amount
+    rdfs:subClassOf [
+        rdf:type owl:Restriction ;
+        owl:onProperty ex:hasCost ;
+        owl:someValuesFrom ex:Payment_Amount
+    ].
 
-# Final decision
-{
-  ?person :hasMedicareCoverage ?coverage.
-  ?coverage :providesBenefit true.
-  ?coverage :coversImmunosuppressiveDrugs true.
-  ?coverage :losesPartACoverage true.
-  ?coverage :losesAfter36Months true.
-  ?coverage :otherHealthCoverage false.
-} => {
-  ?person :isEligibleForBenefit true.
-}.
+# Part A coverage class
+ex:PartA_Coverage
+    rdf:type owl:Class ;
+    rdfs:label "Part A coverage" .
 
-{
-  ?person :isEligibleForBenefit true.
-  ?person :canSignUpBenefit true.
-  ?person :hasContactInformation ?contact.
-  ?contact :phoneNumber "1-877-465-0355".
-} => {
-  ?person :canContactSocialSecurity true.
-}.
+# Part B coverage class
+ex:PartB_Coverage
+    rdf:type owl:Class ;
+    rdfs:label "Part B coverage" .
 
-{
-  ?person :isEligibleForBenefit true.
-  ?person :canSignUpBenefit true.
-  ?contact :phoneNumber "1-800-325-0788".
-  ?contact :canUseTTY true.
-} => {
-  ?person :canContactSocialSecurity true.
-}.
+# Part D coverage class
+ex:PartD_Coverage
+    rdf:type owl:Class ;
+    rdfs:label "Part D coverage" .
 
-{
-  ?person :isEligibleForBenefit true.
-  ?person :canContactSocialSecurity true.
-} => {
-  ?person :canReceiveBenefit true.
-}.
+# Medicare drug plan class
+ex:Medicare_Drug_Plan
+    rdf:type owl:Class ;
+    rdfs:label "Medicare drug plan" .
 
-{
-  ?person :canReceiveBenefit true.
-} => {
-  ?person :finalDecision true.
-}.
+# ESRD coverage end class
+ex:Coverage_End_Esrd
+    rdf:type owl:Class ;
+    rdfs:label "ESRD coverage end" .
+
+# Immunosuppressive drug coverage class
+ex:Immunosuppressive_Drug_Coverage
+    rdf:type owl:Class ;
+    rdfs:label "Immunosuppressive drug coverage" .
+
+# Full health coverage class
+ex:Full_Health_Coverage
+    rdf:type owl:Class ;
+    rdfs:label "Full health coverage" .
+
+# Premium cost class
+ex:Premium_Cost
+    rdf:type owl:Class ;
+    rdfs:label "Premium cost" .
+
+# Deductible cost class
+ex:Deductible_Cost
+    rdf:type owl:Class ;
+    rdfs:label "Deductible cost" .
+
+# Payment amount class
+ex:Payment_Amount
+    rdf:type owl:Class ;
+    rdfs:label "Payment amount" .
+
+# Subscribe action class
+action:signUp
+    rdf:type owl:ObjectProperty ;
+    rdfs:label "Sign up" .
+
+# Phone number class
+action:PhoneNumber
+    rdf:type owl:Class ;
+    rdfs:label "Phone number" ;
+    rdfs:subClassOf action:signUp .
+
+# Number property
+action:number
+    rdf:type owl:DatatypeProperty ;
+    rdfs:label "Number" .
+
+# TTY number property
+action:TTYNumber
+    rdf:type owl:DatatypeProperty ;
+    rdfs:label "TTY number" .
+
+```
+Note: This N3 representation of the logic rules is just a demonstration and may not cover all the complexities of the original natural language text. Additional rules and properties may need to be added based on the specific requirements and domain knowledge.

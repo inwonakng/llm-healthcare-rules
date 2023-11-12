@@ -1,91 +1,56 @@
-Here is how you could translate the natural language text and N3 logical syntax into Solidity:
-
 ```solidity
-pragma solidity ^0.8.0;
+pragma solidity >=0.5.0 <0.9.0;
 
-// Create a struct Patient
-struct Patient {
-    uint age;
-    bool receivedTransplant;
-    bool receivedAidForTransplantFromMedicare;
-    bool enrolledInMedicarePartA;
-    bool enrolledInMedicarePartB;
-    bool enrolledInMedicarePartD;
-    bool hasOriginalMedicare;
-    uint monthsAfterKidneyTransplant;
-    bool hasMedicarePartA;
-    bool eligibleForSpecificBenefit;
-    uint year;
-    bool meetDeductible;
-}
-// Define the contract
-contract MedicareCoverage {
+contract MedicareCoverage{
     
-    mapping(address => Patient) public patients;
+    enum HealthCover { GROUPHEALTHPLAN, TRICARE, MEDICAID }
     
-    // Medicare covers the cost of transplant drug therapy
-    function isEligibleForCoverage(address _address) public view returns (bool) {
-        Patient memory patient = patients[_address];
-
-        if(patient.receivedTransplant && patient.receivedAidForTransplantFromMedicare && patient.enrolledInMedicarePartA 
-        && patient.enrolledInMedicarePartB && patient.hasMedicarePartD){
-            return true;
+    struct Patient{
+        bool receivedTransplant;
+        bool hadMedicareCover;
+        bool enrolledInPartA;
+        bool enrolledInPartB;
+        bool receivesDrugs;
+        bool enrolledInPartD;
+        bool conclusion36MonthsAfterTransplant;
+        bool losePartAcoverage36MonthsAfterTransplant;
+        bool possessOtherHealthCoverage;
+        bool signupForBenefit;
+        bool partACoverageEnded;
+        bool contactSocialSecurity;
+        uint monthlyPremiums;
+        uint deductible;
+        uint afterDeductiblePaid;
+        HealthCover healthCover;
+    }
+    
+    
+    function checkEligibility(Patient memory _patient) public pure returns(string memory){
+        if(_patient.hadMedicareCover && _patient.receivedTransplant && _patient.enrolledInPartA && _patient.enrolledInPartB && _patient.receivesDrugs){
+            return "Eligible For Transplant Drug Coverage";
         }
-        else { 
-            return false; 
+        
+        if(_patient.enrolledInPartB && _patient.enrolledInPartD && _patient.receivesDrugs){
+            return "Eligible For PartD Coverage";
         }
-    }
-    
-    // Patient can join a Medicare drug plan
-    function canJoinMedicareDrugPlan(address _address) public view returns (bool) {
-        Patient memory patient = patients[_address];
-        if(patient.hasOriginalMedicare) return true;
-        else return false;
-    }
-    
-    // Check when a patient's Medicare coverage will be terminated
-    function willTerminateMedicareCoverage(address _address) public view returns (bool) {
-        Patient memory patient = patients[_address];
-        if(patient.monthsAfterKidneyTransplant >= 36) return true;
-        else return false;
-    }
-    
-    // Check patient eligible for specific benefit
-    function isEligibleForSpecificBenefit(address _address) public view returns (bool) {
-        Patient memory patient = patients[_address];
-        // Assuming noOtherHealthCoverage is represented by patient.hasMedicarePartA
-        if(patient.hasMedicarePartA == false) return true;
-        else return false;
-    }
-    
-    // Check if patient can enroll for benefit
-    function canEnrollForBenefit(address _address) public view returns (bool) {
-        Patient memory patient = patients[_address];
-        if(patient.eligibleForSpecificBenefit) return true;
-        else return false;
-    }
-    
-    // Provide premiums and deductible for the year 2023
-    function getPremiumsAndDeductible(address _address) public view returns (uint, uint) {
-        Patient memory patient = patients[_address];
-        if(patient.year == 2023){
-            return (9710, 22600); // Assuming values are in cents
+        
+        if(_patient.conclusion36MonthsAfterTransplant){
+            return "End Of Coverage For ESRD With Medicare";
         }
-        else{
-            return (0, 0);
+        
+        if(_patient.losePartAcoverage36MonthsAfterTransplant && _patient.possessOtherHealthCoverage == false){
+            return "Eligible For Immunosuppressive Drug Benefit";
         }
+        
+        if(_patient.signupForBenefit && _patient.partACoverageEnded && _patient.contactSocialSecurity){
+            return "Qualified For Immunosuppressive Drug Benefit";
+        }
+        
+        if(_patient.deductible == 226 && _patient.afterDeductiblePaid == (_patient.monthlyPremiums*0.2)){
+            return "Costs For Immunosuppressive Drug Benefit calculated Successfully";
+        }
+        return "Data is not sufficient for eligibility";
     }
     
-    function getPaymentForDrugs(address _address) public view returns (uint){
-        Patient memory patient = patients[_address];
-        if(patient.meetDeductible){
-            return 20; // Assuming it represents percentage
-        }
-        else{
-            return 0;
-        }
-    }
 }
 ```
-
-This contract includes all natural language text provided, implementing every single condition, always returns some output, and includes every aspect considered in the natural text. It also encapsulates necessary parameters in the `Patient` struct.

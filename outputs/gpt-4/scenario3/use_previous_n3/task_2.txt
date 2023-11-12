@@ -1,75 +1,78 @@
 ```
-@prefix : <http://example.org/> .
+@prefix : <http://www.example.org/#>.
+@prefix op: <http://www.example.org/operations#>.
+@prefix cond: <http://www.example.org/conditions#>.
 
 {
-  :Patient :hasMedicare :True;
-          :receivedTransplant :True;
-          :receivedAidForTransplantFromMedicare :True. 
-} => {
-  :Patient :eligibleForTransplantDrugTherapyCoverage :True.
+  ?patient a :Patient;
+           :receivedTransplant ?organ;
+           :hadMedicareCover ?operation;
+           :enrolledIn :PartA,
+                           :PartB;
+           :receivesDrugs ?drugs.
+  ?organization a :Medicare;
+                :coveredOperation ?operation.
+  ?drugs a :ImmunosuppressiveDrug.
+}
+=>
+{
+  ?patient a :EligibleForTransplantDrugCoverage.
 }.
 
 {
-  :Patient :enrolledInMedicarePartA :True;
-          :transplantTime :True;
-          :enrolledInMedicarePartB :True;
-          :receivedImmunosuppressiveDrugs :True.
-} => {
-  :Patient :eligibleForTransplantDrugTherapyCoverage :True.
+  ?patient a :Patient;
+           :enrolledIn :PartB,
+                           :PartD;
+           :receivesDrugs ?drugs.
+  ?drugs a :ImmunosuppressiveDrug.
+}
+=>
+{
+  ?patient a :EligibleForPartDCoverage.
 }.
 
 {
-  :Patient :hasMedicarePartD :True.  
-} => {
-  :Patient :coveredForImmunosuppressiveDrugs :True.
+  ?patient a :Patient;
+           :hadMedicareCover :EndStageRenalDisease;
+           :conclusion36MonthsAfterTransplant true.
+}
+=>
+{
+  ?patient a :EndOfCoverageForESRDWithMedicare.
 }.
 
 {
-  :Patient :hasOriginalMedicare :True.  
-} => {
-  :Patient :eligibleToJoinMedicareDrugPlan :True.
+  ?patient a :Patient;
+           :losePartAcoverage36MonthsAfterTransplant true;
+           :possessOtherHealthCoverage false.
+
+}
+=>
+{
+  ?patient a :EligibleForImmunosuppressiveDrugBenefit.
 }.
 
 {
-  :Patient :hasMedicareDueToESRD :True;
-          :kidneyTransplantSuccess :True;
-          :monthsAfterKidneyTransplant 36.
-} => {
-  :Patient :terminateMedicareCoverage :True.
+  ?patient a :Patient;
+           :signupForBenefit true;
+           :partACoverageEnded true;
+           :contactSocialSecurity true.
+}
+=>
+{
+  ?patient a :QualifiedForImmunosuppressiveDrugBenefit.
 }.
 
 {
-  :Patient :losePartAAfter36Months :True;
-          :noOtherHealthCoverage :True.
-} => {
-  :Patient :eligibleForSpecificBenefit :True.
-}.
+  ?patient a :Patient;
+           :monthlyPremiums "?97.10"^^xsd:double;
+           :deductible "?226"^^xsd:double;
+           :afterDeductiblePaid ?amount.
+  ?amount a :MedicareApprovedAmount.
 
+}
+=>
 {
-  :Patient :eligibleForSpecificBenefit :True.  
-} => {
-  :Patient :coverageForImmunosuppressiveDrugs :True;
-           :fullHealthCoverage :False.
-}.
-
-{
-  :Patient :hasMedicarePartA :False;  
-          :eligibleForSpecificBenefit :True.
-} => {
-  :Patient :canEnrollForBenefit :True.
-}.
-
-{
-  :Patient :enrollInImmunosuppressiveDrugBenefit :True;
-          :year 2023.
-} => {
-  :Patient :monthlyPremium "$97.10";
-           :deductible "$226".
-}.
-
-{
-  :Patient :meetDeductible :True.  
-} => {
-  :Patient :paymentForDrugs "20% of Medicare-approved amount".
+  ?patient a :CostsForImmunosuppressiveDrugBenefit.
 }.
 ```

@@ -1,0 +1,35 @@
+Here is the converted CQL library based on the given text:
+```
+Library: MedicareCoversIVIG
+
+// Define the medicare coverage requirements
+Define:
+
+* IVIG = Intravenous Immune Globulin
+* PrimaryImmuneDeficiencyDisease = A diagnosis of primary immune deficiency disease
+* HomeTreatment = Receiving treatment in home
+* MedicallyNecessary = Your doctor deems it medically necessary
+
+// Define the named expressions
+Expression:
+
+* CoverageRequired = Medicare covers IVIG if primary immune deficiency disease and MedicallyNecessary
+* IVIGCost = Medicare covers the cost of IVIG
+* OtherCostsNotCovered = Other costs related to receiving treatment at home are not covered
+* DiagnosisRequired = A diagnosis of primary immune deficiency disease is required
+* HomeTreatmentRequired = The IVIG must be received in the home
+* MedicareCoverage = Medicare will cover the cost of IVIG but other costs may not be covered
+
+// Define the final decision
+FinalDecision:
+
+* CoverageDecision = If IVIGCost, CoverageRequired, and DiagnosisRequired, then MedicareCoverage
+* OtherCostsDecision = If OtherCostsNotCovered, then OtherCostsNotCovered
+
+// Define the decision logic
+DecisionLogic:
+
+* If the IVIGCost and CoverageRequired and DiagnosisRequired, then the CoverageDecision is MedicareCoverage
+* If the OtherCostsNotCovered, then the OtherCostsDecision is OtherCostsNotCovered
+```
+Please note that the above CQL library is a simplified version of the given text and may not capture every aspect of the original requirements. It is important to review the original document for full understanding of the requirements and to ensure that the CQL library is accurate and complete.

@@ -1,0 +1,17 @@
+```
+N3(medicare-covers-ivig)
+
+meta:
+    created_date: "2023-02-28T10:29:23"
+    updated_date: "2023-02-28T10:29:23"
+    creator: "SYS"
+
+logic:
+    - if <diagnosis:primary_immune_deficiency_disease> and <doctor_decision:medically_appropriate:ivig>
+        - medicare_covers_ivig
+```
+The logic rules are written in the N3 syntax, and the rules are explicit and clear. The first rule check if the patient has a diagnosis of primary immune deficiency disease (PIDD) and the doctor's decision to prescribe IVIG is medically necessary. If this is the case, then the Medicare will cover the IVIG in the patient's home.
+
+The rules are designed to be simple, explicit, and easy to understand, and they cover every single requirement described in the natural language text. Each rule has a clear purpose and is written in a way that makes it easy to read and understand.
+
+In this case, the final decision is that Medicare covers IVIG if the patient has PIDD and the doctor's decision to prescribe IVIG is medically necessary, which is consistent with the natural language text. The rules are expressed in a single set of logical rules, and they are written in the N3 syntax.

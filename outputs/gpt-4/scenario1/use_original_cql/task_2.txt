@@ -1,0 +1,54 @@
+```
+library InjectableOsteoporosisDrugs version '1.0'
+
+using FHIR version '4.0.0'
+
+include 'Terminologies' version '1.0' called Codes
+include 'Common' version '1.0' called Common
+
+context Patient
+
+define "Osteoporosis Diagnosis":
+    [Condition: Codes.'Osteoporosis'] Diagnosis
+    where Diagnosis.subject = Patient
+
+define "Female Patient":
+    [Gender: Codes.'Female'] Gender
+    where Gender.subject = Patient
+
+define "Medicare Beneficiary":
+    [Coverage: Codes.'Medicare'] Coverage
+    where Coverage.beneficiary = Patient
+
+define "Bone Fracture Related to Post-menopausal Osteoporosis":
+    [Condition: Codes.'Bone Fracture'] Fracture
+    where Fracture.subject = Patient 
+    and Fracture.clinicalStatus = 'Active'
+    and exists ([Procedure: Codes.'Post-menopausal Osteoporosis Certification'] Certification
+    where Certification.subject = Patient
+    and Certification.reasonReference = Fracture)
+
+define "Self-Injection Incapability":
+    [Observation: Codes.'Self-injection Incapability'] Observation
+    where Observation.subject = Patient 
+    and Observation.status = 'Active'
+   
+define "Home Health Care Requirement":
+    [Procedure: Codes.'Home Health Care'] HomeCare
+    where HomeCare.subject = Patient
+    and HomeCare.status = 'Required'
+    
+define "Family or Caregivers Unwillingness or Inability":
+    [Observation: Codes.'Family or Caregivers Unwillingness or Inability for Drug Injection'] Observation
+    where Observation.subject = Patient
+    and Observation.status = 'Active'
+
+define "Medicare Coverage for Injectable Osteoporosis Drugs":
+    "Osteoporosis Diagnosis"
+    and "Female Patient"
+    and "Medicare Beneficiary"
+    and "Bone Fracture Related to Post-menopausal Osteoporosis"
+    and "Self-Injection Incapability"
+    and (("Home Health Care Requirement")
+    or ("Family or Caregivers Unwillingness or Inability"))
+```

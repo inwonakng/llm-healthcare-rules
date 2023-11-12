@@ -1,0 +1,75 @@
+I have converted the provided natural language text into named expressions grouped within a CQL library, as follows:
+```
+library IntravenousImmuneGlobulin_Medicare_Coverage_Requirements
+
+// Named expressions for requirements
+
+Context:
+  Patient "John Doe" with a diagnosis of primary immune deficiency disease
+  IVIG being administered in the home
+
+Named expressions:
+
+1. "Primary immune deficiency disease"
+  Definition:
+    "Primary immune deficiency disease" =
+      Condition "PIDD" with description "Primary immune deficiency disease"
+
+2. "IVIG"
+  Definition:
+    "IVIG" =
+      Substance "Intravenous immune globulin" with description "IVIG"
+
+3. "Home administration"
+  Definition:
+    "Home administration" =
+      Procedure "Home IVIG administration" with description "IVIG administered in the home"
+
+4. "Medicare coverage"
+  Definition:
+    "Medicare coverage" =
+      Policyholder "John Doe" with Medicare coverage for "IVIG"
+
+5. "Medicare Part B coverage"
+  Definition:
+    "Medicare Part B coverage" =
+      Coverage "Medicare Part B" for "IVIG"
+
+6. "Eligibility for Medicare Part B coverage"
+  Definition:
+    "Eligibility for Medicare Part B coverage" =
+      Confirmation "Eligible for Medicare Part B coverage" with description "Eligible for Medicare Part B"
+
+7. "Primary source of payment for IVIG"
+  Definition:
+    "Primary source of payment for IVIG" =
+      Provider "Home IVIG provider" with payment source "Primary payer" for "IVIG"
+
+8. "Secondary source of payment for IVIG"
+  Definition:
+    "Secondary source of payment for IVIG" =
+      Provider "Home IVIG provider" with payment source "Secondary payer" for "IVIG"
+
+9. "Programmatic determination for IVIG"
+  Definition:
+    "Programmatic determination for IVIG" =
+      Determination "IVIG programmatic determination" with description "IVIG programmatic determination"
+
+10. "Final decision for IVIG coverage"
+  Definition:
+    "Final decision for IVIG coverage" =
+      Decision "IVIG coverage decision" with description "IVIG coverage decision"
+
+// Final decision
+
+FinalDecision(
+  Coverage = MedicareCoverage,
+  MedicarePartBCoverage = MedicarePartBCoverage,
+  Eligibility = EligibilityForMedicarePartBCoverage,
+  PrimarySourceOfPayment = PrimarySourceOfPaymentForIVIG,
+  SecondarySourceOfPayment = SecondarySourceOfPaymentForIVIG,
+  ProgrammaticDetermination = ProgrammaticDeterminationForIVIG,
+  Decision = FinalDecisionForIVIGCoverage
+)
+```
+In this CQL library, the named expressions are grouped into sections based on the requirements listed in the natural language text. Each named expression defines a specific concept or component of the Medicare coverage determination process for IVIG administration in the home. The final decision is determined by the intersection of the Medicare coverage, Medicare Part B coverage, eligibility for Medicare Part B coverage, primary source of payment, secondary source of payment, programmatic determination, and final decision.

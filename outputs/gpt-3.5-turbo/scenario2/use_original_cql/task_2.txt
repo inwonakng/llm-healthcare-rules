@@ -1,0 +1,26 @@
+```
+library Medicare_Coverage_of_IVIG_in_Home
+
+using System
+include "CMS146v9" version '1.0.0'
+
+codesystem "ICD-10-CM": 'urn:oid:2.16.840.1.113883.6.90'
+codesystem "SNOMED": 'urn:oid:2.16.840.1.113883.6.96'
+
+code "Primary_Immune_Deficiency_Disease":
+  "ICD-10-CM" member 'D81'
+
+concept "Intravenous_Immune_Globulin":
+  includes { 'SNOMED' member '1076144005' }
+
+expression "IVIG_Coverage_Criteria":
+  "Primary_Immune_Deficiency_Disease" implies
+  exists Encounter:
+    ["CMS146v9:EncounterAdmitSource"] EAS
+    where EAS.value in ['Home'] and
+    exists MedicationAdministration:
+      ["CMS146v9:AdministeredMedication"] AM
+      where AM.medication is Concept and
+            AM.medication.concept is "Intravenous_Immune_Globulin"
+
+```

@@ -1,0 +1,14 @@
+Based on the natural language text, the following named expressions can be extracted:
+
+```yaml
+If:
+    - Woman with osteoporosis who meets the criteria for the Medicare home health benefit.
+    - Has a bone fracture that a doctor certifies was related to post-menopausal osteoporosis.
+    - Unable or unwilling to give self the injection or learn how to give the drug by injection.
+    - Home health nurse or aide is available to provide the injection if family or caregivers are unable or unwilling.
+
+Then:
+    - Coverage of injectable osteoporosis drugs is approved by Medicare.
+```
+
+In summary, if a woman with osteoporosis meets the requirements of being covered by the Medicare home health benefit, has a bone fracture related to post-menopausal osteoporosis, and cannot give herself the injection or learn how to give the drug by injection, coverage of injectable osteoporosis drugs is approved by Medicare, including assistance with the injection from a home health nurse or aide if needed.

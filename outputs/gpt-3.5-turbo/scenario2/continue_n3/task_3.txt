@@ -1,24 +1,22 @@
-```solidity
+```
 pragma solidity ^0.8.0;
 
 contract MedicareCoverage {
-    struct Individual {
-        bool diagnosedWithPrimaryImmuneDeficiency;
-        bool medicallyAppropriateForHomeCare;
-        bool partBCoversIVIG;
-        bool doesNotCoverOtherItems;
+    enum PrimaryImmuneDeficiencyDisease {
+        PrimaryImmuneDeficiency
     }
-
-    function isEligibleForIVIGCoverage(
-        bool diagnosedWithPrimaryImmuneDeficiency,
-        bool medicallyAppropriateForHomeCare,
-        bool partBCoversIVIG,
-        bool doesNotCoverOtherItems
-    ) external pure returns (bool) {
-        if (diagnosedWithPrimaryImmuneDeficiency &&
-            medicallyAppropriateForHomeCare &&
-            partBCoversIVIG &&
-            !doesNotCoverOtherItems) {
+    
+    struct IVIG {
+        PrimaryImmuneDeficiencyDisease diagnosis;
+    }
+    
+    struct HomeDelivery {
+        IVIG ivig;
+        bool medicallyAppropriate;
+    }
+    
+    function checkCoverage(IVIG memory ivig, HomeDelivery memory homeDelivery) external view returns (bool) {
+        if (ivig.diagnosis == PrimaryImmuneDeficiencyDisease.PrimaryImmuneDeficiency && homeDelivery.medicallyAppropriate) {
             return true;
         } else {
             return false;
@@ -26,8 +24,4 @@ contract MedicareCoverage {
     }
 }
 ```
-
-Explanation:
-1. The smart contract defines a struct named "Individual" that encapsulates the parameters used to determine eligibility for IVIG coverage.
-2. The function "isEligibleForIVIGCoverage" takes in the necessary parameters and returns a boolean value indicating eligibility for IVIG coverage.
-3. The function checks if the individual is diagnosed with primary immune deficiency, medically appropriate for home care, Part B covers IVIG, and if other items and services related to IVIG at home are not covered. If all conditions are met, it returns true; otherwise, it returns false.
+```

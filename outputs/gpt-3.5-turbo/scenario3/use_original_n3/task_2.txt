@@ -1,105 +1,176 @@
-```n3
+```
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix ex: <http://example.org/ns#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix : <http://example.com/medicare#> .
 
-ex:MedicareDrugCoverage a rdfs:Class .
-ex:TransplantDrugTherapy a rdfs:Class .
-ex:ImmunosuppressiveDrugs a rdfs:Class .
-ex:PartA a rdfs:Class .
-ex:PartB a rdfs:Class .
-ex:OriginalMedicare a rdfs:Class .
-ex:EndStageRenalDisease a rdfs:Class .
-ex:KidneyTransplant a rdfs:Class .
+:Medicare rdf:type owl:Class .
+:TransplantDrugTherapy rdf:type owl:Class .
+:ImmunosuppressiveDrug rdf:type owl:Class .
+:PartA rdf:type owl:Class .
+:PartB rdf:type owl:Class .
+:MedicareDrugCoverage rdf:type owl:Class .
+:OriginalMedicare rdf:type owl:Class .
+:EndStageRenalDisease rdf:type owl:Class .
+:KidneyTransplant rdf:type owl:Class .
+:OtherHealthCoverage rdf:type owl:Class .
+:GroupHealthPlan rdf:type owl:Class .
+:TRICARE rdf:type owl:Class .
+:Medicaid rdf:type owl:Class .
+:Benefit rdf:type owl:Class .
+:FullHealthCoverage rdf:type owl:Class .
+:Qualify rdf:type owl:Class .
 
-ex:TransplantDrugTherapyCoverage rdf:type ex:MedicareDrugCoverage .
-ex:TransplantDrugTherapyCoverage rdf:type ex:TransplantDrugTherapy .
-ex:ImmunosuppressiveDrugCoverage rdf:type ex:MedicareDrugCoverage .
-ex:ImmunosuppressiveDrugCoverage rdf:type ex:ImmunosuppressiveDrugs .
-ex:PartACoverage rdf:type ex:PartA .
-ex:PartBCoverage rdf:type ex:PartB .
-ex:OriginalMedicareCoverage rdf:type ex:OriginalMedicare .
-ex:EndStageRenalDiseaseCoverage rdf:type ex:EndStageRenalDisease .
-ex:KidneyTransplantCoverage rdf:type ex:KidneyTransplant .
+:coveredBy rdf:type owl:ObjectProperty .
+:helpedPayFor rdf:type owl:ObjectProperty .
+:haveAt rdf:type owl:DatatypeProperty .
+:joinToGet rdf:type owl:ObjectProperty .
+:loseAfter rdf:type owl:ObjectProperty .
+:isNotSubstituteFor rdf:type owl:DatatypeProperty .
+:signUp rdf:type owl:ObjectProperty .
+:pay rdf:type owl:ObjectProperty .
+:met rdf:type owl:ObjectProperty .
+:approved rdf:type owl:DatatypeProperty .
+:pays rdf:type owl:DatatypeProperty .
+:hasPremium rdf:type owl:DatatypeProperty .
+:hasDeductible rdf:type owl:DatatypeProperty .
 
-ex:MedicareCoversTransplantDrugTherapy rdf:type rdf:Rule .
-{
-  ?p a ex:TransplantDrugTherapyCoverage .
-  ?p a ex:MedicareCoversTransplantDrugTherapy.
-} => {
-  ?p rdf:type ex:MedicareDrugCoverage .
-} .
+:TransplantDrugTherapy rdfs:subClassOf :Medicare .
+:ImmunosuppressiveDrug rdfs:subClassOf :Medicare .
+:PartA rdfs:subClassOf :Medicare .
+:PartB rdfs:subClassOf :Medicare .
+:MedicareDrugCoverage rdfs:subClassOf :Medicare .
+:OriginalMedicare rdfs:subClassOf :Medicare .
+:EndStageRenalDisease rdfs:subClassOf :Medicare .
+:KidneyTransplant rdfs:subClassOf :Medicare .
+:OtherHealthCoverage rdfs:subClassOf :Medicare .
+:GroupHealthPlan rdfs:subClassOf :Medicare .
+:TRICARE rdfs:subClassOf :Medicare .
+:Medicaid rdfs:subClassOf :Medicare .
+:Benefit rdfs:subClassOf :Medicare .
+:FullHealthCoverage rdfs:subClassOf :Medicare .
+:Qualify rdfs:subClassOf :Medicare .
 
-ex:PartARequired rdf:type rdf:Rule .
-{
-  ?p a ex:TransplantDrugTherapyCoverage .
-  ?p a ex:PartACoverage .
-} => {
-  ?p a ex:PartARequired .
-} .
+:TransplantDrugTherapy :coveredBy :Medicare .
+:ImmunosuppressiveDrug :coveredBy :Medicare .
+:PartA :haveAt :TimeOf .
+:PartB :haveAt :TimeOf .
+:MedicareDrugCoverage :coveredBy :Medicare .
+:OriginalMedicare :joinToGet :MedicareDrugCoverage .
+:EndStageRenalDisease :coveredBy :Medicare .
+:KidneyTransplant :helpedPayFor :Medicare .
+:OtherHealthCoverage :coveredBy :Medicare .
+:GroupHealthPlan :coveredBy :OtherHealthCoverage .
+:TRICARE :coveredBy :OtherHealthCoverage .
+:Medicaid :coveredBy :OtherHealthCoverage .
+:Benefit :isNotSubstituteFor :FullHealthCoverage .
+:Qualify :signUp :Benefit .
 
-ex:PartBRequired rdf:type rdf:Rule .
-{
-  ?p a ex:ImmunosuppressiveDrugCoverage .
-  ?p a ex:PartBCoverage .
-} => {
-  ?p a ex:PartBRequired .
-} .
+:TimeOf rdfs:domain :PartA .
+:TimeOf rdfs:domain :PartB .
+:TimeOf rdfs:range xsd:dateTime .
+:TimeOf rdfs:subClassOf xsd:nonNegativeInteger .
 
-ex:MedicareCoversImmunosuppressiveDrugs rdf:type rdf:Rule .
-{
-  ?p a ex:MedicareDrugCoverage .
-  ?p a ex:ImmunosuppressiveDrugCoverage .
-  NOT EXISTS { ?p a ex:PartBRequired . }
-} => {
-  ?p rdf:type ex:MedicareCoversImmunosuppressiveDrugs .
-} .
+:MedicareDrugCoverage rdfs:domain :OriginalMedicare .
+:MedicareDrugCoverage rdfs:range :MedicareDrugCoverage .
+:OriginalMedicare rdfs:subClassOf :JoinToGet .
+:OriginalMedicare rdfs:subClassOf :PartA .
 
-ex:MedicareDrugPlanRequiredForOriginalMedicare rdf:type rdf:Rule .
-{
-  ?p a ex:OriginalMedicareCoverage .
-  ?p a ex:MedicareCoversImmunosuppressiveDrugs .
-} => {
-  ?p a ex:MedicareDrugPlanRequiredForOriginalMedicare .
-} .
+:KidneyTransplant rdfs:domain :KidneyTransplant .
 
-ex:MedicareCoverageEndsAfterSuccessfulKidneyTransplant rdf:type rdf:Rule .
-{
-  ?p a ex:EndStageRenalDiseaseCoverage .
-  ?p a ex:KidneyTransplantCoverage .
-} => {
-  ?p a ex:MedicareCoverageEndsAfterSuccessfulKidneyTransplant .
-} .
+:JoinToGet rdfs:domain :OriginalMedicare .
+:JoinToGet rdfs:range :MedicareDrugCoverage .
 
-ex:MedicareBenefitForLostPartACoverage rdf:type rdf:Rule .
-{
-  ?p a ex:KidneyTransplantCoverage .
-  ?p a ex:MedicareCoverageEndsAfterSuccessfulKidneyTransplant .
-  ?p a ex:MedicareBenefitForLostPartACoverage .
-} => {
-  ?p rdf:type ex:MedicareDrugCoverage .
-} .
+:PartA rdfs:domain :TimeOf .
+:PartB rdfs:domain :TimeOf .
 
-ex:BenefitOnlyCoversImmunosuppressiveDrugs rdf:type rdf:Rule .
-{
-  ?p a ex:MedicareBenefitForLostPartACoverage .
-} => {
-  ?p rdf:type ex:BenefitOnlyCoversImmunosuppressiveDrugs .
-} .
+:PartA :haveAt :Transplant .
+:PartB :haveAt :ImmunosuppressiveDrug .
 
-ex:BenefitNotSubstituteForFullCoverage rdf:type rdf:Rule .
-{
-  ?p a ex:BenefitOnlyCoversImmunosuppressiveDrugs .
-} => {
-  ?p rdf:type ex:BenefitNotSubstituteForFullCoverage .
-} .
+:Transplant rdfs:subClassOf :CoveredTransplant .
+:ImmunosuppressiveDrug rdfs:subClassOf :CoveredTransplant .
 
-ex:BenefitSignUpPossibleAfterPartACoverageEnds rdf:type rdf:Rule .
-{
-  ?p a ex:BenefitOnlyCoversImmunosuppressiveDrugs .
-  ?p a ex:BenefitSignUpPossibleAfterPartACoverageEnds .
-} => {
-  ?p rdf:type ex:MedicareDrugCoverage .
-} .
+:ImmunosuppressiveDrug rdf:type :PartB .
+
+:OriginalMedicare :haveAt :EndStageRenalDisease .
+
+:EndDate rdfs:domain :EndStageRenalDisease .
+:EndDate rdfs:range xsd:dateTime .
+
+:EndDate :loseAfter :KidneyTransplant .
+
+:KidneyTransplant :helpedPayFor :Medicare .
+:KidneyTransplant :loseAfter :EndDate .
+
+:FullHealthCoverage :coveredBy :Benefit .
+
+:Qualify :joinToGet :Benefit .
+
+:PartACoverageEnds rdfs:domain :KidneyTransplant .
+:PartACoverageEnds rdfs:domain :FullHealthCoverage .
+:PartACoverageEnds rdfs:range xsd:dateTime .
+
+:PartACoverageEnds :signUp :Qualify .
+
+:PhoneNumber rdf:type owl:DatatypeProperty .
+
+:SignUp rdfs:domain :PartACoverageEnds .
+:SignUp rdfs:range :PhoneNumber .
+
+:CallToSignUp rdf:type owl:Class .
+
+:CallToSignUp rdf:type owl:Class .
+
+:SocialSecurityPhoneNumber rdf:type owl:DatatypeProperty .
+
+:CallToSignUp :callAt :SocialSecurityPhoneNumber .
+
+:CallToSignUp rdf:type :SignUp .
+
+:Medicare rdf:type :CallToSignUp .
+
+:ImmunoSuppDrugCost rdfs:domain :TimeOf .
+:ImmunoSuppDrugCost rdfs:range xsd:float .
+
+:ImmunoSuppDrugCost :pay :premium .
+:ImmunoSuppDrugCost :pay :deductible .
+
+:ImmunosuppressiveDrugCost rdfs:domain :ImmunoSuppDrugCost .
+:ImmunosuppressiveDrugCost rdfs:range :ImmunosuppressiveDrug .
+
+:premium rdf:type :hasPremium .
+:premium rdfs:domain :ImmunoSuppDrugCost .
+:premium rdfs:range xsd:float .
+
+:deductible rdf:type :hasDeductible .
+:deductible rdfs:domain :ImmunoSuppDrugCost .
+:deductible rdfs:range xsd:float .
+
+:pay rdf:type :pays .
+:pay rdfs:domain :ImmunosuppressiveDrugCost .
+:pay rdfs:range xsd:float .
+
+:MedicareApprovedCost rdf:type owl:DatatypeProperty .
+
+:pay rdf:type :pays .
+:pay rdfs:domain :ImmunosuppressiveDrugCost .
+:pay rdfs:range :MedicareApprovedCost .
+
+:pay rdf:type :pays .
+:pay rdfs:domain :ImmunosuppressiveDrugCost .
+:pay rdfs:range xsd:float .
+
+:MedicareApprovedCost rdf:type :approved .
+:MedicareApprovedCost rdfs:domain :ImmunosuppressiveDrugCost .
+:MedicareApprovedCost rdfs:range xsd:float .
+
+:ImmunosuppressiveDrugCost :met :deductible .
+
+:TwentyPercentCost rdf:type :pays .
+:TwentyPercentCost rdfs:domain :ImmunosuppressiveDrugCost .
+:TwentyPercentCost rdfs:range xsd:float .
+
+:TwentyPercentCost :pay :MedicareApprovedCost .
 
 ```

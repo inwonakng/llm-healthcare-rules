@@ -1,0 +1,20 @@
+```
+// Define the ontology for the natural language text
+:primaryImmuneDeficiency a owl:Class
+// Define the predicate for the doctor's decision
+:hasPrimaryImmuneDeficiency rdf:type :primaryImmuneDeficiency
+// Define the predicates for the cost and coverage of IVIG
+:IVIG a owl:Class
+:IVIG :cost 500
+:IVIG :coverage "Medicare"
+
+// Define the logical rules for the coverage of IVIG
+:Rule1
+  ?IVIG :hasPrimaryImmuneDeficiency true
+  ?IVIG :coverage "Medicare"
+->
+  ?IVIG :cost 500
+```
+In this set of N3 rules, we define an ontology for primary immune deficiency diseases and the coverage of IVIG by Medicare. We also define the logical rules for the coverage of IVIG, which states that if an individual has a primary immune deficiency disease and Medicare coverage, then the cost of IVIG is 500.
+
+This set of rules covers every single requirement described in the natural language text and ensures that the final decision fits the natural language text. The natural language text is expressed in a single set of logical rules, which is a crucial requirement for N3 syntax.

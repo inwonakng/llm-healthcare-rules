@@ -1,0 +1,33 @@
+```cql
+library InjectableOsteoporosisDrugsCoverage version '1.0'
+
+using FHIR version '4.0.0'
+
+context Patient
+
+define "IsFemale":
+  Patient.gender.value = 'female'
+
+define "HasOsteoporosis":
+  exists ([Condition: "Osteoporosis"])
+
+define "MeetsMedicareHomeHealthBenefitCriteria": 
+  exists ([CoverageEligibilityResponse] where status.value = 'active' and insurance.payer.display.value = 'Medicare' and purpose contains 'homehealth')
+
+define "HasOsteoporosisRelatedFracture":
+  exists ([Condition: "Fracture"] E where E.clinicalStatus.value = 'active' and E.verificationStatus.value = 'confirmed' and E.evidence.detail.display.value = 'Post-menopausal Osteoporosis')
+
+define "CannotSelfAdministerDrug":
+  not exists ([Procedure: "SelfInjectionEducation"] E where E.status.value = 'completed')
+
+define "RequiresHomeHealthAideForInjection":
+  exists ([ReferralRequest] R where R.reasonCode contains 'homehealth' and R.serviceRequested contains 'Injection' and R.occurrenceDateTime during "Last Year")
+
+define "MedicareInjectionCoverage":
+  "IsFemale" and 
+  "HasOsteoporosis" and 
+  "MeetsMedicareHomeHealthBenefitCriteria" and
+  "HasOsteoporosisRelatedFracture" and
+  "CannotSelfAdministerDrug" and 
+  "RequiresHomeHealthAideForInjection"
+```

@@ -1,0 +1,32 @@
+`CQL Library: Medicare Transplant Drug Therapy
+
+Named Expression 1:
+Part A at the time of the covered transplant
+
+Named Expression 2:
+Part B at the time you get immunosuppressive drugs
+
+Named Expression 3:
+Medicare drug coverage, Part D, may cover immunosuppressive drugs
+
+Named Expression 4:
+Keep Original Medicare to join a Medicare drug plan
+
+Named Expression 5:
+Meet 36-month waiting period after a successful kidney transplant if you only have Medicare due to ESRD
+
+Named Expression 6:
+Lose Part A coverage 36 months after a kidney transplant and not have other health coverage
+
+Named Expression 7:
+Sign up for the immunosuppressive drug benefit
+
+Named Expression 8:
+Pay a monthly premium of $97.10* and a $226 deductible
+
+Named Expression 9:
+Meet the deductible and pay 20% of the Medicare-approved amount for immunosuppressive drugs
+
+Final Decision:
+If Part A at the time of the covered transplant, Part B at the time you get immunosuppressive drugs, and keeping Original Medicare are met, then the patient is eligible for the immunosuppressive drug benefit. If the patient is only eligible for Medicare due to ESRD, they must meet the 36-month waiting period and sign up for the benefit within 36 months of Part A coverage ending. The patient must pay a monthly premium of $97.10* and a $226 deductible, and once the deductible is met, they will pay 20% of the Medicare-approved amount for their immunosuppressive drugs.
+`

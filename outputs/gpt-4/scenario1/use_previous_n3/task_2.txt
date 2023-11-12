@@ -1,56 +1,33 @@
-```n3
-@prefix : <http://example.com/> .
+```
+@prefix : <#> .
 
-# Rule 1
 {
-    ?patient a :Woman ;
-             :hasCondition :Osteoporosis ;
-             :fulfillsCriteria :MedicareHomeHealthBenefit .
+  :Patient a :Woman ;
+           :hasCondition :Osteoporosis ;
+           :qualifies :MedicareHomeHealthBenefit .
 } => {
-    ?patient :EligibleForMedicareCoverage true .
-}.
-
-# Rule 2
-{
-    ?patient :hasCondition :Fracture;
-              :associatedWith :PostMenopausalOsteoporosis;
-              :confirmedBy  ?doctor .
-} => {
-    ?patient :HasOsteoporosisFracture true .
-}.
-
-# Rule 3
-{
-    ?doctor :Certifies {
-        ?patient :UnableToAdministerOsteoporosisInjection true .
-    }
-} => {
-    ?patient :NeedsAssistanceForInjection true .
+  :Patient :isCandidateForCoverage true .
 }.
 
 {
-    ?doctor :Certifies {
-        ?patient :CannotLearnToAdministerOsteoporosisInjection true .
-    }
+  :Patient :hasFracture :BoneFracture .
+  :Doctor :certifiesFractureRelatedTo :PostmenopausalOsteoporosis .
 } => {
-    ?patient :NeedsAssistanceForInjection true .
+  :Patient :isCandidateForCoverage true .
 }.
 
-# Rule 4
 {
-    ?patient :NeedsAssistanceForInjection true;
-              :FamilyOrCaregivers :UnableOrUnwillingToAdministerInjection true.
+  :Doctor :certifiesPatientCannotAdministerInjection true .
 } => {
-    :Medicare :CoverHomeHealthNurseOrAideExpense true .
+  :Patient :isCandidateForCoverage true .
 }.
 
-# Final decision
 {
-    ?patient :EligibleForMedicareCoverage true;
-              :HasOsteoporosisFracture true;
-              :NeedsAssistanceForInjection true.
-    :Medicare :CoverHomeHealthNurseOrAideExpense true.
+  :Family a :Person ;
+           :canAdministerInjection false .
+  :Caregiver a :Person ;
+              :canAdministerInjection false .
 } => {
-     :Medicare :ProvidesCoverageForInjectableOsteoporosisDrugs true.
+  :Medicare :coversService :HomeHealthAideForInjection .
 }.
 ```

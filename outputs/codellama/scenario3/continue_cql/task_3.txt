@@ -1,0 +1,139 @@
+```
+pragma solidity ^0.8.0;
+
+contract MedicareTransplantDrugTherapy {
+
+    // Structs to encapsulate necessary parameters
+    struct Patient {
+        address patientAddress;
+        bool hasPartA;
+        bool hasPartB;
+        bool hasOriginalMedicare;
+        bool signedUpForDrugBenefit;
+        uint deductibleAmount;
+        uint premiumAmount;
+    }
+
+    struct Drug {
+        string drugName;
+        uint drugPrice;
+        bool isCoveredByMedicare;
+        bool isCoveredByPartD;
+    }
+
+    // State variables to keep track of patient and drug information
+    mapping(address => Patient) public patients;
+    mapping(uint => Drug) public drugs;
+
+    // Function to register a new patient
+    function registerPatient(address patientAddress, bool hasPartA, bool hasPartB, bool hasOriginalMedicare) public {
+        patients[patientAddress] = Patient({
+            patientAddress: patientAddress,
+            hasPartA: hasPartA,
+            hasPartB: hasPartB,
+            hasOriginalMedicare: hasOriginalMedicare,
+            signedUpForDrugBenefit: false,
+            deductibleAmount: 0,
+            premiumAmount: 0
+        });
+    }
+
+    // Function to register a new drug
+    function registerDrug(uint drugID, string memory drugName, uint drugPrice, bool isCoveredByMedicare, bool isCoveredByPartD) public {
+        drugs[drugID] = Drug({
+            drugName: drugName,
+            drugPrice: drugPrice,
+            isCoveredByMedicare: isCoveredByMedicare,
+            isCoveredByPartD: isCoveredByPartD
+        });
+    }
+
+    // Function to check if a patient is eligible for the immunosuppressive drug benefit
+    function isEligibleForDrugBenefit(address patientAddress) public view returns (bool) {
+        if (patients[patientAddress].hasPartA && patients[patientAddress].hasPartB && patients[patientAddress].hasOriginalMedicare) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    // Function to sign up for the immunosuppressive drug benefit
+    function signUpForDrugBenefit(address patientAddress) public {
+        if (isEligibleForDrugBenefit(patientAddress)) {
+            patients[patientAddress].signedUpForDrugBenefit = true;
+        } else {
+            revert("Patient is not eligible for the immunosuppressive drug benefit");
+        }
+    }
+
+    // Function to check if a drug is covered by Medicare
+    function isCoveredByMedicare(uint drugID) public view returns (bool) {
+        return drugs[drugID].isCoveredByMedicare;
+    }
+
+    // Function to check if a drug is covered by Part D
+    function isCoveredByPartD(uint drugID) public view returns (bool) {
+        return drugs[drugID].isCoveredByPartD;
+    }
+
+    // Function to calculate the deductible amount for a patient
+    function calculateDeductibleAmount(uint patientID, uint drugID) public view returns (uint) {
+        if (isEligibleForDrugBenefit(patients[patientID].patientAddress) && isCoveredByMedicare(drugID) && !isCoveredByPartD(drugID)) {
+            return drugs[drugID].drugPrice * 20 / 100;
+        } else if (isEligibleForDrugBenefit(patients[patientID].patientAddress) && !isCoveredByMedicare(drugID) && isCoveredByPartD(drugID)) {
+            return drugs[drugID].drugPrice * 20 / 100;
+        } else {
+            return 0;
+        }
+    }
+
+    // Function to calculate the premium amount for a patient
+    function calculatePremiumAmount(uint patientID, uint drugID) public view returns (uint) {
+        if (isEligibleForDrugBenefit(patients[patientID].patientAddress) && isCoveredByMedicare(drugID) && !isCoveredByPartD(drugID)) {
+            return drugs[drugID].drugPrice * 30 / 100;
+        } else if (isEligibleForDrugBenefit(patients[patientID].patientAddress) && !isCoveredByMedicare(drugID) && isCoveredByPartD(drugID)) {
+            return drugs[drugID].drugPrice * 30 / 100;
+        } else {
+            return 0;
+        }
+    }
+
+    // Function to check if a patient has met their deductible for a drug
+    function hasMetDeductible(uint patientID, uint drugID) public view returns (bool) {
+        uint deductibleAmount = calculateDeductibleAmount(patientID, drugID);
+        if (patients[patientID].deductibleAmount >= deductibleAmount) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    // Function to check if a patient has met their premium for a drug
+    function hasMetPremium(uint patientID, uint drugID) public view returns (bool) {
+        uint premiumAmount = calculatePremiumAmount(patientID, drugID);
+        if (patients[patientID].premiumAmount >= premiumAmount) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    // Function to check if a patient is eligible for the immunosuppressive drug benefit and has met their deductible and premium
+    function isEligibleForDrugCoverage(uint patientID, uint drugID) public view returns (bool) {
+        if (isEligibleForDrugBenefit(patients[patientID].patientAddress) && hasMetDeductible(patientID, drugID) && hasMetPremium(patientID, drugID)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    // Function to check if a drug is covered by Medicare or Part D
+    function isCovered(uint drugID) public view returns (bool) {
+        if (isCoveredByMedicare(drugID) || isCoveredByPartD(drugID)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+}
+```

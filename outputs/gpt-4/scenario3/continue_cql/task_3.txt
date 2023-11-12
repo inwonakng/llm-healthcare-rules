@@ -1,0 +1,58 @@
+```sol
+pragma solidity >=0.7.0 <0.9.0;
+
+contract TransplantDrugTherapyCoverage {
+
+    // Structs to encapsulate necessary parameters
+    struct MedicarePart {
+        bool active;
+    }
+
+    struct TransplantProcedure {
+        bool isSuccessful;
+        uint256 procedureDate;
+    }
+
+    struct Patient {
+        bool hasESRD;
+        TransplantProcedure[] transplants;
+        MedicarePart partA;
+        MedicarePart partB;
+    }
+
+    uint256 deductible = 226 ether;
+    uint256 premium = 97.10 ether;
+
+    // Function to check patient's eligibility for drug coverage
+    function checkEligibility(Patient memory patient, uint256 date) public view returns (string memory) {
+
+        // Check if patient had a kidney transplant more than 36 months ago
+        for (uint i = 0; i < patient.transplants.length; i++) {
+            if ((date - patient.transplants[i].procedureDate) > 36) {
+
+                // Check if patient has Parts A and B during procedure and drug prescription respectively
+                if(patient.partA.active && patient.partB.active) {
+                    if(patient.hasESRD) {
+                        return "Eligible for Medicare benefit for immunosuppressive drugs. Charges apply.";
+                    } else {
+                        return "Medicare covers your immunosuppressive drugs.";
+                    }
+                } else {
+                    return "Not eligible due to lack of Part A and/or Part B coverage.";
+                }
+            }
+        }
+        return "Not eligible for Medicare benefit.";
+    } 
+
+    // Function to calculate cost of coverage
+    function costOfCoverage(bool hasESRD, uint256 date) public view returns (uint256) {
+        // Calculate cost for patients who had a successful transplant and have ESRD
+        if(hasESRD && (date > 36)) {
+            return (premium * date) + deductible;
+        } else {
+            return 0;
+        }
+    }
+}
+```

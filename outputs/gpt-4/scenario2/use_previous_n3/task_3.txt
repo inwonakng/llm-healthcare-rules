@@ -1,50 +1,53 @@
-```solity
-pragma solidity ^0.8.6;
+```solidity
+pragma solidity >=0.7.0 <0.9.0;
 
 contract MedicareCoverage {
-    
-    // Structs 
-    struct Medicare {
-        bool isPartB;
-        bool coverIVIG;
-        bool coverIVIGCosts;
-        bool coverIVIGAdditionalServices;
-    }
 
     struct Patient {
-        bool hasPrimaryImmuneDeficiency;
-        bool administeredAtHome;
-        bool medicallyAppropriate;
+        bool diagnosedWithPIDD;  // Primary Immune Deficiency Disease
+        bool doctorAppropriatedHomeIVIG;
     }
-    
-    // Functions
-    function updateMedicarePart (boolean partB) public {
-        Medicare.isPartB = partB;
-        if(partB) {
-            Medicare.coverIVIGCosts = true;
-            Medicare.coverIVIGAdditionalServices = false;
+
+    struct Service {
+        bool medicareCoveredIVIG;
+        bool medicarePartBCoveredHomeIVIG;
+        bool medicareCoveredOtherForHomeIVIG;
+    }
+
+    mapping(address => Patient) patients;
+    mapping(address => Service) services;
+
+    function setDiagnosedWithPIDD(address _patientAddress) public {
+        patients[_patientAddress].diagnosedWithPIDD = true;
+    }
+
+    function setDoctorAppropriatedHomeIVIG(address _patientAddress) public {
+        patients[_patientAddress].doctorAppropriatedHomeIVIG = true;
+    }
+
+    function coversIVIG(address _patientAddress) public {
+        if(patients[_patientAddress].diagnosedWithPIDD) {
+            services[_patientAddress].medicareCoveredIVIG = true;
         }
     }
-    
-    function updatePatientData(boolean hasPrimaryImmuneDeficiency, boolean administeredAtHome, boolean medicallyAppropriate) public {
-        Patient.hasPrimaryImmuneDeficiency = hasPrimaryImmuneDeficiency;
-        Patient.administeredAtHome = administeredAtHome;
-        Patient.medicallyAppropriate = medicallyAppropriate;
-        if(hasPrimaryImmuneDeficiency && administeredAtHome && medicallyAppropriate) {
-            Medicare.coverIVIG = true;
+
+    function coversHomeIVIG(address _patientAddress) public {
+        if(patients[_patientAddress].diagnosedWithPIDD && patients[_patientAddress].doctorAppropriatedHomeIVIG) {
+            services[_patientAddress].medicarePartBCoveredHomeIVIG = true;
         }
     }
-    
-    function isIVIGCovered () public view returns (boolean) {
-        return Medicare.coverIVIG;
+
+    function doesNotCoverOtherForHomeIVIG(address _patientAddress) public {
+        if(patients[_patientAddress].diagnosedWithPIDD && patients[_patientAddress].doctorAppropriatedHomeIVIG) {
+            services[_patientAddress].medicareCoveredOtherForHomeIVIG = false;
+        }
     }
-    
-    function isIVIGCostCovered () public view returns (boolean) {
-        return Medicare.coverIVIGCosts;
-    }
-    
-    function isIVIGAdditionalServicesCovered () public view returns (boolean) {
-        return Medicare.coverIVIGAdditionalServices;
+
+    function getCoverage(address _patientAddress) public view returns (bool, bool, bool) {
+        return (services[_patientAddress].medicareCoveredIVIG, services[_patientAddress].medicarePartBCoveredHomeIVIG, services[_patientAddress].medicareCoveredOtherForHomeIVIG);
     }
 }
 ```
+This Solidity code provides a way for coverage determination for IVIG treatment. The 'Patient' struct is used to store information about the patient: if they have been diagnosed with PIDD and if Home IVIG is doctor appropriated. The 'Service' struct stores the information about the coverage by Medicare and Medicare Part B for IVIG, Home IVIG and other services for Home IVIG.
+
+The provided functions allow setting the diagnosed and doctor warranted status for patients, determine coverages based on conditions mentioned in text, and obtain the coverage details for a given patient.

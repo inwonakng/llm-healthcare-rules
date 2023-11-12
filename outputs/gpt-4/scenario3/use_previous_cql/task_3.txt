@@ -1,0 +1,69 @@
+```solidity
+pragma solidity ^0.7.4;
+
+contract MedicareCoverage {
+
+    struct Patient {
+        address id;
+        bool hasPartA;
+        bool hasPartB;
+        bool hasPartD;
+        bool hasOriginalMedicare;
+        bool hasESRD;
+        uint transplantDate;
+        uint successfulKidneyTransplantDate;
+        uint receivedImmunosuppressiveDrugsDate;
+        uint256 premium;
+        uint deductible;
+    }
+
+    struct MedicareBenefits {
+        bool organTransplantCoverage;
+        bool immunosuppressiveDrugCoverage;
+    }
+
+    mapping (address => Patient) patients;
+    mapping (address => MedicareBenefits) benefits;
+
+    function isCoverageForTransplantAndTherapy(Patient memory patient) public view returns(bool){
+        require(benefits[patient.id].organTransplantCoverage == true);
+        require(benefits[patient.id].immunosuppressiveDrugCoverage == true);
+        return true;
+    }
+
+    function isPatientPossessesPartAAndB(Patient memory patient) public view returns(bool) {
+        require(patient.hasPartA && patient.hasPartB);
+        return true;
+    }
+
+    function isDrugsCoverageUnderPartBOrD(Patient memory patient) public view returns(bool) {
+        require(patient.hasPartB || patient.hasPartD);
+        return true;
+    }
+
+    function isEnrollmentInMedicareDrugPlan(Patient memory patient) public view returns(bool){
+        require(patient.hasOriginalMedicare);
+        return true;
+    }
+
+    function endCoverageAfter36MonthsAfterKidneyTransplant(Patient memory patient) public view returns(bool){
+        require(patient.successfulKidneyTransplantDate <= block.timestamp - 36 * 30 days); 
+        return true;
+    }
+
+    function determineLimitedMedicareBenefitEligibility(Patient memory patient) public view returns(bool){
+        require(block.timestamp > patient.successfulKidneyTransplantDate + 36 * 30 days);
+        require(benefits[patient.id].immunosuppressiveDrugCoverage == true);
+        return true;
+    }
+
+    function getBenefitRegistrationProcedure() public pure returns(string memory){
+        return "Call Social Security at 1-877-465-0355. TTY users can dial 1-800-325-0788.";
+    }
+
+    function getCostOfImmunosuppressiveDrugBenefit(Patient memory patient) public view returns(string memory){
+        require(patient.premium == 97.10 ether && patient.deductible == 226 ether);
+        return "The monthly premium for the immunosuppressive drug benefit is 97.10 and the annual deductible is 226. After meeting the deductible, 20% of the Medicare-approved amount will be your responsibility for your immunosuppressive drugs.";
+    }
+}
+```

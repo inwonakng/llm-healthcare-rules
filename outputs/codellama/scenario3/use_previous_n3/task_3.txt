@@ -1,0 +1,120 @@
+Here is the smart contract that implements the above rules:
+```
+pragma solidity ^0.6.0;
+
+contract ImmunosuppressiveDrugCoverage {
+    struct Patient {
+        uint id;
+        string name;
+        string contact;
+        bool hasPartA;
+        bool hasPartB;
+        uint transplantDate;
+        uint drugCoverageEndDate;
+        string immunosuppressiveDrug;
+        string medicareID;
+        bool isCovered;
+    }
+
+    mapping (uint => Patient) public patients;
+    uint public patientCount;
+
+    constructor() public {
+        patientCount = 0;
+    }
+
+    function addPatient(string memory name, string memory contact, bool hasPartA, bool hasPartB, uint transplantDate, uint drugCoverageEndDate, string memory immunosuppressiveDrug, string memory medicareID) public {
+        require(name.length > 0, "Name cannot be blank");
+        require(contact.length > 0, "Contact cannot be blank");
+        require(transplantDate > 0, "Transplant date cannot be blank");
+        require(drugCoverageEndDate > 0, "Drug coverage end date cannot be blank");
+        require(immunosuppressiveDrug.length > 0, "Immunosuppressive drug cannot be blank");
+        require(medicareID.length > 0, "Medicare ID cannot be blank");
+
+        patients[patientCount] = Patient({
+            id: patientCount,
+            name: name,
+            contact: contact,
+            hasPartA: hasPartA,
+            hasPartB: hasPartB,
+            transplantDate: transplantDate,
+            drugCoverageEndDate: drugCoverageEndDate,
+            immunosuppressiveDrug: immunosuppressiveDrug,
+            medicareID: medicareID,
+            isCovered: false
+        });
+
+        patientCount++;
+    }
+
+    function updatePatient(uint patientId, bool hasPartA, bool hasPartB, uint transplantDate, uint drugCoverageEndDate, string memory immunosuppressiveDrug, string memory medicareID) public {
+        require(patientId < patientCount, "Patient does not exist");
+        require(hasPartA || hasPartB, "Patient must have Part A or Part B coverage");
+        require(transplantDate > 0, "Transplant date cannot be blank");
+        require(drugCoverageEndDate > 0, "Drug coverage end date cannot be blank");
+        require(immunosuppressiveDrug.length > 0, "Immunosuppressive drug cannot be blank");
+        require(medicareID.length > 0, "Medicare ID cannot be blank");
+
+        Patient storage patient = patients[patientId];
+        patient.hasPartA = hasPartA;
+        patient.hasPartB = hasPartB;
+        patient.transplantDate = transplantDate;
+        patient.drugCoverageEndDate = drugCoverageEndDate;
+        patient.immunosuppressiveDrug = immunosuppressiveDrug;
+        patient.medicareID = medicareID;
+        patient.isCovered = false;
+    }
+
+    function isCovered(uint patientId) public view returns (bool) {
+        require(patientId < patientCount, "Patient does not exist");
+
+        Patient memory patient = patients[patientId];
+        if (patient.hasPartA && patient.hasPartB && patient.transplantDate > 0 && patient.drugCoverageEndDate > 0 && patient.immunosuppressiveDrug.length > 0 && patient.medicareID.length > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    function getCoverageEndDate(uint patientId) public view returns (uint) {
+        require(patientId < patientCount, "Patient does not exist");
+
+        Patient memory patient = patients[patientId];
+        return patient.drugCoverageEndDate;
+    }
+
+    function getMedicareID(uint patientId) public view returns (string memory) {
+        require(patientId < patientCount, "Patient does not exist");
+
+        Patient memory patient = patients[patientId];
+        return patient.medicareID;
+    }
+
+    function getPatientCount() public view returns (uint) {
+        return patientCount;
+    }
+}
+```
+This contract has several functions:
+
+1. `addPatient`: This function adds a new patient to the contract and sets their coverage status based on their input.
+2. `updatePatient`: This function updates the information for an existing patient.
+3. `isCovered`: This function returns whether a patient is covered based on their medicare ID and immunosuppressive drug.
+4. `getCoverageEndDate`: This function returns the date when the patient's coverage ends.
+5. `getMedicareID`: This function returns the patient's medicare ID.
+6. `getPatientCount`: This function returns the number of patients currently in the contract.
+
+The contract also uses a struct called `Patient` to store the information for each patient. The struct has the following fields:
+
+* `id`: The patient's ID number.
+* `name`: The patient's name.
+* `contact`: The patient's contact information.
+* `hasPartA`: Whether the patient has Part A coverage.
+* `hasPartB`: Whether the patient has Part B coverage.
+* `transplantDate`: The date of the patient's transplant procedure.
+* `drugCoverageEndDate`: The date when the patient's drug coverage ends.
+* `immunosuppressiveDrug`: The name of the patient's immunosuppressive drug.
+* `medicareID`: The patient's medicare ID number.
+* `isCovered`: Whether the patient is covered based on their medicare ID and immunosuppressive drug.
+
+In summary, this contract provides a way to manage the coverage status of patients who received a transplant and are taking immunosuppressive drugs. It allows for the addition, updating, and querying of patient information, as well as the calculation of the patient's coverage end date and medicare ID.

@@ -1,0 +1,96 @@
+```
+library Medicare_Transplant_Drug_Therapy_Coverage
+
+using QDM
+
+logic:
+    // Requirement 1: You must have Part A at the time of the covered transplant.
+    define "Covered_Transplant_Part_A":
+        ["Procedure: Organ Transplantation"]
+            Year ofPerforms:  Value in { Medicare_Part_A.Date_of_Service }
+
+    // Requirement 2: You must have Part B at the time you get immunosuppressive drugs.
+    define "Immunosuppressive_Drugs_Part_B":
+        exists ["Medication, Order: Immunomodulator Medication"]
+            Ordered: Class = "Medication, Order"
+            during ["Measurement Period"]
+            with ["Medication, Order: Drug"] RelatedBy
+                ["Medication, Order: Immunomodulator Medication"].InferredDrug
+            where ["Medication, Order: Substance Administration"]
+                reason:Class.value in {"Medication administration coded specified", 
+                                        "Substance Administered: Medication Bin"}
+                and ["Medication, Order: Substance Administration"]
+                    ["Procedure, Performed: Medication, Administered"]
+                        during ["Measurement Period"]
+            return ["Medication, Order: Immunomodulator Medication"]
+
+    // Requirement 3: If Part B doesn't cover immunosuppressive drugs, Medicare drug coverage (Part D) can be obtained.
+    define "Immunosuppressive_Drugs_Part_D":
+        exists ["Medication, Order: Immunomodulator Medication"]
+            Ordered: Class = "Medication, Order"
+            during ["Measurement Period"]
+            with ["Medication, Order: Drug"] RelatedBy
+                ["Medication, Order: Immunomodulator Medication"].InferredDrug
+            where ["Medication, Order: Substance Administration"]
+                reason:Class.value in {"Medication administration coded specified", 
+                                        "Substance Administered: Medication Bin"}
+                and ["Medication, Order: Substance Administration"]
+                    ["Procedure, Performed: Medication, Administered"]
+                        during ["Measurement Period"]
+            return ["Medication, Order: Immunomodulator Medication"]
+
+    // Requirement 4: Original Medicare beneficiaries can join a Medicare drug plan to get drug coverage.
+    define "Medicare_Drug_Plan":
+        exists ["Coverage: Medicare Part D Plan"]
+            status: Class, value in {"Active", "Reinstated", "Transferred"}
+
+    // Requirement 5: Medicare coverage, including immunosuppressive drug coverage, ends 36 months after a successful kidney transplant for individuals with Medicare due to End-Stage Renal Disease (ESRD).
+    define "ESRD_Kidney_Transplant_Coverage_Ends":
+        ["Intellectual Product: Medication Administration"], ["Encounter, Performed: Medication Administration"]
+            RelevantDatetime: Value in {"180 Days After", "36 Months After"} ["Procedure: Kidney Transplant"]
+
+    // Requirement 6: Medicare offers a benefit for immunosuppressive drugs if certain conditions are met.
+    define "Immunosuppressive_Drug_Benefit":
+        ["Medication, Order: Immunomodulator Medication"]
+            where ["Medication, Order: Substance Administration"]
+                reason:Class.value in {"Medication administration coded specified", 
+                                        "Substance Administered: Medication Bin"}
+                and ["Medication, Order: Substance Administration"]
+                    ["Procedure, Performed: Medication, Administered"]
+                        during ["Measurement Period"]
+            return ["Medication, Order: Immunomodulator Medication"]
+
+    // Requirement 7: The benefit only covers immunosuppressive drugs and doesn't substitute for full health coverage.
+    define "Immunosuppressive_Drugs_Benefit_Only":
+        ["Intellectual Product: Medication Administration"], ["Encounter, Performed: Medication Administration"]
+            RelevantDatetime: ["Medication, Order: Immunomodulator Medication"]
+            RelevantDatetime: during ["Measurement Period"]
+            Status: Adjudication.Status in {"Adjudicated", "Adjudication Complete"}
+
+    // Requirement 8: If eligible, individuals can sign up for this benefit after their Part A coverage ends by contacting Social Security.
+    define "Eligible_Immunosuppressive_Drug_Benefit":
+        ["Medication, Order: Immunomodulator Medication"]
+            return ["Medication, Order: Immunomodulator Medication"]
+
+    // Requirement 9: In 2023, the monthly premium for the immunosuppressive drug benefit is $97.10 and there is a $226 deductible.
+    define "Immunosuppressive_Drug_Benefit_Cost":
+        exists ["Coverage: Pharmaceutical Benefit Rider"], ["Encounter, Performed: Medication Administration"]
+            ["Intellectual Product: Medication Administration"]
+                TotalCostPaid: Value > 0,
+                Reason: Value in {"Premium"},
+                Reason: Value in {"DEDUCTIBLE"},
+            RelevantDatetime: 
+                ["Medication, Order: Immunomodulator Medication"]
+                and during {"measurement period"}
+        
+    // Requirement 10: After meeting the deductible, individuals will pay 20% of the Medicare-approved amount for their immunosuppressive drugs.
+    define "Immunosuppressive_Drugs_Cost_Sharing":
+        exists ["Coverage: Pharmaceutical Benefit Rider"]
+            ["Intellectual Product: Medication Administration"]
+                TotalCostPaid: Value > 0,
+                Reason: Value in {"Coinsurance: 20%"},
+            RelevantDatetime: ["Medication, Order: Immunomodulator Medication"]
+                and during ["measurement period"]
+
+end
+```

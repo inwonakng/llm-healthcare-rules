@@ -1,0 +1,88 @@
+```
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+contract MedicareCoverageTransplantDrugTherapy {
+    
+    struct MedicareCoverage {
+        bool helpedPayForTransplant;
+        bool hasPartA;
+        bool hasPartB;
+        bool partBDoesntCoverDrugs;
+        bool hasOriginalMedicare;
+        bool hasESRDCoverage;
+        bool lostPartACoverage;
+        bool hasLimitedCoverageBenefit;
+        bool qualifiesForBenefit;
+        bool hasQualifiedHealthCoverage;
+        bool signedUpForBenefit;
+        bool hasMetDeductible;
+    }
+    
+    function checkCoverage(MedicareCoverage memory coverage) public pure returns (bool) {
+        if (coverage.helpedPayForTransplant && coverage.hasPartA && coverage.hasPartB) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    function checkDrugCoverage(MedicareCoverage memory coverage) public pure returns (bool) {
+        if (coverage.partBDoesntCoverDrugs || coverage.hasOriginalMedicare) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    function checkESRDTermination(MedicareCoverage memory coverage) public pure returns (bool) {
+        if (coverage.hasESRDCoverage) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    function checkLimitedBenefit(MedicareCoverage memory coverage) public pure returns (bool) {
+        if (coverage.lostPartACoverage && !coverage.hasQualifiedHealthCoverage && coverage.hasLimitedCoverageBenefit) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    function signForBenefit(MedicareCoverage memory coverage) public pure returns (bool) {
+        if (coverage.losesPartACoverage && coverage.qualifiesForBenefit) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    function checkPremium(MedicareCoverage memory coverage) public pure returns (uint) {
+        if (coverage.signedUpForBenefit) {
+            return 9710;
+        } else {
+            return 0;
+        }
+    }
+    
+    function checkDeductible(MedicareCoverage memory coverage) public pure returns (uint) {
+        if (coverage.signedUpForBenefit) {
+            return 226;
+        } else {
+            return 0;
+        }
+    }
+    
+    function checkPayment(MedicareCoverage memory coverage) public pure returns (uint) {
+        if (coverage.hasMetDeductible) {
+            return 20;
+        } else {
+            return 0;
+        }
+    }
+    
+}
+```
+```

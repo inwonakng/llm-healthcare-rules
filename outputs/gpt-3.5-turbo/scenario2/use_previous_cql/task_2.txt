@@ -1,0 +1,40 @@
+```
+library Medicare_Coverage_IVIG is
+
+    define "Primary Immune Deficiency Disease Diagnosis":
+        exists [Condition: Condition] 
+            (Condition.code in "primary immune deficiency disease" 
+            and Condition.clinicalStatus = "active")
+
+    define "Medically Appropriate for IVIG Treatment at Home":
+        exists [Procedure: Procedure]
+            (Procedure.code in "intravenous immune globulin administration" 
+            and Procedure.reason in "Primary Immune Deficiency Disease Diagnosis" 
+            and Procedure.performer.target in "patient"
+            and Procedure.reason.code in "primary immune deficiency disease"
+            and Procedure.location.target in "home")
+            
+    define "Coverage for IVIG Treatment":
+        exists [Service: Service]
+            (Service.type in "intravenous immune globulin" 
+            and Service.procedure.target = "Medically Appropriate for IVIG Treatment at Home")
+    
+    define "Coverage for IVIG Cost":
+        exists [Coverage: Coverage]
+            (Coverage.type in "Medicare Part B" 
+            and Coverage.service.target = "Coverage for IVIG Treatment")
+    
+    define "No Coverage for Additional Items and Services":
+        not exists [Service: Service]
+            (Service.type in "other items and services" 
+            and Service.procedure.target = "Medically Appropriate for IVIG Treatment at Home")
+
+    define "IVIG Coverage Decision":
+        ["Primary Immune Deficiency Disease Diagnosis" => true] 
+            and ["Medically Appropriate for IVIG Treatment at Home" => true]
+            and ["Coverage for IVIG Treatment" => true]  
+            and ["Coverage for IVIG Cost" => true] 
+            and ["No Coverage for Additional Items and Services" => true]
+
+end library
+```

@@ -1,24 +1,25 @@
-```@prefix : <http://healthcare.com/> .
+```
+@prefix : <http://example.org/> .
 
 {
-    :Patient a :PatientWithPrimaryImmuneDeficiency;
-              :AdministeredAtHome true;
-              :MedicallyAppropriate true.
+  :Patient a :Person;
+    :diagnosedWith :PrimaryImmuneDeficiencyDisease.
 } => {
-    :Medicare :CoverIVIG true.
+  :Medicare :covers :IVIG.
 }.
 
 {
-    :Medicare a :MedicarePartB.
+  :Patient a :Person;
+    :diagnosedWith :PrimaryImmuneDeficiencyDisease;
+    :doctorDetermines :MedicallyAppropriateForHomeIVIG.
 } => {
-    :Medicare :CoverIVIGCosts true.
+  :MedicarePartB :covers :HomeIVIG.
 }.
 
 {
-    :Patient a :PatientWithPrimaryImmuneDeficiency;
-              :AdministeredAtHome true;
-    :Medicare a :MedicarePartB.
+  :IVIG a :MedicalTreatment;
+    :providedAt :Home;
 } => {
-    :Medicare :CoverIVIGAdditionalServices false.
+  :Medicare :doesNotCover :OtherItemsAndServicesForHomeIVIG.
 }.
 ```

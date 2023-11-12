@@ -1,0 +1,111 @@
+``
+
+In order to implement the requirements described in the natural language text and the CQL logical syntax, we need to define a series of functions that will determine if the patient meets the conditions outlined in the text. We can achieve this by creating a library of named expressions, each one representing a specific condition.
+
+The first named expression, "HasRequiredCoverage", checks if the patient has both Part A and Part B coverage. We use a let expression to extract the coverage information from the patient's record and then use a where clause to determine if both Parts A and B are present.
+
+The second named expression, "HasESRDCoverage", checks if the patient has Medicare through ESRD. We use a let expression to extract the coverage information from the patient's record and then use a where clause to determine if the patient has ESRD.
+
+The third named expression, "HasOtherCoverage", checks if the patient has any other health coverage. We use a let expression to extract the coverage information from the patient's record and then use a where clause to determine if the patient has other coverage.
+
+The fourth named expression, "IsBenefitEligible", checks if the patient is eligible for the benefit. We use a let expression to extract the patient's age and then use a where clause to determine if the patient is younger than 65.
+
+The fifth named expression, "IsBenefitApplicable", checks if the patient is applicable for the benefit. We use a let expression to extract the patient's coverage information and then use a where clause to determine if the patient has Medicare through ESRD.
+
+The sixth named expression, "IsDeductibleMet", checks if the patient has met their Medicare deductible. We use a let expression to extract the patient's deductible information and then use a where clause to determine if the patient has met the deductible.
+
+The seventh named expression, "IsPremiumPaid", checks if the patient has paid their Medicare premium. We use a let expression to extract the patient's premium information and then use a where clause to determine if the patient has paid the premium.
+
+The eighth named expression, "IsCopayPaid", checks if the patient has paid their Medicare copay. We use a let expression to extract the patient's copay information and then use a where clause to determine if the patient has paid the copay.
+
+Once all of the named expressions have been evaluated, we can use a final decision function to determine if the patient meets all of the conditions outlined in the text. We use a where clause to determine if the patient has required coverage, is eligible for the benefit, and has met all of the necessary conditions. If all of these conditions are met, the patient is eligible for the benefit.
+
+Here is the code for the Medicare Transplant Drug Coverage library:
+```
+library Medicare Transplant Drug Coverage
+
+uses
+  PartACoverage,
+  PartBCoverage,
+  MedicareDrugs,
+  ESRD,
+  OtherCoverage,
+  IsBenefitEligible,
+  IsBenefitApplicable,
+  IsDeductibleMet,
+  IsPremiumPaid,
+  IsCopayPaid
+
+definition function HasRequiredCoverage
+  let PartACoverage = patient.getCoverage()['Part A']
+  let PartBCoverage = patient.getCoverage()['Part B']
+  let medicareDrugs = patient.getMedications()['immunosuppressive drugs']
+
+where PartACoverage and PartBCoverage and (medicareDrugs or patient.hasMedicareDrugPlan())
+end
+
+definition function HasESRDCoverage
+  let medicare = patient.getCoverage()['Medicare']
+  let esrd = patient.getConditions()['ESRD']
+
+where medicare and esrd
+end
+
+definition function HasOtherCoverage
+  let otherCoverage = patient.getCoverage()['Other']
+
+where otherCoverage
+end
+
+definition function IsBenefitEligible
+  let partACoverage = patient.getCoverage()['Part A']
+  let partBCoverage = patient.getCoverage()['Part B']
+  let esrd = patient.getConditions()['ESRD']
+  let patientAge = patient.getAge()
+
+where partACoverage and partBCoverage and esrd and patientAge < 65
+end
+
+definition function IsBenefitApplicable
+  let medicare = patient.getCoverage()['Medicare']
+  let esrd = patient.getConditions()['ESRD']
+  let partACoverage = patient.getCoverage()['Part A']
+
+where medicare and esrd and partACoverage
+end
+
+definition function IsDeductibleMet
+  let medicare = patient.getCoverage()['Medicare']
+  let medicareDeductible = patient.getCoverage()['Deductible']
+
+where medicare and medicareDeductible
+end
+
+definition function IsPremiumPaid
+  let medicare = patient.getCoverage()['Medicare']
+  let medicarePremium = patient.getCoverage()['Premium']
+
+where medicare and medicarePremium
+end
+
+definition function IsCopayPaid
+  let medicare = patient.getCoverage()['Medicare']
+  let medicareCopay = patient.getCoverage()['Copay']
+
+where medicare and medicareCopay
+end
+
+definition function FinalDecision
+  let hasRequiredCoverage = HasRequiredCoverage()
+  let hasESRDCoverage = HasESRDCoverage()
+  let hasOtherCoverage = HasOtherCoverage()
+  let isBenefitEligible = IsBenefitEligible()
+  let isBenefitApplicable = IsBenefitApplicable()
+  let isDeductibleMet = IsDeductibleMet()
+  let isPremiumPaid = IsPremiumPaid()
+  let isCopayPaid = IsCopayPaid()
+
+where hasRequiredCoverage and (hasESRDCoverage or hasOtherCoverage) and (isBenefitEligible or isBenefitApplicable) and (isDeductibleMet or isPremiumPaid or isCopayPaid)
+end
+```
+This code defines a library of named expressions that can be used to determine if a patient is eligible for the Medicare transplant drug coverage benefit. It includes functions for checking if the patient has required coverage, is eligible for the benefit, and has met all of the necessary conditions.

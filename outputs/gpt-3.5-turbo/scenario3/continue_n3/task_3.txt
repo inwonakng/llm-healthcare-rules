@@ -1,161 +1,104 @@
-```solidity
+```
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
 contract MedicareCoverage {
-    struct Person {
-        bool hasPartA;
-        bool hasPartB;
-        bool isEligible;
-        bool hasMetDeductible;
+    
+    enum Part { A, B, D }
+    enum HealthCoverage { GroupHealthPlan, TRICARE, Medicaid }
+    
+    struct Transplant {
+        bool isCovered;
+        Part partA;
+        Part partB;
+        Part partD;
     }
     
-    struct Coverage {
-        uint256 premiumAmount;
-        uint256 deductibleAmount;
-        uint256 coveragePercentage;
+    struct Immunotherapy {
+        bool isCovered;
+        Part partB;
+        Part partD;
     }
     
-    mapping(address => Person) public persons;
-    
-    Coverage public coverage2023;
-    
-    constructor() {
-        coverage2023 = Coverage({
-            premiumAmount: 9710,
-            deductibleAmount: 226,
-            coveragePercentage: 20
-        });
+    struct KidneyTransplantBenefit {
+        bool isAvailable;
+        bool isSubstitute;
+        uint premium;
+        uint deductible;
+        uint paymentPercentage;
     }
     
-    function setPersonPartA(address _person, bool _hasPartA) external {
-        persons[_person].hasPartA = _hasPartA;
+    mapping(address => Transplant) public transplantCoverage;
+    mapping(address => Immunotherapy) public immunotherapyCoverage;
+    mapping(address => KidneyTransplantBenefit) public kidneyTransplantBenefit;
+    
+    function addTransplantCoverage(address beneficiary, Part partA, Part partB, Part partD) external {
+        transplantCoverage[beneficiary] = Transplant(true, partA, partB, partD);
     }
     
-    function setPersonPartB(address _person, bool _hasPartB) external {
-        persons[_person].hasPartB = _hasPartB;
+    function addImmunotherapyCoverage(address beneficiary, Part partB, Part partD) external {
+        immunotherapyCoverage[beneficiary] = Immunotherapy(true, partB, partD);
     }
     
-    function setPersonEligibility(address _person, bool _isEligible) external {
-        persons[_person].isEligible = _isEligible;
+    function addKidneyTransplantBenefit(address beneficiary, bool isAvailable, bool isSubstitute, uint premium, uint deductible, uint paymentPercentage) external {
+        kidneyTransplantBenefit[beneficiary] = KidneyTransplantBenefit(isAvailable, isSubstitute, premium, deductible, paymentPercentage);
     }
     
-    function setPersonDeductible(address _person, bool _hasMetDeductible) external {
-        persons[_person].hasMetDeductible = _hasMetDeductible;
+    function getTransplantCoverage(address beneficiary) external view returns (bool) {
+        return transplantCoverage[beneficiary].isCovered;
     }
     
-    function getCoveragePremium() external view returns (uint256) {
-        return coverage2023.premiumAmount;
+    function getImmunotherapyCoverage(address beneficiary) external view returns (bool) {
+        return immunotherapyCoverage[beneficiary].isCovered;
     }
     
-    function getCoverageDeductible() external view returns (uint256) {
-        return coverage2023.deductibleAmount;
+    function getKidneyTransplantBenefit(address beneficiary) external view returns (bool) {
+        return kidneyTransplantBenefit[beneficiary].isAvailable;
     }
     
-    function getCoveragePercentage() external view returns (uint256) {
-        return coverage2023.coveragePercentage;
-    }
-    
-    function checkCoverage(address _person) external view returns (bool) {
-        Person memory person = persons[_person];
-        
-        if (person.hasPartA && person.hasPartB) {
-            return true;
-        } else {
-            return false;
+    function getCoverageAfter36Months(address beneficiary) external view returns (bool) {
+        if (transplantCoverage[beneficiary].partA == Part.A && isESRD(beneficiary)) {
+            // Check if 36 months have passed after a successful kidney transplant
+            return (block.timestamp >= (36 * 30 days));
         }
+        return false;
     }
     
-    function checkImmunosuppressiveDrugCoverage(address _person) external view returns (bool) {
-        Person memory person = persons[_person];
-        
-        if (person.hasPartB) {
-            return true;
-        } else {
-            return false;
-        }
+    function isESRD(address beneficiary) private view returns (bool) {
+        // Check if beneficiary has Medicare due to End-Stage Renal Disease (ESRD)
+        // Logic to check ESRD status
+        return true;
     }
     
-    function checkDrugPlanCoverage(address _person) external view returns (bool) {
-        Person memory person = persons[_person];
-        
-        if (!person.hasPartB) {
-            return true;
-        } else {
-            return false;
+    function getImmunosuppressiveDrugCoverage(address beneficiary) external view returns (bool) {
+        if (transplantCoverage[beneficiary].isCovered) {
+            // Part B or Part D covers immunosuppressive drugs
+            return (transplantCoverage[beneficiary].partB == Part.B || transplantCoverage[beneficiary].partD == Part.D);
         }
+        return false;
     }
     
-    function checkKidneyTransplantCoverage(address _person) external view returns (bool) {
-        Person memory person = persons[_person];
-        
-        if (person.isEligible) {
-            return true;
-        } else {
-            return false;
+    function getPremiumAmount(address beneficiary) external view returns (uint) {
+        if (kidneyTransplantBenefit[beneficiary].isAvailable) {
+            return kidneyTransplantBenefit[beneficiary].premium;
         }
+        return 0;
     }
     
-    function checkCoverageAfterTransplant(address _person) external view returns (bool) {
-        Person memory person = persons[_person];
-        
-        if (person.isEligible) {
-            return true;
-        } else {
-            return false;
+    function getDeductibleAmount(address beneficiary) external view returns (uint) {
+        if (kidneyTransplantBenefit[beneficiary].isAvailable) {
+            return kidneyTransplantBenefit[beneficiary].deductible;
         }
+        return 0;
     }
     
-    function checkPartialMedicareCoverageBenefit(address _person) external view returns (bool) {
-        Person memory person = persons[_person];
-        
-        if (person.isEligible) {
-            return true;
-        } else {
-            return false;
+    function getPaymentPercentage(address beneficiary) external view returns (uint) {
+        if (kidneyTransplantBenefit[beneficiary].isAvailable) {
+            return kidneyTransplantBenefit[beneficiary].paymentPercentage;
         }
+        return 0;
     }
-    
-    function checkBenefitSubstitute(address _person) external view returns (bool) {
-        Person memory person = persons[_person];
-        
-        if (!person.isEligible) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-    
-    function signUpForBenefit(address _person) external view returns (bool) {
-        Person memory person = persons[_person];
-        
-        if (!person.hasPartA) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-    
-    function checkCoverageYear(address _person) external view returns (bool) {
-        Person memory person = persons[_person];
-        
-        if (!person.hasPartA) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-    
-    function checkPersonQualification(address _person) external view returns (bool) {
-        Person memory person = persons[_person];
-        
-        if (person.isEligible) {
-            return true;
-        } else {
-            return false;
-        }
-    }
+
 }
 ```
-
-This Solidity smart contract implements the conditions described in the previous conversation regarding Medicare coverage. It includes structs to store person and coverage information. The contract allows setting the person's Part A, Part B, eligibility, and deductible status. It also provides functions to retrieve coverage details such as premium amount, deductible amount, and coverage percentage. Additionally, it has various functions to check eligibility and coverage based on the provided person's information.
+Note: This is a basic implementation of a smart contract to demonstrate how the logic described in the natural language text can be translated into Solidity code. The contract contains mappings to store coverage information for organ transplant, immunotherapy, and kidney transplant benefits for beneficiaries. It also includes functions to add coverage information and get coverage details for each beneficiary. The actual implementation may require additional modifications and validations based on the specific requirements and context.

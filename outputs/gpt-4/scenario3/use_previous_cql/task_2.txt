@@ -1,0 +1,56 @@
+```
+library MedicareCoverageRules
+
+using FHIR version '4.0.1'
+
+context Patient 
+
+define CoverageForTransplantAndTherapy:
+    exists ([ExplanationOfBenefit: "Medicare"] EOB 
+        where EOB.item.procedure.exists(procedure 
+            where procedure.type.text.value in 'Organ Transplant')) 
+        and exists ([Claim: 'immunosuppressive drugs'] Claim 
+            where Claim.payer.exists(payer 
+                where payer.reference.display.value = 'Medicare'))
+
+define PatientPossessesPartAAndB:
+    exists ([Coverage: 'Medicare Part A'] CoverageA 
+        where Coverage.period contains Period() 
+        from 'transplant date' to 'immunosuppressive drugs received date') 
+        and exists ([Coverage: 'Medicare Part B'] CoverageB 
+            where CoverageB.period.start.value >= 'immunosuppressive drugs received date')
+
+define DrugsCoverageUnderPartBOrD:
+    exists ([Coverage: 'Medicare Part B, Medicare Part D'] CoverageBD 
+        where CoverageBD.type.text.value in 'immunosuppressive drugs')
+
+define EnrollmentInMedicareDrugPlan:
+    exists ([EnrollmentResponse: 'Medicare Drug Plan'] drugPlan 
+        where drugPlan.status in 'active' and drugPlan.insurance in 'Original Medicare')
+
+define EndCoverageAfter36MonthsAfterKidneyTransplant:
+    if today() > 'start date of kidney transplant' + 36 months 
+        then not exists ([Coverage: 'Medicare'] Coverage 
+            where Coverage.period contains Interval() 
+            from 'start date of kidney transplant' + 36 months to 'today()') 
+    else true
+
+define LimitedMedicareBenefitEligibility:
+    exists ([Coverage: 'group health plan', 'TRICARE', 'Medicaid'] LimitedCoverage 
+        where LimitedCoverage.period.start >= 'Organ Transplant' +36 months) 
+        and exists ([Claim: 'immunosuppressive drugs'] Claim 
+            where Claim.payer.reference.display.value = 'Medicare')
+
+define BenefitRegistrationProcedure:
+    'Call Social Security at 1-877-465-0355. TTY users can dial 1-800-325-0788.'
+
+define CostOfImmunosuppressiveDrugBenefit:
+    let 
+        premium = 97.10 USD, 
+        deductible = 226 USD 
+    in 
+        'The monthly premium for the immunosuppressive drug benefit is '
+        + ToString(premium) + ' and the annual deductible is ' 
+        + ToString(deductible) 
+        + '. After meeting the deductible, 20% of the Medicare-approved amount will be your responsibility for your immunosuppressive drugs.'
+```

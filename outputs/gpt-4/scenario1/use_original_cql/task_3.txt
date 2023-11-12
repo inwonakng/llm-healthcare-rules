@@ -1,0 +1,48 @@
+```sol
+pragma solidity >=0.4.22 <0.9.0;
+
+contract MedicareCover {
+    
+    struct Patient {
+        string name;
+        bool isWoman;
+        bool hasOsteoporosis;
+        bool meetsHomeHealthBenefit;
+        bool hasFractureFromOsteoporosis;
+        bool cannotSelfInject;
+    }
+    
+    struct NurseOrAide {
+        string name;
+        bool isAvailable;
+    }
+    
+    mapping(address => Patient) public patients;
+    mapping(address => NurseOrAide) public nurseOrAides;
+    
+    function isCovered(address _patientAddress, address _nurseOrAideAddress) public view returns (string memory) {
+        
+        //Check if patient meets all condition
+        if( patients[_patientAddress].isWoman == true && 
+            patients[_patientAddress].hasOsteoporosis == true && 
+            patients[_patientAddress].meetsHomeHealthBenefit == true && 
+            patients[_patientAddress].hasFractureFromOsteoporosis == true && 
+            patients[_patientAddress].cannotSelfInject == true){
+                
+                //Check if Nurse or Aide is available    
+                if(nurseOrAides[_nurseOrAideAddress].isAvailable == true ){
+                    return "Medicare covers injectable osteoporosis drugs";
+                }
+                else{
+                    return "Medicare does not cover for injectable osteoporosis drugs as Nurse/Aide not available";
+                }
+                
+            } 
+        else{
+            return "Medicare does not cover for injectable osteoporosis drugs as patient does not meet all conditions";
+        }
+            
+    }
+}
+```
+This smart contract verifies if a patient's condition is covered under Medicare for injectable osteoporosis drugs. It checks if the patient meets all the condition and if there's a Nurse or Aide available to administer the injection. Then it returns whether or not the patient's condition is covered based on those conditions.

@@ -1,0 +1,42 @@
+```solidity
+pragma solidity ^0.8.0;
+
+contract MedicareContract {
+    
+    // Represent patient with primary immune deficiency disease
+    struct Patient {
+        string name;
+        bool hasPrimaryImmuneDeficiency;
+        bool doctorApprovalForHomeIVIG;
+    }
+    
+    mapping (address => Patient) public patients;
+
+    function getIVIGCoverage(address _patientAddress) public view returns(string memory) {
+        
+        Patient memory patient = patients[_patientAddress];
+        
+        // Check if patient has a primary immune deficiency
+        require(patient.hasPrimaryImmuneDeficiency, "Patient is not eligible for IVIG coverage");
+        
+        // If patient has approval from doctor for home IVIG
+        if(patient.doctorApprovalForHomeIVIG) {
+            return "Medicare Part B covers IVIG, but doesn’t pay for other items and services related to you getting the IVIG at home.";
+        } else {
+            return "Doctor approval required for home IVIG coverage.";
+        }        
+    }
+    
+    // Add Patient
+    function addPatient(address _patientAddress, string memory _name, bool _hasPrimaryImmuneDeficiency, bool _doctorApprovalForHomeIVIG) public {
+        patients[_patientAddress] = Patient(_name, _hasPrimaryImmuneDeficiency, _doctorApprovalForHomeIVIG);
+    }
+}
+```
+This Solidity smart contract includes a `Patient` struct to represent each patient with a primary immune deficiency disease. The struct includes attributes such as `hasPrimaryImmuneDeficiency` and `doctorApprovalForHomeIVIG` to ensure that the conditions mentioned in the natural language text are covered and implemented.
+
+A mapping `patients` is used to map each patient's address to their respective `Patient` struct.
+
+The function `getIVIGCoverage` is used to determine what coverage a patient is eligible for based on their diagnosis and doctor's approval for home IVIG. The function returns a string indicating the patient's coverage.
+
+Finally, the `addPatient` function is used to add a new patient to the `patients` mapping, requiring all the information needed to determine eligibility for coverage.

@@ -1,0 +1,105 @@
+```
+**CQL Library: Medicare Transplant Drug Coverage**
+
+**Named Expression 1: HasRequiredCoverage**
+
+define function HasRequiredCoverage:
+
+let PartACoverage = patient.getCoverage()['Part A']
+let PartBCoverage = patient.getCoverage()['Part B']
+let medicareDrugs = patient.getMedications()['immunosuppressive drugs']
+
+where PartACoverage and PartBCoverage and (medicareDrugs or patient.hasMedicareDrugPlan())
+
+**Named Expression 2: HasESRDCoverage**
+
+define function HasESRDCoverage:
+
+let medicare = patient.getCoverage()['Medicare']
+let esrd = patient.getConditions()['ESRD']
+
+where medicare and esrd
+
+**Named Expression 3: HasOtherCoverage**
+
+define function HasOtherCoverage:
+
+let otherCoverage = patient.getCoverage()['Other']
+
+where otherCoverage
+
+**Named Expression 4: IsBenefitEligible**
+
+define function IsBenefitEligible:
+
+let partACoverage = patient.getCoverage()['Part A']
+let partBCoverage = patient.getCoverage()['Part B']
+let esrd = patient.getConditions()['ESRD']
+let patientAge = patient.getAge()
+
+where partACoverage and partBCoverage and esrd and patientAge < 65
+
+**Named Expression 5: IsBenefitApplicable**
+
+define function IsBenefitApplicable:
+
+let medicare = patient.getCoverage()['Medicare']
+let esrd = patient.getConditions()['ESRD']
+let partACoverage = patient.getCoverage()['Part A']
+
+where medicare and esrd and partACoverage
+
+**Named Expression 6: IsDeductibleMet**
+
+define function IsDeductibleMet:
+
+let medicare = patient.getCoverage()['Medicare']
+let medicareDeductible = patient.getCoverage()['Deductible']
+
+where medicare and medicareDeductible
+
+**Named Expression 7: IsPremiumPaid**
+
+define function IsPremiumPaid:
+
+let medicare = patient.getCoverage()['Medicare']
+let medicarePremium = patient.getCoverage()['Premium']
+
+where medicare and medicarePremium
+
+**Named Expression 8: IsCopayPaid**
+
+define function IsCopayPaid:
+
+let medicare = patient.getCoverage()['Medicare']
+let medicareCopay = patient.getCoverage()['Copay']
+
+where medicare and medicareCopay
+
+**Final Decision:**
+
+define function FinalDecision:
+
+let hasRequiredCoverage = HasRequiredCoverage()
+let hasESRDCoverage = HasESRDCoverage()
+let hasOtherCoverage = HasOtherCoverage()
+let isBenefitEligible = IsBenefitEligible()
+let isBenefitApplicable = IsBenefitApplicable()
+let isDeductibleMet = IsDeductibleMet()
+let isPremiumPaid = IsPremiumPaid()
+let isCopayPaid = IsCopayPaid()
+
+where hasRequiredCoverage and (hasESRDCoverage or hasOtherCoverage) and (isBenefitEligible or isBenefitApplicable) and (isDeductibleMet or isPremiumPaid or isCopayPaid)
+
+**Satisfying Example:**
+
+* Patient has Part A coverage
+* Patient has Part B coverage
+* Patient has immunosuppressive drugs
+* Patient has Medicare through ESRD
+* Patient has other health coverage
+* Patient is under the age of 65
+* Patient has met the Medicare deductible
+* Patient has paid the Medicare premium
+* Patient has paid the Medicare copay
+```

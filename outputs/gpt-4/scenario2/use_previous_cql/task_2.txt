@@ -1,0 +1,26 @@
+```
+library IVIGMedicareCoverage version '1.0'
+
+using QDM version '5.5'
+
+context Patient
+
+define "Primary Immune Deficiency":
+  exists ["Diagnosis": "Primary Immune Deficiency Disease"] DiagnosisReceived
+
+define "Physician's Approval":
+  exists ["Encounter, Performed": "Primary Care Visit"] where authorDatetime.value = "practitioner"
+
+define "IVIG Covered":
+  "Primary Immune Deficiency" and "Physician's Approval"
+
+define "Expenses Handled by Medicare Part B":
+  ["Medication, Administered": "IVIG"] IVIGadministered
+  where IVIGadministered.relevantPeriod ends during "Measurement Period"
+
+define "Medicare Part B Non-Covered Items":
+  not ["Supply, Delivered": "Items for home-based IVIG administration"] during "Measurement Period"
+
+define "Final IVIG Medicare Coverage Decision":
+  "IVIG Covered" and "Expenses Handled by Medicare Part B" and "Medicare Part B Non-Covered Items"
+```

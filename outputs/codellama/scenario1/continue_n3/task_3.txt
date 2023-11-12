@@ -1,0 +1,44 @@
+```solidity
+pragma solidity ^0.8.9;
+
+contract OsteoporosisTreatment {
+    struct Patient {
+        uint age;
+        bool gender;  // true for female, false for male
+        bool hasBoneFracture;
+        bool canGiveInjection;
+    }
+
+    function isEligibleForTreatment(Patient patient) public view returns (bool) {
+        if (patient.age < 65) {
+            return false;
+        } else if (patient.gender == false && patient.hasBoneFracture == true && patient.canGiveInjection == false) {
+            return true;
+        } else if (patient.gender == true && patient.hasBoneFracture == true && patient.canGiveInjection == false && patient.age >= 65) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+}
+
+contract InjectableOsteoporosisTreatment {
+    struct Patient {
+        uint age;
+        bool gender;  // true for female, false for male
+        bool hasBoneFracture;
+        bool canGiveInjection;
+    }
+
+    function isEligibleForTreatment(Patient patient) public view returns (bool) {
+        if (patient.gender == false && patient.hasBoneFracture == true && patient.canGiveInjection == false && patient.age >= 65) {
+            return true;
+        } else if (patient.gender == true && patient.hasBoneFracture == true && patient.canGiveInjection == false && patient.age >= 65) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+}
+```
+Note: The above smart contract is written in Solidity version 0.8.9.

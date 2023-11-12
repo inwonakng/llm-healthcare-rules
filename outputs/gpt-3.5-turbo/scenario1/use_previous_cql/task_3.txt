@@ -1,0 +1,102 @@
+```solidity
+pragma solidity ^0.8.0;
+
+contract MedicareCoverageForOsteoporosisDrugs {
+    struct Patient {
+        uint256 age;
+        bool isFemale;
+        bool hasOsteoporosis;
+    }
+    
+    struct Encounter {
+        uint256 encounterDate;
+        string encounterType;
+        string deliveryMethod;
+        string drugProduct;
+        bool meetsQualification;
+    }
+    
+    struct BoneFracture {
+        uint256 fractureDate;
+        bool isRelatedToOsteoporosis;
+    }
+    
+    struct Certification {
+        string certificationType;
+        bool isCertified;
+    }
+    
+    struct Doctor {
+        string name;
+        Certification injectionCertification;
+    }
+    
+    mapping(address => Patient) public patients;
+    mapping(address => Encounter[]) public patientEncounters;
+    mapping(address => BoneFracture[]) public patientBoneFractures;
+    mapping(address => Doctor) public patientDoctors;
+    
+    function addPatient(address patientAddress, uint256 age, bool isFemale, bool hasOsteoporosis) external {
+        patients[patientAddress] = Patient(age, isFemale, hasOsteoporosis);
+    }
+    
+    function addEncounter(address patientAddress, uint256 encounterDate, string memory encounterType, string memory deliveryMethod, string memory drugProduct) external {
+        Encounter memory encounter = Encounter(encounterDate, encounterType, deliveryMethod, drugProduct, false);
+        patientEncounters[patientAddress].push(encounter);
+    }
+    
+    function addBoneFracture(address patientAddress, uint256 fractureDate, bool isRelatedToOsteoporosis) external {
+        BoneFracture memory boneFracture = BoneFracture(fractureDate, isRelatedToOsteoporosis);
+        patientBoneFractures[patientAddress].push(boneFracture);
+    }
+    
+    function certifyInjection(address patientAddress, string memory certificationType, bool isCertified) external {
+        Certification memory certification = Certification(certificationType, isCertified);
+        patientDoctors[patientAddress].injectionCertification = certification;
+    }
+    
+    function checkQualifiesForMedicareHomeHealthBenefit(address patientAddress) external view returns (bool) {
+        Patient memory patient = patients[patientAddress];
+        return patient.age >= 65 && patient.isFemale && patient.hasOsteoporosis;
+    }
+    
+    function checkBoneFractureRelatedToPostMenopausalOsteoporosis(address patientAddress) external view returns (bool) {
+        BoneFracture[] memory boneFractures = patientBoneFractures[patientAddress];
+        for (uint256 i = 0; i < boneFractures.length; i++) {
+            if (boneFractures[i].isRelatedToOsteoporosis) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    function checkInabilityToSelfAdministerInjection(address patientAddress) external view returns (bool) {
+        Certification memory certification = patientDoctors[patientAddress].injectionCertification;
+        return certification.isCertified && certification.certificationType == "InabilityToSelfAdministerInjection";
+    }
+    
+    function checkMedicareCoverageForInjectionAdministration(address patientAddress) external view returns (bool) {
+        Encounter[] memory encounters = patientEncounters[patientAddress];
+        for (uint i = 0; i < encounters.length; i++) {
+            Encounter memory encounter = encounters[i];
+            if (encounter.deliveryMethod == "Injection" && (encounter.deliveryMethod == "Caregiver" || encounter.deliveryMethod == "Family")) {
+                if (checkInabilityToSelfAdministerInjection(patientAddress) || checkDiagnosticStudyPerformed(patientAddress)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    
+    function checkDiagnosticStudyPerformed(address patientAddress) external view returns (bool) {
+        Certification memory certification = patientDoctors[patientAddress].injectionCertification;
+        return certification.isCertified && certification.certificationType == "DiagnosticStudyPerformed";
+    }
+    
+    function checkMedicareCoverageForOsteoporosisDrugs(address patientAddress) external view returns (bool) {
+        return checkQualifiesForMedicareHomeHealthBenefit(patientAddress) &&
+            checkBoneFractureRelatedToPostMenopausalOsteoporosis(patientAddress) &&
+            checkMedicareCoverageForInjectionAdministration(patientAddress);
+    }
+}
+```

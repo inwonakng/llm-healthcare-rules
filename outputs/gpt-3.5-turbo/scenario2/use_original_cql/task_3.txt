@@ -1,0 +1,23 @@
+```solidity
+pragma solidity ^0.8.0;
+
+contract MedicareCoverage {
+    struct IVIG {
+        string diagnosis;
+        bool isMedicallyAppropriate;
+        bool isInHome;
+    }
+    
+    function isCovered(string memory diagnosis, bool isMedicallyAppropriate, bool isInHome) public view returns (bool) {
+        IVIG memory ivig = IVIG(diagnosis, isMedicallyAppropriate, isInHome);
+        
+        if (keccak256(abi.encodePacked(ivig.diagnosis)) == keccak256(abi.encodePacked("primary immune deficiency disease")) && 
+            ivig.isMedicallyAppropriate && ivig.isInHome) {
+            return true;
+        }
+        
+        return false;
+    }
+}
+```
+This smart contract represents a Medicare coverage for Intravenous Immune Globulin (IVIG) provided in home. It includes a struct `IVIG` to encapsulate the parameters `diagnosis`, `isMedicallyAppropriate`, and `isInHome`. The `isCovered` function takes these parameters as input and checks if the diagnosis is "primary immune deficiency disease", if it is medically appropriate, and if it is provided in the home. If all conditions are met, it returns `true`, indicating that Medicare covers IVIG in the given scenario. Otherwise, it returns `false`.

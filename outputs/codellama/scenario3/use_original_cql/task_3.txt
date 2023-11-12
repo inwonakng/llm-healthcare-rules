@@ -1,0 +1,74 @@
+```
+pragma solidity ^0.8.0;
+
+contract MedicareTransplantDrugTherapy {
+    struct Patient {
+        bool hasPartA;
+        bool hasPartB;
+        bool hasMedicare;
+        bool hasESRD;
+        bool hasOriginalMedicare;
+        bool hasMedicareDrugCoverage;
+        uint deductible;
+        uint premium;
+    }
+
+    mapping(address => Patient) private patients;
+
+    function setHasPartA(address patientAddress, bool hasPartA) public {
+        patients[patientAddress].hasPartA = hasPartA;
+    }
+
+    function setHasPartB(address patientAddress, bool hasPartB) public {
+        patients[patientAddress].hasPartB = hasPartB;
+    }
+
+    function setHasMedicare(address patientAddress, bool hasMedicare) public {
+        patients[patientAddress].hasMedicare = hasMedicare;
+    }
+
+    function setHasESRD(address patientAddress, bool hasESRD) public {
+        patients[patientAddress].hasESRD = hasESRD;
+    }
+
+    function setHasOriginalMedicare(address patientAddress, bool hasOriginalMedicare) public {
+        patients[patientAddress].hasOriginalMedicare = hasOriginalMedicare;
+    }
+
+    function setHasMedicareDrugCoverage(address patientAddress, bool hasMedicareDrugCoverage) public {
+        patients[patientAddress].hasMedicareDrugCoverage = hasMedicareDrugCoverage;
+    }
+
+    function setDeductible(address patientAddress, uint deductible) public {
+        patients[patientAddress].deductible = deductible;
+    }
+
+    function setPremium(address patientAddress, uint premium) public {
+        patients[patientAddress].premium = premium;
+    }
+
+    function getPatient(address patientAddress) public view returns(Patient memory) {
+        return patients[patientAddress];
+    }
+
+    function isCovered(address patientAddress) public view returns(bool) {
+        Patient memory patient = patients[patientAddress];
+        if (patient.hasPartA && patient.hasPartB && patient.hasMedicare && patient.hasESRD && patient.hasOriginalMedicare) {
+            return true;
+        }
+        return false;
+    }
+
+    function getBenefit(address patientAddress) public view returns(bool) {
+        Patient memory patient = patients[patientAddress];
+        if (patient.deductible == 0 && patient.premium == 0) {
+            return true;
+        }
+        return false;
+    }
+}
+
+```
+This smart contract has functions to set the patient's information and get the patient's information. The `isCovered` function checks if the patient is covered by Medicare transplant drug therapy. The `getBenefit` function checks if the patient is eligible for the immunosuppressive drug benefit.
+
+Note that this contract is just an example and may need to be modified to fit the specific requirements of the Medicare program. Additionally, the contract does not account for the possibility of patients with different types of health coverage, such as group health plans, TRICARE, or Medicaid.

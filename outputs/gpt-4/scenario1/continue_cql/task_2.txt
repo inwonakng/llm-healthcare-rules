@@ -1,0 +1,20 @@
+```
+Library OsteoporosisCoverage
+
+define "WomanWithOsteoporosis":
+  exists ([Patient] P where P.gender.value = 'female' and 
+  exists ([Condition: "Osteoporosis"] C where C.subject.reference = P.id))
+
+define "EligibleForMedicareHomeHealthBenefit":
+  exists ([EligibilityStatement] E where E.benefitType.coding[0].display = 'Medicare home health benefit')
+
+define "FractureDueToPostMenopausalOsteoporosis":
+  exists ([Condition: "Bone Fracture"] B, [Condition: "Post-menopausal osteoporosis"] PO where B.subject.reference = PO.subject.reference)
+
+define "CannotSelfAdminister":
+  exists ([ClinicalImpression] CI where CI.description = 'Patient unable to self-administer osteoporosis medication')
+
+define "MedicareCoverageForNurseInjection":
+  "WomanWithOsteoporosis" and "EligibleForMedicareHomeHealthBenefit" and 
+  "FractureDueToPostMenopausalOsteoporosis" and "CannotSelfAdminister"
+```

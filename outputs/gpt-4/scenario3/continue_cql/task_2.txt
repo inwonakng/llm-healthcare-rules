@@ -1,0 +1,54 @@
+```
+library TransplantDrugTherapyCoverage version '1.0'
+
+// Medicare coverage of transplant drug therapy 
+// if it also funded the organ transplant procedure
+define 'MedicareFundedTransplantCoverage':
+MedicareCoverage.exists() and
+TransplantProcedure.invoicedTo(MedicareCoverage)
+
+// Coverage with Part A at the time of the transplant 
+// and Part B during the time you receive immunosuppressive drugs.
+define 'PartAandBcoverage':
+PartA.isActiveDuring(TransplantProcedure.period) and
+PartB.isActiveDuring(ImmunosuppressiveDrugPrescription.period)
+
+// Medicare drug coverage (Part D) 
+// will cover them if Part B does not.
+define 'PartDCoverageIfBDoesNotCover':
+if not PartB.covers(ImmunosuppressiveDrugPrescription) 
+    then PartD.covers(ImmunosuppressiveDrugPrescription)
+    else false
+
+// Joining a Medicare drug plan grants Medicare drug coverage
+define 'MedicareDrugPlan':
+OriginalMedicare and MedicareDrugPlanEnrollment
+
+// Medicare coverage ceases 36 months after a successful kidney transplant for ESRD patients.
+define 'MedicareCoveragePostTransplant':
+(MedicareCoverage becauseOf 'End-Stage Renal Disease') and
+successfulTransplant.type = 'kidney' and
+successfulTransplant.period.ends moreThan 36 months after successfulTransplant.period.starts
+
+// Medicare provides a benefit for those who lose Part A coverage 36 months post a kidney transplant
+define 'PartACoveragePostTransplant':
+(PartA.period.ends moreThan 36 months after KidneyTransplant.period.starts) and 
+(not OtherHealthCoverage.exists())
+
+// The cited benefit only covers the cost of immunosuppressive drugs.
+define 'ImmunoDrugBenefitCoverage':
+ImmunoDrugBenefit.covers and (OtherItemsServices.status ='not_covered')
+
+// Monthly premium of $97.10 and a $226 deductible are required for the immunosuppressive drug benefit
+define 'ImmunosuppressiveDrugBenefitCost':
+ImmunosuppressiveDrugBenefitCost: 
+  (monthlyPremium.value = 97.10 and monthlyPremium.unit='USD' and
+   deductible.value = 226 and deductible.unit='USD')
+
+// Once the deductible is paid, 20% of the Medicare-approved cost 
+// for the immunosuppressive drugs.
+define 'CostAfterDeductible':
+  if firstDeductible.isPaid
+    then (MedicareApprovedAmount * 20) / 100
+    else null
+```

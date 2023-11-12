@@ -1,0 +1,76 @@
+```
+pragma solidity ^0.8.0;
+
+contract InjectableOsteoporosisDrugs {
+    
+    struct Condition {
+        uint code;
+        uint verificationStatus;
+        uint verificationDate;
+    }
+    
+    struct Patient {
+        string gender;
+        bool eligibleForMedicareHomeHealthBenefit;
+    }
+    
+    struct Observation {
+        uint code;
+    }
+    
+    struct Provider {
+        string name;
+        bool coverage;
+    }
+    
+    struct FamilyOrCaregivers {
+        bool unableOrUnwilling;
+    }
+    
+    function eligibleWoman(Patient memory patient) private pure returns(bool) {
+        // Check if the patient is a woman with osteoporosis and eligible for Medicare home health benefit
+        if (bytes(patient.gender).length > 0 && keccak256(bytes(patient.gender)) == keccak256(bytes("female"))
+            && patient.eligibleForMedicareHomeHealthBenefit) {
+            return true;
+        }
+        return false;
+    }
+    
+    function relatedFracture(Condition memory condition, Patient memory patient) private view returns(bool) {
+        // Check if the condition is a bone fracture related to post-menopausal osteoporosis
+        if (condition.code == 284196006 && condition.verificationStatus == 1 && condition.verificationDate >= postMenopausalDate
+            && eligibleWoman(patient)) {
+            return true;
+        }
+        return false;
+    }
+    
+    function unableToSelfAdminister(Observation memory observation, Patient memory patient) private pure returns(bool) {
+        // Check if the observation indicates the patient is unable to self-administer the injection
+        if (observation.code == XXXXX && eligibleWoman(patient)) {
+            return true;
+        }
+        return false;
+    }
+    
+    function coverHomeHealthInjection(Provider memory provider, bool familyOrCaregivers) private pure returns(bool) {
+        // Check if Medicare covers the home health injection for the eligible patient
+        if (keccak256(bytes(provider.name)) == keccak256(bytes("Medicare")) && provider.coverage
+            && (!familyOrCaregivers || (familyOrCaregivers && unableOrUnwilling))) {
+            return true;
+        }
+        return false;
+    }
+    
+    function checkMedicareCoverage(Patient memory patient, Condition memory condition, Observation memory observation, Provider memory provider, 
+        bool familyOrCaregivers) public pure returns(bool) {
+        
+        if (eligibleWoman(patient) && relatedFracture(condition, patient) && unableToSelfAdminister(observation, patient)
+            && coverHomeHealthInjection(provider, familyOrCaregivers)) {
+            return true;
+        }
+        return false;
+    }
+}
+```
+Note: The code includes placeholders (XXXXX and postMenopausalDate) that need to be replaced with actual values or implementation details.

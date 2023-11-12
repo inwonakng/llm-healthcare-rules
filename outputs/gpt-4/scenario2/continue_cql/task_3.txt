@@ -1,0 +1,34 @@
+```
+pragma solidity ^0.6.0;
+
+contract IVIGCoverage {
+
+    enum Diagnosis {NONE, PRIMARY_IMMUNE_DEFICIENCY}
+    enum Decision {REJECTED, APPROVED}
+    enum Service {NONE, IVIG}
+    enum Insurance {NONE, MEDICARE_PART_B}
+    enum Location {HOSPITAL, HOME}
+
+    struct Patient {
+        Diagnosis diagnosis;
+        Decision doctorDecision;
+        Service service;
+        Insurance insurance;
+        Location location;
+    }
+
+    function getCoverage(Patient memory patient) public pure returns(string memory) {
+        if(patient.diagnosis == Diagnosis.PRIMARY_IMMUNE_DEFICIENCY 
+           && patient.doctorDecision == Decision.APPROVED 
+           && patient.service == Service.IVIG 
+           && patient.insurance == Insurance.MEDICARE_PART_B 
+           && patient.location == Location.HOME) {
+           
+           return "Coverage Approved";
+        } else {
+           return "Coverage Denied";
+        }
+    }
+
+}
+```

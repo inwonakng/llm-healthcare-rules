@@ -1,0 +1,91 @@
+```solidity
+pragma solidity ^0.8.0;
+
+contract MedicareCoverageIVIG {
+    struct Condition {
+        string code;
+        string clinicalStatus;
+    }
+    
+    struct Procedure {
+        string code;
+        string reason;
+        string performerTarget;
+        string reasonCode;
+        string locationTarget;
+    }
+    
+    struct Service {
+        string type;
+        string procedureTarget;
+    }
+    
+    struct Coverage {
+        string type;
+        string serviceTarget;
+    }
+    
+    mapping(uint256 => Condition) conditions;
+    mapping(uint256 => Procedure) procedures;
+    mapping(uint256 => Service) services;
+    mapping(uint256 => Coverage) coverages;
+    
+    function addCondition(uint256 id, string memory code, string memory clinicalStatus) public {
+        Condition memory newCondition;
+        newCondition.code = code;
+        newCondition.clinicalStatus = clinicalStatus;
+        conditions[id] = newCondition;
+    }
+    
+    function addProcedure(uint256 id, string memory code, string memory reason, string memory performerTarget, string memory reasonCode, string memory locationTarget) public {
+        Procedure memory newProcedure;
+        newProcedure.code = code;
+        newProcedure.reason = reason;
+        newProcedure.performerTarget = performerTarget;
+        newProcedure.reasonCode = reasonCode;
+        newProcedure.locationTarget = locationTarget;
+        procedures[id] = newProcedure;
+    }
+    
+    function addService(uint256 id, string memory type, string memory procedureTarget) public {
+        Service memory newService;
+        newService.type = type;
+        newService.procedureTarget = procedureTarget;
+        services[id] = newService;
+    }
+    
+    function addCoverage(uint256 id, string memory type, string memory serviceTarget) public {
+        Coverage memory newCoverage;
+        newCoverage.type = type;
+        newCoverage.serviceTarget = serviceTarget;
+        coverages[id] = newCoverage;
+    }
+    
+    function checkIVIGCoverage(uint256 conditionId, uint256 procedureId, uint256 serviceId, uint256 coverageId) public view returns (bool) {
+        Condition memory condition = conditions[conditionId];
+        Procedure memory procedure = procedures[procedureId];
+        Service memory service = services[serviceId];
+        Coverage memory coverage = coverages[coverageId];
+        
+        if (keccak256(bytes(condition.code)) == keccak256(bytes("primary immune deficiency disease")) && 
+            keccak256(bytes(condition.clinicalStatus)) == keccak256(bytes("active"))) {
+            
+            if (keccak256(bytes(procedure.code)) == keccak256(bytes("intravenous immune globulin administration")) &&
+                keccak256(bytes(procedure.reasonCode)) == keccak256(bytes("primary immune deficiency disease")) &&
+                keccak256(bytes(procedure.performerTarget)) == keccak256(bytes("patient")) &&
+                keccak256(bytes(procedure.locationTarget)) == keccak256(bytes("home"))) {
+                
+                if (keccak256(bytes(service.type)) == keccak256(bytes("intravenous immune globulin")) &&
+                    keccak256(bytes(service.procedureTarget)) == keccak256(bytes("Medically Appropriate for IVIG Treatment at Home")) &&
+                    keccak256(bytes(coverage.type)) == keccak256(bytes("Medicare Part B")) &&
+                    keccak256(bytes(coverage.serviceTarget)) == keccak256(bytes("Coverage for IVIG Treatment"))) {
+                    
+                    return true;
+                }
+            }
+        }
+        
+        return false;
+    }
+}
+```

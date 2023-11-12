@@ -1,0 +1,52 @@
+```
+@prefix : <https://www.medicare.gov/coverage/medicare-coverage-for-osteoporosis#part-i-injectable-osteoporosis-drugs> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix hydra: <http://www.w3.org/ns/hydra/core#> .
+
+:MedicareCoverageForOsteoporosis a hydra:Class ;
+  hydra:title "Medicare Coverage for Osteoporosis" ;
+  hydra:description "Medicare covers injectable osteoporosis drugs if you meet all of these conditions" .
+
+:WomanWithOsteoporosis a hydra:Class ;
+  hydra:title "Woman with Osteoporosis" ;
+  hydra:description "You are a woman with osteoporosis" .
+
+:HomeHealthBenefit a hydra:Class ;
+  hydra:title "Home Health Benefit" ;
+  hydra:description "You meet the criteria for the Medicare home health benefit" .
+
+:OsteoporosisFracture a hydra:Class ;
+  hydra:title "Osteoporosis Fracture" ;
+  hydra:description "You have a bone fracture that a doctor certifies was related to post-menopausal osteoporosis" .
+
+:UnableToGiveInjection a hydra:Class ;
+  hydra:title "Unable to Give Injection" ;
+  hydra:description "Your doctor certifies that you can't give yourself the injection or learn how to give yourself the drug by injection" .
+
+:HomeHealthNurseOrAide a hydra:Class ;
+  hydra:title "Home Health Nurse or Aide" ;
+  hydra:description "In addition, Medicare will cover the home health nurse or aide to provide the injection if your family or caregivers are unable or unwilling to give you the drug by injection" .
+
+:MedicareCoverageForOsteoporosis rule:Rule [
+  hydra:title "Medicare Coverage for Osteoporosis" ;
+  hydra:description "Medicare covers injectable osteoporosis drugs if you meet all of these conditions" ;
+  hydra:rule (
+    :WomanWithOsteoporosis and
+    :HomeHealthBenefit and
+    :OsteoporosisFracture and
+    :UnableToGiveInjection and
+    :HomeHealthNurseOrAide
+  )
+] .
+```
+
+In this N3 syntax, the first part declares the prefixes used in the rest of the file. The `hydra` prefix is used to define classes and rules, while the `owl` and `rdfs` prefixes are used to define ontology concepts. The `rdf` prefix is used to define the RDF vocabulary itself.
+
+The next part defines the classes and rules used in the logic rules. The `MedicareCoverageForOsteoporosis` rule is defined as a `hydra:Rule`, which means that it will be used to determine the coverage of injectable osteoporosis drugs under Medicare. The rule has a title and description, which are used to provide more information about the rule. The rule also has a list of conditions, which are defined using the `hydra:rule` property.
+
+The conditions are defined using the `hydra:Class` type, which means that they are classes in the ontology. The `WomanWithOsteoporosis`, `HomeHealthBenefit`, `OsteoporosisFracture`, `UnableToGiveInjection`, and `HomeHealthNurseOrAide` classes are all defined as `hydra:Class`es, which means that they are used to represent different conditions that can be met by a patient in order to receive coverage for injectable osteoporosis drugs under Medicare.
+
+The last part of the file defines the `MedicareCoverageForOsteoporosis` rule, which uses the `hydra:rule` property to specify the conditions that must be met in order for the rule to be applicable. The rule states that if a patient is a woman with osteoporosis, meets the criteria for the Medicare home health benefit, has a bone fracture related to post-menopausal osteoporosis, is unable to give themselves the injection or learn how to give themselves the drug by injection, and requires the assistance of a home health nurse or aide to administer the injection, then they will be covered for injectable osteoporosis drugs under Medicare.

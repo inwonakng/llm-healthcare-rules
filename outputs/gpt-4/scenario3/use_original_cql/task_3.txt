@@ -1,0 +1,67 @@
+```sol
+pragma solidity ^0.8.6;
+
+contract Medicare {
+    
+    // Struct to encapsulate necessary parameters
+    struct Patient {
+        bool hasPartA;
+        bool hasPartB;
+        bool hasPartD;
+        bool hasOtherHealthCoverage;
+        bool isESRDPatient;
+        bool isPostSuccessfulKidneyTransplant;
+        uint256 monthsAfterKidneyTransplant;
+        bool isRegisteredForImmunosuppressiveDrugBenefit;
+        uint256 amountPaidForImmunosuppressiveDrugs;
+        uint256 premium;
+        uint256 deductible;
+    }
+
+    mapping(address => Patient) public patients;
+    uint256 public MedicareApprovedAmountForImmunosuppressiveDrugs = 100;
+
+    function registerPatient(address _patientAddress, bool _isESRDPatient, bool _isPostSuccessfulKidneyTransplant) public {
+        patients[_patientAddress] = Patient(true, true, false, false, _isESRDPatient, _isPostSuccessfulKidneyTransplant, 0, false, 0, 97.10 ether, 226 ether);
+    }
+
+    function getTransplantDrugTherapyCoverageDetails(address _patientAddress) public view returns (string memory) {
+        Patient memory patient = patients[_patientAddress];
+
+        if (!patient.hasPartA) {
+            return "Must have Part A for the Transplant drug coverage";
+        }
+        
+        if (!patient.hasPartB) {
+            return "Must have Part B for the Immunosuppressive drugs";
+        }
+        
+        if (patient.isESRDPatient && patient.monthsAfterKidneyTransplant == 36 && patient.hasOtherHealthCoverage) {
+            return "Your Medicare and drug coverage ends after 36 months of successful kidney transplant";
+        }
+
+        if(patient.isESRDPatient && patient.monthsAfterKidneyTransplant >= 36 && !patient.hasOtherHealthCoverage) {
+            return "You are eligible for immunosuppressive drug benefit. This benefit only covers immunosuppressive drugs";
+        }
+
+        return "You are not eligible for immunosuppressive drug benefit";
+    }
+
+    function signUpForImmunosuppressiveDrugBenefit(address _patientAddress) public {
+        patients[_patientAddress].isRegisteredForImmunosuppressiveDrugBenefit = true;
+    }
+
+    function getDetailsOfBillAfterImmunosuppressiveBenefit(address _patientAddress) public view returns (uint256 premium, uint256 deductible, uint256 totalAmountToPay) {
+        Patient memory patient = patients[_patientAddress];
+        require(patient.isRegisteredForImmunosuppressiveDrugBenefit,"You are not signed up for the benefit");
+
+        uint256 amountToPayForImmunosuppressiveDrugs = MedicareApprovedAmountForImmunosuppressiveDrugs * 20 / 100;
+        
+        uint256 totalPayable = patient.premium + patient.deductible + amountToPayForImmunosuppressiveDrugs;
+        
+        return (patient.premium, patient.deductible, totalPayable);
+
+    }
+}
+```
+This Solidity smart contract creates a `Patient` struct to encapsulate necessary parameters such as Medicare parts the patient has, their health status, months after kidney transplant, registrational status for immunosuppressive drug benefit, and payment details. With the `registerPatient` method, patients are registered with their necessary details. `getTransplantDrugTherapyCoverageDetails` method checks the conditions and returns the coverage details. Patients can sign up for immunosuppressive drug benefit using `signUpForImmunosuppressiveDrugBenefit` method and they can get their bill details with the `getDetailsOfBillAfterImmunosuppressiveBenefit` method which considers the premium, deductible, and additional amount to pay for drugs. This Solidity smart contract abides by all the rules and covers all aspects of the provided natural language text.

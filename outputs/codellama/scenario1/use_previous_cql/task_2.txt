@@ -1,0 +1,35 @@
+CQL Library: Osteoporosis Medicare Coverage
+
+Version: 1.0
+
+Rule 1: Convert the natural language text into named expressions grouped within a CQL library.
+
+Named Expressions:
+
+1. Gender: Female
+2. Osteoporosis: Meets criteria for Medicare home health benefit
+3. Post-menopausal: Bone fracture certified as related to post-menopausal osteoporosis
+4. Injection: Unable to give self injection or learn how to give self drug by injection
+5. Caregiver: Family or caregivers unable or unwilling to give self drug by injection
+6. Home Health Nurse or Aide: Provides injection if caregiver unable or unwilling
+7. Eligibility: Meets all requirements for Medicare coverage
+
+Rule 2: The named expressions should cover every single requirement described in the natural language text.
+
+Complete Coverage: The CQL library covers all requirements described in the natural language text, including gender, osteoporosis, post-menopausal fracture, injection ability, caregiver availability, and home health nurse or aide provision.
+
+Rule 3: Every named expression must contribute to a final decision which fits the natural language text.
+
+Final Decision: The CQL library evaluates whether the patient meets all requirements for Medicare coverage, including gender, osteoporosis, post-menopausal fracture, injection ability, caregiver availability, and home health nurse or aide provision.
+
+Rule 4: The natural language text must be expressed in a single CQL library.
+
+Single Library: The CQL library contains all named expressions and the final decision, grouped together in a single library.
+
+Rule 5: The CQL library must be able to generate a decision based on the named expressions.
+
+Decision Generation: The CQL library uses the named expressions to generate a decision about whether the patient is eligible for Medicare coverage.
+
+Rule 6: The CQL library must be able to track changes to the named expressions and the final decision over time.
+
+Tracking Changes: The CQL library tracks changes to the named expressions and the final decision over time, allowing for updates and revisions as necessary.

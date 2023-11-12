@@ -1,252 +1,82 @@
-```n3
-@prefix : <http://example.com/> .
+```
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix : <http://example.com/medicare#> .
 
-# Rule 1
-:MedicareCoversTransplantDrugTherapy rdf:type rdf:Statement ;
-    rdf:subject :Medicare ;
-    rdf:predicate :covers ;
-    rdf:object :TransplantDrugTherapy ;
-    .
+# Rule 1: Medicare covers transplant drug therapy if Medicare helped pay for the organ transplant.
+:MedicareCoverageTransplantDrugTherapy rdf:type rdfs:Class ;
+    rdfs:subClassOf :MedicareHelpedPayOrganTransplant .
 
-# Rule 2
-:PartARequirement rdf:type rdf:Statement ;
-    rdf:subject :Person ;
-    rdf:predicate :hasPart ;
-    rdf:object :PartA ;
-    .
+# Rule 2: Part A coverage is required at the time of the covered transplant.
+:PartARequiredCoverage rdf:type rdfs:Class ;
+    rdfs:subClassOf :CoveredTransplant .
 
-# Rule 3
-:PartBRequirement rdf:type rdf:Statement ;
-    rdf:subject :Person ;
-    rdf:predicate :hasPart ;
-    rdf:object :PartB ;
-    .
+# Rule 3: Part B coverage is required at the time of receiving immunosuppressive drugs.
+:PartBRequiredCoverage rdf:type rdfs:Class ;
+    rdfs:subClassOf :ReceivingImmunosuppressiveDrugs .
 
-# Rule 4
-:ImmuneDrugCoverageByPartD rdf:type rdf:Statement ;
-    rdf:subject :Medicare ;
-    rdf:predicate :hasCoverage ;
-    rdf:object :ImmunosuppressiveDrugs ;
-    .
+# Rule 4: Part D covers immunosuppressive drugs if Part B doesn't cover them.
+:PartDCoversImmunosuppressiveDrugs rdf:type rdfs:Class ;
+    rdfs:subClassOf :PartBCoverageNotCovering .
 
-# Rule 5
-:OrganTransplant rdf:type rdf:Class ;
-    rdfs:subClassOf rdf:MedicalProcedure ;
-    .
+# Rule 5: Medicare drug plan can be joined for drug coverage.
+:JoinMedicareDrugPlan rdf:type rdfs:Class ;
+    rdfs:subClassOf :DrugCoverage .
 
-# Rule 6
-:KidneyTransplantRequirement rdf:type rdf:Statement ;
-    rdf:subject :Person ;
-    rdf:predicate :hasMedicalProcedure ;
-    rdf:object :KidneyTransplant ;
-    .
+# Rule 6: Coverage ends 36 months after a successful kidney transplant for those with Medicare due to ESRD.
+:ESRDcoverageEndsAfter36Months rdf:type rdfs:Class ;
+    rdfs:subClassOf :SuccessfulKidneyTransplant .
 
-# Rule 7
-:CoverageAfterKidneyTransplantRequirement rdf:type rdf:Statement ;
-    rdf:subject :Person ;
-    rdf:predicate :hasCoverage ;
-    rdf:object :ImmunosuppressiveDrugs ;
-    .
+# Rule 7: Medicare offers a benefit for immunosuppressive drugs if you lose Part A coverage after 36 months and don't have other health coverage.
+:MedicareOffersBenefitForDrugs rdf:type rdfs:Class ;
+    rdfs:subClassOf :LosePartACoverage ;
+    rdfs:subClassOf :CoverageAfter36Months ;
+    rdfs:subClassOf :NoOtherHealthCoverage .
 
-# Rule 8
-:PartialMedicareCoverageBenefit rdf:type rdf:Statement ;
-    rdf:subject :Person ;
-    rdf:predicate :hasBenefit ;
-    rdf:object :ImmunosuppressiveDrugs ;
-    .
+# Rule 8: The benefit only covers immunosuppressive drugs and no other items or services.
+:BenefitCoversImmunosuppressiveDrugs rdf:type rdfs:Class ;
+    rdfs:subClassOf :NoOtherItemsServicesCoverage .
 
-# Rule 8 continued
-:PartialMedicareCoverageBenefit rdf:type rdf:Statement ;
-    rdf:subject :Person ;
-    rdf:predicate :hasBenefit ;
-    rdf:object :ItemsAndServices ;
-    rdf:object :FullHealthCoverage ;
-    .
+# Rule 9: The benefit is not a substitute for full health coverage.
+:BenefitNotSubstituteFullCoverage rdf:type rdfs:Class ;
+    rdfs:subClassOf :FullHealthCoverage .
 
-# Rule 9
-:EligibilityRequirement rdf:type rdf:Statement ;
-    rdf:subject :Person ;
-    rdf:predicate :isEligible ;
-    rdf:object :PartialMedicareCoverageBenefit ;
-    .
+# Rule 10: The benefit can be signed up for after Part A coverage ends.
+:SignupAfterPartACoverageEnds rdf:type rdfs:Class ;
+    rdfs:subClassOf :PartACoverageEnds .
 
-# Rule 10
-:SignUpBenefit rdf:type rdf:Statement ;
-    rdf:subject :Person ;
-    rdf:predicate :canSignUp ;
-    rdf:object :PartialMedicareCoverageBenefit ;
-    .
+# Rule 11: The premium in 2023 for the benefit is $97.10 per month.
+:2023Premium rdf:type rdfs:Class ;
+    rdfs:subClassOf :PremiumAmount ;
+    rdfs:subClassOf [
+        rdf:type owl:Restriction ;
+        owl:onProperty :premiumValue ;
+        owl:hasValue "97.10"^^xsd:decimal
+    ] .
 
-# Rule 11
-:PhoneNumber rdf:type rdf:Class ;
-    .
+# Rule 12: There is a $226 deductible for the benefit.
+:DeductibleAmount rdf:type rdfs:Class ;
+    rdfs:subClassOf :Deductible ;
+    rdfs:subClassOf [
+        rdf:type owl:Restriction ;
+        owl:onProperty :deductibleValue ;
+        owl:hasValue "226.00"^^xsd:decimal
+    ] .
 
-# Rule 12
-:CallSocialSecurity rdf:type rdf:Statement ;
-    rdf:subject :Person ;
-    rdf:predicate :canCall ;
-    rdf:object :PhoneNumber ;
-    .
+# Rule 13: After meeting the deductible, 20% of the Medicare-approved amount for immunosuppressive drugs is paid.
+:PaymentAfterDeductible rdf:type rdfs:Class ;
+    rdfs:subClassOf :MetDeductible ;
+    rdfs:subClassOf :MedicareApprovedAmount ;
+    rdfs:subClassOf [
+        rdf:type owl:Restriction ;
+        owl:onProperty :paymentPercentage ;
+        owl:hasValue "20.00"^^xsd:decimal
+    ] .
 
-# Rule 12 continued
-:CallSocialSecurity rdf:type rdf:Statement ;
-    rdf:subject :PhoneNumber ;
-    rdf:predicate :providesService ;
-    rdf:object :PartialMedicareCoverageBenefit ;
-    .
+# Rule 14: Final decision: Medicare covers transplant drug therapy if Medicare helped pay for the organ transplant.
+:MedicareCoverageTransplantDrugTherapy rdfs:subClassOf :FinalDecision .
 
-# Rule 13
-:MonthlyPremium rdf:type rdf:Class ;
-    .
-
-# Rule 13 continued
-:PremiumAmount rdf:type rdf:Statement ;
-    rdf:subject :MonthlyPremium ;
-    rdf:predicate :hasAmount ;
-    rdf:object "$97.10*" ;
-    .
-
-# Rule 14
-:Deductible rdf:type rdf:Class ;
-    .
-
-# Rule 14 continued
-:DeductibleAmount rdf:type rdf:Statement ;
-    rdf:subject :Deductible ;
-    rdf:predicate :hasAmount ;
-    rdf:object "$226" ;
-    .
-
-# Rule 15
-:ImmunosuppressiveDrugCoverage rdf:type rdf:Class ;
-    .
-
-# Rule 15 continued
-:CoveragePercentageAmount rdf:type rdf:Statement ;
-    rdf:subject :ImmunosuppressiveDrugCoverage ;
-    rdf:predicate :coversPercentage ;
-    rdf:object "20%" ;
-    .
-
-# Rule 16
-:MedicareOffersCoverage rdf:type rdf:Statement ;
-    rdf:subject :Medicare ;
-    rdf:predicate :offersCoverage ;
-    rdf:object :ImmunosuppressiveDrugs ;
-    .
-
-# Rule 17
-:PersonHasMetDeductible rdf:type rdf:Statement ;
-    rdf:subject :Person ;
-    rdf:predicate :hasMet ;
-    rdf:object :Deductible ;
-    .
-
-# Rule 18
-:PersonPaysPercentage rdf:type rdf:Statement ;
-    rdf:subject :Person ;
-    rdf:predicate :paysPercentage ;
-    rdf:object :CoveragePercentageAmount ;
-    .
-
-# Rule 19
-:PartACoverage rdf:type rdf:Class ;
-    .
-
-# Rule 20
-:PartAEnds rdf:type rdf:Statement ;
-    rdf:subject :Person ;
-    rdf:predicate :ends ;
-    rdf:object :PartACoverage ;
-    rdf:object :KidneyTransplant ;
-    .
-
-# Rule 21
-:HealthCoverage rdf:type rdf:Class ;
-    .
-
-# Rule 21 continued
-:OtherHealthCoverage rdf:type rdf:Statement ;
-    rdf:subject :Person ;
-    rdf:predicate :hasCoverage ;
-    rdf:object :HealthCoverage ;
-    .
-
-# Rule 21 continued
-:CoverageType rdf:type rdf:Class ;
-    .
-
-# Rule 21 continued
-:GroupHealthPlan rdf:type rdf:Statement ;
-    rdf:subject :Person ;
-    rdf:predicate :hasCoverage ;
-    rdf:object :CoverageType ;
-    .
-
-# Rule 21 continued
-:TRICARE rdf:type rdf:Statement ;
-    rdf:subject :Person ;
-    rdf:predicate :hasCoverage ;
-    rdf:object :CoverageType ;
-    .
-
-# Rule 21 continued
-:Medicaid rdf:type rdf:Statement ;
-    rdf:subject :Person ;
-    rdf:predicate :hasCoverage ;
-    rdf:object :CoverageType ;
-    .
-
-# Rule 21 continued
-:CoverageType rdf:type rdf:Class ;
-    .
-
-# Rule 22
-:BenefitNotSubstitute rdf:type rdf:Statement ;
-    rdf:subject :PartialMedicareCoverageBenefit ;
-    rdf:predicate :isNotSubstitute ;
-    rdf:object :FullHealthCoverage ;
-    .
-
-# Rule 23
-:SignUpAfterPartACoverageEnds rdf:type rdf:Statement ;
-    rdf:subject :Person ;
-    rdf:predicate :canSignUp ;
-    rdf:object :PartialMedicareCoverageBenefit ;
-    .
-
-# Rule 24
-:MedicarePremiumCoverageYear rdf:type rdf:Class ;
-    .
-
-# Rule 24 continued
-:CoverageYearAmount rdf:type rdf:Statement ;
-    rdf:subject :MedicarePremiumCoverageYear ;
-    rdf:predicate :hasAmount ;
-    rdf:object "2023" ;
-    .
-
-# Rule 24 continued
-:CoverageYearAmount rdf:type rdf:Statement ;
-    rdf:subject :MedicarePremiumCoverageYear ;
-    rdf:predicate :hasPremium ;
-    rdf:object :MonthlyPremium ;
-    .
-
-# Rule 24 continued
-:CoverageYearAmount rdf:type rdf:Statement ;
-    rdf:subject :MedicarePremiumCoverageYear ;
-    rdf:predicate :hasDeductible ;
-    rdf:object :Deductible ;
-    .
-
-# Rule 25
-:PersonQualifies rdf:type rdf:Statement ;
-    rdf:subject :Person ;
-    rdf:predicate :qualifies ;
-    rdf:object :MedicarePremiumCoverageYear ;
-    .
+:FinalDecision rdf:type rdf:Property ;
+    rdfs:range :MedicareCoverageTransplantDrugTherapy .
 
 ```

@@ -1,59 +1,56 @@
-Here is a basic outline of a smart contract based on the provided text:
-
-```solidity
-// SPDX-License-Identifier: MIT
+```
 pragma solidity >=0.4.22 <0.9.0;
 
-contract Medicare {
-    struct Individual {
-        bool hasPartA;
-        bool hasPartB;
-        bool hasPartD;
+contract MedicareBenefits {
+    struct Patient {
+        bool hasMedicarePartA;
+        bool hasMedicarePartB;
+        bool hadSuccessfulTransplant;
+        bool organTransplantPaidByMedicare;
+        bool hasMedicarePartD;
         bool hasOriginalMedicare;
-        bool hasESRD;
-        bool kidneyTransplantSuccessful;
-        uint monthsPassedAfterKidneyTransplant;
-        bool hasOtherHealthCoverage;
-        bool hasQualifiedForImmunosuppressiveDrugsOnlyCoverage;
-        bool enrollImmunosuppressiveCoverage;
-        uint monthlyPremium;
-        uint deductible;
-        bool gettingImmunosuppressiveDrugs;
+        bool hasMedicareDueToESRD;
+        bool hadSuccessfulKidneyTransplant;
+        uint monthsAfterTransplant;
+        bool lostPartACoverageAfter36Months;
+        bool hasGroupHealthPlan;
+        bool hasTRICARE;
+        bool hasMedicaidCoveringImmunosuppressiveDrugs;
+        bool signedUpForImmunosuppressiveDrugBenefit;
     }
 
-    function canCoverTransplantDrug(Individual memory individual) public pure returns(bool) {
-        return individual.hasPartA && individual.gettingImmunosuppressiveDrugs;
-    }
+    enum EligibilityStatus {eligible, notEligible}
 
-    function canCoverImmunosuppressiveDrugs(Individual memory individual) public pure returns(bool) {
-        if (individual.hasPartD ) {
-            return true;
-        } else if (individual.hasPartB) {
-            return true;
+    function getTransplantDrugCoverageEligibilityStatus(Patient memory _patient) public pure returns (EligibilityStatus) {
+        if (_patient.hasMedicarePartA && _patient.hasMedicarePartB && _patient.hadSuccessfulTransplant &&
+            _patient.organTransplantPaidByMedicare) {
+                return EligibilityStatus.eligible;
         }
-        return false;
+        if (!_patient.hasMedicarePartB && _patient.hasMedicarePartD) {
+            return EligibilityStatus.eligible;
+        }
+        return EligibilityStatus.notEligible;
     }
 
-    function canJoinDrugPlan(Individual memory individual) public pure returns(bool) {
-        return individual.hasOriginalMedicare;
+    function getOptionToJoinMedicareDrugPlan(Patient memory _patient) public pure returns (bool) {
+        return _patient.hasOriginalMedicare;
     }
 
-    function coverageEnds(Individual memory individual) public pure returns(bool) {
-        return individual.hasESRD && individual.kidneyTransplantSuccessful && individual.monthsPassedAfterKidneyTransplant >= 36;
+    function verifyMedicareCoverageEnd(Patient memory _patient) public pure returns (bool) {
+        return _patient.hasMedicareDueToESRD && _patient.hadSuccessfulKidneyTransplant && _patient.monthsAfterTransplant >= 36;
     }
 
-    function canCoverImmunosuppressiveDrugsOnly(Individual memory individual) public pure returns(bool) {
-        return !individual.hasPartA && individual.monthsPassedAfterKidneyTransplant >= 36 && !individual.hasOtherHealthCoverage;
+    function verifyBenefits(Patient memory _patient) public pure returns (bool) {
+        return _patient.lostPartACoverageAfter36Months && !_patient.hasGroupHealthPlan &&
+            !_patient.hasTRICARE && !_patient.hasMedicaidCoveringImmunosuppressiveDrugs;
     }
 
-    function canSignUpAnytime(Individual memory individual)  public pure returns(bool) {
-        return !individual.hasPartA && individual.hasQualifiedForImmunosuppressiveDrugsOnlyCoverage;
-    }
-
-    function payableAfterDeductible(Individual memory individual) public pure returns(uint) {
-        require(individual.enrollImmunosuppressiveCoverage && individual.monthlyPremium == 97.10 ether && individual.deductible == 226 ether, "Conditions not met!");
-        return individual.deductible + ((individual.monthlyPremium * 20) / 100);
+    function getCoverageCosts(Patient memory _patient) public pure returns (string memory, uint256, uint256) {
+        if (_patient.signedUpForImmunosuppressiveDrugBenefit) {
+            return ("Monthly Premium: $97.10, Deductible: $226, Out-of-Pocket Cost for Drugs: 20% of Medicare-approved cost", 97.10, 226);
+        } else {
+            return ("Not signed up for the benefit", 0, 0);
+        }
     }
 }
 ```
-This smart contract covers all conditions described in the given text. However, this is a high level and simplistic representation and real Solidity code may have more checks and error handling.

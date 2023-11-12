@@ -1,0 +1,27 @@
+```
+pragma solidity ^0.6.0;
+
+contract IVIGCoverage {
+    struct DIAGNOSIS {
+        bool primaryImmuneDeficiency;
+    }
+
+    struct BILLING {
+        bool partB;
+    }
+
+    function giveIVIGCoverage(DIAGNOSIS diagnosis, BILLING billing) pure public {
+        require(diagnosis.primaryImmuneDeficiency, "Diagnosis must be primary immune deficiency disease");
+        require(billing.partB, "Must have part B coverage");
+
+        // Coverage is only provided if the above requirements are met
+        if (billing.partB && diagnosis.primaryImmuneDeficiency) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+}
+
+```
+Note that this smart contract is a simplified version of the original text and does not take into account all the complexities of the Medicare Coverage for IVIG in home. The contract is only for demonstration purposes and should not be used in any production environment.

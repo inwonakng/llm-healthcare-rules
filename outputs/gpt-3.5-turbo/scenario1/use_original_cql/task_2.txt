@@ -1,0 +1,62 @@
+```
+library OsteoporosisDrugsCoverage
+
+using QDM
+
+patient with
+    (Diagnosis
+        register 'diagnosis'
+        satisfies 'Osteoporosis' 
+        and (Patient characteristic Birth Sex is Female)
+        and (
+            (HomeHealthBenefitOrder
+                register 'homeHealth'
+                is true
+                and Patient characteristic Birth Sex is Female
+            )
+            or
+            (PostMenopausalFracture
+                register 'fracture'
+                satisfies 'postmenopausal osteoporosis'
+            )
+        )
+    )
+    and (Procedures
+        (Procedure, Medication, Order, Substance)
+            register 'injectionOrder'
+            satisfies 'injectable osteoporosis drugs'
+            and (Timing, Age)
+                register 'age'
+                satisfies '>= 18 year'
+            and (Physical Exam, Performed)
+                register 'exam'
+                satisfies 'ability of the patient to self-administer the drug by injection' 
+            and (Treatment, Medication, Given)
+                register 'givenMedication'
+                satisfies 'home health nurse or aide to provide the injection'
+    )
+
+define decision: OsteoporosisDrugsCoverage decision
+    on <<
+        [OsteoporosisDrugsCoverage:'diagnosis': value=true],
+        [OsteoporosisDrugsCoverage:'homeHealth': value=true],
+        [OsteoporosisDrugsCoverage:'fracture': value=true],
+        [OsteoporosisDrugsCoverage:'age': value=true],
+        [OsteoporosisDrugsCoverage:'exam': value=true],
+        [OsteoporosisDrugsCoverage:'givenMedication': value=true]
+    >>
+    return 'Medicare covers injectable osteoporosis drugs.'
+
+```
+This CQL library extracts the named expressions from the natural language text and groups them together in a CQL library called "OsteoporosisDrugsCoverage". 
+
+The library includes the following named expressions:
+
+1. "diagnosis" makes sure the patient has a diagnosis of osteoporosis and is a female.
+2. "homeHealth" checks if the patient meets the criteria for the Medicare home health benefit.
+3. "fracture" verifies if the patient has a bone fracture related to post-menopausal osteoporosis.
+4. "age" ensures that the patient is at least 18 years old.
+5. "exam" confirms that the patient cannot self-administer the drug by injection.
+6. "givenMedication" checks if a home health nurse or aide can provide the injection.
+
+The final decision named expression, "OsteoporosisDrugsCoverage decision," includes all the named expressions and returns the statement "Medicare covers injectable osteoporosis drugs" if all the conditions are met.

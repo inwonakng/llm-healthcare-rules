@@ -1,0 +1,90 @@
+```
+library InjectableOsteoporosisDrugsGuidelines
+
+using FHIR version '4.0.1'
+
+-- Requirement 1: Woman with osteoporosis who meets the criteria for the Medicare home health benefit.
+define eligibleWoman:
+  exists(
+    condition: Condition
+    where
+      condition.code.coding.exists(
+        coding: Coding
+        where
+          coding.system = 'http://snomed.info/sct'
+          and coding.code = '64859006' -- Code for osteoporosis
+      )
+      and condition.subject.exists(
+        subject: Patient
+        where
+          patient.gender = 'female'
+          and patient.resourceType = 'Patient'
+          and eligibleForMedicareHomeHealthBenefit(patient)
+      )
+  )
+
+-- Requirement 2: Bone fracture certified by a doctor to be related to post-menopausal osteoporosis.
+define relatedFracture:
+  exists(
+    condition: Condition
+    where
+      condition.code.coding.exists(
+        coding: Coding
+        where
+          coding.system = 'http://snomed.info/sct'
+          and coding.code = '284196006' -- Code for bone fracture
+      )
+      and condition.subject.exists(
+        subject: Patient
+        where
+          subject = eligibleWoman
+      )
+      and condition.verificationStatus = 'confirmed'
+      and condition.verificationDate >= 'post-menopausal date' -- Replace with actual date
+  )
+
+-- Requirement 3: Inability to self-administer the injection or learn how to do so, certified by the doctor.
+define unableToSelfAdminister:
+  exists(
+    condition: Observation
+    where
+      condition.subject.exists(
+        subject: Patient
+        where
+          subject = eligibleWoman
+      )
+      and condition.code.coding.exists(
+        coding: Coding
+        where
+          coding.system = 'http://loinc.org'
+          and coding.code = 'XXXXX' -- Code for unable to self-administer
+      )
+  )
+
+-- Final Decision: Medicare will cover the home health nurse or aide to provide the injection if family or caregivers are unable or unwilling to do so.
+define coverHomeHealthInjection:
+  exists(
+    provider: Organization
+    where
+      provider.name = 'Medicare'
+      and provider.coverage.exists(
+        coverage: Coverage
+        where
+          coverage.type.coding.exists(
+            coding: Coding
+            where
+              coding.system = 'https://www.cms.gov' -- Medicare coverage system
+              and coding.code = 'XXXXX' -- Code for injectable osteoporosis drugs coverage
+          )
+      )
+      and ((not exists(familyOrCaregivers)) or (exists(familyOrCaregivers) and familyOrCaregivers.unableOrUnwilling))
+  )
+
+-- Supporting function to check eligibility for Medicare home health benefit
+define eligibleForMedicareHomeHealthBenefit(patient: Patient): boolean
+  ...
+  -- Implementation of eligibility criteria goes here
+  ...
+
+end library
+```

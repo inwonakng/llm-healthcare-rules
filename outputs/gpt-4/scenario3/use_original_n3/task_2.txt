@@ -1,32 +1,57 @@
-```@prefix : <http://www.medical.org#> .
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+```
+@prefix : <http://example.org#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-:Patient rdf:type :Patient;
-         :hasMedicarePartA :yes;
-         :hasMedicarePartB :yes;
-         :hasMedicarePartD :yes;
-         :hasMedicareBecauseOfESRD :yes;
-         :hasGroupHealthPlan :yes;
-         :hasOtherHealthCoverage :yes;
-         :hasSuccessfulKidneyTransplant :yes;
-         :isInOriginalMedicare :yes.
-         
-:Patient :MedicareCoversTransplantDrugTherapy true IF :MedicareHelpedPayForOrganTransplant true AND :hasMedicarePartA :yes AND :hasMedicarePartB :yes AND :hasMedicarePartD :yes.
+{
+    :patient a :Patient;
+        :medicareCoverage true;
+        :partACoverageAtTransplant true;
+        :partBCoverageAtImmunosuppressiveDrugTime true;
+} => {
+    :patient :transplantDrugCoverage true.
+} .
 
-:Patient :HasPartDCoveringImmunosuppresiveDrugs true IF :PartBDontCoverTheyImmunosupressiveDrugs true.
+{
+    :patient a :Patient;
+        :partBCoverageAtImmunosuppressiveDrugTime false;
+        :medicareDrugCoverage true;
+} => {
+    :patient :immunosuppressiveDrugCoverage true.
+} .
 
-:Patient :CanJoinMedicareDrugPlan true IF :isInOriginalMedicare :yes.
+{
+    :patient a :Patient;
+        :originalMedicare true;
+    not {:patient :healthCoverageType (:groupHealthPlan :TRICARE :Medicaid)};
+} => {
+    :patient :canJoinMedicareDrugPlan true.
+} .
 
-:Patient :MedicareCoverageAfterKidneyTransplant :EndsAfter36Months IF :hasSuccessfulKidneyTransplant :yes AND :hasMedicareBecauseOfESRD :yes.
+{
+    :patient a :Patient;
+        :onlyOnMedicareBecauseOfESRD true;
+        :successfulKidneyTransplantDate ?date;
+    bind (now() - ?date as ?monthsSinceTransplant)
+} => {
+    :patient :CoverageExpiresAfter (36) 
+} if (?monthsSinceTransplant > 36).
 
-:Patient :CanSignUpForImmunosuppresiveDrugBenefit true IF :MedicareCoverageAfterKidneyTransplant :EndsAfter36Months AND :hasGroupHealthPlan :no AND :hasOtherHealthCoverage :no.
+{
+    :patient a :Patient;
+        :qualifiesForImmunoCoverage true;
+        :partCoverageEndDate ?endDate;
+    bind (now() - ?endDate as ?monthsSinceEndCoverage)
+} => {
+    :patient :canSignUpForImmunoCoverage true.
+} if (?monthsSinceEndCoverage > 0).
 
-:Patient :ImmunosuppresiveDrugBenefit rdf:type :ImmunosuppresiveDrugBenefit;
-                             :hasPremium :97.10;
-                             :hasDeductible :226;                            
-                             :IsNotSubstituteForFullHealthCoverage :true.
-
-:Patient :MustPay :DeductibleAnd20PercentOfApprovedAmount IF :SignUpForImmunosuppresiveDrugBenefit :yes.
-
-
+{
+    :patient a :Patient;
+        :signsUpForImmunoCoverage true;
+        :Year "2023"^^xsd:string.
+} => {
+    :patient :monthlyPremium "97.10"^^xsd:decimal;
+        :annualDeductible "226"^^xsd:decimal;
+        :paymentsPercentage 0.20.
+}.
 ```

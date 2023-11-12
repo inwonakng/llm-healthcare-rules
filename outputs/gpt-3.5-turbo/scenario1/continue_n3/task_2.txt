@@ -1,75 +1,28 @@
-```turtle
-@prefix : <http://example.com/> .
+```
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix ns1: <http://example.org/ns#> .
 
-######### Rule 1 #########
-[ a :Requirement ;
-  rdf:value "Must be a woman with osteoporosis and meet the criteria for the Medicare home health benefit." ;
-  :appliesTo :Patient ;
-  :condition [
-    a :Woman ;
-    rdf:type :Osteoporosis ;
-    :meetsCriteriaForMedicareHomeHealthBenefit true
-  ]
-] .
+ns1:InjectableOsteoporosisDrug a rdf:Class .
 
-######### Rule 2 #########
-[ a :Requirement ;
-  rdf:value "Must have a bone fracture certified by a doctor as being related to post-menopausal osteoporosis." ;
-  :appliesTo :Patient ;
-  :condition [
-    a :Patient ;
-    :hasBoneFracture :BoneFracture ;
-    :BoneFracture :certifiedByDoctor true ;
-    :BoneFracture :relatedTo :PostMenopausalOsteoporosis
-  ]
-] .
+ns1:MedicareCoverage rdfs:subClassOf ns1:InjectableOsteoporosisDrug .
 
-######### Rule 3 #########
-[ a :Requirement ;
-  rdf:value "Must be certified by a doctor as unable to self-administer the injection or learn how to do so by injection." ;
-  :appliesTo :Patient ;
-  :condition [
-    a :Patient ;
-    :certifiedByDoctor true ;
-    :unableToSelfAdminister :Injection ;
-    :unableToLearnInjection true
-  ]
-] .
+{
+  ?patient a ns1:MedicareCoverage ;
+           ns1:isFemale "true" ;
+           ns1:hasOsteoporosis "true" ;
+           ns1:meetsCriteriaForHomeHealthBenefit "true" ;
+           ns1:hasBoneFracture "true" ;
+           ns1:isCertifiedByDoctor "true" ;
+           ns1:cannotSelfAdminister "true" ;
+           ns1:cannotLearnToSelfAdminister "true" ;
+           ns1:familyOrCaregiversUnableOrUnwilling "true" .
+} => {
+  ?patient ns1:coverageDecision "true" .
+}
 
-######### Rule 4 #########
-[ a :Requirement ;
-  rdf:value "If family or caregivers are unable or unwilling to provide the injection, Medicare will cover a home health nurse or aide to do so." ;
-  :appliesTo :Medicare ;
-  :condition [
-    a :Medicare ;
-    :covers :HomeHealthNurseOrAide ;
-    :HomeHealthNurseOrAide :coversInjection true ;
-    :HomeHealthNurseOrAide :providesInjection [
-      a :Quote ;
-      rdf:value "Medicare will cover a home health nurse or aide to provide the injection."
-    ] ;
-    :FamilyOrCaregivers :unableOrUnwilling true
-  ]
-] .
-
-######### Final Decision #########
-[ a :FinalDecision ;
-  rdf:value "Medicare covers injectable osteoporosis drugs for eligible women with osteoporosis who meet specific conditions." ;
-  :condition [
-    a :Medicare ;
-    :covers :OsteoporosisDrugs ;
-    :coversFor :EligibleWomenWithOsteoporosis ;
-    :EligibleWomenWithOsteoporosis :meets [
-      a :And ;
-      :Requirement_1 ;
-      :Requirement_2 ;
-      :Requirement_3 ;
-      :Requirement_4
-    ]
-  ]
-] .
 ```
-Note: The individual URIs in this example are placeholders and can be replaced with appropriate URIs as per the specific ontology or knowledge graph being used.
+Logic Rules expressed in N3 syntax:
+
+1. A patient who is female and has osteoporosis and meets the criteria for the Medicare home health benefit and has a bone fracture and is certified by a doctor and cannot self-administer and cannot learn to self-administer and has family or caregivers who are unable or unwilling to administer the injection, is eligible for Medicare coverage of injectable osteoporosis drugs.
+2. If a patient meets all the conditions mentioned in the first rule, the decision for coverage for injectable osteoporosis drugs is true.

@@ -1,0 +1,81 @@
+```
+library MedicareCoverage
+
+using QDM
+
+parameters:
+  "transplantStatus": "Patient has received organ transplant"
+  "partAStatus": "Patient has Part A coverage"
+  "partBStatus": "Patient has Part B coverage"
+  "partDStatus": "Patient has Part D coverage"
+  "enrollmentStatus": "Patient has enrolled in Medicare drug plan"
+  "esrdStatus": "Patient has End-Stage Renal Disease"
+  "lostPartAStatus": "Patient has lost Part A coverage"
+  "otherCoverageStatus": "Patient has certain types of other health coverage"
+  "successfulKidneyTransplantStatus": "Patient has had a successful kidney transplant"
+  "immunosuppressiveCoverageEndStatus": "Patient's Medicare coverage for immunosuppressive drugs has ended"
+  "monthlyPremium": "Monthly premium amount"
+  "deductible": "Deductible amount"
+  "coinsuranceRate": "Coinsurance rate for immunosuppressive drugs"
+
+define "TransplantDrugTherapy":
+  ["transplantStatus": "true"]
+
+define "PartACoveredTransplant":
+  ["transplantStatus": "true",
+   "partAStatus": "true"]
+
+define "PartBCoveredTransplant":
+  ["transplantStatus": "true",
+   "partBStatus": "true"]
+
+define "ImmunosuppressiveDrugCoverage":
+  ["transplantStatus": "true",
+   "partBStatus": "true"]
+
+define "PartDDrugCoverage":
+  ["transplantStatus": "true",
+   "partBStatus": "false",
+   "partDStatus": "true"]
+
+define "JoinMedicareDrugPlan":
+  ["transplantStatus": "true",
+   "partBStatus": "false",
+   "partDStatus": "false",
+   "enrollmentStatus": "true"]
+
+define "ESRDImmunosuppressiveCoverage":
+  ["esrdStatus": "true",
+   "successfulKidneyTransplantStatus": "true"]
+
+define "ESRDImmunosuppressiveCoverageEnd":
+  ["esrdStatus": "true",
+   "successfulKidneyTransplantStatus": "true",
+   "immunosuppressiveCoverageEndStatus": "true"]
+
+define "BenefitForLostPartA":
+  ["lostPartAStatus": "true",
+   "otherCoverageStatus": "false"]
+
+define "PremiumAndDeductible":
+  ["monthlyPremium": "$97.10",
+   "deductible": "$226"]
+
+define "CoinsuranceRate":
+  ["coinsuranceRate": "20%"]
+
+define "FinalDecision":
+  ["transplantStatus": "true",
+   "partAStatus": "true",
+   "partBStatus": "true",
+   "partDStatus": "true",
+   "enrollmentStatus": "true",
+   "esrdStatus": "true",
+   "lostPartAStatus": "true",
+   "otherCoverageStatus": "true",
+   "successfulKidneyTransplantStatus": "true",
+   "immunosuppressiveCoverageEndStatus": "false",
+   "monthlyPremium": "$97.10",
+   "deductible": "$226",
+   "coinsuranceRate": "20%"]
+```

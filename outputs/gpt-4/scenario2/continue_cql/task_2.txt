@@ -1,0 +1,25 @@
+```
+library IVIGCoverage version '1.0'
+
+using Simple version '1.0'
+
+parameter Patient 
+context Patient
+
+define "Primary Immune Deficiency Disease":
+  Patient.Diagnosis contains diagnosis where diagnosis.Code in 'primary immune deficiency disease' //Assuming proper code for primary immune deficiency disease
+
+define "Physician Approval":
+  Patient.Encounters with provider in Providers where provider is doctor and 
+    Encounter.Reason is 'Medically Necessary for IVIG' //Assuming a proper way to represent that the doctor decided it's medically appropriate 
+
+define "At Home IVIG":
+  Patient.Encounters with service in Services where 
+    service.Code in 'IVIG' and Encounter.Location = 'Home' 
+
+define "Medicare Part B":
+  Patient.Insurance[0] in 'Medicare Part B' //Assuming that Insurance[0] is always the primary insurance 
+
+define "IVIG Coverage":
+  "Primary Immune Deficiency Disease" and "Physician Approval" and "At Home IVIG" and "Medicare Part B"
+```

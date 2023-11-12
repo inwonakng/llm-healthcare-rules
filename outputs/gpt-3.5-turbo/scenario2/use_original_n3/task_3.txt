@@ -1,23 +1,43 @@
+```solidity
 pragma solidity ^0.8.0;
 
 contract IVIGCoverage {
-    struct Patient {
-        string diagnosis;
-        bool isMedicallyAppropriate;
-        bool isCovered;
+    
+    struct IVIGRequest {
+        bool isDiagnosed; // Whether the patient is diagnosed with primary immune deficiency disease
+        bool isMedicallyAppropriate; // Whether it is medically appropriate to receive IVIG at home
+        bool isCovered; // Whether Medicare covers IVIG at home
+        bool paysForOtherItems; // Whether Medicare pays for other items and services related to IVIG at home
     }
-
-    mapping(address => Patient) public patients;
-
-    function getIVIGCoverage(address patientAddress) public view returns (bool) {
-        Patient storage patient = patients[patientAddress];
-        
-        if (keccak256(bytes(patient.diagnosis)) == keccak256(bytes("primary immune deficiency disease")) && patient.isMedicallyAppropriate) {
-            patient.isCovered = true;
+    
+    function isIVIGCoverageAvailable(bool isDiagnosed, bool isMedicallyAppropriate) external view returns (bool) {
+        if (isDiagnosed && isMedicallyAppropriate) {
+            return true;
         } else {
-            patient.isCovered = false;
+            return false;
+        }
+    }
+    
+    function getIVIGPaymentDetails(bool isCovered, bool paysForOtherItems) external pure returns (string memory) {
+        string memory paymentDetails;
+        
+        if (isCovered) {
+            paymentDetails = "Medicare covers the IVIG itself";
+            
+            if (!paysForOtherItems) {
+                paymentDetails = string(abi.encodePacked(paymentDetails, ", but doesn’t pay for other items and services"));
+            }
+        } else {
+            paymentDetails = "Medicare does not cover IVIG at home";
         }
         
-        return patient.isCovered;
+        return paymentDetails;
     }
 }
+```
+
+Explanation:
+
+- The `IVIGCoverage` contract defines a struct `IVIGRequest` to encapsulate the necessary parameters for an IVIG coverage request.
+- The `isIVIGCoverageAvailable` function checks if IVIG coverage is available based on the diagnosis and medical appropriateness. It returns `true` if both conditions are met, otherwise `false`.
+- The `getIVIGPaymentDetails` function returns the payment details related to IVIG coverage. If Medicare covers IVIG, it returns a string stating that Medicare covers the IVIG itself. If Medicare does not pay for other items and services, it appends a message mentioning that. If Medicare does not cover IVIG at home, it returns a string stating so.

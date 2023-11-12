@@ -1,0 +1,27 @@
+```
+library IVIG_Home_Coverage
+
+using FHIR version '4.0.1'
+
+define "Diagnosis of Primary Immune Deficiency Disease":
+  // The patient must have primary immune deficiency disease
+  // TODO: Add logic to identify patients with primary immune deficiency disease
+
+define "Medically Appropriate for IVIG at Home":
+  // The doctor must determine that receiving IVIG at home is medically appropriate for the patient
+  // TODO: Add logic to determine if IVIG at home is medically appropriate for the patient
+
+define "IVIG Coverage":
+  // Medicare Part B covers the cost of IVIG itself
+  // TODO: Add logic to determine if IVIG is covered by Medicare Part B
+
+define "Non-Covered Services":
+  // Medicare does not cover other items and services associated with receiving IVIG at home
+  // TODO: Add logic to identify other items and services that are not covered by Medicare
+
+define "Coverage Decision":
+  // Final decision about coverage based on all the requirements
+  exists ("Diagnosis of Primary Immune Deficiency Disease" and "Medically Appropriate for IVIG at Home" and "IVIG Coverage" and "Non-Covered Services")
+
+end library
+```

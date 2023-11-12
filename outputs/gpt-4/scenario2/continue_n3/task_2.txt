@@ -1,6 +1,28 @@
-N3 Logic Rules:
+```
+{
+ :Patient a :Person.
+ :Doctor a :Person.
+ :IVIG a :Treatment.
+ :PrimaryImmuneDeficiencyDisease a :Disease.
+ :PartB a :MedicarePlan.
+ :Home a :Location.
 
-1. { ?patient has diagnosis primary_immune_deficiency_disease } => { ?patient has medicare_coverage IVIG }.
-2. { ?doctor determines IVIG_is_medically_appropriate in_home for ?patient } => { ?patient gets IVIG_at_home }.
-3. { ?patient gets IVIG_at_home } => { Medicare_Part_B covers IVIG_for ?patient }.
-4. { ?patient gets IVIG_at_home } => { Medicare_Part_B does_not_cover other_services_and_items for ?patient }.
+ :Patient :hasMedicarePlan :PartB.
+ :Patient :hasDisease :PrimaryImmuneDeficiencyDisease.
+
+ :Doctor :deemsAppropriate :IVIG.
+ :IVIG :administeredAt :Home. 
+
+ {
+  :Patient :hasMedicarePlan :PartB;
+           :hasDisease :PrimaryImmuneDeficiencyDisease.
+  :Doctor :deemsAppropriate :IVIG.
+  :IVIG :administeredAt :Home.
+ } => {:PartB :covers :IVIG}.
+
+ {
+  :IVIG :associatedWith :AdditionalItemsAndServices.
+  :Patient :receives :IVIG.
+ } => {:PartB :doesNotCover :AdditionalItemsAndServices}.
+}
+```

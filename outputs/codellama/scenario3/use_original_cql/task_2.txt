@@ -1,0 +1,50 @@
+Here is a set of named expressions grouped within a CQL library to cover every single requirement described in the natural language text:
+```
+library TransplantDrugCoverage version '1'
+using FHIR version '4.0.1'
+include "http://hl7.org/fhir/us/core/ValueSet/omb- TreatmentCodes"
+include "http://hl7.org/fhir/us/core/ValueSet/omg- Coverage"
+
+codesystem "omg- TreatmentCodes": 'http://hl7.org/fhir/us/core/ValueSet/omb- TreatmentCodes'  > where {
+    "kidney": 'http://hl7.org/fhir/us/core/CodeSystem/omb- TreatmentCodes#kidney'
+    "liver": 'http://hl7.org/fhir/us/core/CodeSystem/omb- TreatmentCodes#liver'
+    "lung": 'http://hl7.org/fhir/us/core/CodeSystem/omb- TreatmentCodes#lung'
+    "heart": 'http://hl7.org/fhir/us/core/CodeSystem/omb- TreatmentCodes#heart'
+    "other": 'http://hl7.org/fhir/us/core/CodeSystem/omb- TreatmentCodes#other'
+}
+
+codesystem "omg- Coverage": 'http://hl7.org/fhir/us/core/ValueSet/omg- Coverage' > where {
+    "part-A": 'http://hl7.org/fhir/us/core/CodeSystem/omg- Coverage#part-A'
+    "part-B": 'http://hl7.org/fhir/us/core/CodeSystem/omg- Coverage#part-B'
+    "part-D": 'http://hl7.org/fhir/us/core/CodeSystem/omg- Coverage#part-D'
+    "escherichia": 'http://hl7.org/fhir/us/core/CodeSystem/omg- Coverage#escherichia'
+    "end-stage-renal-disease": 'http://hl7.org/fhir/us/core/CodeSystem/omg- Coverage#end-stage-renal-disease'
+    "group-health-plan": 'http://hl7.org/fhir/us/core/CodeSystem/omg- Coverage#group-health-plan'
+    "tricare": 'http://hl7.org/fhir/us/core/CodeSystem/omg- Coverage#tricare'
+    "medicaid": 'http://hl7.org/fhir/us/core/CodeSystem/omg- Coverage#medicaid'
+}
+
+codesystem "immunosuppressive-drug": 'http://www.cms.gov/medicare-coverage- database/codes/coverage- Medicare'  > where {
+    "immunosuppressive-drug": 'http://hl7.org/fhir/us/core/CodeSystem/immunosuppressive- drug#immunosuppressive- drug'
+}
+
+valueset "TransplantDrug": 'http://hl7.org/fhir/us/core/ValueSet/omg- Coverage'  > where {
+    "KidneyTransplant": 'http://hl7.org/fhir/us/core/CodeSystem/omg- Coverage#part-A' < 'http://hl7.org/fhir/us/core/CodeSystem/omg- Coverage#part-B' < 'http://hl7.org/fhir/us/core/CodeSystem/omg- Coverage#part-D'
+    "LiverTransplant": 'http://hl7.org/fhir/us/core/CodeSystem/omg- Coverage#part-A' < 'http://hl7.org/fhir/us/core/CodeSystem/omg- Coverage#part-B' < 'http://hl7.org/fhir/us/core/CodeSystem/omg- Coverage#part-D'
+    "LungTransplant": 'http://hl7.org/fhir/us/core/CodeSystem/omg- Coverage#part-A' < 'http://hl7.org/fhir/us/core/CodeSystem/omg- Coverage#part-B' < 'http://hl7.org/fhir/us/core/CodeSystem/omg- Coverage#part-D'
+    "HeartTransplant": 'http://hl7.org/fhir/us/core/CodeSystem/omg- Coverage#part-A' < 'http://hl7.org/fhir/us/core/CodeSystem/omg- Coverage#part-B' < 'http://hl7.org/fhir/us/core/CodeSystem/omg- Coverage#part-D'
+    "OtherTransplant": 'http://hl7.org/fhir/us/core/CodeSystem/omg- Coverage#part-A' < 'http://hl7.org/fhir/us/core/CodeSystem/omg- Coverage#part-B' < 'http://hl7.org/fhir/us/core/CodeSystem/omg- Coverage#part-D'
+            }
+
+CqlMeasure "TransplantDrugCoverage" has {
+    "EvaluationPeriod": "% Leopard”
+    "Population": "Population '%ResourceType’ with id ‘%ResourceId’"
+    "Observation": "Named Expression ‘KidneyTransplant’”
+    "Score ‘KidneyTransplant’: { Time: ‘%Resource’. Start. Value with ‘Kidney’ }"
+    "Score ‘LiverTransplant’: { Time: ‘%Resource’. Start. Value with ‘Liver’ }"
+    "Score ‘LungTransplant’: { Time: ‘%Resource’. Start. Value with ‘Lung’ }"
+    "Score ‘HeartTransplant’: { Time: ‘%Resource’. Start. Value with ‘Heart’ }"
+    "Score ‘OtherTransplant’: { Time: ‘%Resource’. Start. Value with ‘Other’ }"
+} 
+```
+The CQL measure "TransplantDrugCoverage" includes the named expressions "KidneyTransplant", "LiverTransplant", "LungTransplant", "HeartTransplant", and "OtherTransplant" to cover every single requirement described in the natural language text. The named expressions can be used to generate the final decision that fits the natural language text. The CQL library includes the codes and value sets required for the named expressions.

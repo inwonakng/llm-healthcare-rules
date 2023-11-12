@@ -1,43 +1,43 @@
-Solidity Smart Contract:
-
-```solidity
+```
 pragma solidity ^0.8.0;
 
 contract MedicareCoverage {
+    enum Location {HOME, OTHER}
+    enum Disease {PRIMARY_IMMUNE_DEFICIENCY, OTHER}
+    enum Treatment {IVIG, OTHER}
+
     struct Patient {
-        bool hasPrimaryImmuneDeficiency;
-        bool IVIGAppropriateForHomeUse;
-        bool onIVIGTreatment;
+        bool hasMedicarePartB;
+        Disease disease;
     }
 
-    struct MedicarePartB {
-        bool coversIVIG;
-        bool coversOtherServicesAndItems;
+    struct Doctor {
+        bool deemsIVIGAppropriate;
     }
 
-    mapping(address => Patient) public patients;
-    mapping(address => MedicarePartB) public medicarePartB;
+    Patient public patient;
+    Doctor public doctor;
 
-    function determineCoverage(address _patientAddress) public view returns (string memory){
-        Patient memory patient = patients[_patientAddress];
-        MedicarePartB memory coverage = medicarePartB[_patientAddress];
+    constructor(Patient memory _patient, Doctor memory _doctor) {
+        patient = _patient;
+        doctor = _doctor;
+    }
 
-        require(patient.hasPrimaryImmuneDeficiency, "Patient does not have primary immune deficiency disease.");
-        
-        if(patient.IVIGAppropriateForHomeUse && patient.onIVIGTreatment){
-            coverage.coversIVIG = true;
-            coverage.coversOtherServicesAndItems = false;
-            return "Medicare Part B covers IVIG but does not cover other services and items for home IVIG treatment.";
+    function evaluateCoverage(Location location, Treatment treatment) public view returns(bool) {
+        if(patient.hasMedicarePartB && patient.disease == Disease.PRIMARY_IMMUNE_DEFICIENCY && doctor.deemsIVIGAppropriate && location == Location.HOME && treatment == Treatment.IVIG) {
+            return true;
         } else {
-            return "Medicare Part B does not provide any coverage.";
+            return false;
         }
     }
-    
-    function setPatientDetails(address _patientAddress, bool _hasPrimaryImmuneDeficiency, bool _IVIGAppropriateForHomeUse, bool _onIVIGTreatment) public {
-        Patient storage patient = patients[_patientAddress];
-        patient.hasPrimaryImmuneDeficiency = _hasPrimaryImmuneDeficiency;
-        patient.IVIGAppropriateForHomeUse = _IVIGAppropriateForHomeUse;
-        patient.onIVIGTreatment = _onIVIGTreatment;
+
+    function evaluateAdditionalServiceCoverage() public view returns(bool) {
+        if(patient.hasMedicarePartB){
+            return false;
+        } else {
+            return true;
+        }
     }
 }
 ```
+This Solidity smart contract defines a MedicareCoverage contract, which helps determine whether a patient is eligible to have IVIG treatment covered under Medicare Part B, based on a number of conditions. The Patient and Doctor structs are used to encapsulate patient and doctor parameters.

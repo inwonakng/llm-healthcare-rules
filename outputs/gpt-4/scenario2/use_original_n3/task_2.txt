@@ -1,22 +1,13 @@
-```N3
-@prefix : <http://example.org#> .
+```
+@prefix : <http://example.org/> .
 
-{
-  :Patient :diagnosis :PrimaryImmuneDeficiencyDisease .
-  :Doctor :decides :MedicallyAppropriateForIVIGatHome .
-} => {
-  :Medicare :covers :IVIG .
-}.
+{ 
+    :Patient a :HasPrimaryImmuneDeficiencyDisease; 
+              :MedicallyAppropriateToGetIVIGInHome;
+              :IVIGIsCoveredByPartBInsurancePolicy.
+} => { :Patient :CoveredUnderMedicareForIVIGAtHome true }.
 
-{
-  :Medicare :covers :IVIG .
-} => {
-  :PartB :covers :IVIGitself .
-} .
-
-{
-  :Medicare :covers :IVIG .
-} => {
-  :PartB :doesNotPayFor :otherItemsAndServicesRelatedToIVIGatHome .
-}.
+{ 
+    :Patient :CoveredUnderMedicareForIVIGAtHome true.
+} => { :Patient :OtherRelatedItemsAndServicesToIVIGAtHome not covered }.
 ```

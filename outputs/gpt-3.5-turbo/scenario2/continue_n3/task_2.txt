@@ -1,69 +1,124 @@
 ```
+@prefix med: <http://example.com/med#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
-@prefix medicare: <http://example.com/medicare#> .
 
-[ medicare:medicareCoversIVIG a rdf:Property ;
-    rdfs:label "Medicare covers Intravenous Immune Globulin (IVIG)" ;
-    rdfs:comment "Medicare covers IVIG if you have a diagnosis of primary immune deficiency disease, and your doctor decides that it’s medically appropriate for you to get the IVIG in your home" ;
-    rdfs:domain medicare:Individual ;
-    rdfs:range medicare:IVIG ;
-    rdfs:subPropertyOf medicare:coverage .
+med:MedicareCoverage
+    rdf:type owl:Class ;
+    rdfs:label "Medicare Coverage" .
 
-medicare:diagnosedWithPrimaryImmuneDeficiency a rdf:Property ;
-    rdfs:label "Diagnosed with primary immune deficiency disease" ;
-    rdfs:comment "A diagnosis of primary immune deficiency disease is required for Medicare coverage of IVIG" ;
-    rdfs:domain medicare:Individual .
+med:IVIG
+    rdf:type owl:Class ;
+    rdfs:label "Intravenous Immune Globulin (IVIG)" .
 
-medicare:medicallyAppropriateForHomeCare a rdf:Property ;
-    rdfs:label "Medically appropriate for home care" ;
-    rdfs:comment "Medically appropriate for you to get the IVIG in your home" ;
-    rdfs:domain medicare:Individual .   
+med:PrimaryImmuneDeficiencyDisease
+    rdf:type owl:Class ;
+    rdfs:label "Primary Immune Deficiency Disease" .
 
-medicare:IVIG a rdfs:Class ;
-    rdfs:label "Intravenous Immune Globulin (IVIG)" ;
-    rdfs:comment "Intravenous Immune Globulin (IVIG)" .
+med:IVIGINHome
+    rdf:type owl:Class ;
+    rdfs:label "IVIG provided in the home" .
 
-medicare:Individual a rdfs:Class ;
-    rdfs:label "Individual" ;
-    rdfs:comment "Individual" .
+med:DoctorDecision
+    rdf:type owl:Class ;
+    rdfs:label "Doctor Decision" .
 
-medicare:partBCoversIVIG a rdf:Property ;
-    rdfs:label "Part B covers the IVIG" ;
-    rdfs:comment "Part B covers the IVIG itself" ;
-    rdfs:subPropertyOf medicare:coverage ;
-    rdfs:domain medicare:IVIG .
+med:MedicallyAppropriate
+    rdf:type owl:Class ;
+    rdfs:label "Medically Appropriate" .
 
-medicare:doesNotCoverOtherItems a rdf:Property ;
-    rdfs:label "Does not cover other items and services" ;
-    rdfs:comment "Medicare Part B does not pay for other items and services related to you getting the IVIG at home" ;
-    rdfs:domain medicare:Individual .
-
-medicare:relatedToIVIGAtHome a rdf:Property ;
-    rdfs:label "Related to getting the IVIG at home" ;
-    rdfs:comment "Items and services related to you getting the IVIG at home" ;
-    rdfs:domain medicare:Individual .
-
-medicare:IVIGCoverage rdfs:subPropertyOf medicare:coverage ;
+med:IVIGCoverage
+    rdf:type owl:ObjectProperty ;
     rdfs:label "IVIG Coverage" ;
-    rdfs:domain medicare:Individual ;
-    rdfs:range medicare:IVIG .
+    rdfs:domain med:MedicareCoverage ;
+    rdfs:range med:IVIG .
 
-## Individual has primary immune deficiency disease
-{ ?individual medicare:diagnosedWithPrimaryImmuneDeficiency true } => { ?individual medicare:medicareCoversIVIG true } .
+med:PrimaryDiagnosis
+    rdf:type owl:ObjectProperty ;
+    rdfs:label "Primary Diagnosis" ;
+    rdfs:domain med:IVIG ;
+    rdfs:range med:PrimaryImmuneDeficiencyDisease .
 
-## Individual is medically appropriate for home care
-{ ?individual medicare:medicallyAppropriateForHomeCare true } => { ?individual medicare:medicareCoversIVIG true } .
+med:DoctorApproval
+    rdf:type owl:ObjectProperty ;
+    rdfs:label "Doctor Approval" ;
+    rdfs:domain med:IVIG ;
+    rdfs:range med:DoctorDecision .
 
-## Part B covers IVIG itself
-{ ?individual medicare:partBCoversIVIG true } => { ?individual medicare:medicareCoversIVIG true } .
+med:HomeDelivery
+    rdf:type owl:ObjectProperty ;
+    rdfs:label "Home Delivery" ;
+    rdfs:domain med:IVIG ;
+    rdfs:range med:IVIGINHome .
 
-## Medicare does not cover other items and services related to getting IVIG at home
-{ ?individual medicare:doesNotCoverOtherItems true } => { ?individual medicare:relatedToIVIGAtHome false } .
+med:CoverageDecision
+    rdf:type owl:ObjectProperty ;
+    rdfs:label "Coverage Decision" ;
+    rdfs:domain med:IVIG ;
+    rdfs:range med:MedicareCoverage .
+
+med:IVIGNotCoveredServices
+    rdf:type owl:ObjectProperty ;
+    rdfs:label "IVIG Not Covered Services" ;
+    rdfs:domain med:IVIG ;
+    rdfs:range med:IVIGINHome .
+
+med:MedicarePartBCoversCost
+    rdf:type owl:ObjectProperty ;
+    rdfs:label "Medicare Part B Covers Cost" ;
+    rdfs:domain med:IVIG ;
+    rdfs:range med:MedicareCoverage .
+
+{
+    med:MedicareCoverage a owl:Class ;
+        rdfs:label "Medicare Coverage" .
+    med:IVIG a owl:Class ;
+        rdfs:label "Intravenous Immune Globulin (IVIG)" .
+    med:PrimaryImmuneDeficiencyDisease a owl:Class ;
+        rdfs:label "Primary Immune Deficiency Disease" .
+    med:IVIGINHome a owl:Class ;
+        rdfs:label "IVIG provided in the home" .
+    med:DoctorDecision a owl:Class ;
+        rdfs:label "Doctor Decision" .
+    med:MedicallyAppropriate a owl:Class ;
+        rdfs:label "Medically Appropriate" .
+    med:IVIGCoverage a owl:ObjectProperty ;
+        rdfs:label "IVIG Coverage" ;
+        rdfs:domain med:MedicareCoverage ;
+        rdfs:range med:IVIG .
+    med:PrimaryDiagnosis a owl:ObjectProperty ;
+        rdfs:label "Primary Diagnosis" ;
+        rdfs:domain med:IVIG ;
+        rdfs:range med:PrimaryImmuneDeficiencyDisease .
+    med:DoctorApproval a owl:ObjectProperty ;
+        rdfs:label "Doctor Approval" ;
+        rdfs:domain med:IVIG ;
+        rdfs:range med:DoctorDecision .
+    med:HomeDelivery a owl:ObjectProperty ;
+        rdfs:label "Home Delivery" ;
+        rdfs:domain med:IVIG ;
+        rdfs:range med:IVIGINHome .
+    med:CoverageDecision a owl:ObjectProperty ;
+        rdfs:label "Coverage Decision" ;
+        rdfs:domain med:IVIG ;
+        rdfs:range med:MedicareCoverage .
+    med:IVIGNotCoveredServices a owl:ObjectProperty ;
+        rdfs:label "IVIG Not Covered Services" ;
+        rdfs:domain med:IVIG ;
+        rdfs:range med:IVIGINHome .
+    med:MedicarePartBCoversCost a owl:ObjectProperty ;
+        rdfs:label "Medicare Part B Covers Cost" ;
+        rdfs:domain med:IVIG ;
+        rdfs:range med:MedicareCoverage .
+    
+    med:IVIGCoverage med:PrimaryDiagnosis med:PrimaryImmuneDeficiencyDisease .
+    med:CoverageDecision med:IVIG med:MedicareCoverage .
+    med:CoverageDecision med:DoctorApproval med:DoctorDecision .
+    med:CoverageDecision med:HomeDelivery med:IVIGINHome .
+    med:CoverageDecision med:MedicallyAppropriate .
+    med:MedicarePartBCoversCost med:IVIG .
+
+} => {
+    med:CoverageDecision med:IVIG med:MedicareCoverage .
+} .
 ```
-
-Explanation:
-1. An individual is covered by Medicare for Intravenous Immune Globulin (IVIG) if they are diagnosed with primary immune deficiency disease or if it is determined to be medically appropriate for them to receive IVIG at home.
-2. Medicare Part B covers the IVIG itself.
-3. Medicare does not cover other items and services related to getting IVIG at home.
+```

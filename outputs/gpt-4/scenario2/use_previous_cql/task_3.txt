@@ -1,0 +1,52 @@
+```solidity
+pragma solidity ^0.8.0;
+
+contract IVIGMedicareCoverage {
+    struct Conditions {
+        bool primaryImmuneDeficiency;
+        bool physicianApproval;
+        bool ivigCovered;
+        bool expensesHandledByMedicarePartB;
+        bool medicarePartBNonCoveredItems;
+    }
+
+    mapping (address => Conditions) public patientConditions;
+
+    event finalIVIGMedicareCoverageDecision (
+        address indexed patient,
+        bool eligible
+    );
+
+    function setConditions(
+        address _patient,
+        bool _primaryImmuneDeficiency,
+        bool _physicianApproval,
+        bool _ivigCovered,
+        bool _expensesHandledByMedicarePartB,
+        bool _medicarePartBNonCoveredItems
+    ) public {
+        Conditions memory conditions = Conditions(
+            _primaryImmuneDeficiency,
+            _physicianApproval,
+            _ivigCovered,
+            _expensesHandledByMedicarePartB,
+            _medicarePartBNonCoveredItems
+        );
+        patientConditions[_patient] = conditions;
+    }
+
+    function finalDecision(address _patient) public {
+        require(
+            patientConditions[_patient].primaryImmuneDeficiency &&
+            patientConditions[_patient].physicianApproval &&
+            patientConditions[_patient].ivigCovered &&
+            patientConditions[_patient].expensesHandledByMedicarePartB &&
+            !patientConditions[_patient].medicarePartBNonCoveredItems,
+            "Patient does not meet all conditions."
+        );
+        
+        emit finalIVIGMedicareCoverageDecision(_patient, true);
+    }
+}
+```
+This Solidity smart contract covers all the conditions described in the document as per the five rules. The `setConditions` function allows setting the conditions for each patient and the `finalDecision` function checks these conditions and emits an event if a patient is eligible for IVIG Medicare coverage.

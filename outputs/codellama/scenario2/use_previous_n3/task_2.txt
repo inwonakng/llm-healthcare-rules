@@ -1,0 +1,8 @@
+The following N3 logical rules cover the requirements listed in the natural language text:
+
+1. If the patient has a diagnosis of primary immune deficiency disease, then Part B covers the cost of IVIG in their home.
+2. If the patient's physician determines that it is medically necessary for the patient to receive IVIG in their home, then Part B covers the cost of IVIG in their home.
+3. If Part B covers the cost of IVIG in the patient's home, then Part B does not cover any additional costs associated with administering the IVIG in the patient's home.
+4. If the patient has a diagnosis of primary immune deficiency disease and their physician determines that it is medically necessary for them to receive IVIG in their home, then Part B covers the cost of IVIG in their home.
+
+The last rule is the final decision, which fits the natural language text, as it states that if the patient meets the requirements outlined in the natural language text, then Part B will cover the cost of IVIG in their home.

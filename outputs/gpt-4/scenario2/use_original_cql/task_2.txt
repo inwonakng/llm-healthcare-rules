@@ -1,0 +1,25 @@
+```
+library IVIGEligibility
+
+using "HL7.FHIR.US.Core" version '3.1.1'
+
+context Patient
+
+define "DiagnosedWithPrimaryImmuneDeficiency":
+    exists([Condition: "primary immune deficiency disease"])
+
+define "IVIGMedicallyAppropriate":
+    exists([Procedure: "intravenous immune globulin"])
+
+define "CoveredByMedicarePartB":
+    true //Assume patient's Medicare coverage is not specified and therefore always true
+
+define "OtherIVIGRelatedItemsAndServicesNotCovered":
+    true //Assume that other items and services related to IVIG are always not covered
+
+define "IVIGEligibility":
+    "DiagnosedWithPrimaryImmuneDeficiency" and 
+    "IVIGMedicallyAppropriate" and 
+    "CoveredByMedicarePartB" and 
+    not "OtherIVIGRelatedItemsAndServicesNotCovered"
+```

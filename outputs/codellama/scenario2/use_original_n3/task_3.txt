@@ -1,0 +1,23 @@
+```
+pragma solidity ^0.6.0;
+
+contract Medicare {
+    struct IVIG {
+        string diagnosis;
+        bool medicalAppropriateness;
+        bool partB Coverage;
+        bool homeDelivery;
+    }
+
+    function isIVIGCovered(IVIG memory ivig) public view returns (bool) {
+        if (ivig.diagnosis == "primary immune deficiency disease" &&
+            ivig.medicalAppropriateness &&
+            ivig.partB Coverage &&
+            ivig.homeDelivery) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+}
+```

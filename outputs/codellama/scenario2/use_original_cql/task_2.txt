@@ -1,0 +1,94 @@
+```
+Library HelloWorld version '1'
+
+// Define trigger by its name
+trigger HelloWorld:
+
+ // Define a set of named expressions for IVIG coverage
+ expressions {
+  Medicare_Covers_IVIG:
+    // For every patient
+    for all patients P:
+      // if the patient has a diagnosis of primary immune deficiency disease
+      if P has Diagnosis of Primary_Immune_Deficiency_Disease:
+        // and if the doctor decides that IVIG is medically appropriate
+        if Doctor_Approval of IVIG:
+          // then Medicare covers IVIG
+          return true
+      else:
+        return false
+
+  Part_B_Covers_IVIG_Itself:
+    // For every IVIG order
+    for all IVIG orders O:
+      // if the order is of type IVIG
+      if O is of type IVIG:
+        return true
+      else:
+        return false
+ }
+
+ // Define a set of named expressions for IVIG services and items coverage
+ expressions {
+  Part_B_Covers_IVIG_Services_And_Items:
+    // For every patient
+    for all patients P:
+      // if the patient has a diagnosis of primary immune deficiency disease
+      if P has Diagnosis of Primary_Immune_Deficiency_Disease:
+        // and if the doctor decides that IVIG is medically appropriate
+        if Doctor_Approval of IVIG:
+          // then Part B covers the IVIG service and items
+          return true
+      else:
+        return false
+
+  Part_B_Does_Not_Cover_IVIG_Itself:
+    [not(Part_B_Covers_IVIG_Itself)]
+ }
+
+ // Define the final decision
+ result {
+  Final_Decision:
+    // For every patient
+    for all patients P:
+      // if Medicare covers IVIG
+      if Medicare_Covers_IVIG of P:
+        // then Part B covers the IVIG service and items
+        return Part_B_Covers_IVIG_Services_And_Items of P
+      else:
+        // if Part B does not cover IVIG itself
+        if Part_B_Does_Not_Cover_IVIG_Itself of P:
+          // then IVIG is not covered by Medicare
+          return false
+        else:
+          // if the patient does not have a diagnosis of primary immune deficiency disease
+          if not(P has Diagnosis of Primary_Immune_Deficiency_Disease):
+            // then IVIG is not covered by Medicare
+            return false
+          else:
+            // if the doctor does not approve of IVIG
+            if not(Doctor_Approval of IVIG):
+              // then IVIG is not covered by Medicare
+              return false
+            else:
+              // if the patient is not of type IVIG
+              if not(P is of type IVIG):
+                // then IVIG is not covered by Medicare
+                return false
+              else:
+                // if none of the above conditions are met
+                return true
+ }
+
+end Library
+```
+In this CQL library, I defined four named expressions to cover every requirement described in the natural language text:
+
+* `Medicare_Covers_IVIG`: This expression determines whether Medicare covers IVIG based on the patient's diagnosis and the doctor's approval.
+* `Part_B_Covers_IVIG_Itself`: This expression determines whether Part B covers the IVIG itself.
+* `Part_B_Covers_IVIG_Services_And_Items`: This expression determines whether Part B covers the IVIG service and items.
+* `Part_B_Does_Not_Cover_IVIG_Itself`: This expression determines whether Part B does not cover the IVIG itself.
+
+The final decision is based on the combination of these named expressions. The decision is true if Medicare covers IVIG, or if Part B covers the IVIG service and items and the patient has a diagnosis of primary immune deficiency disease, and the doctor approves of IVIG. Otherwise, the decision is false.
+
+Note that the CQL library also includes a set of terms and concepts, such as `Medicare`, `IVIG`, `Primary_Immune_Deficiency_Disease`, `Doctor_Approval`, and `Part_B`, which are used to define the named expressions. These terms and concepts are defined outside of the CQL library and are assumed to be known by the system.

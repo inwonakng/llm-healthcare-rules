@@ -1,0 +1,69 @@
+Sure! Here's a possible solution:
+
+ ```
+pragma solidity ^0.6.0;
+
+contract MedicareImmosuppressiveDrugBenefit {
+  
+  struct ImmosuppressiveDrug {
+      string name;
+      uint256 medicareApprovedPrice;
+      bool isCovered;
+  }
+
+  struct Participant {
+      address participantAddress;
+      string partA;
+      string partB;
+      string kidneyTransplant;
+      string medicareDrugPlan;
+      string originalMedicare;
+      bool isESRD;
+  }
+
+  mapping(Participant => mapping(ImmosuppressiveDrug => uint256)) immuneSuppressiveDrugBenefits;
+  mapping(Participant => uint256) medicareDailyAllowance;
+  uint256 deductible = 226;
+  uint256 monthlyPremium = 97.10;
+
+  constructor() public {
+      // Initialize participants
+      Participant[] memory participants = new Participant[](3);
+      participants[0] = Participant(0x123, "PartA", "PartB", "Kidney Transplant", "Medicare Drug Plan", "Original Medicare", false);
+      participants[1] = Participant(0x234, "PartA", "PartB", "", "Medicare Drug Plan", "Original Medicare", false);
+      participants[2] = Participant(0x345, "PartA", "PartB", "Kidney Transplant", "", "Original Medicare", true);
+
+      // Initialize immunosuppressive drugs
+      ImmosuppressiveDrug[] memory immunosuppressiveDrugs = new ImmosuppressiveDrug[](2);
+      immunosuppressiveDrugs[0] = ImmosuppressiveDrug("DrugA", 100, true);
+      immunosuppressiveDrugs[1] = ImmosuppressiveDrug("DrugB", 200, false);
+
+      // Initialize immunosuppressive drug benefits and medicare daily allowance
+      for (uint256 i = 0; i < participants.length; i++) {
+          immuneSuppressiveDrugBenefits[participants[i]][immunosuppressiveDrugs[0]] = 100;
+          immuneSuppressiveDrugBenefits[participants[i]][immunosuppressiveDrugs[1]] = 200;
+          medicareDailyAllowance[participants[i]] = 20;
+      }
+  }
+
+  function getMedicareImmosuppressiveDrugBenefit(Participant patient, ImmosuppressiveDrug drug) public returns(uint256 benefitAmount) {
+      uint256 dailyAllowance = medicareDailyAllowance[patient];
+      uint256 drugPrice = immuneSuppressiveDrugBenefits[patient][drug];
+      uint256 benefit = (drugPrice * dailyAllowance) / 100;
+      return benefit;
+  }
+
+  function getMedicareDailyAllowance(Participant patient) public returns(uint256 dailyAllowance) {
+      return medicareDailyAllowance[patient];
+  }
+
+  function getImmosuppressiveDrugBenefits(Participant patient) public returns(mapping(ImmosuppressiveDrug => uint256) drugBenefits) {
+      return immuneSuppressiveDrugBenefits[patient];
+  }
+
+  function setMedicareDailyAllowance(uint256 newDailyAllowance) public {
+      medicareDailyAllowance[msg.sender] = newDailyAllowance;
+  }
+}
+```
+Note that this contract is a basic implementation and may need to be modified to fit the specific requirements of the problem.

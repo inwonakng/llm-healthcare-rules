@@ -1,0 +1,49 @@
+```solidity
+// SPDX-License-Identifier: MIT
+pragma solidity >=0.6.0 <0.9.0;
+
+contract InjectableOsteoporosisDrugsCoverage {
+
+    struct Patient {
+        bool isFemale;
+        bool hasOsteoporosis;
+        bool meetsMedicareHomeHealthBenefitCriteria;
+        bool hasOsteoporosisRelatedFracture;
+        bool cannotSelfAdministerDrug;
+        bool requiresHomeHealthAideForInjection;
+    }
+
+    mapping(address => Patient) public patients;
+
+    function registerPatient(
+        address _patientAddress,
+        bool _isFemale,
+        bool _hasOsteoporosis,
+        bool _meetsMedicareHomeHealthBenefitCriteria,
+        bool _hasOsteoporosisRelatedFracture,
+        bool _cannotSelfAdministerDrug,
+        bool _requiresHomeHealthAideForInjection
+    ) public {
+        patients[_patientAddress].isFemale = _isFemale;
+        patients[_patientAddress].hasOsteoporosis = _hasOsteoporosis;
+        patients[_patientAddress].meetsMedicareHomeHealthBenefitCriteria = _meetsMedicareHomeHealthBenefitCriteria;
+        patients[_patientAddress].hasOsteoporosisRelatedFracture = _hasOsteoporosisRelatedFracture;
+        patients[_patientAddress].cannotSelfAdministerDrug = _cannotSelfAdministerDrug;
+        patients[_patientAddress].requiresHomeHealthAideForInjection = _requiresHomeHealthAideForInjection;
+    }
+
+    function isEligibleForMedicareInjectionCoverage(address _patientAddress) public view returns (bool) {
+        Patient memory patient = patients[_patientAddress];
+
+        return (
+            patient.isFemale &&
+            patient.hasOsteoporosis &&
+            patient.meetsMedicareHomeHealthBenefitCriteria &&
+            patient.hasOsteoporosisRelatedFracture &&
+            patient.cannotSelfAdministerDrug &&
+            patient.requiresHomeHealthAideForInjection
+        );
+    }
+}
+```
+This solidity smart contract takes into consideration each requirement given in the natural language text. A struct "Patient" is created to encapsulate the necessary parameters. Patients' details can be registered, and the eligibility for Medicare Injection Coverage can be checked using the `isEligibleForMedicareInjectionCoverage()` function. All conditions described in the natural language text and CQL syntax are considered in this function to return the eligibility of the patient.

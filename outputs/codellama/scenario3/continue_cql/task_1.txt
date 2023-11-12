@@ -1,0 +1,13 @@
+```
+Summary: Medicare covers transplant drug therapy if Medicare helped pay for your organ transplant. Requirements include:
+
+1. Having Part A at the time of the covered transplant.
+2. Having Part B at the time you get immunosuppressive drugs (Medicare drug coverage, Part D, may cover these drugs if Part B doesn't).
+3. Keeping Original Medicare to join a Medicare drug plan.
+4. Meeting a 36-month waiting period after a successful kidney transplant if you only have Medicare due to ESRD.
+5. Losing Part A coverage 36 months after a kidney transplant and not having other health coverage (like group health plans, TRICARE, or Medicaid that covers immunosuppressive drugs).
+
+If you qualify for the immunosuppressive drug benefit, you can sign up anytime after your Part A coverage ends. Sign up includes paying a monthly premium of $97.10* and a $226 deductible. Once you've met the deductible, you'll pay 20% of the Medicare-approved amount for your immunosuppressive drugs.
+
+*The premium amount may be higher or lower based on your income level.
+```

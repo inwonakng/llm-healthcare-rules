@@ -1,0 +1,43 @@
+```
+library MedicareCoverageForOsteoporosisDrugs
+
+using QDM
+
+define FemaleWithOsteoporosis:
+    [Condition: "Osteoporosis"]
+        -- gender constraint is implied
+    
+define QualifiesForMedicareHomeHealthBenefit:
+    [Encounter: "Home health encounter"]
+        -- patient's encounter details must satisfy additional criteria for qualification under Medicare
+    
+define BoneFractureRelatedToPostMenopausalOsteoporosis:
+    exists BoneFracture "Bone Fracture"
+        with ["Condition": "Post-menopausal Osteoporosis"]
+        
+define InabilityToSelfAdministerInjection:
+    exists DiagnosticStudyPerformed "Injection Administration Certification"
+        -- evaluation of doctor's certification about the patient's inability to self-administer the injection
+        
+define MedicareCoverageForInjectionAdministration:
+    [Encounter: "Home health encounter"]
+        during Interval[QualifiesForMedicareHomeHealthBenefit],
+    relevant ['DeliveryMethod' in {'Injection'}],
+    relevant [performer: related Entity OR "Caregiver"],
+    reason: {
+        exists InabilityToSelfAdministerInjection OR
+        exists DiagnosticStudyPerformed "Injection Administration Certification"
+            with ['Performer': related Entity],
+        result: "Unable"        
+    }
+
+define MedicareCoverageForOsteoporosisDrugs:
+    [Encounter: "Home health encounter"]
+        during Interval[QualifiesForMedicareHomeHealthBenefit],
+        relevant ['DrugProduct' in {'Osteoporosis Drug'}],
+    reason: {
+        exists FemaleWithOsteoporosis,
+        exists BoneFractureRelatedToPostMenopausalOsteoporosis,
+        exists MedicareCoverageForInjectionAdministration
+    }
+```

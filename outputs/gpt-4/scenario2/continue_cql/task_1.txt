@@ -1,0 +1,7 @@
+```
+1. Medicare covers Intravenous Immune Globulin (IVIG) if the patient is diagnosed with primary immune deficiency disease.
+2. The decision on the medical appropriateness of IVIG for the patient must be made by their doctor.
+3. IVIG must be administered in the patient's home for coverage. 
+4. Medicare Part B covers the cost of IVIG only.
+5. Other items and services associated with home administration of IVIG are not covered under Medicare.
+```

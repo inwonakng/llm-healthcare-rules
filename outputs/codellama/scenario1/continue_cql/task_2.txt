@@ -1,0 +1,15 @@
+```
+CQL Library: OsteoporosisMedicareCoverage
+
+Named Expressions:
+
+1. FemaleWithOsteoporosis: Patient is a female with osteoporosis.
+2. BoneFracture: Patient has a bone fracture related to post-menopausal osteoporosis.
+3. Injection: Patient requires injection of osteoporosis drug.
+4. HomeHealthBenefit: Patient meets requirements for Medicare home health benefit.
+5. InjectionCertification: Doctor certifies that patient cannot give themselves or learn how to give the injection by injection.
+6. FamilyUnwilling: Patient's family or caregivers are unable or unwilling to give them the injection by injection.
+7. HomeHealthNurse: Home health nurse or aide is available to provide the injection.
+
+Decision: If FemaleWithOsteoporosis and BoneFracture and Injection and HomeHealthBenefit and InjectionCertification and FamilyUnwilling, then HomeHealthNurse.
+```

@@ -1,17 +1,16 @@
-High-level summary: Medicare offers coverage for transplant drug therapy, including immunosuppressive drugs, under certain conditions. There is also a benefit available for individuals who lose Part A coverage after 36 months following a kidney transplant and do not have other health coverage. However, this benefit only covers immunosuppressive drugs and not other healthcare services.
+High-level summary: Medicare provides coverage for transplant drug therapy, including immunosuppressive drugs, if Medicare helped pay for the organ transplant. There are certain requirements and options for getting this coverage.
 
-Requirements:
+Requirements for Medicare coverage of transplant drug therapy:
+1. Have Part A coverage at the time of the covered transplant.
+2. Have Part B coverage at the time of receiving immunosuppressive drugs.
+3. If Part B doesn't cover immunosuppressive drugs, Medicare drug coverage (Part D) can be used.
+4. If you have Original Medicare, you can join a Medicare drug plan for drug coverage.
+5. If you only have Medicare due to End-Stage Renal Disease (ESRD), Medicare coverage, including immunosuppressive drugs, ends 36 months after a successful kidney transplant.
+6. Medicare offers a benefit if you lose Part A coverage 36 months after a kidney transplant and don't have certain other health coverage. This benefit only covers immunosuppressive drugs and not other services.
+7. The benefit is not a substitute for full health coverage.
+8. To sign up for the benefit, call Social Security at 1-877-465-0355. TTY users can call 1-800-325-0788.
 
-1. Medicare covers transplant drug therapy if it paid for your organ transplant.
-2. You need to have Part A at the time of the covered transplant.
-3. You must have Part B at the time you receive immunosuppressive drugs.
-4. If Part B doesn't cover immunosuppressive drugs, Medicare's drug coverage (Part D) can be used.
-5. If you have Original Medicare, you can join a Medicare drug plan for coverage.
-6. If you only have Medicare due to End-Stage Renal Disease (ESRD), your coverage, including immunosuppressive drug coverage, ends 36 months after a successful kidney transplant.
-7. Medicare provides a benefit for individuals who lose Part A coverage 36 months after a kidney transplant and don't have certain types of other health coverage.
-8. The benefit only covers immunosuppressive drugs and no other services.
-9. It is not a substitute for full health coverage.
-10. The benefit can be applied for any time after Part A coverage ends.
-11. To sign up for the benefit, contact Social Security at 1-877-465-0355. TTY users can call 1-800-325-0788.
-
-Final decision: Medicare offers a benefit for immunosuppressive drugs to individuals who qualify and lose Part A coverage after 36 months following a kidney transplant, and don't have certain types of other health coverage. The benefit covers only immunosuppressive drugs and can be signed up for by contacting Social Security.
+Costs for the immunosuppressive drug benefit in 2023:
+- Monthly premium of $97.10*
+- $226 deductible
+- After meeting the deductible, you'll pay 20% of the Medicare-approved amount for immunosuppressive drugs.

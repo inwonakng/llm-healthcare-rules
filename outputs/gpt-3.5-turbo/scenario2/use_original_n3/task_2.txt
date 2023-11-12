@@ -1,22 +1,30 @@
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix owl: <http://www.w3.org/2002/07/owl#> .
-@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
-@prefix : <http://example.org/rules#> .
-@prefix medicare: <http://example.org/medicare#> .
-
-:IVIG a medicare:Coverage ;
-      medicare:requiresPrimaryDiagnosis :PrimaryImmuneDeficiency ;
-      medicare:requiresHomeDelivery true ;
-      medicare:requiresMedicallyAppropriate true ;
-      medicare:isCoveredIn :HomeDelivery ;
-      medicare:isCoveredIn medicare:PartB ;
-      medicare:excludedItemsAndServices medicare:NoCoveredServices .
-
-:PrimaryImmuneDeficiency a medicare:Diagnosis .
-
-:HomeDelivery a medicare:Setting .
-
-medicare:PartB a medicare:Program .
-
-medicare:NoCoveredServices a medicare:ItemsAndServices .
+```
+{
+   ?patient a :Patient.
+   
+   ?patient :hasDiagnosis ?diagnosis.
+   ?diagnosis a :PrimaryImmuneDeficiencyDisease.
+   
+   ?doctor a :Doctor.
+   ?doctor :decides ?decision.
+   ?decision :isMedicallyAppropriate true.
+   ?decision :isProvidingIVIG ?patient.
+   ?decision :isProvidingIVIGAtHome true.
+   
+   ?ivig a :IntravenousImmuneGlobulin.
+   ?ivig :isProvidedBy ?decision.
+   
+   ?partB a :MedicarePartB.
+   ?partB :covers ?ivig.
+   
+   ?item a :Item.
+   ?service a :Service.
+   ?relatedTo a :RelatedTo.
+   ?relatedTo :isRelatedTo ?item.
+   ?relatedTo :isRelatedTo ?service.
+   ?partB :doesNotPayFor ?relatedTo.
+   
+   ?finalDecision a :FinalDecision.
+   ?finalDecision :fitsRequirements ?decision.
+}
+```

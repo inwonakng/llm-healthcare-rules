@@ -1,0 +1,38 @@
+```
+library TransplantDrugCoverage version '1.0'
+
+// Requirements for Medicare coverage
+define "Medicare Coverage for Transplant Drug Therapy":
+  (["Medicare Part A Coverage"] at time of Transplant) and
+  (["Medicare Part B Coverage"] at time of Immunosuppressive Drugs) 
+  
+define "Medicare Part A Coverage":
+  exists ["Medicare Part A"]
+
+define "Medicare Part B Coverage":
+  exists ["Medicare Part B"]
+
+// Requirement for Drug Coverage when Part B doesn’t cover them
+define "Drug Coverage Part D":
+  NotFound("Medicare Part B Coverage") implies exists ["Medicare Part D Coverage"]
+
+// ESRD determination and coverage time limit
+define "ESRD Coverage Time Limit":
+  (exists ["ESRD Diagnosis"] and ["Medicare Coverage"])  and 
+  duration in months from time of ["Kidney Transplant"] to now() <= 36
+
+// Benefit for lost Part A coverage
+define "Coverage After Losing Part A":
+  ("Medicare Coverage for Transplant Drug Therapy" and not exists ["Other Health Coverage"]) and
+  duration in months from Time of ["Kidney Transplant"] to now() > 36
+
+// Costs for the immunosuppressive drug benefit
+define "Monthly Premium Costs":
+  $97.10
+
+define "Deductible Costs":
+  $226
+
+define "Copay Costs":
+  20% of ["Medicare-approved amount for Immunosuppressive drugs" after deductive reached]
+```

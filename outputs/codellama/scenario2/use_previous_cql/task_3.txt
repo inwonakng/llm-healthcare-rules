@@ -1,0 +1,32 @@
+Thank you for providing the natural language text and CQL logical syntax for this task. After reviewing the information, I believe that the following Solidity smart contract implementation meets the requirements outlined in the task:
+```solidity
+pragma solidity ^0.8.0;
+
+contract MedicareCoversIVIG {
+    struct MedicareCoverage {
+        bool isCovered;
+        bool isMedicallyNecessary;
+    }
+
+    function isCovered(uint256 medicallyNecessary, uint256 primaryImmuneDeficiencyDisease, uint256 homeTreatment) public view returns (MedicareCoverage memory) {
+        if (medicallyNecessary && primaryImmuneDeficiencyDisease && homeTreatment) {
+            return MedicareCoverage(true, 1);
+        } else {
+            return MedicareCoverage(false, 0);
+        }
+    }
+
+    function isMedicallyNecessary(uint256 primaryImmuneDeficiencyDisease, uint256 homeTreatment) public view returns (bool) {
+        if (primaryImmuneDeficiencyDisease && homeTreatment) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+}
+```
+The above Solidity smart contract implementation encapsulates the named expressions from the CQL library into functions. The `isCovered` function takes in three inputs: `medicallyNecessary`, `primaryImmuneDeficiencyDisease`, and `homeTreatment`, and checks if all three are `true`. The function returns a `MedicareCoverage` struct, which includes a `isCovered` and a `isMedicallyNecessary` property. The `isMedicallyNecessary` function is a helper function that checks if the `primaryImmuneDeficiencyDisease` and `homeTreatment` inputs are `true`.
+
+The Solidity smart contract also includes the necessary checks to ensure that the contract follows the rules specified in the task. Each function is marked with the `public` keyword to allow external access. The `return` statements are used to return the results of the function calls.
+
+Please note that this implementation is a starting point and may require further testing and validation to ensure that it meets the requirements of the original document. Additionally, the CQL library may include additional requirements or complexities that are not captured in the provided summary. It is important to review the original document for full understanding of the requirements and to ensure that the Solidity smart contract implementation is accurate and complete.

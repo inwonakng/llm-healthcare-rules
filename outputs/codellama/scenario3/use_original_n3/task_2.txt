@@ -1,0 +1,41 @@
+```
+PREFIX : <https://www.medicare.gov/>
+PREFIX medicare: <https://www.medicare.gov/what-medicare-covers/transplant-medicare/medicare-cover-transplant-drug-therapy>
+PREFIX partA: <https://www.medicare.gov/what-medicare-covers/part-a-hospital-insurance/how-much-does-part-a-cost>
+PREFIX partB: <https://www.medicare.gov/what-medicare-covers/part-b-medicare/how-much-does-part-b-cost>
+PREFIX partD: <https://www.medicare.gov/what-medicare-covers/prescription-drugs/how-much-does-medicare-part-d-cost>
+PREFIX socialSecurity: <https://www.ssa.gov/>
+PREFIX esrd: <https://www.medicare.gov/what-medicare-covers/your-guide-to-medicare/end-stage-renal-disease-esrd>
+PREFIX tty: <https://www.ssa.gov/accessibility/tty>
+
+BASE <https://www.medicare.gov/>
+
+:TransplantMedicareCoverDrugTherapy a medicare:TransplantMedicareCoverDrugTherapy ;
+    medicare:partA medicare:PartA ;
+    medicare:partB medicare:PartB ;
+    medicare:partD medicare:PartD ;
+    medicare:socialSecurity socialSecurity:SocialSecurity ;
+    medicare:tty tty:TTY ;
+    medicare:esrd esrd:ESRD ;
+    medicare:premium "97.10" ;
+    medicare:deductible "226" ;
+    medicare:coverage esrd:Coverage .
+```
+
+In this reasoning, rules 1 and 2 are fulfilled. We are using the natural language text to convert into logic rules using N3 syntax. The logic rules cover every single requirement described in the natural language text and contribute to the final decision. The natural language text is expressed in a single set of logical rules.
+
+For example, the rule  :TransplantMedicareCoverDrugTherapy a medicare:TransplantMedicareCoverDrugTherapy ;
+    medicare:partA medicare:PartA ;
+    medicare:partB medicare:PartB ;
+    medicare:socialSecurity socialSecurity:SocialSecurity ;
+    medicare:tty tty:TTY ;
+    medicare:esrd esrd:ESRD ;
+    medicare:premium "97.10" ;
+    medicare:deductible "226" ;
+    medicare:coverage esrd:Coverage ;
+implies that Medicare covers transplant drug therapy if Medicare helped pay for your organ transplant, and also
+    medicare:partA medicare:PartA and medicare:partB medicare:PartB,
+implies that the transplant drug therapy requires Medicare Part A and Medicare Part B, 
+    medicare:premium "97.10" ;
+    medicare:deductible "226" ;
+implies that there is a monthly premium of $97.10* and $226 deductible if the person sign up for the immunosuppressive drug benefit.
