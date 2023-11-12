@@ -25,6 +25,7 @@ generation_modes = Literal[
 @click.command()
 @click.argument('doc_name', default='scenario1')
 @click.option('--model', default='gpt-3.5-turbo')
+@click.option('--mode', default='use_original_n3')
 def run(
     doc_name: Literal['scenario1','scenario2', 'scenario3'],
     model: Literal['gpt-3.5-turbo', 'gpt-4', 'codellama'],
@@ -46,6 +47,8 @@ def run(
         continue_conversation=continue_conversation,
         save_dir = save_dir
     )
+    
+    print(f'{model} -- {mode} completed')
 
 
     # messages_per_task = load_template(mode, logic)
@@ -82,8 +85,8 @@ def run(
     #             }
     #         ]
     #         open(save_dir / f"{task['task_name']}.txt",'w').write(model_output)
-    else:
-        raise Exception(f'Unknown mode [{mode}]')
+    # else:
+    #     raise Exception(f'Unknown mode [{mode}]')
 
 
 if __name__ == "__main__":

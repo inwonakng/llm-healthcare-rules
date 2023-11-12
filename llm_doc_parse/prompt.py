@@ -1,10 +1,9 @@
-from typing import Self
 import yaml
 from dataclasses import dataclass, field
 from pathlib import Path
 
-from .custom_types import OpenAIMessage
 from .api import generate
+from .utils import progress_bar
 
 VOWELS = 'aeiou'
 
@@ -70,65 +69,68 @@ class Prompt:
             save_dir = Path(save_dir)
             save_dir.mkdir(parents=True, exist_ok=True)
 
-        for i, raw_conf in enumerate(configs):
-            executable = Executable(**raw_conf)
-            task = self.tasks[executable.task]
+        with progress_bar() as progress:
+            p_task = progress.add_task('Executing..', total=len(configs))
+            for i, raw_conf in enumerate(configs):
+                executable = Executable(**raw_conf)
+                task = self.tasks[executable.task]
 
-            # build messages
-            system_msg = '\n'.join(
-                replace_input_name(
-                    task.messages[message],
-                    executable.input.name,
+                # build messages
+                system_msg = '\n'.join(
+                    replace_input_name(
+                        task.messages[message],
+                        executable.input.name,
+                    )
+                    for message in executable.system_message.messages
                 )
-                for message in executable.system_message.messages
-            )
-            if executable.system_message.include_input:
-                system_msg += '\n\n'.join(
-                    f'### {input_component.capitalize()}\n' + 
-                    valid_input_components[input_component].strip()
-                    for input_component in executable.input.components
+                if executable.system_message.include_input:
+                    system_msg += '\n\n'.join(
+                        f'### {input_component.capitalize()}\n' + 
+                        valid_input_components[input_component].strip()
+                        for input_component in executable.input.components
+                    )
+                user_msg = '\n'.join(
+                    replace_input_name(
+                        task.messages[message],
+                        executable.input.name,
+                    )
+                    for message in executable.user_message.messages
                 )
-            user_msg = '\n'.join(
-                replace_input_name(
-                    task.messages[message],
-                    executable.input.name,
-                )
-                for message in executable.user_message.messages
-            )
-            if executable.user_message.include_input:
-                user_msg += '\n\n'.join(
-                    f'### {input_component.capitalize()}\n' + 
-                    valid_input_components[input_component].strip()
-                    for input_component in executable.input.components
-                )
-            messages = [
-                {'role': 'system', 'content': system_msg,},
-            ]
-            if user_msg:
-                messages += [
-                    {'role': 'user', 'content': user_msg,},
-                ]            
-            chat_history += messages 
+                if executable.user_message.include_input:
+                    user_msg += '\n\n'.join(
+                        f'### {input_component.capitalize()}\n' + 
+                        valid_input_components[input_component].strip()
+                        for input_component in executable.input.components
+                    )
+                messages = [
+                    {'role': 'system', 'content': system_msg,},
+                ]
+                if user_msg:
+                    messages += [
+                        {'role': 'user', 'content': user_msg,},
+                    ]            
+                chat_history += messages 
 
-            output = generate(
-                model, 
-                messages if not continue_conversation else chat_history,
-            )
-            
-            valid_input_components[executable.task] = output
-            
-            chat_history += [{'role': 'assistant', 'content': output,}]
-            
-            print('-'*20+'system'+'-'*20)
-            print(system_msg)
-            print()
-            print('-'*20+'user'+'-'*20)
-            print(user_msg)
-            print('-'*20+'assistant'+'-'*20)
-            print(output)
-            print('='*80)
-            
-            open(save_dir / f"{i:02d}_{executable.task}.txt",'w').write(output)
+                output = generate(
+                    model, 
+                    messages if not continue_conversation else chat_history,
+                )
+                
+                valid_input_components[executable.task] = output
+                
+                chat_history += [{'role': 'assistant', 'content': output,}]
+                
+                # print('-'*20+'system'+'-'*20)
+                # print(system_msg)
+                # print()
+                # print('-'*20+'user'+'-'*20)
+                # print(user_msg)
+                # print('-'*20+'assistant'+'-'*20)
+                # print(output)
+                # print('='*80)
+                
+                open(save_dir / f"{i}_{executable.task}.txt",'w').write(output)
+                progress.advance(p_task)
 
     @staticmethod
     def load_from_file(tasks_file) -> 'Prompt':

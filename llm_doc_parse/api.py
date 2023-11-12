@@ -1,5 +1,9 @@
 import requests
-from llm_doc_parse.config.api import load_api_config
+from requests.packages import urllib3
+
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+
+from .config.api import load_api_config
 
 CODELLAMA_ARGS = {
     "chat_instruct_command": '<|prompt|>',
@@ -7,7 +11,7 @@ CODELLAMA_ARGS = {
 }
 
 DEFAULT_ARGS = {
-    'temperature': 0,
+    'temperature': 1e-10,
 }
 
 def generate(
