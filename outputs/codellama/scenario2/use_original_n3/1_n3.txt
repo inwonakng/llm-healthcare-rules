@@ -1,0 +1,43 @@
+```
+@prefix : <https://www.example.com/insurance-policy#> .
+
+:IVIG a :MedicareCoveredService .
+:IVIG :hasDiagnosis :primaryImmuneDeficiencyDisease .
+:IVIG :medicallyAppropriate :home .
+
+:PartB a :InsurancePolicy .
+:PartB :covers :IVIG .
+:PartB :doesNotPayFor :otherItemsAndServices .
+
+:primaryImmuneDeficiencyDisease a :Diagnosis .
+:home a :Location .
+:otherItemsAndServices a :Service .
+
+:MedicareCoveredService a :Service .
+:InsurancePolicy a :Policy .
+:Diagnosis a :MedicalCondition .
+:Location a :Place .
+:Service a :Activity .
+```
+
+This N3 syntax document defines the following entities and their relationships:
+
+* `IVIG`: A Medicare-covered service that is intravenous immune globulin (IVIG) provided in a home setting.
+* `PartB`: An insurance policy that covers IVIG.
+* `primaryImmuneDeficiencyDisease`: A diagnosis of primary immune deficiency disease.
+* `home`: A location where IVIG is administered.
+* `otherItemsAndServices`: Services and items related to IVIG that are not covered by PartB.
+* `MedicareCoveredService`: A service that is covered by Medicare.
+* `InsurancePolicy`: A policy that governs the coverage of services and items.
+* `Diagnosis`: A medical condition that is used to determine coverage.
+* `Location`: A place where a service is provided.
+* `Service`: An activity that is provided to a patient.
+
+The relationships between these entities are as follows:
+
+* `IVIG` has a diagnosis of `primaryImmuneDeficiencyDisease`.
+* `IVIG` is medically appropriate for administration in a `home` setting.
+* `PartB` covers `IVIG`.
+* `PartB` does not pay for `otherItemsAndServices`.
+
+This set of logical rules captures the requirements described in the insurance policy document, and can be used to make decisions about coverage for IVIG in a home setting based on the patient's diagnosis and other factors.

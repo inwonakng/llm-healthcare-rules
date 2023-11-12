@@ -1,0 +1,51 @@
+```solidity
+pragma solidity ^0.8.0;
+
+import "truffle/Assert.sol";
+import "../contracts/InsurancePolicy.sol";
+
+contract InsurancePolicyTest {
+    InsurancePolicy insurancePolicy;
+
+    function beforeEach() public {
+        insurancePolicy = new InsurancePolicy();
+    }
+
+    // Test for Requirement 1: Medicare covers IVIG if you have a diagnosis of primary immune deficiency disease
+    function testCoverageForPrimaryImmuneDeficiency() public {
+        bool isCovered = insurancePolicy.coverageForPrimaryImmuneDeficiency("Primary Immune Deficiency Disease");
+        Assert.isTrue(isCovered, "IVIG should be covered for primary immune deficiency disease");
+    }
+
+    // Test for Requirement 2: IVIG can be provided in your home if your doctor determines it is medically appropriate
+    function testIvigInHomeMedicallyAppropriate() public {
+        bool isMedicallyAppropriate = insurancePolicy.ivigInHomeMedicallyAppropriate("Intravenous Immune Globulin (IVIG)", 18);
+        Assert.isTrue(isMedicallyAppropriate, "IVIG should be medically appropriate for home administration");
+    }
+
+    // Test for Requirement 3: Medicare Part B covers the cost of the IVIG itself
+    function testMedicarePartBCoversIVIG() public {
+        bool isCovered = insurancePolicy.medicarePartBCoversIVIG("Medicare Part B", "Intravenous Immune Globulin (IVIG)");
+        Assert.isTrue(isCovered, "Medicare Part B should cover the cost of IVIG");
+    }
+
+    // Test for Requirement 4: Medicare does not cover other items and services related to receiving IVIG at home
+    function testNonCoveredItemsAndServices() public {
+        bool isCovered = insurancePolicy.nonCoveredItemsAndServices("Intravenous Immune Globulin (IVIG)", "IVIG Administration");
+        Assert.isFalse(isCovered, "Medicare should not cover other items and services related to IVIG at home");
+    }
+
+    // Test for Final decision based on the requirements
+    function testMeetsInsurancePolicyRequirements() public {
+        bool meetsRequirements = insurancePolicy.meetsInsurancePolicyRequirements(
+            "Primary Immune Deficiency Disease",
+            "Intravenous Immune Globulin (IVIG)",
+            18,
+            "Medicare Part B",
+            "IVIG Administration"
+        );
+        Assert.isTrue(meetsRequirements, "The insurance policy requirements should be met");
+    }
+}
+```
+```

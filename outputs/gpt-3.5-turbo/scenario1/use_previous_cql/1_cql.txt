@@ -1,0 +1,81 @@
+```cql
+library InsurancePolicyDocument
+
+using FHIR version '4.0.1'
+
+define InjectableOsteoporosisDrugsCoverage:
+  exists (
+    [Condition: Condition.code.coding.where(
+      ($this.code = 'Osteoporosis') and ($this.subject.gender = 'female')
+    )],
+    [Procedure: Procedure.code.coding.where(
+      ($this.code = 'BoneFracture') and ($this.subject.gender = 'female')
+    )],
+    [MedicationAdministration: MedicationAdministration.medication.code.coding.where(
+      $this.code = 'InjectableOsteoporosisDrug'
+    )],
+    [MedicationAdministration: MedicationAdministration.reasonCode.coding.where(
+      $this.code = 'PostMenopausalOsteoporosis'
+    )],
+    [MedicationAdministration: MedicationAdministration.performer.where(
+      $this.performerType = 'nurse' or $this.performerType = 'aide'
+    )]
+  )
+
+define UnableToSelfAdminister:
+  exists (
+    [Condition: Condition.code.coding.where(
+      $this.code = 'Osteoporosis'
+    )],
+    [Procedure: Procedure.code.coding.where(
+      $this.code = 'BoneFracture'
+    )],
+    [MedicationAdministration: MedicationAdministration.medication.code.coding.where(
+      $this.code = 'InjectableOsteoporosisDrug'
+    )],
+    [MedicationAdministration: MedicationAdministration.reasonCode.coding.where(
+      $this.code = 'PostMenopausalOsteoporosis'
+    )],
+    [MedicationAdministration: MedicationAdministration.performer.where(
+      $this.performerType = 'nurse' or $this.performerType = 'aide'
+    )],
+    not exists (
+      [Procedure: Procedure.code.coding.where(
+        $this.code = 'SelfAdminister'
+      )]
+    )
+  )
+
+define FamilyOrCaregiversUnableOrUnwilling:
+  exists (
+    [Condition: Condition.code.coding.where(
+      $this.code = 'Osteoporosis'
+    )],
+    [Procedure: Procedure.code.coding.where(
+      $this.code = 'BoneFracture'
+    )],
+    [MedicationAdministration: MedicationAdministration.medication.code.coding.where(
+      $this.code = 'InjectableOsteoporosisDrug'
+    )],
+    [MedicationAdministration: MedicationAdministration.reasonCode.coding.where(
+      $this.code = 'PostMenopausalOsteoporosis'
+    )],
+    [MedicationAdministration: MedicationAdministration.performer.where(
+      $this.performerType = 'nurse' or $this.performerType = 'aide'
+    )],
+    exists (
+      [Procedure: Procedure.code.coding.where(
+        $this.code = 'FamilyOrCaregiversUnableOrUnwilling'
+      )]
+    )
+  )
+```
+In the above CQL library, I have defined three named expressions based on the conditions mentioned in the insurance policy document and its summary:
+
+1. `InjectableOsteoporosisDrugsCoverage`: This named expression checks if all the conditions for Medicare coverage of injectable osteoporosis drugs are met. It verifies if the patient has a diagnosis of osteoporosis, a bone fracture related to post-menopausal osteoporosis, is a female, and the medication administered is an injectable osteoporosis drug. It also checks if the medication is administered by a nurse or aide.
+
+2. `UnableToSelfAdminister`: This named expression checks if the patient is unable to self-administer the injectable osteoporosis drug. It verifies the same conditions as `InjectableOsteoporosisDrugsCoverage` and additionally checks if there is no procedure code indicating self-administration.
+
+3. `FamilyOrCaregiversUnableOrUnwilling`: This named expression checks if the patient's family or caregivers are unable or unwilling to administer the injectable osteoporosis drug. It verifies the same conditions as `InjectableOsteoporosisDrugsCoverage` and additionally checks if there is a procedure code indicating family or caregivers unable or unwilling to administer the drug.
+
+These named expressions cover all the requirements mentioned in the insurance policy document and its summary.

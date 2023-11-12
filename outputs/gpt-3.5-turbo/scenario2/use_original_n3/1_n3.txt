@@ -1,0 +1,27 @@
+```
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix policy: <http://example.com/policy#> .
+@prefix condition: <http://example.com/condition#> .
+@prefix decision: <http://example.com/decision#> .
+
+policy:IVIG_Coverage a policy:Policy ;
+    rdfs:label "IVIG Coverage Policy" ;
+    policy:hasCondition condition:Primary_Immune_Deficiency_Disease ;
+    policy:hasCondition condition:Medically_Appropriate ;
+    policy:hasDecision decision:Covered .
+
+condition:Primary_Immune_Deficiency_Disease a policy:Condition ;
+    rdfs:label "Primary Immune Deficiency Disease" .
+
+condition:Medically_Appropriate a policy:Condition ;
+    rdfs:label "Medically Appropriate" .
+
+decision:Covered a policy:Decision ;
+    rdfs:label "Covered" .
+```
+Explanation:
+- The policy is defined as "IVIG Coverage Policy" and is represented by the resource `policy:IVIG_Coverage`.
+- There are two conditions that need to be satisfied for the IVIG coverage: `condition:Primary_Immune_Deficiency_Disease` and `condition:Medically_Appropriate`.
+- The decision for the coverage is represented by the resource `decision:Covered`.
+- The policy states that if the conditions `condition:Primary_Immune_Deficiency_Disease` and `condition:Medically_Appropriate` are met, the decision is `decision:Covered`.

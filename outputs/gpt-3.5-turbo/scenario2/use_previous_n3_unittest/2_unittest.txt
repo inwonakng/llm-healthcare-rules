@@ -1,0 +1,63 @@
+### N3 Logic Rules
+```
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix policy: <http://example.com/policy#> .
+@prefix condition: <http://example.com/condition#> .
+@prefix action: <http://example.com/action#> .
+
+policy:IVIGCoverage a policy:Policy ;
+    rdfs:label "IVIG Coverage Policy" ;
+    policy:hasCondition condition:PrimaryImmuneDeficiency ;
+    policy:hasCondition condition:MedicallyAppropriate ;
+    policy:hasAction action:CoverIVIG .
+
+condition:PrimaryImmuneDeficiency a policy:Condition ;
+    rdfs:label "Primary Immune Deficiency" ;
+    policy:hasRequirement [
+        rdf:type policy:Diagnosis ;
+        rdfs:label "Diagnosis of Primary Immune Deficiency Disease"
+    ] .
+
+condition:MedicallyAppropriate a policy:Condition ;
+    rdfs:label "Medically Appropriate" ;
+    policy:hasRequirement [
+        rdf:type policy:DoctorDecision ;
+        rdfs:label "Doctor determines it is medically appropriate"
+    ] .
+
+action:CoverIVIG a policy:Action ;
+    rdfs:label "Cover IVIG" ;
+    policy:hasCoverage [
+        rdf:type policy:CoverageType ;
+        rdfs:label "Medicare Part B covers IVIG"
+    ] .
+```
+
+### Solidity Unit Tests
+```solidity
+pragma solidity ^0.8.0;
+
+import "truffle/Assert.sol";
+import "truffle/DeployedAddresses.sol";
+import "../contracts/InsuranceContract.sol";
+
+contract InsuranceContractTest {
+    function testIVIGCoverage() public {
+        InsuranceContract insuranceContract = InsuranceContract(DeployedAddresses.InsuranceContract());
+
+        // Test condition: PrimaryImmuneDeficiency
+        bool hasPrimaryImmuneDeficiency = insuranceContract.hasPrimaryImmuneDeficiency();
+        Assert.isTrue(hasPrimaryImmuneDeficiency, "Condition: PrimaryImmuneDeficiency should be true");
+
+        // Test condition: MedicallyAppropriate
+        bool isMedicallyAppropriate = insuranceContract.isMedicallyAppropriate();
+        Assert.isTrue(isMedicallyAppropriate, "Condition: MedicallyAppropriate should be true");
+
+        // Test action: CoverIVIG
+        bool isIVIGCovered = insuranceContract.isIVIGCovered();
+        Assert.isTrue(isIVIGCovered, "Action: CoverIVIG should be true");
+    }
+}
+```

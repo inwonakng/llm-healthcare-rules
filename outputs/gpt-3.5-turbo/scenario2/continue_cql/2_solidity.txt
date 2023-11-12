@@ -1,0 +1,30 @@
+```solidity
+pragma solidity ^0.8.0;
+
+contract InsurancePolicyContract {
+    
+    struct IVIGCoverage {
+        bool hasPrimaryImmuneDeficiency;
+        bool isIVIGMedicallyAppropriate;
+        bool isIVIGCoveredByMedicarePartB;
+        bool isOtherItemsAndServicesNotCovered;
+    }
+    
+    function checkIVIGCoverage(IVIGCoverage memory coverage) public pure returns (bool) {
+        return coverage.hasPrimaryImmuneDeficiency &&
+            (coverage.isIVIGMedicallyAppropriate || coverage.isIVIGCoveredByMedicarePartB) &&
+            coverage.isOtherItemsAndServicesNotCovered;
+    }
+    
+    function checkCoverageRequirements(bool hasPrimaryImmuneDeficiency, bool isIVIGMedicallyAppropriate, bool isIVIGCoveredByMedicarePartB, bool isOtherItemsAndServicesNotCovered) public pure returns (bool) {
+        IVIGCoverage memory coverage = IVIGCoverage(
+            hasPrimaryImmuneDeficiency,
+            isIVIGMedicallyAppropriate,
+            isIVIGCoveredByMedicarePartB,
+            isOtherItemsAndServicesNotCovered
+        );
+        return checkIVIGCoverage(coverage);
+    }
+}
+```
+```

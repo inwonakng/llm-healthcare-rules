@@ -1,0 +1,53 @@
+```
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix policy: <http://example.com/policy#> .
+@prefix condition: <http://example.com/condition#> .
+@prefix coverage: <http://example.com/coverage#> .
+@prefix summary: <http://example.com/summary#> .
+
+# Conditions
+condition:womanWithOsteoporosis
+    rdf:type policy:Condition ;
+    rdfs:label "You're a woman with osteoporosis who meets the criteria for the Medicare home health benefit" .
+
+condition:boneFracture
+    rdf:type policy:Condition ;
+    rdfs:label "You have a bone fracture that a doctor certifies was related to post-menopausal osteoporosis" .
+
+condition:unableToInject
+    rdf:type policy:Condition ;
+    rdfs:label "Your doctor certifies that you can't give yourself the injection or learn how to give yourself the drug by injection" .
+
+condition:familyOrCaregiversUnableOrUnwilling
+    rdf:type policy:Condition ;
+    rdfs:label "Your family or caregivers are unable or unwilling to give you the drug by injection" .
+
+# Coverage
+coverage:injectableOsteoporosisDrugs
+    rdf:type policy:Coverage ;
+    rdfs:label "Medicare covers injectable osteoporosis drugs" ;
+    policy:requires condition:womanWithOsteoporosis ;
+    policy:requires condition:boneFracture ;
+    policy:requires condition:unableToInject ;
+    policy:requires condition:familyOrCaregiversUnableOrUnwilling .
+
+coverage:homeHealthNurseOrAide
+    rdf:type policy:Coverage ;
+    rdfs:label "Medicare will cover the home health nurse or aide to provide the injection" ;
+    policy:requires condition:familyOrCaregiversUnableOrUnwilling .
+
+# Summary
+summary:summary1
+    rdf:type policy:Summary ;
+    rdfs:label "Medicare covers injectable osteoporosis drugs if the following conditions are met" ;
+    policy:requires condition:womanWithOsteoporosis ;
+    policy:requires condition:boneFracture ;
+    policy:requires condition:unableToInject .
+
+summary:summary2
+    rdf:type policy:Summary ;
+    rdfs:label "If your family or caregivers are unable or unwilling to give you the drug by injection, Medicare will cover the home health nurse or aide to provide the injection" ;
+    policy:requires condition:familyOrCaregiversUnableOrUnwilling .
+```
+```

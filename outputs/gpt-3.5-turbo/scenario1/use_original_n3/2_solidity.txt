@@ -10,7 +10,7 @@ contract OsteoporosisInsurance {
         bool hasFracture;
         bool hasCertification;
         bool hasInjectionCapability;
-        bool hasFamilyOrCaregiver;
+        bool hasFamilyOrCaregivers;
     }
     
     function isCovered(Patient memory patient) public pure returns (bool) {
@@ -19,7 +19,8 @@ contract OsteoporosisInsurance {
             patient.meetsHomeHealthCriteria &&
             patient.hasFracture &&
             patient.hasCertification &&
-            (!patient.hasInjectionCapability || !patient.hasFamilyOrCaregiver)) {
+            (!patient.hasInjectionCapability || !patient.hasFamilyOrCaregivers)
+        ) {
             return true;
         }
         return false;

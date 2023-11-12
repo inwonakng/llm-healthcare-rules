@@ -1,0 +1,84 @@
+```solidity
+pragma solidity ^0.8.0;
+
+contract InsurancePolicy {
+    struct Patient {
+        bool hasPrimaryImmuneDeficiencyDisease;
+        bool isMedicallyAppropriate;
+        bool coverIVIG;
+        bool coverIVIGInHome;
+        bool coverIVIGCost;
+        bool doNotCoverOtherServices;
+    }
+    
+    mapping(address => Patient) public patients;
+    
+    function setPrimaryImmuneDeficiencyDisease(address patientAddress, bool hasCondition) external {
+        patients[patientAddress].hasPrimaryImmuneDeficiencyDisease = hasCondition;
+    }
+    
+    function setMedicallyAppropriate(address patientAddress, bool isMedicallyAppropriate) external {
+        patients[patientAddress].isMedicallyAppropriate = isMedicallyAppropriate;
+    }
+    
+    function checkCoverIVIG(address patientAddress) external {
+        Patient storage patient = patients[patientAddress];
+        
+        if (patient.hasPrimaryImmuneDeficiencyDisease && patient.isMedicallyAppropriate) {
+            patient.coverIVIG = true;
+        } else {
+            patient.coverIVIG = false;
+        }
+    }
+    
+    function checkCoverIVIGInHome(address patientAddress) external {
+        Patient storage patient = patients[patientAddress];
+        
+        if (patient.coverIVIG && patient.isMedicallyAppropriate) {
+            patient.coverIVIGInHome = true;
+        } else {
+            patient.coverIVIGInHome = false;
+        }
+    }
+    
+    function checkCoverIVIGCost(address patientAddress) external {
+        Patient storage patient = patients[patientAddress];
+        
+        if (patient.coverIVIG && patient.coverIVIGInHome) {
+            patient.coverIVIGCost = true;
+        } else {
+            patient.coverIVIGCost = false;
+        }
+    }
+    
+    function checkDoNotCoverOtherServices(address patientAddress) external {
+        Patient storage patient = patients[patientAddress];
+        
+        if (patient.coverIVIGInHome) {
+            patient.doNotCoverOtherServices = true;
+        } else {
+            patient.doNotCoverOtherServices = false;
+        }
+    }
+}
+```
+
+The smart contract `InsurancePolicy` implements the conditions and decisions described in the summary and N3 logic rules.
+
+The `Patient` struct represents the insurance policy details for each patient. It includes boolean variables to track the conditions and decisions.
+
+The `patients` mapping is used to store the insurance policy details for each patient.
+
+The `setPrimaryImmuneDeficiencyDisease` function allows setting the condition of having primary immune deficiency disease for a patient.
+
+The `setMedicallyAppropriate` function allows setting the condition of being medically appropriate for a patient.
+
+The `checkCoverIVIG` function checks if a patient is eligible for IVIG coverage based on the conditions. It updates the `coverIVIG` variable accordingly.
+
+The `checkCoverIVIGInHome` function checks if a patient is eligible for IVIG coverage in home based on the conditions. It updates the `coverIVIGInHome` variable accordingly.
+
+The `checkCoverIVIGCost` function checks if a patient is eligible for IVIG cost coverage based on the conditions. It updates the `coverIVIGCost` variable accordingly.
+
+The `checkDoNotCoverOtherServices` function checks if a patient is eligible for not covering other services based on the conditions. It updates the `doNotCoverOtherServices` variable accordingly.
+
+These functions can be called externally to set the conditions and decisions for a patient and retrieve the insurance policy details for a patient.

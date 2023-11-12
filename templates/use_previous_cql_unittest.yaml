@@ -42,7 +42,7 @@
     components:  
       - summary
       - cql
-      - uniitest
+      - unittest
   system_message:
     messages:
       - role

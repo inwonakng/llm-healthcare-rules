@@ -8,70 +8,56 @@
 @prefix doctor: <http://example.com/doctor#> .
 @prefix homehealth: <http://example.com/homehealth#> .
 
-policy:InjectableOsteoporosisDrugs a policy:Policy ;
-    rdfs:comment "Medicare covers injectable osteoporosis drugs if certain conditions are met." .
+policy:InjectableOsteoporosisDrugs a policy:InsurancePolicy ;
+    rdfs:label "Injectable Osteoporosis Drugs Policy" ;
+    policy:requiresCondition policy:CriteriaForMedicareHomeHealthBenefit ;
+    policy:requiresCondition policy:FractureRelatedToOsteoporosis ;
+    policy:requiresCondition policy:InabilityToSelfInject ;
+    policy:requiresCondition policy:FamilyOrCaregiversUnwillingness .
 
-policy:Condition1 a policy:Condition ;
-    rdfs:comment "You're a woman with osteoporosis who meets the criteria for the Medicare home health benefit." .
+policy:CriteriaForMedicareHomeHealthBenefit a policy:Condition ;
+    rdfs:label "Criteria for Medicare Home Health Benefit" ;
+    policy:requiresCondition osteoporosis:Osteoporosis ;
+    policy:requiresCondition osteoporosis:GenderFemale .
 
-policy:Condition2 a policy:Condition ;
-    rdfs:comment "You have a bone fracture that a doctor certifies was related to post-menopausal osteoporosis." .
+policy:FractureRelatedToOsteoporosis a policy:Condition ;
+    rdfs:label "Fracture Related to Osteoporosis" ;
+    policy:requiresCondition osteoporosis:Osteoporosis ;
+    policy:requiresCondition osteoporosis:PostMenopausal .
 
-policy:Condition3 a policy:Condition ;
-    rdfs:comment "Your doctor certifies that you can't give yourself the injection or learn how to give yourself the drug by injection." .
+policy:InabilityToSelfInject a policy:Condition ;
+    rdfs:label "Inability to Self-Inject" ;
+    policy:requiresCondition osteoporosis:Osteoporosis ;
+    policy:requiresCondition doctor:Certification .
 
-policy:Condition4 a policy:Condition ;
-    rdfs:comment "Medicare will cover the home health nurse or aide to provide the injection if your family or caregivers are unable or unwilling to give you the drug by injection." .
+policy:FamilyOrCaregiversUnwillingness a policy:Condition ;
+    rdfs:label "Family or Caregivers Unwillingness" ;
+    policy:requiresCondition osteoporosis:Osteoporosis ;
+    policy:requiresCondition homehealth:InjectionProvided .
 
-policy:InjectableOsteoporosisDrugsCovered a policy:Coverage ;
-    rdfs:comment "Medicare covers injectable osteoporosis drugs if all conditions are met." ;
-    policy:requiresCondition policy:Condition1 ;
-    policy:requiresCondition policy:Condition2 ;
-    policy:requiresCondition policy:Condition3 ;
-    policy:requiresCondition policy:Condition4 .
+osteoporosis:Osteoporosis a policy:Condition ;
+    rdfs:label "Osteoporosis" .
 
-medicare:HomeHealthBenefit a medicare:Benefit ;
-    rdfs:comment "Medicare home health benefit." .
+osteoporosis:GenderFemale a policy:Condition ;
+    rdfs:label "Gender: Female" .
 
-osteoporosis:Osteoporosis a osteoporosis:Condition ;
-    rdfs:comment "Osteoporosis condition." .
+osteoporosis:PostMenopausal a policy:Condition ;
+    rdfs:label "Post-Menopausal" .
 
-osteoporosis:PostMenopausalOsteoporosis a osteoporosis:Condition ;
-    rdfs:comment "Post-menopausal osteoporosis condition." .
+doctor:Certification a policy:Condition ;
+    rdfs:label "Doctor Certification" .
 
-osteoporosis:BoneFracture a osteoporosis:Condition ;
-    rdfs:comment "Bone fracture condition." .
+homehealth:InjectionProvided a policy:Condition ;
+    rdfs:label "Injection Provided" .
 
-doctor:Certification a doctor:Action ;
-    rdfs:comment "Doctor certification." .
+medicare:CoveredDrug a policy:Coverage ;
+    rdfs:label "Covered Drug" ;
+    policy:requiresCondition policy:InjectableOsteoporosisDrugs .
 
-homehealth:Injection a homehealth:Action ;
-    rdfs:comment "Home health injection." .
+medicare:CoveredNurseOrAide a policy:Coverage ;
+    rdfs:label "Covered Nurse or Aide" ;
+    policy:requiresCondition policy:InjectableOsteoporosisDrugs ;
+    policy:requiresCondition policy:FamilyOrCaregiversUnwillingness .
 
-policy:InjectableOsteoporosisDrugsCovered
-    policy:requiresCondition [
-        rdf:type medicare:Benefit ;
-        medicare:requiresCondition medicare:HomeHealthBenefit
-    ] ;
-    policy:requiresCondition [
-        rdf:type osteoporosis:Condition ;
-        osteoporosis:requiresCondition osteoporosis:Osteoporosis
-    ] ;
-    policy:requiresCondition [
-        rdf:type osteoporosis:Condition ;
-        osteoporosis:requiresCondition osteoporosis:PostMenopausalOsteoporosis
-    ] ;
-    policy:requiresCondition [
-        rdf:type osteoporosis:Condition ;
-        osteoporosis:requiresCondition osteoporosis:BoneFracture
-    ] ;
-    policy:requiresCondition [
-        rdf:type doctor:Action ;
-        doctor:requiresCondition doctor:Certification
-    ] ;
-    policy:requiresCondition [
-        rdf:type homehealth:Action ;
-        homehealth:requiresCondition homehealth:Injection
-    ] .
 ```
 ```

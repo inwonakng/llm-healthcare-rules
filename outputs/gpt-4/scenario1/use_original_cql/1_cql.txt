@@ -1,0 +1,38 @@
+```
+library InjectableOsteoporosisDrugsCoverage version '1.0'
+
+using QDM version '5.5'
+
+context Patient
+
+define "Eligible for Medicare":
+  AgeInYearsAt(start of "Measurement Period") >= 65
+
+define "Female Patient":
+  Patient.gender.value = 'F'
+
+define "Diagnosed with Osteoporosis":
+  exists(["Diagnosis": "Osteoporosis"])
+
+define "Meets Home Health Benefit Criteria":
+  "Diagnosed with Osteoporosis" and "Eligible for Medicare"
+
+define "Has Bone Fracture":
+  exists(["Diagnosis": "Bone Fracture"])
+
+define "Fracture Related to Post-Menopausal Osteoporosis":
+  "Has Bone Fracture" and exists(["Diagnosis": "Post-Menopausal Osteoporosis"])
+
+define "Unable to Self-Administer Injection":
+  exists(["Patient Characteristic": "Unable to Self-Administer Injection"])
+
+define "Eligible for Injectable Osteoporosis Drugs":
+  "Female Patient" and "Meets Home Health Benefit Criteria" and "Fracture Related to Post-Menopausal Osteoporosis" and "Unable to Self-Administer Injection"
+
+define "Family or Caregivers Unable or Unwilling to Administer Injection":
+  exists(["Patient Characteristic": "Family or Caregivers Unable or Unwilling to Administer Injection"])
+
+define "Eligible for Home Health Nurse or Aide":
+  "Eligible for Injectable Osteoporosis Drugs" and "Family or Caregivers Unable or Unwilling to Administer Injection"
+```
+This CQL library defines several named expressions that represent the conditions described in the insurance policy document. The final two expressions, "Eligible for Injectable Osteoporosis Drugs" and "Eligible for Home Health Nurse or Aide", represent the overall decisions of whether a patient is eligible for coverage of injectable osteoporosis drugs and a home health nurse or aide to administer the injection, respectively.

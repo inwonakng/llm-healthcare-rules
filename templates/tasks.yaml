@@ -52,6 +52,8 @@
       The unit tests should implement all aspects of the <<INPUT_NAME>> and implement every single condition described in it.
       The unit tests must always return some output as a result of the input's conditions.
       If the code is too complex, you can create structs to encapsulate necessary parameters for cleaner code in the smart contract.
+      Do not implement the full smart contract, only implement the tests that it should pass.
+      The name of the test should end with {ContractName}Test to signify that it is a test for that contract.
       Write as many tests as necessary.
 
       Wrap your response in triple-backticks (```).

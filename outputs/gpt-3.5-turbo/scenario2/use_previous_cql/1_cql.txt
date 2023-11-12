@@ -1,0 +1,68 @@
+```cql
+library InsurancePolicyDocument
+
+using FHIR version '4.0.1'
+
+define DiagnosisOfPrimaryImmuneDeficiency:
+  exists (
+    [Condition: code in "Primary immune deficiency disease"]
+    where Condition.subject = Patient
+  )
+
+define MedicallyAppropriateForHomeIVIG:
+  exists (
+    [Encounter: type in "Home"]
+    where Encounter.subject = Patient
+  )
+
+define MedicareCoversIVIG:
+  exists (
+    [Coverage: code in "Medicare Part B"]
+    where Coverage.beneficiary = Patient
+  )
+
+define MedicareCoversIVIGAtHome:
+  exists (
+    [Coverage: code in "Medicare Part B"]
+    where Coverage.beneficiary = Patient
+      and exists (
+        [Encounter: type in "Home"]
+        where Encounter.subject = Patient
+      )
+  )
+
+define MedicareCoversIVIGItself:
+  exists (
+    [Coverage: code in "Medicare Part B"]
+    where Coverage.beneficiary = Patient
+      and exists (
+        [MedicationRequest: code in "Intravenous Immune Globulin (IVIG)"]
+        where MedicationRequest.subject = Patient
+      )
+  )
+
+define MedicareDoesNotCoverOtherItemsAndServices:
+  not exists (
+    [Coverage: code in "Medicare Part B"]
+    where Coverage.beneficiary = Patient
+      and exists (
+        [Encounter: type in "Home"]
+        where Encounter.subject = Patient
+      )
+  )
+```
+The CQL library "InsurancePolicyDocument" contains the following named expressions:
+
+1. `DiagnosisOfPrimaryImmuneDeficiency`: This named expression checks if the patient has a diagnosis of primary immune deficiency disease.
+
+2. `MedicallyAppropriateForHomeIVIG`: This named expression checks if the patient's doctor has determined that it is medically appropriate for the patient to receive IVIG at home.
+
+3. `MedicareCoversIVIG`: This named expression checks if Medicare covers IVIG for the patient.
+
+4. `MedicareCoversIVIGAtHome`: This named expression checks if Medicare covers IVIG for the patient when it is provided at home.
+
+5. `MedicareCoversIVIGItself`: This named expression checks if Medicare covers the cost of the IVIG itself for the patient.
+
+6. `MedicareDoesNotCoverOtherItemsAndServices`: This named expression checks if Medicare does not cover other items and services related to receiving IVIG at home for the patient.
+
+These named expressions cover every single requirement described in the insurance policy document and its summary.

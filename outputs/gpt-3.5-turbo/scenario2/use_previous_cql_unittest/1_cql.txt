@@ -1,0 +1,57 @@
+```cql
+library InsurancePolicyDocument
+
+using FHIR version '4.0.1'
+
+define DiagnosisOfPrimaryImmuneDeficiency:
+  exists (
+    [Condition: code in "Primary immune deficiency disease"]
+    where Condition.subject = Patient
+  )
+
+define MedicallyAppropriateForHomeIVIG:
+  exists (
+    [Encounter: type in "Home"]
+    where Encounter.subject = Patient
+  )
+
+define MedicareCoversIVIG:
+  exists (
+    [Coverage: code in "Medicare Part B"]
+    where Coverage.subscriber = Patient
+  )
+
+define MedicareCoversIVIGInHome:
+  exists (
+    [Coverage: code in "Medicare Part B"]
+    where Coverage.subscriber = Patient
+  ) and MedicallyAppropriateForHomeIVIG
+
+define MedicareDoesNotCoverOtherItemsAndServices:
+  not exists (
+    [Coverage: code in "Medicare Part B"]
+    where Coverage.subscriber = Patient
+  )
+
+define MedicareCoversIVIGInHomeWithConditions:
+  MedicareCoversIVIG and DiagnosisOfPrimaryImmuneDeficiency and MedicallyAppropriateForHomeIVIG
+
+define MedicareCoversIVIGInHomeWithoutConditions:
+  MedicareCoversIVIG and not DiagnosisOfPrimaryImmuneDeficiency and MedicallyAppropriateForHomeIVIG
+
+define MedicareDoesNotCoverIVIGInHome:
+  MedicareCoversIVIG and not MedicallyAppropriateForHomeIVIG
+
+define MedicareDoesNotCoverIVIG:
+  not MedicareCoversIVIG
+
+define MedicareCoversIVIGInHomeWithConditionsAndDoesNotCoverOtherItemsAndServices:
+  MedicareCoversIVIGInHomeWithConditions and MedicareDoesNotCoverOtherItemsAndServices
+
+define MedicareCoversIVIGInHomeWithoutConditionsAndDoesNotCoverOtherItemsAndServices:
+  MedicareCoversIVIGInHomeWithoutConditions and MedicareDoesNotCoverOtherItemsAndServices
+
+define MedicareDoesNotCoverIVIGInHomeAndDoesNotCoverOtherItemsAndServices:
+  MedicareDoesNotCoverIVIGInHome and MedicareDoesNotCoverOtherItemsAndServices
+```
+```

@@ -12,11 +12,12 @@ def extract_codeblock(string):
     else:
         return string.strip()
 
-def progress_bar():
+def progress_bar(transient: bool = False):
     return rich.progress.Progress(
         '[progress.description]{task.description}',
         rich.progress.BarColumn(),
         '[progress.percentage]{task.percentage:>3.0f}%',
         rich.progress.TimeRemainingColumn(),
         rich.progress.TimeElapsedColumn(),
+        transient = transient,
     )

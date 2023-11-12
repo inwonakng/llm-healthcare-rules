@@ -1,0 +1,31 @@
+```solidity
+pragma solidity ^0.8.0;
+
+contract OsteoporosisInsurance {
+    
+    struct Patient {
+        bool isWoman;
+        bool hasOsteoporosis;
+        bool meetsHomeHealthCriteria;
+        bool hasFracture;
+        bool hasCertification;
+        bool hasInjectionCapability;
+        bool hasFamilyOrCaregivers;
+    }
+    
+    function isCovered(Patient memory patient) public pure returns (bool) {
+        if (patient.isWoman &&
+            patient.hasOsteoporosis &&
+            patient.meetsHomeHealthCriteria &&
+            patient.hasFracture &&
+            patient.hasCertification &&
+            (!patient.hasInjectionCapability || !patient.hasFamilyOrCaregivers)
+        ) {
+            return true;
+        }
+        return false;
+    }
+}
+```
+
+The smart contract above defines a struct `Patient` to encapsulate the necessary parameters for determining if a patient is eligible for coverage of injectable osteoporosis drugs. The `isCovered` function takes a `Patient` object as input and returns a boolean value indicating whether the patient meets all the conditions for coverage.

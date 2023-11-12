@@ -28,7 +28,7 @@ def generate(
     data = DEFAULT_ARGS
     data['messages'] = messages
 
-    if model in ['gpt-4', 'gpt-3.5-turbo']:
+    if model in ['gpt-4', 'gpt-4-1106-preview', 'gpt-3.5-turbo']:
         data['model'] = model
     else:
         data.update(CODELLAMA_ARGS)

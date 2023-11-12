@@ -1,0 +1,212 @@
+```cql
+library InsurancePolicyDocument
+
+using FHIR version '4.0.1'
+
+define MedicareCoversTransplantDrugTherapy:
+  exists (
+    [Condition: Condition.code.coding.where(
+      ($this.code = 'Z94.0' and $this.system = 'http://hl7.org/fhir/sid/icd-10') or
+      ($this.code = 'Z94.1' and $this.system = 'http://hl7.org/fhir/sid/icd-10') or
+      ($this.code = 'Z94.2' and $this.system = 'http://hl7.org/fhir/sid/icd-10') or
+      ($this.code = 'Z94.3' and $this.system = 'http://hl7.org/fhir/sid/icd-10') or
+      ($this.code = 'Z94.4' and $this.system = 'http://hl7.org/fhir/sid/icd-10') or
+      ($this.code = 'Z94.5' and $this.system = 'http://hl7.org/fhir/sid/icd-10') or
+      ($this.code = 'Z94.6' and $this.system = 'http://hl7.org/fhir/sid/icd-10') or
+      ($this.code = 'Z94.8' and $this.system = 'http://hl7.org/fhir/sid/icd-10') or
+      ($this.code = 'Z94.9' and $this.system = 'http://hl7.org/fhir/sid/icd-10')
+    )].exists()
+  )
+
+define HasPartAAtTimeOfTransplant:
+  exists (
+    [Condition: Condition.code.coding.where(
+      ($this.code = 'Z94.0' and $this.system = 'http://hl7.org/fhir/sid/icd-10') or
+      ($this.code = 'Z94.1' and $this.system = 'http://hl7.org/fhir/sid/icd-10') or
+      ($this.code = 'Z94.2' and $this.system = 'http://hl7.org/fhir/sid/icd-10') or
+      ($this.code = 'Z94.3' and $this.system = 'http://hl7.org/fhir/sid/icd-10') or
+      ($this.code = 'Z94.4' and $this.system = 'http://hl7.org/fhir/sid/icd-10') or
+      ($this.code = 'Z94.5' and $this.system = 'http://hl7.org/fhir/sid/icd-10') or
+      ($this.code = 'Z94.6' and $this.system = 'http://hl7.org/fhir/sid/icd-10') or
+      ($this.code = 'Z94.8' and $this.system = 'http://hl7.org/fhir/sid/icd-10') or
+      ($this.code = 'Z94.9' and $this.system = 'http://hl7.org/fhir/sid/icd-10')
+    )].exists()
+    and
+    exists (
+      [Encounter: Encounter.type.coding.where(
+        ($this.code = '270335006' and $this.system = 'http://snomed.info/sct') or
+        ($this.code = '270336005' and $this.system = 'http://snomed.info/sct')
+      )].exists()
+    )
+  )
+
+define HasPartBAtTimeOfImmunosuppressiveDrugs:
+  exists (
+    [Condition: Condition.code.coding.where(
+      ($this.code = 'Z94.0' and $this.system = 'http://hl7.org/fhir/sid/icd-10') or
+      ($this.code = 'Z94.1' and $this.system = 'http://hl7.org/fhir/sid/icd-10') or
+      ($this.code = 'Z94.2' and $this.system = 'http://hl7.org/fhir/sid/icd-10') or
+      ($this.code = 'Z94.3' and $this.system = 'http://hl7.org/fhir/sid/icd-10') or
+      ($this.code = 'Z94.4' and $this.system = 'http://hl7.org/fhir/sid/icd-10') or
+      ($this.code = 'Z94.5' and $this.system = 'http://hl7.org/fhir/sid/icd-10') or
+      ($this.code = 'Z94.6' and $this.system = 'http://hl7.org/fhir/sid/icd-10') or
+      ($this.code = 'Z94.8' and $this.system = 'http://hl7.org/fhir/sid/icd-10') or
+      ($this.code = 'Z94.9' and $this.system = 'http://hl7.org/fhir/sid/icd-10')
+    )].exists()
+    and
+    exists (
+      [Encounter: Encounter.type.coding.where(
+        ($this.code = '270335006' and $this.system = 'http://snomed.info/sct') or
+        ($this.code = '270336005' and $this.system = 'http://snomed.info/sct')
+      )].exists()
+    )
+  )
+
+define MedicareDrugCoverageCoversImmunosuppressiveDrugs:
+  exists (
+    [Condition: Condition.code.coding.where(
+      ($this.code = 'Z94.0' and $this.system = 'http://hl7.org/fhir/sid/icd-10') or
+      ($this.code = 'Z94.1' and $this.system = 'http://hl7.org/fhir/sid/icd-10') or
+      ($this.code = 'Z94.2' and $this.system = 'http://hl7.org/fhir/sid/icd-10') or
+      ($this.code = 'Z94.3' and $this.system = 'http://hl7.org/fhir/sid/icd-10') or
+      ($this.code = 'Z94.4' and $this.system = 'http://hl7.org/fhir/sid/icd-10') or
+      ($this.code = 'Z94.5' and $this.system = 'http://hl7.org/fhir/sid/icd-10') or
+      ($this.code = 'Z94.6' and $this.system = 'http://hl7.org/fhir/sid/icd-10') or
+      ($this.code = 'Z94.8' and $this.system = 'http://hl7.org/fhir/sid/icd-10') or
+      ($this.code = 'Z94.9' and $this.system = 'http://hl7.org/fhir/sid/icd-10')
+    )].exists()
+    and
+    not exists (
+      [MedicationRequest: MedicationRequest.medicationCodeableConcept.coding.where(
+        ($this.code = 'Z94.0' and $this.system = 'http://hl7.org/fhir/sid/icd-10') or
+        ($this.code = 'Z94.1' and $this.system = 'http://hl7.org/fhir/sid/icd-10') or
+        ($this.code = 'Z94.2' and $this.system = 'http://hl7.org/fhir/sid/icd-10') or
+        ($this.code = 'Z94.3' and $this.system = 'http://hl7.org/fhir/sid/icd-10') or
+        ($this.code = 'Z94.4' and $this.system = 'http://hl7.org/fhir/sid/icd-10') or
+        ($this.code = 'Z94.5' and $this.system = 'http://hl7.org/fhir/sid/icd-10') or
+        ($this.code = 'Z94.6' and $this.system = 'http://hl7.org/fhir/sid/icd-10') or
+        ($this.code = 'Z94.8' and $this.system = 'http://hl7.org/fhir/sid/icd-10') or
+        ($this.code = 'Z94.9' and $this.system = 'http://hl7.org/fhir/sid/icd-10')
+      )].exists()
+    )
+  )
+
+define HasOriginalMedicare:
+  exists (
+    [Coverage: Coverage.type.coding.where(
+      ($this.code = '1' and $this.system = 'http://terminology.hl7.org/CodeSystem/v3-ActCode')
+    )].exists()
+    and
+    exists (
+      [Coverage: Coverage.payor.identifier.where(
+        ($this.system = 'http://hl7.org/fhir/sid/medicare')
+      )].exists()
+    )
+  )
+
+define HasMedicareDrugPlan:
+  exists (
+    [Coverage: Coverage.type.coding.where(
+      ($this.code = '2' and $this.system = 'http://terminology.hl7.org/CodeSystem/v3-ActCode')
+    )].exists()
+    and
+    exists (
+      [Coverage: Coverage.payor.identifier.where(
+        ($this.system = 'http://hl7.org/fhir/sid/medicare')
+      )].exists()
+    )
+  )
+
+define HasMedicareDueToEndStageRenalDisease:
+  exists (
+    [Coverage: Coverage.type.coding.where(
+      ($this.code = '1' and $this.system = 'http://terminology.hl7.org/CodeSystem/v3-ActCode')
+    )].exists()
+    and
+    exists (
+      [Coverage: Coverage.payor.identifier.where(
+        ($this.system = 'http://hl7.org/fhir/sid/medicare')
+      )].exists()
+    )
+    and
+    exists (
+      [Condition: Condition.code.coding.where(
+        ($this.code = 'Z99.2' and $this.system = 'http://hl7.org/fhir/sid/icd-10')
+      )].exists()
+    )
+  )
+
+define MedicareCoverageEndsAfterSuccessfulKidneyTransplant:
+  exists (
+    [Condition: Condition.code.coding.where(
+      ($this.code = 'Z94.0' and $this.system = 'http://hl7.org/fhir/sid/icd-10') or
+      ($this.code = 'Z94.1' and $this.system = 'http://hl7.org/fhir/sid/icd-10') or
+      ($this.code = 'Z94.2' and $this.system = 'http://hl7.org/fhir/sid/icd-10') or
+      ($this.code = 'Z94.3' and $this.system = 'http://hl7.org/fhir/sid/icd-10') or
+      ($this.code = 'Z94.4' and $this.system = 'http://hl7.org/fhir/sid/icd-10') or
+      ($this.code = 'Z94.5' and $this.system = 'http://hl7.org/fhir/sid/icd-10') or
+      ($this.code = 'Z94.6' and $this.system = 'http://hl7.org/fhir/sid/icd-10') or
+      ($this.code = 'Z94.8' and $this.system = 'http://hl7.org/fhir/sid/icd-10') or
+      ($this.code = 'Z94.9' and $this.system = 'http://hl7.org/fhir/sid/icd-10')
+    )].exists()
+    and
+    exists (
+      [Condition: Condition.code.coding.where(
+        ($this.code = 'Z99.2' and $this.system = 'http://hl7.org/fhir/sid/icd-10')
+      )].exists()
+    )
+    and
+    not exists (
+      [Condition: Condition.code.coding.where(
+        ($this.code = 'Z94.0' and $this.system = 'http://hl7.org/fhir/sid/icd-10') or
+        ($this.code = 'Z94.1' and $this.system = 'http://hl7.org/fhir/sid/icd-10') or
+        ($this.code = 'Z94.2' and $this.system = 'http://hl7.org/fhir/sid/icd-10') or
+        ($this.code = 'Z94.3' and $this.system = 'http://hl7.org/fhir/sid/icd-10') or
+        ($this.code = 'Z94.4' and $this.system = 'http://hl7.org/fhir/sid/icd-10') or
+        ($this.code = 'Z94.5' and $this.system = 'http://hl7.org/fhir/sid/icd-10') or
+        ($this.code = 'Z94.6' and $this.system = 'http://hl7.org/fhir/sid/icd-10') or
+        ($this.code = 'Z94.8' and $this.system = 'http://hl7.org/fhir/sid/icd-10') or
+        ($this.code = 'Z94.9' and $this.system = 'http://hl7.org/fhir/sid/icd-10')
+      )].exists()
+    )
+  )
+
+define MedicareOffersBenefit:
+  exists (
+    [Condition: Condition.code.coding.where(
+      ($this.code = 'Z94.0' and $this.system = 'http://hl7.org/fhir/sid/icd-10') or
+      ($this.code = 'Z94.1' and $this.system = 'http://hl7.org/fhir/sid/icd-10') or
+      ($this.code = 'Z94.2' and $this.system = 'http://hl7.org/fhir/sid/icd-10') or
+      ($this.code = 'Z94.3' and $this.system = 'http://hl7.org/fhir/sid/icd-10') or
+      ($this.code = 'Z94.4' and $this.system = 'http://hl7.org/fhir/sid/icd-10') or
+      ($this.code = 'Z94.5' and $this.system = 'http://hl7.org/fhir/sid/icd-10') or
+      ($this.code = 'Z94.6' and $this.system = 'http://hl7.org/fhir/sid/icd-10') or
+      ($this.code = 'Z94.8' and $this.system = 'http://hl7.org/fhir/sid/icd-10') or
+      ($this.code = 'Z94.9' and $this.system = 'http://hl7.org/fhir/sid/icd-10')
+    )].exists()
+    and
+    exists (
+      [Condition: Condition.code.coding.where(
+        ($this.code = 'Z99.2' and $this.system = 'http://hl7.org/fhir/sid/icd-10')
+      )].exists()
+    )
+    and
+    not exists (
+      [Condition: Condition.code.coding.where(
+        ($this.code = 'Z94.0' and $this.system = 'http://hl7.org/fhir/sid/icd-10') or
+        ($this.code = 'Z94.1' and $this.system = 'http://hl7.org/fhir/sid/icd-10') or
+        ($this.code = 'Z94.2' and $this.system = 'http://hl7.org/fhir/sid/icd-10') or
+        ($this.code = 'Z94.3' and $this.system = 'http://hl7.org/fhir/sid/icd-10') or
+        ($this.code = 'Z94.4' and $this.system = 'http://hl7.org/fhir/sid/icd-10') or
+        ($this.code = 'Z94.5' and $this.system = 'http://hl7.org/fhir/sid/icd-10') or
+        ($this.code = 'Z94.6' and $this.system = 'http://hl7.org/fhir/sid/icd-10') or
+        ($this.code = 'Z94.8' and $this.system = 'http://hl7.org/fhir/sid/icd-10') or
+        ($this.code = 'Z94.9' and $this.system = 'http://hl7.org/fhir/sid/icd-10')
+      )].exists()
+    )
+    and
+    not exists (
+      [Coverage: Coverage.type.coding.where(
+        ($this.code = '1' and $this.system = 'http://terminology.hl7.org/CodeSystem/v3-ActCode') or
+        ($this.code = '2' and $this.system = 'http://terminology.hl7.org/CodeSystem/v3-ActCode') or
+        ($this.code = '3' and $this.system = 'http://terminology.hl7

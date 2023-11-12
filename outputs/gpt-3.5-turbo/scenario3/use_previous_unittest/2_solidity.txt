@@ -1,0 +1,89 @@
+```solidity
+pragma solidity ^0.8.0;
+
+contract InsuranceContract {
+    struct MedicareCoverage {
+        bool transplantDrugTherapyCovered;
+        bool hasPartA;
+        bool hasPartB;
+        bool immunosuppressiveDrugsCoveredByMedicareDrugCoverage;
+        bool canJoinMedicareDrugPlan;
+        bool coverageEndsAfter36MonthsForESRD;
+        bool hasMedicareBenefitForLossOfPartAAfter36Months;
+        bool doesBenefitOnlyCoverImmunosuppressiveDrugs;
+        bool isBenefitSubstituteForFullHealthCoverage;
+        bool canSignUpForBenefitAfterPartACoverageEnds;
+    }
+
+    MedicareCoverage public coverage;
+
+    constructor() {
+        coverage.transplantDrugTherapyCovered = true;
+        coverage.hasPartA = true;
+        coverage.hasPartB = true;
+        coverage.immunosuppressiveDrugsCoveredByMedicareDrugCoverage = true;
+        coverage.canJoinMedicareDrugPlan = true;
+        coverage.coverageEndsAfter36MonthsForESRD = true;
+        coverage.hasMedicareBenefitForLossOfPartAAfter36Months = true;
+        coverage.doesBenefitOnlyCoverImmunosuppressiveDrugs = true;
+        coverage.isBenefitSubstituteForFullHealthCoverage = false;
+        coverage.canSignUpForBenefitAfterPartACoverageEnds = true;
+    }
+
+    function isTransplantDrugTherapyCovered() public view returns (bool) {
+        return coverage.transplantDrugTherapyCovered;
+    }
+
+    function hasPartA() public view returns (bool) {
+        return coverage.hasPartA;
+    }
+
+    function hasPartB() public view returns (bool) {
+        return coverage.hasPartB;
+    }
+
+    function isImmunosuppressiveDrugsCoveredByMedicareDrugCoverage() public view returns (bool) {
+        return coverage.immunosuppressiveDrugsCoveredByMedicareDrugCoverage;
+    }
+
+    function canJoinMedicareDrugPlan() public view returns (bool) {
+        return coverage.canJoinMedicareDrugPlan;
+    }
+
+    function doesMedicareCoverageEndAfter36MonthsForESRD() public view returns (bool) {
+        return coverage.coverageEndsAfter36MonthsForESRD;
+    }
+
+    function hasMedicareBenefitForLossOfPartAAfter36Months() public view returns (bool) {
+        return coverage.hasMedicareBenefitForLossOfPartAAfter36Months;
+    }
+
+    function doesBenefitOnlyCoverImmunosuppressiveDrugs() public view returns (bool) {
+        return coverage.doesBenefitOnlyCoverImmunosuppressiveDrugs;
+    }
+
+    function isBenefitSubstituteForFullHealthCoverage() public view returns (bool) {
+        return coverage.isBenefitSubstituteForFullHealthCoverage;
+    }
+
+    function canSignUpForBenefitAfterPartACoverageEnds() public view returns (bool) {
+        return coverage.canSignUpForBenefitAfterPartACoverageEnds;
+    }
+
+    function getSocialSecurityPhoneNumber() public pure returns (string memory) {
+        return "1-877-465-0355";
+    }
+
+    function getMonthlyPremiumFor2023() public pure returns (uint256) {
+        return 9710;
+    }
+
+    function getDeductibleFor2023() public pure returns (uint256) {
+        return 226;
+    }
+
+    function getPaymentPercentageAfterDeductibleMet() public pure returns (uint256) {
+        return 20;
+    }
+}
+```

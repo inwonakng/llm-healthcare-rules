@@ -4,7 +4,7 @@ from .path import DOTENV_PATH
 load_dotenv(DOTENV_PATH)
 
 def load_api_config(model_name):
-    if model_name in ['gpt-4', 'gpt-3.5-turbo']:
+    if model_name in ['gpt-4', 'gpt-4-1106-preview', 'gpt-3.5-turbo']:
         url = "https://api.openai.com/v1/chat/completions"
         api_key = os.environ['OPENAI_API_KEY']
     else:

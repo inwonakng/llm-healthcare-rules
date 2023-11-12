@@ -1,0 +1,57 @@
+```
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix policy: <http://example.com/policy#> .
+@prefix condition: <http://example.com/condition#> .
+@prefix coverage: <http://example.com/coverage#> .
+
+# Define the conditions
+condition:1 a policy:Condition ;
+    rdfs:label "You are a woman with osteoporosis who meets the criteria for the Medicare home health benefit" .
+
+condition:2 a policy:Condition ;
+    rdfs:label "You have a bone fracture that a doctor certifies was related to post-menopausal osteoporosis" .
+
+condition:3 a policy:Condition ;
+    rdfs:label "Your doctor certifies that you can't give yourself the injection or learn how to give yourself the drug by injection" .
+
+condition:4 a policy:Condition ;
+    rdfs:label "Your family or caregivers are unable or unwilling to give you the drug by injection" .
+
+# Define the coverage
+coverage:1 a policy:Coverage ;
+    rdfs:label "Medicare covers injectable osteoporosis drugs" .
+
+coverage:2 a policy:Coverage ;
+    rdfs:label "Medicare will cover the home health nurse or aide to provide the injection" .
+
+# Define the logic rules
+{
+    ?patient rdf:type policy:Patient .
+    ?patient policy:hasCondition ?condition1 .
+    ?patient policy:hasCondition ?condition2 .
+    ?patient policy:hasCondition ?condition3 .
+    ?patient policy:hasCoverage ?coverage1 .
+} =>
+{
+    ?patient policy:isEligible true .
+}
+
+{
+    ?patient rdf:type policy:Patient .
+    ?patient policy:hasCondition ?condition4 .
+    ?patient policy:hasCoverage ?coverage2 .
+} =>
+{
+    ?patient policy:isEligible true .
+}
+
+# Define the summary
+policy:summary a policy:Summary ;
+    rdfs:label "Medicare covers injectable osteoporosis drugs if the following conditions are met:
+    1. You are a woman with osteoporosis who meets the criteria for the Medicare home health benefit.
+    2. You have a bone fracture that a doctor certifies was related to post-menopausal osteoporosis.
+    3. Your doctor certifies that you can't give yourself the injection or learn how to give yourself the drug by injection.
+    4. If your family or caregivers are unable or unwilling to give you the drug by injection, Medicare will cover the home health nurse or aide to provide the injection." .
+```
+```

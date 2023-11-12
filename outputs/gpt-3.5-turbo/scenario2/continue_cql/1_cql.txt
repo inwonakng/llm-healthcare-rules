@@ -1,0 +1,33 @@
+```cql
+library InsurancePolicyDocument
+
+using FHIR version '4.0.1'
+
+-- Named expressions for the insurance policy document requirements
+
+-- Requirement 1: Medicare covers IVIG if you have a diagnosis of primary immune deficiency disease
+define hasPrimaryImmuneDeficiency:
+  exists (Condition: code in "primary immune deficiency disease")
+
+-- Requirement 2: IVIG can be provided in your home if your doctor determines it is medically appropriate
+define isIVIGMedicallyAppropriate:
+  exists (Procedure: code in "IVIG administration") and
+  exists (Encounter: location in "home")
+
+-- Requirement 3: Medicare Part B covers the cost of the IVIG itself
+define isIVIGCoveredByMedicarePartB:
+  exists (Coverage: code in "Medicare Part B") and
+  exists (Procedure: code in "IVIG administration")
+
+-- Requirement 4: Medicare does not cover other items and services related to receiving IVIG at home
+define isOtherItemsAndServicesNotCovered:
+  not exists (Procedure: code in "IVIG administration") and
+  exists (Encounter: location in "home")
+
+-- Final decision based on the requirements
+define isIVIGCovered:
+  hasPrimaryImmuneDeficiency and
+  (isIVIGMedicallyAppropriate or isIVIGCoveredByMedicarePartB) and
+  isOtherItemsAndServicesNotCovered
+
+```

@@ -28,7 +28,7 @@
     name: summary of an insurance policy document and a set of Solidity unit tests describing it
     components:  
       - summary
-      - uniitest
+      - unittest
   system_message:
     messages:
       - role

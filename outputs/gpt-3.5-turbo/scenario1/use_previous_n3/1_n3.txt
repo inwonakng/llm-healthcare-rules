@@ -1,0 +1,58 @@
+```
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix policy: <http://example.com/policy#> .
+@prefix condition: <http://example.com/condition#> .
+@prefix coverage: <http://example.com/coverage#> .
+
+policy:InjectableOsteoporosisDrugsCoverage a policy:InsurancePolicy ;
+    rdfs:label "Injectable Osteoporosis Drugs Coverage" ;
+    policy:hasCoverage coverage:InjectableOsteoporosisDrugs .
+
+coverage:InjectableOsteoporosisDrugs a policy:Coverage ;
+    rdfs:label "Injectable Osteoporosis Drugs" ;
+    policy:requiresCondition condition:Condition1 ;
+    policy:requiresCondition condition:Condition2 ;
+    policy:requiresCondition condition:Condition3 ;
+    policy:providesCoverage coverage:HomeHealthNurseOrAideInjection .
+
+condition:Condition1 a policy:Condition ;
+    rdfs:label "Condition 1" ;
+    policy:requiresCriteria policy:MedicareHomeHealthBenefit .
+
+condition:Condition2 a policy:Condition ;
+    rdfs:label "Condition 2" ;
+    policy:requiresCertification policy:BoneFractureRelatedToOsteoporosis .
+
+condition:Condition3 a policy:Condition ;
+    rdfs:label "Condition 3" ;
+    policy:requiresCertification policy:InabilityToSelfAdministerInjection .
+
+policy:MedicareHomeHealthBenefit a policy:Criteria ;
+    rdfs:label "Medicare Home Health Benefit" .
+
+policy:BoneFractureRelatedToOsteoporosis a policy:Certification ;
+    rdfs:label "Bone Fracture Related to Osteoporosis" .
+
+policy:InabilityToSelfAdministerInjection a policy:Certification ;
+    rdfs:label "Inability to Self-Administer Injection" .
+
+coverage:HomeHealthNurseOrAideInjection a policy:Coverage ;
+    rdfs:label "Home Health Nurse or Aide Injection" ;
+    policy:requiresCondition condition:Condition4 .
+
+condition:Condition4 a policy:Condition ;
+    rdfs:label "Condition 4" ;
+    policy:requiresInabilityOrUnwillingnessToSelfAdministerInjection .
+
+policy:InabilityOrUnwillingnessToSelfAdministerInjection a policy:Condition ;
+    rdfs:label "Inability or Unwillingness to Self-Administer Injection" .
+```
+The above N3 logic rules represent the insurance policy document and its summary for Injectable Osteoporosis Drugs coverage. The policy requires three conditions to be met: 
+1. The individual must meet the criteria for the Medicare home health benefit.
+2. The individual must have a bone fracture related to post-menopausal osteoporosis, certified by a doctor.
+3. The individual must be unable to self-administer the injection or learn how to do so, certified by a doctor.
+
+If the family or caregivers are unable or unwilling to administer the injection, Medicare will cover the home health nurse or aide to provide the injection. This is represented by the additional condition 4: the individual must have an inability or unwillingness to self-administer the injection.
+
+Each condition and certification is represented as a separate entity with a label and a relationship to the policy or coverage it belongs to. The logic rules ensure that every requirement described in the insurance policy document and its summary is covered and contributes to the final decision regarding coverage for Injectable Osteoporosis Drugs.

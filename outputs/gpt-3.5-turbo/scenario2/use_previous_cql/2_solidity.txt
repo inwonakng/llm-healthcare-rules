@@ -1,0 +1,46 @@
+Here is a Solidity smart contract that implements the summary of the insurance policy document and the set of CQL named expressions:
+
+```solidity
+pragma solidity ^0.8.0;
+
+contract InsurancePolicyDocument {
+    struct Patient {
+        bool hasPrimaryImmuneDeficiency;
+        bool isMedicallyAppropriateForHomeIVIG;
+        bool isMedicareCoverage;
+        bool isMedicareCoverageAtHome;
+        bool isMedicareCoverageForIVIG;
+        bool isMedicareCoverageForOtherItems;
+    }
+    
+    function checkDiagnosisOfPrimaryImmuneDeficiency(Patient memory patient) internal pure returns (bool) {
+        return patient.hasPrimaryImmuneDeficiency;
+    }
+    
+    function checkMedicallyAppropriateForHomeIVIG(Patient memory patient) internal pure returns (bool) {
+        return patient.isMedicallyAppropriateForHomeIVIG;
+    }
+    
+    function checkMedicareCoversIVIG(Patient memory patient) internal pure returns (bool) {
+        return patient.isMedicareCoverage;
+    }
+    
+    function checkMedicareCoversIVIGAtHome(Patient memory patient) internal pure returns (bool) {
+        return patient.isMedicareCoverage && patient.isMedicareCoverageAtHome;
+    }
+    
+    function checkMedicareCoversIVIGItself(Patient memory patient) internal pure returns (bool) {
+        return patient.isMedicareCoverage && patient.isMedicareCoverageForIVIG;
+    }
+    
+    function checkMedicareDoesNotCoverOtherItemsAndServices(Patient memory patient) internal pure returns (bool) {
+        return patient.isMedicareCoverage && !patient.isMedicareCoverageAtHome && patient.isMedicareCoverageForOtherItems;
+    }
+}
+```
+
+The `InsurancePolicyDocument` contract defines a `Patient` struct that represents the patient's insurance policy information. Each field in the struct corresponds to a condition described in the CQL named expressions.
+
+The contract also includes six internal functions, each corresponding to one of the named expressions. These functions take a `Patient` struct as input and return a boolean value indicating whether the condition is met or not.
+
+You can use these functions to check the conditions of the insurance policy document for a given patient.

@@ -1,0 +1,39 @@
+```solidity
+pragma solidity ^0.8.0;
+
+contract InjectableOsteoporosisDrugsCoverage {
+    struct Patient {
+        bool meetsCriteriaForHomeHealthBenefit;
+        bool hasPostMenopausalOsteoporosisFracture;
+        bool unableToSelfAdministerInjection;
+        bool familyOrCaregiversUnableOrUnwilling;
+    }
+
+    function meetsCriteriaForHomeHealthBenefit(Patient memory patient) internal pure returns (bool) {
+        return patient.meetsCriteriaForHomeHealthBenefit;
+    }
+
+    function hasPostMenopausalOsteoporosisFracture(Patient memory patient) internal pure returns (bool) {
+        return patient.hasPostMenopausalOsteoporosisFracture;
+    }
+
+    function unableToSelfAdministerInjection(Patient memory patient) internal pure returns (bool) {
+        return patient.unableToSelfAdministerInjection;
+    }
+
+    function familyOrCaregiversUnableOrUnwilling(Patient memory patient) internal pure returns (bool) {
+        return patient.familyOrCaregiversUnableOrUnwilling;
+    }
+
+    function coverage(Patient memory patient) public pure returns (bool) {
+        return (
+            meetsCriteriaForHomeHealthBenefit(patient) &&
+            hasPostMenopausalOsteoporosisFracture(patient) &&
+            unableToSelfAdministerInjection(patient) &&
+            familyOrCaregiversUnableOrUnwilling(patient)
+        );
+    }
+}
+```
+
+Note: The above Solidity smart contract implements the named expressions from the previous conversation. The `Patient` struct is used to encapsulate the necessary parameters for the conditions. You can call the `coverage` function with a `Patient` object to check if the patient is eligible for injectable osteoporosis drugs coverage under Medicare.

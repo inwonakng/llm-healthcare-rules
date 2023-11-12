@@ -1,0 +1,183 @@
+```
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix policy: <http://example.com/policy#> .
+@prefix medicare: <http://example.com/medicare#> .
+
+policy:MedicareCoversTransplantDrugTherapy
+    rdf:type rdfs:Class ;
+    rdfs:comment "Medicare covers transplant drug therapy if Medicare helped pay for your organ transplant." .
+
+policy:PartARequirement
+    rdf:type rdfs:Class ;
+    rdfs:comment "You must have Part A at the time of the covered transplant." .
+
+policy:PartBRequirement
+    rdf:type rdfs:Class ;
+    rdfs:comment "You must have Part B at the time you get immunosuppressive drugs." .
+
+policy:MedicareDrugCoverage
+    rdf:type rdfs:Class ;
+    rdfs:comment "Medicare drug coverage (Part D) covers immunosuppressive drugs if Part B doesn’t cover them." .
+
+policy:OriginalMedicare
+    rdf:type rdfs:Class ;
+    rdfs:comment "If you have Original Medicare, you may join a Medicare drug plan to get Medicare drug coverage." .
+
+policy:ESRD
+    rdf:type rdfs:Class ;
+    rdfs:comment "If you only have Medicare because of End-Stage Renal Disease (ESRD), your Medicare coverage, including immunosuppressive drug coverage, ends 36 months after a successful kidney transplant." .
+
+policy:MedicareBenefit
+    rdf:type rdfs:Class ;
+    rdfs:comment "Medicare offers a benefit that may help you, if you lose Part A coverage 36 months after a kidney transplant, and you don’t have certain types of other health coverage (like a group health plan, TRICARE, or Medicaid that covers immunosuppressive drugs)." .
+
+policy:ImmunosuppressiveDrugsCoverage
+    rdf:type rdfs:Class ;
+    rdfs:comment "This benefit only covers your immunosuppressive drugs and no other items or services. It isn’t a substitute for full health coverage." .
+
+policy:ImmunosuppressiveDrugPremium
+    rdf:type rdfs:Class ;
+    rdfs:comment "In 2023, you’ll pay a monthly premium of $97.10* if you sign up for the immunosuppressive drug benefit." .
+
+policy:ImmunosuppressiveDrugDeductible
+    rdf:type rdfs:Class ;
+    rdfs:comment "In 2023, you’ll pay a $226 deductible if you sign up for the immunosuppressive drug benefit." .
+
+policy:ImmunosuppressiveDrugCost
+    rdf:type rdfs:Class ;
+    rdfs:comment "Once you’ve met the deductible, you’ll pay 20% of the Medicare-approved amount for your immunosuppressive drugs." .
+
+policy:signUpForBenefit
+    rdf:type rdfs:Class ;
+    rdfs:comment "If you qualify, you can sign up for this benefit any time after your Part A coverage ends." .
+
+policy:contactSocialSecurity
+    rdf:type rdfs:Class ;
+    rdfs:comment "To sign up, call Social Security at 1-877-465-0355. TTY users can call 1-800-325-0788." .
+
+policy:MedicareCoversTransplantDrugTherapy
+    rdfs:subClassOf medicare:Coverage ;
+    rdfs:comment "Medicare covers transplant drug therapy if Medicare helped pay for your organ transplant." .
+
+policy:PartARequirement
+    rdfs:subClassOf medicare:Requirement ;
+    rdfs:comment "You must have Part A at the time of the covered transplant." .
+
+policy:PartBRequirement
+    rdfs:subClassOf medicare:Requirement ;
+    rdfs:comment "You must have Part B at the time you get immunosuppressive drugs." .
+
+policy:MedicareDrugCoverage
+    rdfs:subClassOf medicare:Coverage ;
+    rdfs:comment "Medicare drug coverage (Part D) covers immunosuppressive drugs if Part B doesn’t cover them." .
+
+policy:OriginalMedicare
+    rdfs:subClassOf medicare:Coverage ;
+    rdfs:comment "If you have Original Medicare, you may join a Medicare drug plan to get Medicare drug coverage." .
+
+policy:ESRD
+    rdfs:subClassOf medicare:Coverage ;
+    rdfs:comment "If you only have Medicare because of End-Stage Renal Disease (ESRD), your Medicare coverage, including immunosuppressive drug coverage, ends 36 months after a successful kidney transplant." .
+
+policy:MedicareBenefit
+    rdfs:subClassOf medicare:Benefit ;
+    rdfs:comment "Medicare offers a benefit that may help you, if you lose Part A coverage 36 months after a kidney transplant, and you don’t have certain types of other health coverage (like a group health plan, TRICARE, or Medicaid that covers immunosuppressive drugs)." .
+
+policy:ImmunosuppressiveDrugsCoverage
+    rdfs:subClassOf medicare:Coverage ;
+    rdfs:comment "This benefit only covers your immunosuppressive drugs and no other items or services. It isn’t a substitute for full health coverage." .
+
+policy:ImmunosuppressiveDrugPremium
+    rdfs:subClassOf medicare:Cost ;
+    rdfs:comment "In 2023, you’ll pay a monthly premium of $97.10* if you sign up for the immunosuppressive drug benefit." .
+
+policy:ImmunosuppressiveDrugDeductible
+    rdfs:subClassOf medicare:Cost ;
+    rdfs:comment "In 2023, you’ll pay a $226 deductible if you sign up for the immunosuppressive drug benefit." .
+
+policy:ImmunosuppressiveDrugCost
+    rdfs:subClassOf medicare:Cost ;
+    rdfs:comment "Once you’ve met the deductible, you’ll pay 20% of the Medicare-approved amount for your immunosuppressive drugs." .
+
+policy:signUpForBenefit
+    rdfs:subClassOf medicare:Requirement ;
+    rdfs:comment "If you qualify, you can sign up for this benefit any time after your Part A coverage ends." .
+
+policy:contactSocialSecurity
+    rdfs:subClassOf medicare:Requirement ;
+    rdfs:comment "To sign up, call Social Security at 1-877-465-0355. TTY users can call 1-800-325-0788." .
+
+policy:MedicareCoversTransplantDrugTherapy
+    rdfs:subClassOf medicare:Decision ;
+    rdfs:comment "Medicare covers transplant drug therapy if Medicare helped pay for your organ transplant." .
+
+policy:PartARequirement
+    rdfs:subClassOf medicare:Decision ;
+    rdfs:comment "You must have Part A at the time of the covered transplant." .
+
+policy:PartBRequirement
+    rdfs:subClassOf medicare:Decision ;
+    rdfs:comment "You must have Part B at the time you get immunosuppressive drugs." .
+
+policy:MedicareDrugCoverage
+    rdfs:subClassOf medicare:Decision ;
+    rdfs:comment "Medicare drug coverage (Part D) covers immunosuppressive drugs if Part B doesn’t cover them." .
+
+policy:OriginalMedicare
+    rdfs:subClassOf medicare:Decision ;
+    rdfs:comment "If you have Original Medicare, you may join a Medicare drug plan to get Medicare drug coverage." .
+
+policy:ESRD
+    rdfs:subClassOf medicare:Decision ;
+    rdfs:comment "If you only have Medicare because of End-Stage Renal Disease (ESRD), your Medicare coverage, including immunosuppressive drug coverage, ends 36 months after a successful kidney transplant." .
+
+policy:MedicareBenefit
+    rdfs:subClassOf medicare:Decision ;
+    rdfs:comment "Medicare offers a benefit that may help you, if you lose Part A coverage 36 months after a kidney transplant, and you don’t have certain types of other health coverage (like a group health plan, TRICARE, or Medicaid that covers immunosuppressive drugs)." .
+
+policy:ImmunosuppressiveDrugsCoverage
+    rdfs:subClassOf medicare:Decision ;
+    rdfs:comment "This benefit only covers your immunosuppressive drugs and no other items or services. It isn’t a substitute for full health coverage." .
+
+policy:ImmunosuppressiveDrugPremium
+    rdfs:subClassOf medicare:Decision ;
+    rdfs:comment "In 2023, you’ll pay a monthly premium of $97.10* if you sign up for the immunosuppressive drug benefit." .
+
+policy:ImmunosuppressiveDrugDeductible
+    rdfs:subClassOf medicare:Decision ;
+    rdfs:comment "In 2023, you’ll pay a $226 deductible if you sign up for the immunosuppressive drug benefit." .
+
+policy:ImmunosuppressiveDrugCost
+    rdfs:subClassOf medicare:Decision ;
+    rdfs:comment "Once you’ve met the deductible, you’ll pay 20% of the Medicare-approved amount for your immunosuppressive drugs." .
+
+policy:signUpForBenefit
+    rdfs:subClassOf medicare:Decision ;
+    rdfs:comment "If you qualify, you can sign up for this benefit any time after your Part A coverage ends." .
+
+policy:contactSocialSecurity
+    rdfs:subClassOf medicare:Decision ;
+    rdfs:comment "To sign up, call Social Security at 1-877-465-0355. TTY users can call 1-800-325-0788." .
+
+medicare:Coverage
+    rdf:type rdfs:Class ;
+    rdfs:comment "Coverage provided by Medicare." .
+
+medicare:Requirement
+    rdf:type rdfs:Class ;
+    rdfs:comment "Requirement for Medicare coverage." .
+
+medicare:Benefit
+    rdf:type rdfs:Class ;
+    rdfs:comment "Benefit provided by Medicare." .
+
+medicare:Cost
+    rdf:type rdfs:Class ;
+    rdfs:comment "Cost associated with Medicare coverage." .
+
+medicare:Decision
+    rdf:type rdfs:Class ;
+    rdfs:comment "Decision made based on Medicare coverage." .
+```

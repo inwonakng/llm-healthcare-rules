@@ -1,0 +1,59 @@
+```
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix policy: <http://example.com/policy#> .
+@prefix condition: <http://example.com/condition#> .
+@prefix decision: <http://example.com/decision#> .
+
+# Define the policy
+policy: a rdf:Policy ;
+    rdfs:label "Insurance Policy Document" .
+
+# Define the conditions
+condition:1 a rdf:Condition ;
+    rdfs:label "Condition 1" ;
+    rdf:description "You must have a diagnosis of primary immune deficiency disease." .
+
+condition:2 a rdf:Condition ;
+    rdfs:label "Condition 2" ;
+    rdf:description "Your doctor must determine that it is medically appropriate for you to receive IVIG in your home." .
+
+# Define the decisions
+decision:1 a rdf:Decision ;
+    rdfs:label "Decision 1" ;
+    rdf:description "Medicare covers IVIG if Condition 1 and Condition 2 are met." .
+
+decision:2 a rdf:Decision ;
+    rdfs:label "Decision 2" ;
+    rdf:description "Medicare Part B covers the cost of the IVIG itself." .
+
+decision:3 a rdf:Decision ;
+    rdfs:label "Decision 3" ;
+    rdf:description "Medicare does not cover other items and services related to receiving IVIG at home." .
+
+# Define the logical rules
+{
+    ?policy rdf:label "Insurance Policy Document" .
+    ?condition1 rdf:label "Condition 1" .
+    ?condition2 rdf:label "Condition 2" .
+    ?decision1 rdf:label "Decision 1" .
+    ?decision2 rdf:label "Decision 2" .
+    ?decision3 rdf:label "Decision 3" .
+} =>
+{
+    ?policy rdf:type rdf:Policy .
+    ?condition1 rdf:type rdf:Condition .
+    ?condition2 rdf:type rdf:Condition .
+    ?decision1 rdf:type rdf:Decision .
+    ?decision2 rdf:type rdf:Decision .
+    ?decision3 rdf:type rdf:Decision .
+    ?decision1 rdf:description "Medicare covers IVIG if Condition 1 and Condition 2 are met." .
+    ?decision2 rdf:description "Medicare Part B covers the cost of the IVIG itself." .
+    ?decision3 rdf:description "Medicare does not cover other items and services related to receiving IVIG at home." .
+    ?decision1 rdfs:subClassOf ?policy .
+    ?decision2 rdfs:subClassOf ?policy .
+    ?decision3 rdfs:subClassOf ?policy .
+    ?decision1 rdfs:subClassOf ?condition1 .
+    ?decision1 rdfs:subClassOf ?condition2 .
+}
+```

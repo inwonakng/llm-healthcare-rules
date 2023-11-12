@@ -1,0 +1,84 @@
+```solidity
+pragma solidity ^0.8.0;
+
+import "truffle/Assert.sol";
+import "../contracts/InsuranceContract.sol";
+
+contract InsuranceContractTest {
+    InsuranceContract insuranceContract;
+
+    function beforeEach() public {
+        insuranceContract = new InsuranceContract();
+    }
+
+    function testMedicareCoversTransplantDrugTherapy() public {
+        bool isCovered = insuranceContract.isTransplantDrugTherapyCovered();
+        Assert.isTrue(isCovered, "Medicare should cover transplant drug therapy");
+    }
+
+    function testMustHavePartAAtTimeOfCoveredTransplant() public {
+        bool hasPartA = insuranceContract.hasPartA();
+        Assert.isTrue(hasPartA, "Must have Part A at the time of the covered transplant");
+    }
+
+    function testMustHavePartBAtTimeOfImmunosuppressiveDrugs() public {
+        bool hasPartB = insuranceContract.hasPartB();
+        Assert.isTrue(hasPartB, "Must have Part B at the time of getting immunosuppressive drugs");
+    }
+
+    function testMedicareDrugCoverageCoversImmunosuppressiveDrugs() public {
+        bool isCovered = insuranceContract.isImmunosuppressiveDrugsCoveredByMedicareDrugCoverage();
+        Assert.isTrue(isCovered, "Medicare drug coverage should cover immunosuppressive drugs");
+    }
+
+    function testCanJoinMedicareDrugPlanForDrugCoverage() public {
+        bool canJoin = insuranceContract.canJoinMedicareDrugPlan();
+        Assert.isTrue(canJoin, "Can join a Medicare drug plan for drug coverage");
+    }
+
+    function testMedicareCoverageEndsAfter36MonthsForESRD() public {
+        bool coverageEnds = insuranceContract.doesMedicareCoverageEndAfter36MonthsForESRD();
+        Assert.isTrue(coverageEnds, "Medicare coverage ends after 36 months for ESRD patients");
+    }
+
+    function testMedicareBenefitForLossOfPartAAfter36Months() public {
+        bool hasBenefit = insuranceContract.hasMedicareBenefitForLossOfPartAAfter36Months();
+        Assert.isTrue(hasBenefit, "Medicare offers a benefit for loss of Part A after 36 months");
+    }
+
+    function testBenefitOnlyCoversImmunosuppressiveDrugs() public {
+        bool onlyCoversDrugs = insuranceContract.doesBenefitOnlyCoverImmunosuppressiveDrugs();
+        Assert.isTrue(onlyCoversDrugs, "The benefit only covers immunosuppressive drugs");
+    }
+
+    function testBenefitIsNotSubstituteForFullHealthCoverage() public {
+        bool isSubstitute = insuranceContract.isBenefitSubstituteForFullHealthCoverage();
+        Assert.isFalse(isSubstitute, "The benefit is not a substitute for full health coverage");
+    }
+
+    function testCanSignUpForBenefitAfterPartACoverageEnds() public {
+        bool canSignUp = insuranceContract.canSignUpForBenefitAfterPartACoverageEnds();
+        Assert.isTrue(canSignUp, "Can sign up for the benefit after Part A coverage ends");
+    }
+
+    function testCallSocialSecurityToSignUpForBenefit() public {
+        string memory phoneNumber = insuranceContract.getSocialSecurityPhoneNumber();
+        Assert.equal(phoneNumber, "1-877-465-0355", "Call Social Security at 1-877-465-0355 to sign up for the benefit");
+    }
+
+    function testMonthlyPremiumFor2023() public {
+        uint256 premium = insuranceContract.getMonthlyPremiumFor2023();
+        Assert.equal(premium, 9710, "The monthly premium for 2023 should be $97.10");
+    }
+
+    function testDeductibleFor2023() public {
+        uint256 deductible = insuranceContract.getDeductibleFor2023();
+        Assert.equal(deductible, 226, "The deductible for 2023 should be $226");
+    }
+
+    function testPaymentPercentageAfterDeductibleMet() public {
+        uint256 paymentPercentage = insuranceContract.getPaymentPercentageAfterDeductibleMet();
+        Assert.equal(paymentPercentage, 20, "After the deductible is met, payment percentage should be 20%");
+    }
+}
+```

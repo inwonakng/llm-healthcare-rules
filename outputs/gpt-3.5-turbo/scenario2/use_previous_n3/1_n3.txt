@@ -1,0 +1,56 @@
+```
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix policy: <http://example.com/policy#> .
+@prefix condition: <http://example.com/condition#> .
+@prefix decision: <http://example.com/decision#> .
+
+# Conditions
+condition:primaryImmuneDeficiencyDisease a policy:Condition ;
+    rdfs:label "Primary Immune Deficiency Disease" .
+
+condition:medicallyAppropriate a policy:Condition ;
+    rdfs:label "Medically Appropriate" .
+
+# Decisions
+decision:coverIVIG a policy:Decision ;
+    rdfs:label "Cover IVIG" .
+
+decision:coverIVIGInHome a policy:Decision ;
+    rdfs:label "Cover IVIG in Home" .
+
+decision:coverIVIGCost a policy:Decision ;
+    rdfs:label "Cover IVIG Cost" .
+
+decision:doNotCoverOtherServices a policy:Decision ;
+    rdfs:label "Do Not Cover Other Services" .
+
+# Rules
+{
+    ?patient policy:hasCondition condition:primaryImmuneDeficiencyDisease ;
+             policy:hasCondition condition:medicallyAppropriate .
+} => {
+    ?patient policy:hasDecision decision:coverIVIG .
+} .
+
+{
+    ?patient policy:hasDecision decision:coverIVIG ;
+             policy:hasCondition condition:medicallyAppropriate .
+} => {
+    ?patient policy:hasDecision decision:coverIVIGInHome .
+} .
+
+{
+    ?patient policy:hasDecision decision:coverIVIG ;
+             policy:hasDecision decision:coverIVIGInHome .
+} => {
+    ?patient policy:hasDecision decision:coverIVIGCost .
+} .
+
+{
+    ?patient policy:hasDecision decision:coverIVIGInHome .
+} => {
+    ?patient policy:hasDecision decision:doNotCoverOtherServices .
+} .
+```
+```

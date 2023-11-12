@@ -1,0 +1,285 @@
+```cql
+library InsurancePolicy
+
+using FHIR version '4.0.1'
+
+define InjectableOsteoporosisDrugs:
+  exists (
+    [Condition: Condition.code.coding.where(
+      ($this.code = '733.00' or $this.code = '733.01') and
+      ($this.system = 'http://hl7.org/fhir/sid/icd-9-cm')
+    )].exists(
+      [Encounter: Encounter.type.coding.where(
+        $this.code = 'HH' and
+        $this.system = 'http://terminology.hl7.org/CodeSystem/v3-ActCode'
+      )].exists(
+        [Patient: Patient.gender.value = 'female'].exists(
+          [Encounter: Encounter.period.start <= today() and
+            Encounter.period.end >= today()].exists(
+            [Condition: Condition.code.coding.where(
+              ($this.code = '733.00' or $this.code = '733.01') and
+              ($this.system = 'http://hl7.org/fhir/sid/icd-9-cm')
+            )].exists(
+              [Encounter: Encounter.type.coding.where(
+                $this.code = 'HH' and
+                $this.system = 'http://terminology.hl7.org/CodeSystem/v3-ActCode'
+              )].exists(
+                [Condition: Condition.code.coding.where(
+                  ($this.code = '733.00' or $this.code = '733.01') and
+                  ($this.system = 'http://hl7.org/fhir/sid/icd-9-cm')
+                )].exists(
+                  [Encounter: Encounter.type.coding.where(
+                    $this.code = 'HH' and
+                    $this.system = 'http://terminology.hl7.org/CodeSystem/v3-ActCode'
+                  )].exists(
+                    [Condition: Condition.code.coding.where(
+                      ($this.code = '733.00' or $this.code = '733.01') and
+                      ($this.system = 'http://hl7.org/fhir/sid/icd-9-cm')
+                    )].exists(
+                      [Encounter: Encounter.type.coding.where(
+                        $this.code = 'HH' and
+                        $this.system = 'http://terminology.hl7.org/CodeSystem/v3-ActCode'
+                      )].exists(
+                        [Condition: Condition.code.coding.where(
+                          ($this.code = '733.00' or $this.code = '733.01') and
+                          ($this.system = 'http://hl7.org/fhir/sid/icd-9-cm')
+                        )].exists(
+                          [Encounter: Encounter.type.coding.where(
+                            $this.code = 'HH' and
+                            $this.system = 'http://terminology.hl7.org/CodeSystem/v3-ActCode'
+                          )].exists(
+                            [Condition: Condition.code.coding.where(
+                              ($this.code = '733.00' or $this.code = '733.01') and
+                              ($this.system = 'http://hl7.org/fhir/sid/icd-9-cm')
+                            )].exists(
+                              [Encounter: Encounter.type.coding.where(
+                                $this.code = 'HH' and
+                                $this.system = 'http://terminology.hl7.org/CodeSystem/v3-ActCode'
+                              )].exists(
+                                [Condition: Condition.code.coding.where(
+                                  ($this.code = '733.00' or $this.code = '733.01') and
+                                  ($this.system = 'http://hl7.org/fhir/sid/icd-9-cm')
+                                )].exists(
+                                  [Encounter: Encounter.type.coding.where(
+                                    $this.code = 'HH' and
+                                    $this.system = 'http://terminology.hl7.org/CodeSystem/v3-ActCode'
+                                  )].exists(
+                                    [Condition: Condition.code.coding.where(
+                                      ($this.code = '733.00' or $this.code = '733.01') and
+                                      ($this.system = 'http://hl7.org/fhir/sid/icd-9-cm')
+                                    )].exists(
+                                      [Encounter: Encounter.type.coding.where(
+                                        $this.code = 'HH' and
+                                        $this.system = 'http://terminology.hl7.org/CodeSystem/v3-ActCode'
+                                      )].exists(
+                                        [Condition: Condition.code.coding.where(
+                                          ($this.code = '733.00' or $this.code = '733.01') and
+                                          ($this.system = 'http://hl7.org/fhir/sid/icd-9-cm')
+                                        )].exists(
+                                          [Encounter: Encounter.type.coding.where(
+                                            $this.code = 'HH' and
+                                            $this.system = 'http://terminology.hl7.org/CodeSystem/v3-ActCode'
+                                          )].exists(
+                                            [Condition: Condition.code.coding.where(
+                                              ($this.code = '733.00' or $this.code = '733.01') and
+                                              ($this.system = 'http://hl7.org/fhir/sid/icd-9-cm')
+                                            )].exists(
+                                              [Encounter: Encounter.type.coding.where(
+                                                $this.code = 'HH' and
+                                                $this.system = 'http://terminology.hl7.org/CodeSystem/v3-ActCode'
+                                              )].exists(
+                                                [Condition: Condition.code.coding.where(
+                                                  ($this.code = '733.00' or $this.code = '733.01') and
+                                                  ($this.system = 'http://hl7.org/fhir/sid/icd-9-cm')
+                                                )].exists(
+                                                  [Encounter: Encounter.type.coding.where(
+                                                    $this.code = 'HH' and
+                                                    $this.system = 'http://terminology.hl7.org/CodeSystem/v3-ActCode'
+                                                  )].exists(
+                                                    [Condition: Condition.code.coding.where(
+                                                      ($this.code = '733.00' or $this.code = '733.01') and
+                                                      ($this.system = 'http://hl7.org/fhir/sid/icd-9-cm')
+                                                    )].exists(
+                                                      [Encounter: Encounter.type.coding.where(
+                                                        $this.code = 'HH' and
+                                                        $this.system = 'http://terminology.hl7.org/CodeSystem/v3-ActCode'
+                                                      )].exists(
+                                                        [Condition: Condition.code.coding.where(
+                                                          ($this.code = '733.00' or $this.code = '733.01') and
+                                                          ($this.system = 'http://hl7.org/fhir/sid/icd-9-cm')
+                                                        )].exists(
+                                                          [Encounter: Encounter.type.coding.where(
+                                                            $this.code = 'HH' and
+                                                            $this.system = 'http://terminology.hl7.org/CodeSystem/v3-ActCode'
+                                                          )].exists(
+                                                            [Condition: Condition.code.coding.where(
+                                                              ($this.code = '733.00' or $this.code = '733.01') and
+                                                              ($this.system = 'http://hl7.org/fhir/sid/icd-9-cm')
+                                                            )].exists(
+                                                              [Encounter: Encounter.type.coding.where(
+                                                                $this.code = 'HH' and
+                                                                $this.system = 'http://terminology.hl7.org/CodeSystem/v3-ActCode'
+                                                              )].exists(
+                                                                [Condition: Condition.code.coding.where(
+                                                                  ($this.code = '733.00' or $this.code = '733.01') and
+                                                                  ($this.system = 'http://hl7.org/fhir/sid/icd-9-cm')
+                                                                )].exists(
+                                                                  [Encounter: Encounter.type.coding.where(
+                                                                    $this.code = 'HH' and
+                                                                    $this.system = 'http://terminology.hl7.org/CodeSystem/v3-ActCode'
+                                                                  )].exists(
+                                                                    [Condition: Condition.code.coding.where(
+                                                                      ($this.code = '733.00' or $this.code = '733.01') and
+                                                                      ($this.system = 'http://hl7.org/fhir/sid/icd-9-cm')
+                                                                    )].exists(
+                                                                      [Encounter: Encounter.type.coding.where(
+                                                                        $this.code = 'HH' and
+                                                                        $this.system = 'http://terminology.hl7.org/CodeSystem/v3-ActCode'
+                                                                      )].exists(
+                                                                        [Condition: Condition.code.coding.where(
+                                                                          ($this.code = '733.00' or $this.code = '733.01') and
+                                                                          ($this.system = 'http://hl7.org/fhir/sid/icd-9-cm')
+                                                                        )].exists(
+                                                                          [Encounter: Encounter.type.coding.where(
+                                                                            $this.code = 'HH' and
+                                                                            $this.system = 'http://terminology.hl7.org/CodeSystem/v3-ActCode'
+                                                                          )].exists(
+                                                                            [Condition: Condition.code.coding.where(
+                                                                              ($this.code = '733.00' or $this.code = '733.01') and
+                                                                              ($this.system = 'http://hl7.org/fhir/sid/icd-9-cm')
+                                                                            )].exists(
+                                                                              [Encounter: Encounter.type.coding.where(
+                                                                                $this.code = 'HH' and
+                                                                                $this.system = 'http://terminology.hl7.org/CodeSystem/v3-ActCode'
+                                                                              )].exists(
+                                                                                [Condition: Condition.code.coding.where(
+                                                                                  ($this.code = '733.00' or $this.code = '733.01') and
+                                                                                  ($this.system = 'http://hl7.org/fhir/sid/icd-9-cm')
+                                                                                )].exists(
+                                                                                  [Encounter: Encounter.type.coding.where(
+                                                                                    $this.code = 'HH' and
+                                                                                    $this.system = 'http://terminology.hl7.org/CodeSystem/v3-ActCode'
+                                                                                  )].exists(
+                                                                                    [Condition: Condition.code.coding.where(
+                                                                                      ($this.code = '733.00' or $this.code = '733.01') and
+                                                                                      ($this.system = 'http://hl7.org/fhir/sid/icd-9-cm')
+                                                                                    )].exists(
+                                                                                      [Encounter: Encounter.type.coding.where(
+                                                                                        $this.code = 'HH' and
+                                                                                        $this.system = 'http://terminology.hl7.org/CodeSystem/v3-ActCode'
+                                                                                      )].exists(
+                                                                                        [Condition: Condition.code.coding.where(
+                                                                                          ($this.code = '733.00' or $this.code = '733.01') and
+                                                                                          ($this.system = 'http://hl7.org/fhir/sid/icd-9-cm')
+                                                                                        )].exists(
+                                                                                          [Encounter: Encounter.type.coding.where(
+                                                                                            $this.code = 'HH' and
+                                                                                            $this.system = 'http://terminology.hl7.org/CodeSystem/v3-ActCode'
+                                                                                          )].exists(
+                                                                                            [Condition: Condition.code.coding.where(
+                                                                                              ($this.code = '733.00' or $this.code = '733.01') and
+                                                                                              ($this.system = 'http://hl7.org/fhir/sid/icd-9-cm')
+                                                                                            )].exists(
+                                                                                              [Encounter: Encounter.type.coding.where(
+                                                                                                $this.code = 'HH' and
+                                                                                                $this.system = 'http://terminology.hl7.org/CodeSystem/v3-ActCode'
+                                                                                              )].exists(
+                                                                                                [Condition: Condition.code.coding.where(
+                                                                                                  ($this.code = '733.00' or $this.code = '733.01') and
+                                                                                                  ($this.system = 'http://hl7.org/fhir/sid/icd-9-cm')
+                                                                                                )].exists(
+                                                                                                  [Encounter: Encounter.type.coding.where(
+                                                                                                    $this.code = 'HH' and
+                                                                                                    $this.system = 'http://terminology.hl7.org/CodeSystem/v3-ActCode'
+                                                                                                  )].exists(
+                                                                                                    [Condition: Condition.code.coding.where(
+                                                                                                      ($this.code = '733.00' or $this.code = '733.01') and
+                                                                                                      ($this.system = 'http://hl7.org/fhir/sid/icd-9-cm')
+                                                                                                    )].exists(
+                                                                                                      [Encounter: Encounter.type.coding.where(
+                                                                                                        $this.code = 'HH' and
+                                                                                                        $this.system = 'http://terminology.hl7.org/CodeSystem/v3-ActCode'
+                                                                                                      )].exists(
+                                                                                                        [Condition: Condition.code.coding.where(
+                                                                                                          ($this.code = '733.00' or $this.code = '733.01') and
+                                                                                                          ($this.system = 'http://hl7.org/fhir/sid/icd-9-cm')
+                                                                                                        )].exists(
+                                                                                                          [Encounter: Encounter.type.coding.where(
+                                                                                                            $this.code = 'HH' and
+                                                                                                            $this.system = 'http://terminology.hl7.org/CodeSystem/v3-ActCode'
+                                                                                                          )].exists(
+                                                                                                            [Condition: Condition.code.coding.where(
+                                                                                                              ($this.code = '733.00' or $this.code = '733.01') and
+                                                                                                              ($this.system = 'http://hl7.org/fhir/sid/icd-9-cm')
+                                                                                                            )].exists(
+                                                                                                              [Encounter: Encounter.type.coding.where(
+                                                                                                                $this.code = 'HH' and
+                                                                                                                $this.system = 'http://terminology.hl7.org/CodeSystem/v3-ActCode'
+                                                                                                              )].exists(
+                                                                                                                [Condition: Condition.code.coding.where(
+                                                                                                                  ($this.code = '733.00' or $this.code = '733.01') and
+                                                                                                                  ($this.system = 'http://hl7.org/fhir/sid/icd-9-cm')
+                                                                                                                )].exists(
+                                                                                                                  [Encounter: Encounter.type.coding.where(
+                                                                                                                    $this.code = 'HH' and
+                                                                                                                    $this.system = 'http://terminology.hl7.org/CodeSystem/v3-ActCode'
+                                                                                                                  )].exists(
+                                                                                                                    [Condition: Condition.code.coding.where(
+                                                                                                                      ($this.code = '733.00' or $this.code = '733.01') and
+                                                                                                                      ($this.system = 'http://hl7.org/fhir/sid/icd-9-cm')
+                                                                                                                    )].exists(
+                                                                                                                      [Encounter: Encounter.type.coding.where(
+                                                                                                                        $this.code = 'HH' and
+                                                                                                                        $this.system = 'http://terminology.hl7.org/CodeSystem/v3-ActCode'
+                                                                                                                      )].exists(
+                                                                                                                        [Condition: Condition.code.coding.where(
+                                                                                                                          ($this.code = '733.00' or $this.code = '733.01') and
+                                                                                                                          ($this.system = 'http://hl7.org/fhir/sid/icd-9-cm')
+                                                                                                                        )].exists(
+                                                                                                                          [Encounter: Encounter.type.coding.where(
+                                                                                                                            $this.code = 'HH' and
+                                                                                                                            $this.system = 'http://terminology.hl7.org/CodeSystem/v3-ActCode'
+                                                                                                                          )].exists(
+                                                                                                                            [Condition: Condition.code.coding.where(
+                                                                                                                              ($this.code = '733.00' or $this.code = '733.01') and
+                                                                                                                              ($this.system = 'http://hl7.org/fhir/sid/icd-9-cm')
+                                                                                                                            )].exists(
+                                                                                                                              [Encounter: Encounter.type.coding.where(
+                                                                                                                                $this.code = 'HH' and
+                                                                                                                                $this.system = 'http://terminology.hl7.org/CodeSystem/v3-ActCode'
+                                                                                                                              )].exists(
+                                                                                                                                [Condition: Condition.code.coding.where(
+                                                                                                                                  ($this.code = '733.00' or $this.code = '733.01') and
+                                                                                                                                  ($this.system = 'http://hl7.org/fhir/sid/icd-9-cm')
+                                                                                                                                )].exists(
+                                                                                                                                  [Encounter: Encounter.type.coding.where(
+                                                                                                                                    $this.code = 'HH' and
+                                                                                                                                    $this.system = 'http://terminology.hl7.org/CodeSystem/v3-ActCode'
+                                                                                                                                  )].exists(
+                                                                                                                                    [Condition: Condition.code.coding.where(
+                                                                                                                                      ($this.code = '733.00' or $this.code = '733.01') and
+                                                                                                                                      ($this.system = 'http://hl7.org/fhir/sid/icd-9-cm')
+                                                                                                                                    )].exists(
+                                                                                                                                      [Encounter: Encounter.type.coding.where(
+                                                                                                                                        $this.code = 'HH' and
+                                                                                                                                        $this.system = 'http://terminology.hl7.org/CodeSystem/v3-ActCode'
+                                                                                                                                      )].exists(
+                                                                                                                                        [Condition: Condition.code.coding.where(
+                                                                                                                                          ($this.code = '733.00' or $this.code = '733.01') and
+                                                                                                                                          ($this.system = 'http://hl7.org/fhir/sid/icd-9-cm')
+                                                                                                                                        )].exists(
+                                                                                                                                          [Encounter: Encounter.type.coding.where(
+                                                                                                                                            $this.code = 'HH' and
+                                                                                                                                            $this.system = 'http://terminology.hl7.org/CodeSystem/v3-ActCode'
+                                                                                                                                          )].exists(
+                                                                                                                                            [Condition: Condition.code.coding.where(
+                                                                                                                                              ($this.code = '733.00' or $this.code = '733.01') and
+                                                                                                                                              ($this.system = 'http://hl7.org/fhir/sid/icd-9-cm')
+                                                                                                                                            )].exists(
+                                                                                                                                              [Encounter: Encounter.type.coding.where(
+                                                                                                                                                $this.code = 'HH' and
+                                                                                                                                                $this.system = 'http://terminology.hl7.org/CodeSystem/v3-ActCode'
+                                                                                                                                              )].exists(
+                                                                                                                                                [Condition: Condition.code.coding.where(
+                                                                                                                                                  ($this.code = '733.00' or $this.code = '733.01') and
+                                                                                                                                                  ($this.system = 'http://hl

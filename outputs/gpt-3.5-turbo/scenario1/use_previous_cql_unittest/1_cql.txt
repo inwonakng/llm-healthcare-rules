@@ -1,0 +1,132 @@
+```cql
+library InsurancePolicy
+
+using FHIR version '4.0.1'
+
+define InjectableOsteoporosisDrugsCoverage:
+  exists (
+    [Condition: Condition | 
+      Condition.code.coding.exists(coding: Coding | 
+        coding.system = 'http://snomed.info/sct' and 
+        coding.code = '64859006' and 
+        coding.display = 'Osteoporosis') and 
+      Condition.subject.gender = 'female' and 
+      Condition.subject.birthDate <= today() - '50 years' and 
+      Condition.subject.birthDate >= today() - '90 years' and 
+      Condition.clinicalStatus.coding.exists(coding: Coding | 
+        coding.system = 'http://terminology.hl7.org/CodeSystem/condition-clinical' and 
+        coding.code = 'active')
+    ] exists (
+      [Encounter: Encounter | 
+        Encounter.type.exists(type: CodeableConcept | 
+          type.coding.exists(coding: Coding | 
+            coding.system = 'http://terminology.hl7.org/CodeSystem/v3-ActCode' and 
+            coding.code = 'HH' and 
+            coding.display = 'Home health service')) and 
+        Encounter.period.start <= today() and 
+        Encounter.period.end >= today()
+      ] or 
+      [ServiceRequest: ServiceRequest | 
+        ServiceRequest.category.exists(category: CodeableConcept | 
+          category.coding.exists(coding: Coding | 
+            coding.system = 'http://terminology.hl7.org/CodeSystem/service-request-category' and 
+            coding.code = 'home-health')) and 
+        ServiceRequest.status = 'active'
+      ]
+    )
+  ) and
+  exists (
+    [Condition: Condition | 
+      Condition.code.coding.exists(coding: Coding | 
+        coding.system = 'http://snomed.info/sct' and 
+        coding.code = '72704001' and 
+        coding.display = 'Fracture of bone') and 
+      Condition.subject.gender = 'female' and 
+      Condition.subject.birthDate <= today() - '50 years' and 
+      Condition.subject.birthDate >= today() - '90 years' and 
+      Condition.clinicalStatus.coding.exists(coding: Coding | 
+        coding.system = 'http://terminology.hl7.org/CodeSystem/condition-clinical' and 
+        coding.code = 'active')
+    ] exists (
+      [Condition: Condition | 
+        Condition.code.coding.exists(coding: Coding | 
+          coding.system = 'http://snomed.info/sct' and 
+          coding.code = '64859006' and 
+          coding.display = 'Osteoporosis') and 
+        Condition.subject.gender = 'female' and 
+        Condition.subject.birthDate <= today() - '50 years' and 
+        Condition.subject.birthDate >= today() - '90 years' and 
+        Condition.clinicalStatus.coding.exists(coding: Coding | 
+          coding.system = 'http://terminology.hl7.org/CodeSystem/condition-clinical' and 
+          coding.code = 'active')
+      ] exists (
+        [Encounter: Encounter | 
+          Encounter.type.exists(type: CodeableConcept | 
+            type.coding.exists(coding: Coding | 
+              coding.system = 'http://terminology.hl7.org/CodeSystem/v3-ActCode' and 
+              coding.code = 'HH' and 
+              coding.display = 'Home health service')) and 
+          Encounter.period.start <= today() and 
+          Encounter.period.end >= today()
+        ] or 
+        [ServiceRequest: ServiceRequest | 
+          ServiceRequest.category.exists(category: CodeableConcept | 
+            category.coding.exists(coding: Coding | 
+              coding.system = 'http://terminology.hl7.org/CodeSystem/service-request-category' and 
+              coding.code = 'home-health')) and 
+          ServiceRequest.status = 'active'
+        ]
+      )
+    )
+  ) and
+  exists (
+    [Condition: Condition | 
+      Condition.code.coding.exists(coding: Coding | 
+        coding.system = 'http://snomed.info/sct' and 
+        coding.code = '64859006' and 
+        coding.display = 'Osteoporosis') and 
+      Condition.subject.gender = 'female' and 
+      Condition.subject.birthDate <= today() - '50 years' and 
+      Condition.subject.birthDate >= today() - '90 years' and 
+      Condition.clinicalStatus.coding.exists(coding: Coding | 
+        coding.system = 'http://terminology.hl7.org/CodeSystem/condition-clinical' and 
+        coding.code = 'active')
+    ] exists (
+      [Encounter: Encounter | 
+        Encounter.type.exists(type: CodeableConcept | 
+          type.coding.exists(coding: Coding | 
+            coding.system = 'http://terminology.hl7.org/CodeSystem/v3-ActCode' and 
+            coding.code = 'HH' and 
+            coding.display = 'Home health service')) and 
+        Encounter.period.start <= today() and 
+        Encounter.period.end >= today()
+      ] or 
+      [ServiceRequest: ServiceRequest | 
+        ServiceRequest.category.exists(category: CodeableConcept | 
+          category.coding.exists(coding: Coding | 
+            coding.system = 'http://terminology.hl7.org/CodeSystem/service-request-category' and 
+            coding.code = 'home-health')) and 
+        ServiceRequest.status = 'active'
+      ]
+    )
+  ) and
+  exists (
+    [Encounter: Encounter | 
+      Encounter.type.exists(type: CodeableConcept | 
+        type.coding.exists(coding: Coding | 
+          coding.system = 'http://terminology.hl7.org/CodeSystem/v3-ActCode' and 
+          coding.code = 'HH' and 
+          coding.display = 'Home health service')) and 
+      Encounter.period.start <= today() and 
+      Encounter.period.end >= today()
+    ] or 
+    [ServiceRequest: ServiceRequest | 
+      ServiceRequest.category.exists(category: CodeableConcept | 
+        category.coding.exists(coding: Coding | 
+          coding.system = 'http://terminology.hl7.org/CodeSystem/service-request-category' and 
+          coding.code = 'home-health')) and 
+      ServiceRequest.status = 'active'
+    ]
+  )
+```
+```

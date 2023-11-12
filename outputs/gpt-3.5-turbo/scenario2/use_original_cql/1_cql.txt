@@ -1,0 +1,44 @@
+```cql
+library InsurancePolicyDocument
+
+using FHIR version '4.0.1'
+
+-- Named expression for primary immune deficiency disease diagnosis
+define PrimaryImmuneDeficiency:
+  exists (Condition: code in 'Primary immune deficiency disease')
+
+-- Named expression for medically appropriate IVIG in home
+define MedicallyAppropriateIVIGInHome:
+  exists (MedicationRequest: medication.code in 'Intravenous immune globulin' and
+                           medicationRequest.intent in 'order' and
+                           medicationRequest.status in 'active' and
+                           medicationRequest.subject.exists() and
+                           medicationRequest.subject.patient.exists() and
+                           medicationRequest.subject.patient.birthDate.exists() and
+                           medicationRequest.subject.patient.birthDate <= Today() and
+                           medicationRequest.subject.patient.gender.exists() and
+                           medicationRequest.subject.patient.gender in 'male,female')
+
+-- Named expression for Medicare coverage of IVIG in home
+define MedicareCoverage:
+  exists (Coverage: payor in 'Medicare' and
+                    coverage.class.type in 'medical' and
+                    coverage.class.value in 'Part B')
+
+-- Named expression for IVIG coverage
+define IVIGCoverage:
+  PrimaryImmuneDeficiency and MedicallyAppropriateIVIGInHome and MedicareCoverage
+
+-- Named expression for non-coverage of other items and services related to IVIG in home
+define NonCoverageOfOtherItemsAndServices:
+  not exists (Coverage: payor in 'Medicare' and
+                        coverage.class.type in 'medical' and
+                        coverage.class.value in 'Part B' and
+                        coverage.subClass.type in 'other' and
+                        coverage.subClass.value in 'items and services related to IVIG in home')
+
+-- Final decision named expression
+define FinalDecision:
+  IVIGCoverage and NonCoverageOfOtherItemsAndServices
+```
+```

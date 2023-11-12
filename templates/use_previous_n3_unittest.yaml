@@ -42,7 +42,7 @@
     components:  
       - summary
       - n3
-      - uniitest
+      - unittest
   system_message:
     messages:
       - role

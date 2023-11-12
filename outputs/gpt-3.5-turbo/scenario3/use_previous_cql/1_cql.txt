@@ -1,0 +1,89 @@
+```cql
+library InsurancePolicyDocument
+
+using FHIR version '4.0.1'
+
+codesystem "SNOMEDCT": 'http://snomed.info/sct'
+
+code "PartA": 'Part A'
+code "PartB": 'Part B'
+code "PartD": 'Part D'
+
+code "ImmunosuppressiveDrugs": 'Immunosuppressive drugs'
+
+code "MedicareCoverage": 'Medicare coverage'
+code "TransplantDrugTherapy": 'Transplant drug therapy'
+code "MedicareHelpedPay": 'Medicare helped pay for organ transplant'
+code "MedicareDrugCoverage": 'Medicare drug coverage'
+code "OriginalMedicare": 'Original Medicare'
+code "MedicareDrugPlan": 'Medicare drug plan'
+code "EndStageRenalDisease": 'End-Stage Renal Disease (ESRD)'
+code "SuccessfulKidneyTransplant": 'Successful kidney transplant'
+code "ImmunosuppressiveDrugCoverage": 'Immunosuppressive drug coverage'
+code "Benefit": 'Benefit'
+code "LossOfPartACoverage": 'Loss of Part A coverage'
+code "OtherHealthCoverage": 'Other health coverage'
+code "ImmunosuppressiveDrugsOnly": 'Immunosuppressive drugs only'
+code "FullHealthCoverage": 'Full health coverage'
+code "QualifyForBenefit": 'Qualify for benefit'
+code "SignUpForBenefit": 'Sign up for benefit'
+
+code "SocialSecurityPhoneNumber": '1-877-465-0355'
+code "TTYPhoneNumber": '1-800-325-0788'
+
+code "MonthlyPremium": 'Monthly premium'
+code "Deductible": 'Deductible'
+code "MedicareApprovedAmount": 'Medicare-approved amount'
+
+code "PercentagePayment": 'Percentage payment'
+
+code "2023": '2023'
+
+define MedicareCoversTransplantDrugTherapy: 
+  [MedicareCoverage: SNOMEDCT] subsumes [TransplantDrugTherapy: SNOMEDCT] and
+  [MedicareHelpedPay: SNOMEDCT] subsumes [MedicareCoverage: SNOMEDCT]
+
+define MustHavePartAAtTimeOfCoveredTransplant: 
+  [PartA: SNOMEDCT] subsumes [TransplantDrugTherapy: SNOMEDCT]
+
+define MustHavePartBAtTimeOfImmunosuppressiveDrugs: 
+  [PartB: SNOMEDCT] subsumes [ImmunosuppressiveDrugs: SNOMEDCT]
+
+define PartDDoesNotCoverImmunosuppressiveDrugs: 
+  [PartD: SNOMEDCT] subsumes [ImmunosuppressiveDrugs: SNOMEDCT]
+
+define OriginalMedicareAllowsJoiningMedicareDrugPlan: 
+  [OriginalMedicare: SNOMEDCT] subsumes [MedicareDrugPlan: SNOMEDCT]
+
+define MedicareCoverageEndsAfter36MonthsOfSuccessfulKidneyTransplant: 
+  [EndStageRenalDisease: SNOMEDCT] subsumes [MedicareCoverage: SNOMEDCT] and
+  [SuccessfulKidneyTransplant: SNOMEDCT] subsumes [EndStageRenalDisease: SNOMEDCT]
+
+define MedicareOffersBenefitForLossOfPartACoverage: 
+  [MedicareCoverage: SNOMEDCT] subsumes [LossOfPartACoverage: SNOMEDCT] and
+  [OtherHealthCoverage: SNOMEDCT] subsumes [LossOfPartACoverage: SNOMEDCT]
+
+define BenefitCoversImmunosuppressiveDrugsOnly: 
+  [Benefit: SNOMEDCT] subsumes [ImmunosuppressiveDrugsOnly: SNOMEDCT]
+
+define BenefitIsNotSubstituteForFullHealthCoverage: 
+  [Benefit: SNOMEDCT] subsumes [FullHealthCoverage: SNOMEDCT]
+
+define CanSignUpForBenefitAfterPartACoverageEnds: 
+  [QualifyForBenefit: SNOMEDCT] subsumes [SignUpForBenefit: SNOMEDCT]
+
+define CallSocialSecurityForSignUp: 
+  [SignUpForBenefit: SNOMEDCT] subsumes [SocialSecurityPhoneNumber: SNOMEDCT] and
+  [TTYPhoneNumber: SNOMEDCT] subsumes [SocialSecurityPhoneNumber: SNOMEDCT]
+
+define MonthlyPremiumIn2023: 
+  [MonthlyPremium: SNOMEDCT] subsumes [2023: SNOMEDCT]
+
+define DeductibleIn2023: 
+  [Deductible: SNOMEDCT] subsumes [2023: SNOMEDCT]
+
+define PercentagePaymentForImmunosuppressiveDrugs: 
+  [PercentagePayment: SNOMEDCT] subsumes [ImmunosuppressiveDrugs: SNOMEDCT]
+
+```
+```
