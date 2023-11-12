@@ -1,0 +1,35 @@
+```
+library InjectableOsteoporosisDrugCoverage version '1.0'
+
+using QDM version '5.5'
+
+context Patient
+
+define "IsFemale":
+  Patient.gender.value = 'F'
+
+define "HasOsteoporosis":
+  exists(["Diagnosis: Osteoporosis"] DiagnosisOsteoporosis)
+
+define "QualifiesForMedicareHomeHealthBenefit":
+  // The specific criteria for the Medicare home health benefit would be defined here
+
+define "HasCertifiedPostMenopausalOsteoporosisFracture":
+  exists(["Diagnosis: Post-menopausal Osteoporosis Fracture"] PostMenopausalOsteoporosisFracture)
+    and PostMenopausalOsteoporosisFracture.authorDatetime during "Measurement Period"
+
+define "CannotSelfAdministerInjection":
+  // The specific criteria for being unable to self-administer the injection would be defined here
+
+define "FamilyOrCaregiversCannotAdministerInjection":
+  // The specific criteria for family or caregivers being unable or unwilling to administer the injection would be defined here
+
+define "EligibleForCoverage":
+  "IsFemale"
+    and "HasOsteoporosis"
+    and "QualifiesForMedicareHomeHealthBenefit"
+    and "HasCertifiedPostMenopausalOsteoporosisFracture"
+    and "CannotSelfAdministerInjection"
+    and "FamilyOrCaregiversCannotAdministerInjection"
+```
+This CQL library defines several named expressions that correspond to the conditions outlined in the insurance policy document and its summary. The "EligibleForCoverage" expression combines all of these conditions to determine whether a patient is eligible for coverage of injectable osteoporosis drugs under Medicare.

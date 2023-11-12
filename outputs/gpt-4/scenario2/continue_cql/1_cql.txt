@@ -1,0 +1,25 @@
+```
+```
+library IVIGCoverage version '1.0'
+
+using QDM version '5.5'
+
+include 'QDM' version '5.5' called QDM
+
+context Patient
+
+define "Primary Immune Deficiency Diagnosis":
+  exists([Condition: "Primary Immune Deficiency Disease"])
+
+define "Doctor's Decision":
+  exists([Encounter, Performed: "Medical Evaluation for IVIG"] E
+    where E.result = 'Medically appropriate for home IVIG')
+
+define "IVIG Provided at Home":
+  exists([Medication, Administered: "Intravenous Immune Globulin"] M
+    where M.setting = 'Home')
+
+define "Coverage Eligibility":
+  "Primary Immune Deficiency Diagnosis" and "Doctor's Decision" and "IVIG Provided at Home"
+```
+```

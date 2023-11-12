@@ -1,0 +1,50 @@
+```
+library InsurancePolicy version '1.0'
+
+using QDM version '5.5'
+
+context Patient
+
+define "Medicare Part A Coverage":
+  exists ["PatientCharacteristicPayer": "Medicare Part A"] 
+
+define "Medicare Part B Coverage":
+  exists ["PatientCharacteristicPayer": "Medicare Part B"] 
+
+define "Medicare Part D Coverage":
+  exists ["PatientCharacteristicPayer": "Medicare Part D"] 
+
+define "Medicare Paid for Organ Transplant":
+  exists ["ProcedurePerformed": "Organ Transplant"] where ["Payer": "Medicare"]
+
+define "Immunosuppressive Drug Therapy":
+  exists ["MedicationDispensed": "Immunosuppressive Drugs"]
+
+define "End-Stage Renal Disease":
+  exists ["Diagnosis": "End-Stage Renal Disease"]
+
+define "Successful Kidney Transplant":
+  exists ["ProcedurePerformed": "Kidney Transplant"] and ["Result": "Successful"]
+
+define "Coverage Ends After Kidney Transplant":
+  "Successful Kidney Transplant" and days between "Successful Kidney Transplant" and Today() > 36 * 30
+
+define "Immunosuppressive Drug Coverage":
+  "Medicare Part B Coverage" or "Medicare Part D Coverage" or "Medicare Paid for Organ Transplant"
+
+define "Eligible for Immunosuppressive Drug Benefit":
+  "Medicare Part A Coverage" and "Medicare Part B Coverage" and "Immunosuppressive Drug Therapy" and not "Coverage Ends After Kidney Transplant"
+
+define "Monthly Premium":
+  97.10
+
+define "Deductible":
+  226
+
+define "Medicare Approved Amount":
+  "Monthly Premium" * 12 + "Deductible"
+
+define "Patient Pays After Deductible":
+  0.20 * "Medicare Approved Amount"
+```
+This CQL library defines the conditions for Medicare coverage of immunosuppressive drug therapy, eligibility for the immunosuppressive drug benefit, and the costs associated with this benefit. It also includes conditions for end-stage renal disease and the termination of coverage after a successful kidney transplant.

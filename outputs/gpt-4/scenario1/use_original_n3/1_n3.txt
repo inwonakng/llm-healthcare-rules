@@ -1,0 +1,22 @@
+```
+@prefix : <http://example.org/> .
+
+{
+    :Patient a :Woman;
+        :hasOsteoporosis true;
+        :meetsMedicareHomeHealthBenefit true;
+        :hasBoneFracture true;
+        :boneFractureRelatedToPostMenopausalOsteoporosis true;
+        :cannotSelfAdministerInjection true.
+} => {
+    :Patient :eligibleForInjectableOsteoporosisDrugCoverage true.
+}.
+
+{
+    :Patient :eligibleForInjectableOsteoporosisDrugCoverage true;
+        :hasFamilyOrCaregiversUnwillingOrUnableToAdministerInjection true.
+} => {
+    :Patient :eligibleForHomeHealthNurseOrAideCoverage true.
+}.
+```
+This set of rules states that a patient is eligible for injectable osteoporosis drug coverage if they are a woman with osteoporosis, meet the criteria for the Medicare home health benefit, have a bone fracture that is related to post-menopausal osteoporosis, and cannot self-administer the injection. If the patient is eligible for injectable osteoporosis drug coverage and has family or caregivers who are unwilling or unable to administer the injection, then the patient is also eligible for home health nurse or aide coverage.

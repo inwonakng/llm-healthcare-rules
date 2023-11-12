@@ -1,0 +1,41 @@
+```
+library OsteoporosisMedicationCoverage version '1.0'
+
+using FHIR version '4.0.0'
+
+include FHIRHelpers version '4.0.0' called FHIRHelpers
+
+context Patient
+
+define "Woman with Osteoporosis":
+  [Condition: "Osteoporosis"] Diagnosis
+    where Diagnosis.patient.gender.value = 'female'
+
+define "Qualifies for Medicare Home Health Benefit":
+  [Coverage: "Medicare"] Coverage
+    where Coverage.beneficiary = Patient
+
+define "Certified Post-Menopausal Osteoporosis Fracture":
+  [Condition: "Fracture"] Fracture
+    where Fracture.patient = Patient
+      and Fracture.asserter.specialty.coding[0].display.value = 'Orthopedic'
+      and Fracture.asserter.certificationStatus.value = 'certified'
+      and Fracture.asserter.certificationReason.value = 'post-menopausal osteoporosis'
+
+define "Unable to Self-Administer Injection":
+  [Observation: "Self-Administration Ability"] Observation
+    where Observation.patient = Patient
+      and Observation.value.value = 'unable'
+
+define "Family or Caregivers Unable or Unwilling to Administer":
+  [Observation: "Caregiver Administration Ability"] Observation
+    where Observation.patient = Patient
+      and (Observation.value.value = 'unable' or Observation.value.value = 'unwilling')
+
+define "Eligible for Injectable Osteoporosis Drug Coverage":
+  "Woman with Osteoporosis"
+    and "Qualifies for Medicare Home Health Benefit"
+    and "Certified Post-Menopausal Osteoporosis Fracture"
+    and "Unable to Self-Administer Injection"
+    and "Family or Caregivers Unable or Unwilling to Administer"
+```

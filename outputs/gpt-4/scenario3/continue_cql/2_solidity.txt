@@ -1,0 +1,70 @@
+```
+```
+pragma solidity ^0.8.0;
+
+contract TransplantDrugCoverage {
+    struct Patient {
+        bool hasPartA;
+        bool hasPartB;
+        bool hasPartD;
+        bool hasOtherCoverage;
+        bool hadTransplant;
+        bool hadKidneyTransplant;
+        uint256 transplantDate;
+        uint256 drugReceiptDate;
+        uint256 premium;
+        uint256 deductible;
+    }
+
+    mapping(address => Patient) public patients;
+
+    function setPatientData(
+        address _patient,
+        bool _hasPartA,
+        bool _hasPartB,
+        bool _hasPartD,
+        bool _hasOtherCoverage,
+        bool _hadTransplant,
+        bool _hadKidneyTransplant,
+        uint256 _transplantDate,
+        uint256 _drugReceiptDate
+    ) public {
+        patients[_patient] = Patient({
+            hasPartA: _hasPartA,
+            hasPartB: _hasPartB,
+            hasPartD: _hasPartD,
+            hasOtherCoverage: _hasOtherCoverage,
+            hadTransplant: _hadTransplant,
+            hadKidneyTransplant: _hadKidneyTransplant,
+            transplantDate: _transplantDate,
+            drugReceiptDate: _drugReceiptDate,
+            premium: 9710,
+            deductible: 22600
+        });
+    }
+
+    function isEligibleForCoverage(address _patient) public view returns (bool) {
+        Patient memory patient = patients[_patient];
+        bool isEligible = false;
+
+        if (patient.hadTransplant && patient.hasPartA && patient.hasPartB) {
+            if (patient.hadKidneyTransplant && ((block.timestamp - patient.transplantDate) >= 36 * 30 days)) {
+                if (!patient.hasOtherCoverage) {
+                    isEligible = true;
+                }
+            } else if (!patient.hasPartB && patient.hasPartD) {
+                isEligible = true;
+            }
+        }
+
+        return isEligible;
+    }
+
+    function getPremiumAndDeductible(address _patient) public view returns (uint256, uint256) {
+        require(isEligibleForCoverage(_patient), "Patient is not eligible for coverage");
+        Patient memory patient = patients[_patient];
+        return (patient.premium, patient.deductible);
+    }
+}
+```
+```

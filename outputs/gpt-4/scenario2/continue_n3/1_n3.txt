@@ -1,0 +1,20 @@
+```
+```
+@prefix : <http://example.org#> .
+
+{
+    :Patient a :InsuredIndividual;
+        :hasDiagnosis :PrimaryImmuneDeficiencyDisease;
+        :hasDoctorRecommendation :IVIGAtHome.
+} => {
+    :Patient :isCoveredUnderPartB :IVIG.
+}.
+
+{
+    :Patient a :InsuredIndividual;
+        :hasDoctorRecommendation :IVIGAtHome.
+} => {
+    :Patient :isNotCovered :OtherItemsAndServices.
+}.
+```
+```

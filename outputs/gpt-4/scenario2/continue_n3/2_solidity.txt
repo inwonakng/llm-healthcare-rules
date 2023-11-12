@@ -1,0 +1,40 @@
+```
+```
+pragma solidity ^0.8.0;
+
+contract IVIGInsurancePolicy {
+    enum Status { NotCovered, CoveredUnderPartB }
+
+    struct Patient {
+        bool hasPrimaryImmuneDeficiencyDisease;
+        bool hasDoctorRecommendation;
+        Status ivigCoverageStatus;
+        Status otherItemsAndServicesCoverageStatus;
+    }
+
+    mapping(address => Patient) public patients;
+
+    function updatePatientStatus(address _patientAddress) public {
+        Patient storage patient = patients[_patientAddress];
+
+        if(patient.hasPrimaryImmuneDeficiencyDisease && patient.hasDoctorRecommendation) {
+            patient.ivigCoverageStatus = Status.CoveredUnderPartB;
+        } else {
+            patient.ivigCoverageStatus = Status.NotCovered;
+        }
+
+        if(patient.hasDoctorRecommendation) {
+            patient.otherItemsAndServicesCoverageStatus = Status.NotCovered;
+        }
+    }
+
+    function getPatientIVIGCoverageStatus(address _patientAddress) public view returns (Status) {
+        return patients[_patientAddress].ivigCoverageStatus;
+    }
+
+    function getPatientOtherItemsAndServicesCoverageStatus(address _patientAddress) public view returns (Status) {
+        return patients[_patientAddress].otherItemsAndServicesCoverageStatus;
+    }
+}
+```
+```

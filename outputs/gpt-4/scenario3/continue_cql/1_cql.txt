@@ -1,0 +1,57 @@
+```
+```
+library TransplantDrugCoverage version '1.0'
+
+using FHIR version '4.0.0'
+
+include FHIRHelpers version '4.0.0' called FHIRHelpers
+
+context Patient
+
+define "MedicareCoveredTransplant":
+  exists([Procedure: "Organ Transplant"] Procedure
+    where Procedure.status.value = 'completed'
+      and Procedure.extension.value = 'Medicare covered')
+
+define "HasPartAAtTransplant":
+  exists([Coverage: "Medicare Part A"] Coverage
+    where Coverage.status.value = 'active'
+      and Coverage.period.start.value <= "MedicareCoveredTransplant".performed.start.value
+      and Coverage.period.end.value >= "MedicareCoveredTransplant".performed.end.value)
+
+define "HasPartBAtDrugReceipt":
+  exists([Coverage: "Medicare Part B"] Coverage
+    where Coverage.status.value = 'active'
+      and Coverage.period.start.value <= "ImmunosuppressiveDrugReceipt".dispenseDate.value
+      and Coverage.period.end.value >= "ImmunosuppressiveDrugReceipt".dispenseDate.value)
+
+define "HasPartDIfPartBNotCovered":
+  exists([Coverage: "Medicare Part D"] Coverage
+    where Coverage.status.value = 'active'
+      and not "HasPartBAtDrugReceipt")
+
+define "HasOriginalMedicare":
+  "HasPartAAtTransplant" and "HasPartBAtDrugReceipt"
+
+define "ESRDCoverageEnds":
+  "HasOriginalMedicare" and "MedicareCoveredTransplant".procedureCode.value = 'Kidney Transplant'
+    and Duration between "MedicareCoveredTransplant".performed.end.value and Today() >= 36 months
+
+define "ImmunosuppressiveDrugBenefit":
+  "HasPartAAtTransplant" and not exists([Coverage: "Other Health Coverage"] Coverage
+    where Coverage.status.value = 'active'
+      and Coverage.period.start.value <= Today()
+      and Coverage.period.end.value >= Today())
+    and "MedicareCoveredTransplant".procedureCode.value = 'Kidney Transplant'
+    and Duration between "MedicareCoveredTransplant".performed.end.value and Today() >= 36 months
+
+define "ImmunosuppressiveDrugBenefitEligibility":
+  "ImmunosuppressiveDrugBenefit" and "HasOriginalMedicare"
+
+define "MonthlyPremiumAndDeductible":
+  "ImmunosuppressiveDrugBenefitEligibility" and Year(Today()) = 2023
+
+define "MedicareApprovedAmount":
+  "MonthlyPremiumAndDeductible" and "ImmunosuppressiveDrugReceipt".cost.value >= "MonthlyPremiumAndDeductible".deductible.value
+```
+```

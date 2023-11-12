@@ -1,0 +1,69 @@
+```
+@prefix : <http://example.org/> .
+
+{
+    :Patient :hasMedicare :Medicare.
+    :Medicare :helpedPayFor :OrganTransplant.
+    :Patient :hasPartA :AtTransplantTime.
+} => {
+    :Patient :isCoveredFor :TransplantDrugTherapy.
+}.
+
+{
+    :Patient :hasPartB :AtDrugTime.
+} => {
+    :Patient :isCoveredFor :ImmunosuppressiveDrugs.
+}.
+
+{
+    :Patient :hasPartB :DoesNotCover.
+    :Patient :hasPartD :true.
+} => {
+    :Patient :isCoveredFor :ImmunosuppressiveDrugs.
+}.
+
+{
+    :Patient :hasOriginalMedicare :true.
+} => {
+    :Patient :canJoin :MedicareDrugPlan.
+}.
+
+{
+    :Patient :hasMedicareBecauseOf :ESRD.
+    :Patient :hasSuccessfulKidneyTransplant :true.
+    :Patient :monthsAfterTransplant :Months.
+    :Months math:greaterThan 36.
+} => {
+    :Patient :MedicareCoverageEnds :true.
+}.
+
+{
+    :Patient :lostPartA :true.
+    :Patient :monthsAfterKidneyTransplant :Months.
+    :Months math:greaterThan 36.
+    :Patient :hasOtherHealthCoverage :false.
+} => {
+    :Patient :canGetBenefit :true.
+}.
+
+{
+    :Patient :qualifiesForBenefit :true.
+    :Patient :PartAEnds :true.
+} => {
+    :Patient :canSignUpForBenefit :true.
+}.
+
+{
+    :Patient :signsUpForBenefit :true.
+    :Year math:equalTo 2023.
+} => {
+    :Patient :paysMonthlyPremium 97.10.
+    :Patient :paysDeductible 226.
+}.
+
+{
+    :Patient :metDeductible :true.
+} => {
+    :Patient :paysPercentageOfApprovedAmount 20.
+}.
+```

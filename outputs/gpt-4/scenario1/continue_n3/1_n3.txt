@@ -1,0 +1,23 @@
+```
+```
+@prefix : <http://example.org/> .
+
+{
+    :PolicyHolder a :Woman;
+        :hasOsteoporosis true;
+        :qualifiesForMedicareHomeHealthBenefit true;
+        :hasBoneFracture true;
+        :boneFractureRelatedToPostMenopausalOsteoporosis true;
+        :unableToSelfAdministerInjection true.
+} => {
+    :PolicyHolder :eligibleForInjectableOsteoporosisDrugCoverage true.
+}.
+
+{
+    :PolicyHolder :eligibleForInjectableOsteoporosisDrugCoverage true;
+        :familyOrCaregiversUnableOrUnwillingToAdministerInjection true.
+} => {
+    :PolicyHolder :eligibleForHomeHealthNurseOrAideCoverage true.
+}.
+```
+```

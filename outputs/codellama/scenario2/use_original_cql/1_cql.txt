@@ -1,0 +1,586 @@
+```
+library IntravenousImmuneGlobulinAtHome version '1.0'
+
+using FHIR version '4.0.0'
+
+codesystem "SNOMED": 'http://snomed.info/sct'
+
+codesystem "ICD-10": 'http://hl7.org/fhir/sid/icd-10'
+
+context Patient
+
+define "PrimaryImmuneDeficiencyDisease":
+  [Condition: "Primary immune deficiency disease" in "SNOMED"]
+
+define "IVIG":
+  [Medication: "Intravenous immune globulin" in "SNOMED"]
+
+define "IVIGAtHome":
+  [Procedure: "IVIG at home" in "SNOMED"]
+
+define "MedicallyAppropriate":
+  [Procedure: "Medically appropriate" in "SNOMED"]
+
+define "CoveredProcedure":
+  [Procedure: "Covered procedure" in "SNOMED"]
+
+define "CoveredService":
+  [Procedure: "Covered service" in "SNOMED"]
+
+define "CoveredSupply":
+  [Procedure: "Covered supply" in "SNOMED"]
+
+define "CoveredDevice":
+  [Procedure: "Covered device" in "SNOMED"]
+
+define "CoveredImplant":
+  [Procedure: "Covered implant" in "SNOMED"]
+
+define "CoveredOther":
+  [Procedure: "Covered other" in "SNOMED"]
+
+define "NotCovered":
+  [Procedure: "Not covered" in "SNOMED"]
+
+define "IVIGAtHomeCoverage":
+  [Procedure: "IVIG at home coverage" in "SNOMED"]
+
+define "IVIGAtHomeCoverageRequirements":
+  [Procedure: "IVIG at home coverage requirements" in "SNOMED"]
+
+define "IVIGAtHomeCoverageExclusions":
+  [Procedure: "IVIG at home coverage exclusions" in "SNOMED"]
+
+define "IVIGAtHomeCoverageLimitations":
+  [Procedure: "IVIG at home coverage limitations" in "SNOMED"]
+
+define "IVIGAtHomeCoverageExceptions":
+  [Procedure: "IVIG at home coverage exceptions" in "SNOMED"]
+
+define "IVIGAtHomeCoverageConditions":
+  [Procedure: "IVIG at home coverage conditions" in "SNOMED"]
+
+define "IVIGAtHomeCoverageRequirementsMet":
+  [Procedure: "IVIG at home coverage requirements met" in "SNOMED"]
+
+define "IVIGAtHomeCoverageExclusionsMet":
+  [Procedure: "IVIG at home coverage exclusions met" in "SNOMED"]
+
+define "IVIGAtHomeCoverageLimitationsMet":
+  [Procedure: "IVIG at home coverage limitations met" in "SNOMED"]
+
+define "IVIGAtHomeCoverageExceptionsMet":
+  [Procedure: "IVIG at home coverage exceptions met" in "SNOMED"]
+
+define "IVIGAtHomeCoverageConditionsMet":
+  [Procedure: "IVIG at home coverage conditions met" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecision":
+  [Procedure: "IVIG at home coverage decision" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionReason":
+  [Procedure: "IVIG at home coverage decision reason" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionDate":
+  [Procedure: "IVIG at home coverage decision date" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionMaker":
+  [Procedure: "IVIG at home coverage decision maker" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionType":
+  [Procedure: "IVIG at home coverage decision type" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionStatus":
+  [Procedure: "IVIG at home coverage decision status" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionEffectiveDate":
+  [Procedure: "IVIG at home coverage decision effective date" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionExpirationDate":
+  [Procedure: "IVIG at home coverage decision expiration date" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationDate":
+  [Procedure: "IVIG at home coverage decision cancellation date" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationReason":
+  [Procedure: "IVIG at home coverage decision cancellation reason" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationType":
+  [Procedure: "IVIG at home coverage decision cancellation type" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationStatus":
+  [Procedure: "IVIG at home coverage decision cancellation status" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationEffectiveDate":
+  [Procedure: "IVIG at home coverage decision cancellation effective date" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationExpirationDate":
+  [Procedure: "IVIG at home coverage decision cancellation expiration date" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationDate":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation date" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationReason":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation reason" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationType":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation type" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationStatus":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation status" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationEffectiveDate":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation effective date" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationExpirationDate":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation expiration date" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationDate":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation date" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationReason":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation reason" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationType":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation type" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationStatus":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation status" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationEffectiveDate":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation effective date" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationExpirationDate":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation expiration date" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationDate":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation date" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationReason":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation reason" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationType":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation type" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationStatus":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation status" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationEffectiveDate":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation effective date" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationExpirationDate":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation expiration date" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationCancellationDate":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation cancellation date" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationCancellationReason":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation cancellation reason" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationCancellationType":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation cancellation type" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationCancellationStatus":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation cancellation status" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationCancellationEffectiveDate":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation cancellation effective date" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationCancellationExpirationDate":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation cancellation expiration date" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationCancellationCancellationDate":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation cancellation cancellation date" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationCancellationCancellationReason":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation cancellation cancellation reason" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationCancellationCancellationType":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation cancellation cancellation type" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationCancellationCancellationStatus":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation cancellation cancellation status" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationCancellationCancellationEffectiveDate":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation cancellation cancellation effective date" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationCancellationCancellationExpirationDate":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation cancellation cancellation expiration date" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationCancellationCancellationCancellationDate":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation cancellation cancellation cancellation date" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationCancellationCancellationCancellationReason":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation cancellation cancellation cancellation reason" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationCancellationCancellationCancellationType":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation cancellation cancellation cancellation type" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationCancellationCancellationCancellationStatus":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation cancellation cancellation cancellation status" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationCancellationCancellationCancellationEffectiveDate":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation cancellation cancellation cancellation effective date" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationCancellationCancellationCancellationExpirationDate":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation cancellation cancellation cancellation expiration date" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationDate":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation date" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationReason":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation reason" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationType":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation type" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationStatus":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation status" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationEffectiveDate":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation effective date" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationExpirationDate":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation expiration date" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationDate":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation date" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationReason":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation reason" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationType":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation type" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationStatus":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation status" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationEffectiveDate":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation effective date" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationExpirationDate":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation expiration date" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationDate":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation date" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationReason":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation reason" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationType":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation type" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationStatus":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation status" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationEffectiveDate":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation effective date" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationExpirationDate":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation expiration date" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationDate":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation date" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationReason":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation reason" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationType":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation type" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationStatus":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation status" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationEffectiveDate":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation effective date" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationExpirationDate":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation expiration date" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationDate":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation date" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationReason":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation reason" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationType":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation type" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationStatus":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation status" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationEffectiveDate":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation effective date" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationExpirationDate":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation expiration date" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationDate":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation date" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationReason":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation reason" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationType":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation type" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationStatus":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation status" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationEffectiveDate":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation effective date" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationExpirationDate":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation expiration date" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationDate":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation date" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationReason":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation reason" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationType":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation type" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationStatus":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation status" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationEffectiveDate":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation effective date" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationExpirationDate":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation expiration date" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationDate":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation date" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationReason":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation reason" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationType":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation type" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationStatus":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation status" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationEffectiveDate":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation effective date" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationExpirationDate":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation expiration date" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationDate":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation date" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationReason":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation reason" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationType":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation type" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationStatus":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation status" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationEffectiveDate":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation effective date" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationExpirationDate":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation expiration date" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationDate":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation date" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationReason":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation reason" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationType":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation type" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationStatus":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation status" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationEffectiveDate":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation effective date" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationExpirationDate":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation expiration date" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationDate":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation date" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationReason":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation reason" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationType":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation type" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationStatus":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation status" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationEffectiveDate":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation effective date" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationExpirationDate":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation expiration date" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationDate":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation date" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationReason":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation reason" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationType":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation type" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationStatus":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation status" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationEffectiveDate":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation effective date" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationExpirationDate":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation expiration date" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationDate":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation date" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationReason":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation reason" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationType":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation type" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationStatus":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation status" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationEffectiveDate":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation effective date" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationExpirationDate":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation expiration date" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationDate":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation date" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationReason":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation reason" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationType":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation type" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationStatus":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation status" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationEffectiveDate":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation effective date" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationExpirationDate":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation expiration date" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationDate":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation date" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationReason":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation reason" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationType":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation type" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationStatus":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation status" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationEffectiveDate":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation effective date" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationExpirationDate":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation expiration date" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationDate":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation date" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationReason":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation reason" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationType":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation type" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationStatus":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation status" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationEffectiveDate":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation effective date" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationExpirationDate":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation expiration date" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationDate":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation date" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationReason":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation reason" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationType":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation type" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationStatus":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation status" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationEffectiveDate":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation effective date" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationExpirationDate":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation expiration date" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationDate":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation date" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationReason":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation reason" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationType":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation type" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationStatus":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation status" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationEffectiveDate":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation effective date" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationExpirationDate":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation expiration date" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationDate":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation date" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationReason":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation reason" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationType":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation type" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationStatus":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation status" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationEffectiveDate":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation effective date" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationExpirationDate":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation expiration date" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationDate":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation date" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationReason":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation reason" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationType":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation type" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationStatus":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation status" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationEffectiveDate":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation effective date" in "SNOMED"]
+
+define "IVIGAtHomeCoverageDecisionCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationCancellationExpirationDate":
+  [Procedure: "IVIG at home coverage decision cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation cancellation

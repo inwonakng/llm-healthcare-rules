@@ -1,0 +1,91 @@
+```solidity
+pragma solidity ^0.8.0;
+
+contract MedicareInsurance {
+    struct Patient {
+        bool hasPartA;
+        bool hasPartB;
+        bool hasPartD;
+        bool hasOriginalMedicare;
+        bool hasESRD;
+        bool hasTransplant;
+        uint256 transplantTime;
+        uint256 deductiblePaid;
+        uint256 premiumPaid;
+    }
+
+    mapping(address => Patient) public patients;
+    uint256 public constant MONTHLY_PREMIUM = 97.10 ether;
+    uint256 public constant DEDUCTIBLE = 226 ether;
+
+    function registerPatient(
+        address _patient,
+        bool _hasPartA,
+        bool _hasPartB,
+        bool _hasPartD,
+        bool _hasOriginalMedicare,
+        bool _hasESRD,
+        bool _hasTransplant
+    ) public {
+        patients[_patient] = Patient({
+            hasPartA: _hasPartA,
+            hasPartB: _hasPartB,
+            hasPartD: _hasPartD,
+            hasOriginalMedicare: _hasOriginalMedicare,
+            hasESRD: _hasESRD,
+            hasTransplant: _hasTransplant,
+            transplantTime: block.timestamp,
+            deductiblePaid: 0,
+            premiumPaid: 0
+        });
+    }
+
+    function payPremium(address _patient) public payable {
+        require(msg.value == MONTHLY_PREMIUM, "Incorrect premium amount");
+        patients[_patient].premiumPaid += msg.value;
+    }
+
+    function payDeductible(address _patient) public payable {
+        require(msg.value == DEDUCTIBLE, "Incorrect deductible amount");
+        patients[_patient].deductiblePaid += msg.value;
+    }
+
+    function isEligibleForTransplantDrugTherapy(address _patient)
+        public
+        view
+        returns (bool)
+    {
+        Patient memory patient = patients[_patient];
+        bool isEligible = false;
+
+        if (
+            patient.hasPartA &&
+            patient.hasPartB &&
+            patient.hasTransplant &&
+            patient.premiumPaid >= MONTHLY_PREMIUM &&
+            patient.deductiblePaid >= DEDUCTIBLE
+        ) {
+            isEligible = true;
+        }
+
+        if (
+            patient.hasESRD &&
+            block.timestamp - patient.transplantTime > 36 * 30 days
+        ) {
+            isEligible = false;
+        }
+
+        if (
+            patient.hasPartD &&
+            !patient.hasPartB &&
+            patient.premiumPaid >= MONTHLY_PREMIUM &&
+            patient.deductiblePaid >= DEDUCTIBLE
+        ) {
+            isEligible = true;
+        }
+
+        return isEligible;
+    }
+}
+```
+This smart contract encapsulates the conditions described in the insurance policy document. It includes a struct to represent a patient and their insurance coverage, a mapping to store patients, and functions to register a patient, pay the premium and deductible, and check eligibility for transplant drug therapy. The contract uses the current block timestamp to calculate the time since a transplant. The `isEligibleForTransplantDrugTherapy` function implements the conditions described in the document.

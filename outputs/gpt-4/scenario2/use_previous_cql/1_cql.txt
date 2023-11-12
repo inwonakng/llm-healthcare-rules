@@ -1,0 +1,38 @@
+```
+library IVIGCoverage version '1.0'
+
+using QDM version '5.5'
+
+context Patient
+
+define "IVIG Provided at Home":
+  exists(["Medication, Administered": "Intravenous Immune Globulin (IVIG)"] IVIG
+    where IVIG.relevantPeriod starts during "Measurement Period"
+      and IVIG.setting.code.value = 'Home')
+
+define "Diagnosed with Primary Immune Deficiency Disease":
+  exists(["Diagnosis": "Primary Immune Deficiency Disease"] PID
+    where PID.prevalencePeriod starts during "Measurement Period")
+
+define "Medically Appropriate for IVIG at Home":
+  exists(["Assessment, Performed": "Medical Appropriateness for IVIG at Home"] MA
+    where MA.relevantPeriod starts during "Measurement Period"
+      and MA.result.value = 'Appropriate')
+
+define "IVIG Covered Under Part B":
+  exists(["Medication, Order": "Intravenous Immune Globulin (IVIG)"] IVIG
+    where IVIG.authorDatetime during "Measurement Period"
+      and IVIG.orderedBy.value in "Part B Providers")
+
+define "No Coverage for Other Items and Services":
+  not exists(["Service, Performed": "Services Related to IVIG at Home"] SRIVIG
+    where SRIVIG.relevantPeriod starts during "Measurement Period")
+
+define "Eligible for IVIG Coverage":
+  "IVIG Provided at Home"
+    and "Diagnosed with Primary Immune Deficiency Disease"
+    and "Medically Appropriate for IVIG at Home"
+    and "IVIG Covered Under Part B"
+    and "No Coverage for Other Items and Services"
+```
+This CQL library defines the conditions under which a patient is eligible for IVIG coverage according to the insurance policy document and its summary. The final named expression "Eligible for IVIG Coverage" combines all the conditions to determine the eligibility.

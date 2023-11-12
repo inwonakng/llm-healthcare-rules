@@ -1,0 +1,20 @@
+```
+@prefix : <http://example.org/> .
+
+{
+    :Beneficiary a :Woman;
+        :hasOsteoporosis true;
+        :qualifiesForMedicareHomeHealthBenefit true;
+        :hasCertifiedFractureRelatedToPostMenopausalOsteoporosis true;
+        :unableToSelfAdministerOrLearn true.
+} => {
+    :Beneficiary :isEligibleForInjectableOsteoporosisDrugCoverage true.
+}.
+
+{
+    :Beneficiary :isEligibleForInjectableOsteoporosisDrugCoverage true;
+        :hasUnwillingOrUnableFamilyOrCaregivers true.
+} => {
+    :Beneficiary :isEligibleForHomeHealthNurseOrAideCoverage true.
+}.
+```

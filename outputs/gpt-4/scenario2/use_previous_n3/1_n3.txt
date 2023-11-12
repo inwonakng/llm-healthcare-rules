@@ -1,0 +1,33 @@
+```
+@prefix : <http://example.org/> .
+
+{
+    :Patient a :Person ;
+        :hasDiagnosis :PrimaryImmuneDeficiencyDisease ;
+        :receivesIVIGAtHome true ;
+        :doctorDecidesMedicallyAppropriate true .
+} => {
+    :Patient :hasInsuranceCoverage :PartB .
+} .
+
+{
+    :Patient a :Person ;
+        :receivesIVIGAtHome true ;
+        :doctorDecidesMedicallyAppropriate true .
+} => {
+    :Patient :hasInsuranceCoverage :IVIG .
+} .
+
+{
+    :Patient a :Person ;
+        :receivesIVIGAtHome true ;
+        :hasInsuranceCoverage :IVIG .
+} => {
+    :Patient :doesNotHaveInsuranceCoverage :OtherItemsAndServices .
+} .
+```
+In the above N3 rules:
+
+- The first rule states that if a patient has a diagnosis of Primary Immune Deficiency Disease, receives IVIG at home, and the doctor decides it's medically appropriate, then the patient has insurance coverage under Part B.
+- The second rule states that if a patient receives IVIG at home and the doctor decides it's medically appropriate, then the patient has insurance coverage for IVIG.
+- The third rule states that if a patient receives IVIG at home and has insurance coverage for IVIG, then the patient does not have insurance coverage for other items and services.

@@ -1,0 +1,54 @@
+```
+library MedicareInsurancePolicy version '1.0'
+
+using QDM version '5.5'
+
+context Patient
+
+define "Medicare Covers Transplant Drug Therapy":
+  exists(["Medication, Order": "Transplant Drug Therapy"]) and
+  ["Procedure, Performed": "Organ Transplant"] during "Medicare Coverage Period"
+
+define "Has Part A at Time of Transplant":
+  exists(["Procedure, Performed": "Organ Transplant"]) during "Part A Coverage Period"
+
+define "Has Part B at Time of Immunosuppressive Drugs":
+  exists(["Medication, Order": "Immunosuppressive Drugs"]) during "Part B Coverage Period"
+
+define "Part D Covers Immunosuppressive Drugs":
+  not "Has Part B at Time of Immunosuppressive Drugs" and
+  exists(["Medication, Order": "Immunosuppressive Drugs"]) during "Part D Coverage Period"
+
+define "Has Original Medicare and Joins Drug Plan":
+  "Has Original Medicare" and
+  exists(["InsurancePolicy": "Medicare Drug Plan"])
+
+define "Medicare Coverage Ends After Kidney Transplant":
+  ["Diagnosis": "End-Stage Renal Disease (ESRD)"] and
+  ["Procedure, Performed": "Kidney Transplant"] ends "Medicare Coverage Period" after 36 months
+
+define "Part A Coverage Ends After Kidney Transplant":
+  ["Procedure, Performed": "Kidney Transplant"] ends "Part A Coverage Period" after 36 months
+
+define "Has Other Health Coverage":
+  exists(["InsurancePolicy": {"Group Health Plan", "TRICARE", "Medicaid"}])
+
+define "Benefit Covers Only Immunosuppressive Drugs":
+  "Part A Coverage Ends After Kidney Transplant" and
+  not "Has Other Health Coverage" and
+  exists(["Medication, Order": "Immunosuppressive Drugs"])
+
+define "Sign Up for Benefit After Part A Ends":
+  "Part A Coverage Ends After Kidney Transplant" and
+  ["Procedure, Performed": "Sign Up for Benefit"]
+
+define "Monthly Premium and Deductible in 2023":
+  Year of "Sign Up for Benefit" = 2023 and
+  ["InsurancePolicy": "Medicare Drug Plan"].premium = 97.10 and
+  ["InsurancePolicy": "Medicare Drug Plan"].deductible = 226
+
+define "Pay 20 Percent After Deductible":
+  ["InsurancePolicy": "Medicare Drug Plan"].deductibleMet and
+  ["Medication, Order": "Immunosuppressive Drugs"].payment = 0.20 * ["Medication, Order": "Immunosuppressive Drugs"].approvedAmount
+```
+This CQL library defines named expressions for each requirement in the insurance policy document and its summary. The expressions use QDM data models to represent the clinical concepts and conditions described in the document. The expressions are designed to contribute to a final decision about whether a patient meets the conditions for coverage under the policy.

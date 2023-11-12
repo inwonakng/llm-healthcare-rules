@@ -1,0 +1,48 @@
+```
+pragma solidity ^0.8.0;
+
+contract IVIG {
+    struct Patient {
+        address patientAddress;
+        string diagnosis;
+        bool medicareCoverage;
+        bool primaryImmuneDeficiencyDisease;
+        bool ivigAdministered;
+    }
+
+    mapping(address => Patient) public patients;
+
+    function setPatient(address patientAddress, string memory diagnosis, bool medicareCoverage, bool primaryImmuneDeficiencyDisease, bool ivigAdministered) public {
+        patients[patientAddress] = Patient(patientAddress, diagnosis, medicareCoverage, primaryImmuneDeficiencyDisease, ivigAdministered);
+    }
+
+    function getPatient(address patientAddress) public view returns (Patient memory) {
+        return patients[patientAddress];
+    }
+
+    function isMedicareCovered(address patientAddress) public view returns (bool) {
+        return patients[patientAddress].medicareCoverage;
+    }
+
+    function isPrimaryImmuneDeficiencyDisease(address patientAddress) public view returns (bool) {
+        return patients[patientAddress].primaryImmuneDeficiencyDisease;
+    }
+
+    function isIVIGAdministered(address patientAddress) public view returns (bool) {
+        return patients[patientAddress].ivigAdministered;
+    }
+}
+```
+This smart contract has a struct called `Patient` that stores the patient's address, diagnosis, Medicare coverage status, primary immune deficiency disease status, and whether or not IVIG has been administered. The contract also has several functions that allow you to set and get the patient's information, as well as check if the patient is Medicare covered, has a primary immune deficiency disease, and if IVIG has been administered.
+
+The `setPatient` function takes in the patient's address, diagnosis, Medicare coverage status, primary immune deficiency disease status, and whether or not IVIG has been administered, and sets the corresponding values in the `Patient` struct.
+
+The `getPatient` function takes in the patient's address and returns the corresponding `Patient` struct.
+
+The `isMedicareCovered` function takes in the patient's address and returns a boolean indicating whether or not the patient is Medicare covered.
+
+The `isPrimaryImmuneDeficiencyDisease` function takes in the patient's address and returns a boolean indicating whether or not the patient has a primary immune deficiency disease.
+
+The `isIVIGAdministered` function takes in the patient's address and returns a boolean indicating whether or not IVIG has been administered to the patient.
+
+This smart contract can be used to keep track of patients and their insurance coverage for IVIG. It can be deployed on the Ethereum blockchain and can be accessed by authorized parties to check the patient's information and make decisions based on that information.

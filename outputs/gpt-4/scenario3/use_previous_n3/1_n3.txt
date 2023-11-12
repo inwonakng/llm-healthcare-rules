@@ -1,0 +1,63 @@
+```
+@prefix : <http://example.org/> .
+
+{
+    :patient :hasMedicare :yes;
+             :medicarePaidForTransplant :yes;
+             :hasPartA :yes;
+             :hasPartB :yes.
+} => {
+    :patient :isEligibleForTransplantDrugTherapy :yes.
+}.
+
+{
+    :patient :hasMedicare :yes;
+             :hasPartB :no;
+             :hasPartD :yes.
+} => {
+    :patient :isEligibleForImmunosuppressiveDrugs :yes.
+}.
+
+{
+    :patient :hasOriginalMedicare :yes.
+} => {
+    :patient :canJoinMedicareDrugPlan :yes.
+}.
+
+{
+    :patient :hasMedicare :yes;
+             :hasMedicareDueToESRD :yes;
+             :monthsAfterSuccessfulKidneyTransplant :months
+} => {
+    :patient :medicareCoverageEnds :months.
+} :months <= 36.
+
+{
+    :patient :lostPartA :yes;
+             :monthsAfterKidneyTransplant :months;
+             :hasOtherHealthCoverage :no.
+} => {
+    :patient :isEligibleForImmunosuppressiveDrugBenefit :yes.
+} :months >= 36.
+
+{
+    :patient :hasPartA :no.
+} => {
+    :patient :canSignUpForBenefit :yes.
+}.
+
+{
+    :patient :signUpForImmunosuppressiveDrugBenefit :yes;
+             :year :year.
+} => {
+    :patient :monthlyPremium "$97.10";
+             :deductible "$226".
+} :year = "2023".
+
+{
+    :patient :metDeductible :yes.
+} => {
+    :patient :payPercentage "20%".
+}.
+```
+This set of rules covers all the requirements described in the insurance policy document and its summary. Each rule contributes to a final decision which fits the insurance policy document and its summary.

@@ -1,0 +1,25 @@
+```
+```
+@prefix : <http://example.org#> .
+
+{
+    :Patient a :InsuredIndividual;
+        :hasDiagnosis :PrimaryImmuneDeficiencyDisease;
+        :receivesTreatment :IVIG;
+        :treatmentLocation :Home;
+        :doctorApproval true.
+} => {
+    :Patient :eligibleForCoverage :PartB.
+}.
+
+{
+    :Patient a :InsuredIndividual;
+        :receivesTreatment :IVIG;
+        :treatmentLocation :Home;
+        :doctorApproval true;
+        :requiresAdditionalServices true.
+} => {
+    :Patient :notCoveredFor :AdditionalServices.
+}.
+```
+```

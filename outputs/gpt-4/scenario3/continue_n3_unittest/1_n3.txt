@@ -1,0 +1,49 @@
+```
+```
+@prefix : <http://example.org#> .
+
+{
+    :patient :hasMedicare :yes .
+    :patient :hasPartA :yes .
+    :patient :hasPartB :yes .
+    :patient :hasTransplantPaidByMedicare :yes .
+} => {
+    :patient :eligibleForTransplantDrugTherapy :yes .
+} .
+
+{
+    :patient :hasOriginalMedicare :yes .
+} => {
+    :patient :canJoinMedicareDrugPlan :yes .
+} .
+
+{
+    :patient :hasMedicareForESRD :yes .
+    :patient :monthsAfterSuccessfulKidneyTransplant :months .
+    :months math:greaterThan 36 .
+} => {
+    :patient :medicareCoverageEnds :yes .
+} .
+
+{
+    :patient :lostPartAAfter36Months :yes .
+    :patient :hasOtherHealthCoverage :no .
+} => {
+    :patient :eligibleForImmunosuppressiveDrugBenefit :yes .
+} .
+
+{
+    :patient :signedUpForImmunosuppressiveDrugBenefit :yes .
+    :patient :paidMonthlyPremium 97.10 .
+    :patient :paidDeductible 226 .
+} => {
+    :patient :metDeductible :yes .
+} .
+
+{
+    :patient :metDeductible :yes .
+} => {
+    :patient :pays20PercentOfApprovedAmount :yes .
+} .
+```
+```

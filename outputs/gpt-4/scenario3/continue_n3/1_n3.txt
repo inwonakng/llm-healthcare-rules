@@ -1,0 +1,57 @@
+```
+```
+@prefix : <http://example.org/> .
+
+{
+    :patient :hasMedicare :yes .
+    :patient :organTransplantPaidByMedicare :yes .
+    :patient :hasPartAAtTransplantTime :yes .
+    :patient :hasPartBAtDrugTime :yes .
+} => {
+    :patient :eligibleForTransplantDrugTherapy :yes .
+} .
+
+{
+    :patient :hasPartBAtDrugTime :no .
+    :patient :hasMedicareDrugCoverage :yes .
+} => {
+    :patient :eligibleForImmunosuppressiveDrugs :yes .
+} .
+
+{
+    :patient :hasMedicareForESRD :yes .
+    :patient :monthsAfterKidneyTransplant :months .
+    :months math:greaterThan 36 .
+} => {
+    :patient :medicareCoverageEnds :yes .
+} .
+
+{
+    :patient :lostPartAAfter36Months :yes .
+    :patient :hasOtherHealthCoverage :no .
+} => {
+    :patient :eligibleForImmunosuppressiveDrugBenefit :yes .
+} .
+
+{
+    :patient :eligibleForImmunosuppressiveDrugBenefit :yes .
+    :patient :partACoverageEnds :yes .
+} => {
+    :patient :canSignUpForBenefit :yes .
+} .
+
+{
+    :patient :signUpForImmunosuppressiveDrugBenefit :yes .
+    :patient :year 2023 .
+} => {
+    :patient :monthlyPremium "$97.10" .
+    :patient :deductible "$226" .
+} .
+
+{
+    :patient :metDeductible :yes .
+} => {
+    :patient :payPercentageOfApprovedAmount 20 .
+} .
+```
+```

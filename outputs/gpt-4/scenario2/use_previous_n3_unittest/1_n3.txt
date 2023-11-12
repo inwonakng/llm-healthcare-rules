@@ -1,0 +1,29 @@
+```
+@prefix : <http://example.org/> .
+
+{
+    :Patient a :Person;
+        :hasDiagnosis :PrimaryImmuneDeficiencyDisease;
+        :receivesIVIGAtHome true;
+        :doctorDecidesMedicallyAppropriate true.
+} => {
+    :Patient :hasCoverageUnderPartB true.
+}.
+
+{
+    :Patient a :Person;
+        :receivesIVIGAtHome true;
+        :hasCoverageUnderPartB true.
+} => {
+    :Patient :hasCoverageForIVIG true.
+}.
+
+{
+    :Patient a :Person;
+        :receivesIVIGAtHome true;
+        :hasCoverageUnderPartB true;
+        :usesOtherItemsAndServices true.
+} => {
+    :Patient :hasCoverageForOtherItemsAndServices false.
+}.
+```

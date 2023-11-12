@@ -1,0 +1,20 @@
+```
+@prefix : <http://example.org/> .
+
+{
+    :Patient :hasMedicarePartA :atTransplantTime.
+    :Patient :hasMedicarePartB :atDrugTime.
+    :Patient :hasMedicarePartD :atDrugTime.
+    :Patient :hasOriginalMedicare :atDrugTime.
+    :Patient :hasMedicareDueToESRD :atTransplantTime.
+    :Patient :hasSuccessfulKidneyTransplant :atTransplantTime.
+    :Patient :losesPartA :after36Months.
+    :Patient :hasOtherHealthCoverage :atDrugTime.
+    :Patient :signsUpForBenefit :afterPartAEnds.
+    :Patient :paysMonthlyPremium "97.10".
+    :Patient :paysDeductible "226".
+    :Patient :paysPercentageOfApprovedAmount "20".
+} => {
+    :Patient :isEligibleForTransplantDrugTherapy true.
+}.
+```

@@ -1,0 +1,7 @@
+```
+1. The insurance policy covers Intravenous Immune Globulin (IVIG) if provided at home.
+2. The coverage is applicable only if the insured has a diagnosis of primary immune deficiency disease.
+3. The decision of whether it's medically appropriate for the insured to receive IVIG at home must be made by a doctor.
+4. The insurance policy under Part B covers the cost of IVIG itself.
+5. The policy does not cover the cost of other items and services related to the insured receiving IVIG at home.
+```

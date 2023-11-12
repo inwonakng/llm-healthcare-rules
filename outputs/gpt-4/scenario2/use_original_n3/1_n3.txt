@@ -1,0 +1,22 @@
+```
+@prefix : <http://example.org/> .
+
+{
+    :Patient :hasDiagnosis :PrimaryImmuneDeficiencyDisease.
+    :Doctor :decides :MedicallyAppropriateForHomeIVIG.
+} => {
+    :Medicare :covers :IVIGInHome.
+}.
+
+{
+    :Medicare :covers :IVIGInHome.
+} => {
+    :Medicare :covers :PartBIVIG.
+}.
+
+{
+    :Medicare :covers :IVIGInHome.
+} => {
+    :Medicare :doesNotCover :OtherItemsAndServicesRelatedToHomeIVIG.
+}.
+```
