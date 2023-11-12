@@ -1,0 +1,228 @@
+```
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix policy: <http://example.com/policy#> .
+@prefix condition: <http://example.com/condition#> .
+@prefix requirement: <http://example.com/requirement#> .
+@prefix decision: <http://example.com/decision#> .
+
+# Policy Document
+policy: a policy:Document ;
+    rdfs:comment "Medicare covers transplant drug therapy if Medicare helped pay for your organ transplant. You must have Part A at the time of the covered transplant, and you must have Part B at the time you get immunosuppressive drugs. Keep in mind, Medicare drug coverage (Part D) covers immunosuppressive drugs if Part B doesn’t cover them. If you have Original Medicare, you may join a Medicare drug plan to get Medicare drug coverage. If you only have Medicare because of End-Stage Renal Disease (ESRD), your Medicare coverage, including immunosuppressive drug coverage, ends 36 months after a successful kidney transplant. Medicare offers a benefit that may help you, if you lose Part A coverage 36 months after a kidney transplant, and you don’t have certain types of other health coverage (like a group health plan, TRICARE, or Medicaid that covers immunosuppressive drugs). This benefit only covers your immunosuppressive drugs and no other items or services. It isn’t a substitute for full health coverage. If you qualify, you can sign up for this benefit any time after your Part A coverage ends. To sign up, call Social Security at 1-877-465-0355. TTY users can call 1-800-325-0788." .
+
+# Summary of Policy Document
+policy:summary a policy:Document ;
+    rdfs:comment "1. Medicare covers transplant drug therapy if Medicare helped pay for your organ transplant.
+    2. You must have Part A at the time of the covered transplant.
+    3. You must have Part B at the time you get immunosuppressive drugs.
+    4. Medicare drug coverage (Part D) covers immunosuppressive drugs if Part B doesn’t cover them.
+    5. If you have Original Medicare, you may join a Medicare drug plan to get Medicare drug coverage.
+    6. If you only have Medicare because of End-Stage Renal Disease (ESRD), your Medicare coverage, including immunosuppressive drug coverage, ends 36 months after a successful kidney transplant.
+    7. Medicare offers a benefit that may help you if you lose Part A coverage 36 months after a kidney transplant and you don’t have certain types of other health coverage.
+    8. This benefit only covers your immunosuppressive drugs and no other items or services.
+    9. It isn’t a substitute for full health coverage.
+    10. If you qualify, you can sign up for this benefit any time after your Part A coverage ends.
+    11. To sign up, call Social Security at 1-877-465-0355. TTY users can call 1-800-325-0788.
+    12. In 2023, the monthly premium for the immunosuppressive drug benefit is $97.10*.
+    13. In 2023, there is a $226 deductible for the immunosuppressive drug benefit.
+    14. Once you've met the deductible, you'll pay 20% of the Medicare-approved amount for your immunosuppressive drugs." .
+
+# Logic Rules
+{
+    # Requirement 1
+    ?policy rdf:type policy:Document ;
+            rdfs:comment "Medicare covers transplant drug therapy if Medicare helped pay for your organ transplant." .
+    ?condition rdf:type condition:Requirement ;
+               condition:hasPolicy ?policy ;
+               condition:hasDescription "Medicare helped pay for your organ transplant." .
+    ?requirement rdf:type requirement:Requirement ;
+                 requirement:hasCondition ?condition ;
+                 requirement:hasNumber "1" .
+    ?decision rdf:type decision:Decision ;
+              decision:hasRequirement ?requirement ;
+              decision:hasDescription "Medicare covers transplant drug therapy." .
+}
+{
+    # Requirement 2
+    ?policy rdf:type policy:Document ;
+            rdfs:comment "You must have Part A at the time of the covered transplant." .
+    ?condition rdf:type condition:Requirement ;
+               condition:hasPolicy ?policy ;
+               condition:hasDescription "Part A at the time of the covered transplant." .
+    ?requirement rdf:type requirement:Requirement ;
+                 requirement:hasCondition ?condition ;
+                 requirement:hasNumber "2" .
+    ?decision rdf:type decision:Decision ;
+              decision:hasRequirement ?requirement ;
+              decision:hasDescription "You must have Part A at the time of the covered transplant." .
+}
+{
+    # Requirement 3
+    ?policy rdf:type policy:Document ;
+            rdfs:comment "You must have Part B at the time you get immunosuppressive drugs." .
+    ?condition rdf:type condition:Requirement ;
+               condition:hasPolicy ?policy ;
+               condition:hasDescription "Part B at the time you get immunosuppressive drugs." .
+    ?requirement rdf:type requirement:Requirement ;
+                 requirement:hasCondition ?condition ;
+                 requirement:hasNumber "3" .
+    ?decision rdf:type decision:Decision ;
+              decision:hasRequirement ?requirement ;
+              decision:hasDescription "You must have Part B at the time you get immunosuppressive drugs." .
+}
+{
+    # Requirement 4
+    ?policy rdf:type policy:Document ;
+            rdfs:comment "Medicare drug coverage (Part D) covers immunosuppressive drugs if Part B doesn’t cover them." .
+    ?condition rdf:type condition:Requirement ;
+               condition:hasPolicy ?policy ;
+               condition:hasDescription "Part B doesn’t cover immunosuppressive drugs." .
+    ?requirement rdf:type requirement:Requirement ;
+                 requirement:hasCondition ?condition ;
+                 requirement:hasNumber "4" .
+    ?decision rdf:type decision:Decision ;
+              decision:hasRequirement ?requirement ;
+              decision:hasDescription "Medicare drug coverage (Part D) covers immunosuppressive drugs." .
+}
+{
+    # Requirement 5
+    ?policy rdf:type policy:Document ;
+            rdfs:comment "If you have Original Medicare, you may join a Medicare drug plan to get Medicare drug coverage." .
+    ?condition rdf:type condition:Requirement ;
+               condition:hasPolicy ?policy ;
+               condition:hasDescription "You have Original Medicare." .
+    ?requirement rdf:type requirement:Requirement ;
+                 requirement:hasCondition ?condition ;
+                 requirement:hasNumber "5" .
+    ?decision rdf:type decision:Decision ;
+              decision:hasRequirement ?requirement ;
+              decision:hasDescription "You may join a Medicare drug plan to get Medicare drug coverage." .
+}
+{
+    # Requirement 6
+    ?policy rdf:type policy:Document ;
+            rdfs:comment "If you only have Medicare because of End-Stage Renal Disease (ESRD), your Medicare coverage, including immunosuppressive drug coverage, ends 36 months after a successful kidney transplant." .
+    ?condition rdf:type condition:Requirement ;
+               condition:hasPolicy ?policy ;
+               condition:hasDescription "You only have Medicare because of End-Stage Renal Disease (ESRD)." .
+    ?requirement rdf:type requirement:Requirement ;
+                 requirement:hasCondition ?condition ;
+                 requirement:hasNumber "6" .
+    ?decision rdf:type decision:Decision ;
+              decision:hasRequirement ?requirement ;
+              decision:hasDescription "Medicare coverage ends 36 months after a successful kidney transplant." .
+}
+{
+    # Requirement 7
+    ?policy rdf:type policy:Document ;
+            rdfs:comment "Medicare offers a benefit that may help you if you lose Part A coverage 36 months after a kidney transplant and you don’t have certain types of other health coverage." .
+    ?condition rdf:type condition:Requirement ;
+               condition:hasPolicy ?policy ;
+               condition:hasDescription "Lose Part A coverage 36 months after a kidney transplant and don’t have certain types of other health coverage." .
+    ?requirement rdf:type requirement:Requirement ;
+                 requirement:hasCondition ?condition ;
+                 requirement:hasNumber "7" .
+    ?decision rdf:type decision:Decision ;
+              decision:hasRequirement ?requirement ;
+              decision:hasDescription "Medicare offers a benefit that may help you." .
+}
+{
+    # Requirement 8
+    ?policy rdf:type policy:Document ;
+            rdfs:comment "This benefit only covers your immunosuppressive drugs and no other items or services." .
+    ?condition rdf:type condition:Requirement ;
+               condition:hasPolicy ?policy ;
+               condition:hasDescription "This benefit covers only immunosuppressive drugs." .
+    ?requirement rdf:type requirement:Requirement ;
+                 requirement:hasCondition ?condition ;
+                 requirement:hasNumber "8" .
+    ?decision rdf:type decision:Decision ;
+              decision:hasRequirement ?requirement ;
+              decision:hasDescription "This benefit only covers immunosuppressive drugs." .
+}
+{
+    # Requirement 9
+    ?policy rdf:type policy:Document ;
+            rdfs:comment "It isn’t a substitute for full health coverage." .
+    ?condition rdf:type condition:Requirement ;
+               condition:hasPolicy ?policy ;
+               condition:hasDescription "It isn’t a substitute for full health coverage." .
+    ?requirement rdf:type requirement:Requirement ;
+                 requirement:hasCondition ?condition ;
+                 requirement:hasNumber "9" .
+    ?decision rdf:type decision:Decision ;
+              decision:hasRequirement ?requirement ;
+              decision:hasDescription "It isn’t a substitute for full health coverage." .
+}
+{
+    # Requirement 10
+    ?policy rdf:type policy:Document ;
+            rdfs:comment "If you qualify, you can sign up for this benefit any time after your Part A coverage ends." .
+    ?condition rdf:type condition:Requirement ;
+               condition:hasPolicy ?policy ;
+               condition:hasDescription "You qualify for this benefit." .
+    ?requirement rdf:type requirement:Requirement ;
+                 requirement:hasCondition ?condition ;
+                 requirement:hasNumber "10" .
+    ?decision rdf:type decision:Decision ;
+              decision:hasRequirement ?requirement ;
+              decision:hasDescription "You can sign up for this benefit any time after your Part A coverage ends." .
+}
+{
+    # Requirement 11
+    ?policy rdf:type policy:Document ;
+            rdfs:comment "To sign up, call Social Security at 1-877-465-0355. TTY users can call 1-800-325-0788." .
+    ?condition rdf:type condition:Requirement ;
+               condition:hasPolicy ?policy ;
+               condition:hasDescription "To sign up, call Social Security at 1-877-465-0355 or TTY users can call 1-800-325-0788." .
+    ?requirement rdf:type requirement:Requirement ;
+                 requirement:hasCondition ?condition ;
+                 requirement:hasNumber "11" .
+    ?decision rdf:type decision:Decision ;
+              decision:hasRequirement ?requirement ;
+              decision:hasDescription "To sign up, call Social Security at 1-877-465-0355 or TTY users can call 1-800-325-0788." .
+}
+{
+    # Requirement 12
+    ?policy rdf:type policy:Document ;
+            rdfs:comment "In 2023, the monthly premium for the immunosuppressive drug benefit is $97.10*." .
+    ?condition rdf:type condition:Requirement ;
+               condition:hasPolicy ?policy ;
+               condition:hasDescription "In 2023, the monthly premium for the immunosuppressive drug benefit is $97.10*." .
+    ?requirement rdf:type requirement:Requirement ;
+                 requirement:hasCondition ?condition ;
+                 requirement:hasNumber "12" .
+    ?decision rdf:type decision:Decision ;
+              decision:hasRequirement ?requirement ;
+              decision:hasDescription "The monthly premium for the immunosuppressive drug benefit in 2023 is $97.10*." .
+}
+{
+    # Requirement 13
+    ?policy rdf:type policy:Document ;
+            rdfs:comment "In 2023, there is a $226 deductible for the immunosuppressive drug benefit." .
+    ?condition rdf:type condition:Requirement ;
+               condition:hasPolicy ?policy ;
+               condition:hasDescription "In 2023, there is a $226 deductible for the immunosuppressive drug benefit." .
+    ?requirement rdf:type requirement:Requirement ;
+                 requirement:hasCondition ?condition ;
+                 requirement:hasNumber "13" .
+    ?decision rdf:type decision:Decision ;
+              decision:hasRequirement ?requirement ;
+              decision:hasDescription "In 2023, there is a $226 deductible for the immunosuppressive drug benefit." .
+}
+{
+    # Requirement 14
+    ?policy rdf:type policy:Document ;
+            rdfs:comment "Once you've met the deductible, you'll pay 20% of the Medicare-approved amount for your immunosuppressive drugs." .
+    ?condition rdf:type condition:Requirement ;
+               condition:hasPolicy ?policy ;
+               condition:hasDescription "Once you've met the deductible, you'll pay 20% of the Medicare-approved amount for your immunosuppressive drugs." .
+    ?requirement rdf:type requirement:Requirement ;
+                 requirement:hasCondition ?condition ;
+                 requirement:hasNumber "14" .
+    ?decision rdf:type decision:Decision ;
+              decision:hasRequirement ?requirement ;
+              decision:hasDescription "Once you've met the deductible, you'll pay 20% of the Medicare-approved amount for your immunosuppressive drugs." .
+}
+```
+```

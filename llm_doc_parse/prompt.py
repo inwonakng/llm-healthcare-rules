@@ -72,14 +72,13 @@ class Prompt:
         if save_dir is not None:
             save_dir = Path(save_dir)
             save_dir.mkdir(parents=True, exist_ok=True)
-
-        if skip_if_exist and all(
-            (save_dir / f"{i}_{raw_conf['task']}.txt").is_file()
-            for i, raw_conf in enumerate(configs)
-        ):
-            return
+            if skip_if_exist and all(
+                (save_dir / f"{i}_{raw_conf['task']}.txt").is_file()
+                for i, raw_conf in enumerate(configs)
+            ):
+                return
         
-        if progress:
+        if progress is not None:
             progress_msg = 'Executing..'
             if mode:
                 progress_msg = f'Executing {mode}..'
@@ -134,9 +133,10 @@ class Prompt:
             
             open(save_dir / f"{i}_{executable.task}.txt",'w').write(output)
             
-            if progress:
+            if progress is not None:
                 progress.advance(p_task)
-        progress.remove_task(p_task)
+        if progress is not None:
+            progress.remove_task(p_task)
 
     @staticmethod
     def load_from_file(tasks_file) -> 'Prompt':

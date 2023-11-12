@@ -1,0 +1,18 @@
+```solidity
+pragma solidity ^0.8.0;
+
+contract InsurancePolicy {
+    struct Policy {
+        string comment;
+    }
+    
+    struct Condition {
+        string description;
+    }
+    
+    struct Requirement {
+        Condition condition;
+        uint256 number;
+    }
+    
+    struct Decision

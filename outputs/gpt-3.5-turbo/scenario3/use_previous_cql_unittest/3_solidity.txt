@@ -1,0 +1,153 @@
+```solidity
+pragma solidity ^0.8.0;
+
+contract InsurancePolicy {
+    struct Policy {
+        bool medicareHelpedPayForOrganTransplant;
+        bool hasPartAAtTimeOfTransplant;
+        bool hasPartBAtTimeOfImmunosuppressiveDrugs;
+        bool partDCoversImmunosuppressiveDrugs;
+        bool canJoinMedicareDrugPlan;
+        bool medicareCoverageEndsAfter36Months;
+        bool medicareOffersBenefit;
+        bool benefitCoversOnlyImmunosuppressiveDrugs;
+        bool benefitIsNotSubstituteForFullCoverage;
+        bool canSignUpForBenefit;
+        bool callSocialSecurityToSignUp;
+        bool monthlyPremiumIn2023;
+        bool deductibleIn2023;
+        bool pay20PercentAfterDeductible;
+    }
+    
+    Policy public policy;
+    
+    constructor() {
+        policy.medicareHelpedPayForOrganTransplant = false;
+        policy.hasPartAAtTimeOfTransplant = false;
+        policy.hasPartBAtTimeOfImmunosuppressiveDrugs = false;
+        policy.partDCoversImmunosuppressiveDrugs = false;
+        policy.canJoinMedicareDrugPlan = false;
+        policy.medicareCoverageEndsAfter36Months = false;
+        policy.medicareOffersBenefit = false;
+        policy.benefitCoversOnlyImmunosuppressiveDrugs = false;
+        policy.benefitIsNotSubstituteForFullCoverage = false;
+        policy.canSignUpForBenefit = false;
+        policy.callSocialSecurityToSignUp = false;
+        policy.monthlyPremiumIn2023 = false;
+        policy.deductibleIn2023 = false;
+        policy.pay20PercentAfterDeductible = false;
+    }
+    
+    function setMedicareHelpedPayForOrganTransplant(bool value) external {
+        policy.medicareHelpedPayForOrganTransplant = value;
+    }
+    
+    function setHasPartAAtTimeOfTransplant(bool value) external {
+        policy.hasPartAAtTimeOfTransplant = value;
+    }
+    
+    function setHasPartBAtTimeOfImmunosuppressiveDrugs(bool value) external {
+        policy.hasPartBAtTimeOfImmunosuppressiveDrugs = value;
+    }
+    
+    function setPartDCoversImmunosuppressiveDrugs(bool value) external {
+        policy.partDCoversImmunosuppressiveDrugs = value;
+    }
+    
+    function setCanJoinMedicareDrugPlan(bool value) external {
+        policy.canJoinMedicareDrugPlan = value;
+    }
+    
+    function setMedicareCoverageEndsAfter36Months(bool value) external {
+        policy.medicareCoverageEndsAfter36Months = value;
+    }
+    
+    function setMedicareOffersBenefit(bool value) external {
+        policy.medicareOffersBenefit = value;
+    }
+    
+    function setBenefitCoversOnlyImmunosuppressiveDrugs(bool value) external {
+        policy.benefitCoversOnlyImmunosuppressiveDrugs = value;
+    }
+    
+    function setBenefitIsNotSubstituteForFullCoverage(bool value) external {
+        policy.benefitIsNotSubstituteForFullCoverage = value;
+    }
+    
+    function setCanSignUpForBenefit(bool value) external {
+        policy.canSignUpForBenefit = value;
+    }
+    
+    function setCallSocialSecurityToSignUp(bool value) external {
+        policy.callSocialSecurityToSignUp = value;
+    }
+    
+    function setMonthlyPremiumIn2023(bool value) external {
+        policy.monthlyPremiumIn2023 = value;
+    }
+    
+    function setDeductibleIn2023(bool value) external {
+        policy.deductibleIn2023 = value;
+    }
+    
+    function setPay20PercentAfterDeductible(bool value) external {
+        policy.pay20PercentAfterDeductible = value;
+    }
+    
+    function checkMedicareCoversTransplantDrugTherapy() external view returns (bool) {
+        return policy.medicareHelpedPayForOrganTransplant && policy.hasPartAAtTimeOfTransplant;
+    }
+    
+    function checkMustHavePartAAtTimeOfTransplant() external view returns (bool) {
+        return policy.hasPartAAtTimeOfTransplant;
+    }
+    
+    function checkMustHavePartBAtTimeOfImmunosuppressiveDrugs() external view returns (bool) {
+        return policy.hasPartBAtTimeOfImmunosuppressiveDrugs;
+    }
+    
+    function checkPartDDrugCoverageIfPartBDoesntCover() external view returns (bool) {
+        return policy.partDCoversImmunosuppressiveDrugs && !policy.hasPartBAtTimeOfImmunosuppressiveDrugs;
+    }
+    
+    function checkJoinMedicareDrugPlanForDrugCoverage() external view returns (bool) {
+        return policy.canJoinMedicareDrugPlan && policy.partDCoversImmunosuppressiveDrugs;
+    }
+    
+    function checkMedicareCoverageEndsAfter36Months() external view returns (bool) {
+        return policy.medicareCoverageEndsAfter36Months;
+    }
+    
+    function checkBenefitForLossOfPartACoverage() external view returns (bool) {
+        return policy.medicareCoverageEndsAfter36Months && policy.medicareOffersBenefit && !policy.benefitIsNotSubstituteForFullCoverage;
+    }
+    
+    function checkBenefitCoversImmunosuppressiveDrugsOnly() external view returns (bool) {
+        return policy.benefitCoversOnlyImmunosuppressiveDrugs && !policy.benefitIsNotSubstituteForFullCoverage;
+    }
+    
+    function checkQualifyForBenefit() external view returns (bool) {
+        return policy.canSignUpForBenefit && !policy.hasPartAAtTimeOfTransplant;
+    }
+    
+    function checkSignUpForBenefit() external view returns (bool) {
+        return !policy.hasPartAAtTimeOfTransplant;
+    }
+    
+    function checkCallSocialSecurityToSignUp() external view returns (bool) {
+        return policy.callSocialSecurityToSignUp;
+    }
+    
+    function checkMonthlyPremiumIn2023() external view returns (bool) {
+        return policy.monthlyPremiumIn2023;
+    }
+    
+    function checkDeductibleIn2023() external view returns (bool) {
+        return policy.deductibleIn2023;
+    }
+    
+    function checkPay20PercentAfterDeductible() external view returns (bool) {
+        return policy.pay20PercentAfterDeductible;
+    }
+}
+```

@@ -1,0 +1,77 @@
+```solidity
+pragma solidity ^0.8.0;
+
+import "truffle/Assert.sol";
+import "truffle/DeployedAddresses.sol";
+import "../contracts/InsuranceContract.sol";
+
+contract InsuranceContractTest {
+    InsuranceContract insuranceContract;
+
+    function beforeEach() public {
+        insuranceContract = new InsuranceContract();
+    }
+
+    function testMedicareCoversTransplantDrugTherapy() public {
+        bool isCovered = insuranceContract.isTransplantDrugTherapyCovered();
+        Assert.isTrue(isCovered, "Medicare should cover transplant drug therapy");
+    }
+
+    function testMustHavePartAAtTimeOfCoveredTransplant() public {
+        bool hasPartA = insuranceContract.hasPartA();
+        Assert.isTrue(hasPartA, "Must have Part A at the time of the covered transplant");
+    }
+
+    function testMustHavePartBAtTimeOfImmunosuppressiveDrugs() public {
+        bool hasPartB = insuranceContract.hasPartB();
+        Assert.isTrue(hasPartB, "Must have Part B at the time of getting immunosuppressive drugs");
+    }
+
+    function testMedicareDrugCoverageCoversImmunosuppressiveDrugs() public {
+        bool hasMedicareDrugCoverage = insuranceContract.hasMedicareDrugCoverage();
+        Assert.isTrue(hasMedicareDrugCoverage, "Medicare drug coverage should cover immunosuppressive drugs");
+    }
+
+    function testJoinMedicareDrugPlanForDrugCoverage() public {
+        bool joinedMedicareDrugPlan = insuranceContract.hasJoinedMedicareDrugPlan();
+        Assert.isTrue(joinedMedicareDrugPlan, "Should join a Medicare drug plan for drug coverage");
+    }
+
+    function testMedicareCoverageEndsAfter36MonthsForESRD() public {
+        bool coverageEnds = insuranceContract.doesMedicareCoverageEnd();
+        Assert.isTrue(coverageEnds, "Medicare coverage, including immunosuppressive drug coverage, ends after 36 months for ESRD");
+    }
+
+    function testBenefitForLossOfPartAAfter36Months() public {
+        bool hasBenefit = insuranceContract.hasBenefitForLossOfPartA();
+        Assert.isTrue(hasBenefit, "Medicare offers a benefit for loss of Part A coverage after 36 months");
+    }
+
+    function testBenefitOnlyCoversImmunosuppressiveDrugs() public {
+        bool coversOnlyDrugs = insuranceContract.coversOnlyImmunosuppressiveDrugs();
+        Assert.isTrue(coversOnlyDrugs, "The benefit only covers immunosuppressive drugs and no other items or services");
+    }
+
+    function testBenefitIsNotSubstituteForFullHealthCoverage() public {
+        bool isSubstitute = insuranceContract.isBenefitSubstituteForFullCoverage();
+        Assert.isFalse(isSubstitute, "The benefit is not a substitute for full health coverage");
+    }
+
+    function testCanSignUpForBenefitAfterPartACoverageEnds() public {
+        bool canSignUp = insuranceContract.canSignUpForBenefit();
+        Assert.isTrue(canSignUp, "Can sign up for the benefit after Part A coverage ends");
+    }
+
+    function testPremiumAndDeductibleFor2023() public {
+        (uint premium, uint deductible) = insuranceContract.getPremiumAndDeductibleFor2023();
+        Assert.equal(premium, 9710, "Premium for 2023 should be $97.10");
+        Assert.equal(deductible, 226, "Deductible for 2023 should be $226");
+    }
+
+    function testPay20PercentForImmunosuppressiveDrugs() public {
+        uint percentage = insuranceContract.getPercentageToPayForDrugs();
+        Assert.equal(percentage, 20, "Should pay 20% of the Medicare-approved amount for immunosuppressive drugs");
+    }
+}
+```
+```

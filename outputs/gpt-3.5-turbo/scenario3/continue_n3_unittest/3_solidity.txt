@@ -1,0 +1,70 @@
+```solidity
+pragma solidity ^0.8.0;
+
+contract InsuranceContract {
+    struct Policy {
+        bool coverTransplantDrugTherapy;
+        bool coverImmunosuppressiveDrugs;
+        bool joinDrugPlan;
+        bool benefitCoverage;
+        bool benefitOnlyDrugs;
+        bool benefitNotSubstitute;
+    }
+
+    Policy public policy;
+
+    uint256 public premium;
+    uint256 public deductible;
+    uint256 public paymentPercentage;
+
+    constructor() {
+        policy.coverTransplantDrugTherapy = true;
+        policy.coverImmunosuppressiveDrugs = true;
+        policy.joinDrugPlan = true;
+        policy.benefitCoverage = true;
+        policy.benefitOnlyDrugs = true;
+        policy.benefitNotSubstitute = true;
+
+        premium = 9710;
+        deductible = 226;
+        paymentPercentage = 20;
+    }
+
+    function coverTransplantDrugTherapy() public view returns (bool) {
+        return policy.coverTransplantDrugTherapy;
+    }
+
+    function coverImmunosuppressiveDrugs() public view returns (bool) {
+        return policy.coverImmunosuppressiveDrugs;
+    }
+
+    function joinDrugPlan() public view returns (bool) {
+        return policy.joinDrugPlan;
+    }
+
+    function benefitCoverage() public view returns (bool) {
+        return policy.benefitCoverage;
+    }
+
+    function benefitOnlyDrugs() public view returns (bool) {
+        return policy.benefitOnlyDrugs;
+    }
+
+    function benefitNotSubstitute() public view returns (bool) {
+        return policy.benefitNotSubstitute;
+    }
+
+    function getPremium() public view returns (uint256) {
+        return premium;
+    }
+
+    function getDeductible() public view returns (uint256) {
+        return deductible;
+    }
+
+    function getPaymentPercentage() public view returns (uint256) {
+        return paymentPercentage;
+    }
+}
+```
+```

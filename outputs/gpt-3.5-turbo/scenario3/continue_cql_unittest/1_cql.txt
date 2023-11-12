@@ -1,0 +1,88 @@
+```
+library InsurancePolicyDocument
+
+using FHIR version '4.0.1'
+
+include FHIRHelpers version '4.0.1'
+
+-- Named expressions based on the insurance policy document
+
+-- Requirement 1: Medicare covers transplant drug therapy if Medicare helped pay for your organ transplant.
+define medicareCoversTransplantDrugTherapy:
+  exists ([Condition: Condition | 'organ transplant' in Condition.code.coding.display] 
+    where 'Medicare' in Condition.payor.reference)
+
+-- Requirement 2: You must have Part A at the time of the covered transplant.
+define hasPartAAtTransplant: 
+  exists ([Condition: Condition | 'organ transplant' in Condition.code.coding.display] 
+    where 'Part A' in Condition.subject.coverage.reference)
+
+-- Requirement 3: You must have Part B at the time you get immunosuppressive drugs.
+define hasPartBAtImmunosuppressiveDrugs:
+  exists ([MedicationRequest: MedicationRequest | 'immunosuppressive drugs' in MedicationRequest.medicationCodeableConcept.coding.display] 
+    where 'Part B' in MedicationRequest.subject.coverage.reference)
+
+-- Requirement 4: Medicare drug coverage (Part D) covers immunosuppressive drugs if Part B doesn’t cover them.
+define partDCoversImmunosuppressiveDrugs:
+  exists ([MedicationRequest: MedicationRequest | 'immunosuppressive drugs' in MedicationRequest.medicationCodeableConcept.coding.display] 
+    where 'Part D' in MedicationRequest.subject.coverage.reference and 'Part B' not in MedicationRequest.subject.coverage.reference)
+
+-- Requirement 5: If you have Original Medicare, you may join a Medicare drug plan to get Medicare drug coverage.
+define joinMedicareDrugPlan:
+  exists ([Patient: Patient] 
+    where 'Original Medicare' in Patient.coverage.reference)
+
+-- Requirement 6: If you only have Medicare because of End-Stage Renal Disease (ESRD), your Medicare coverage, including immunosuppressive drug coverage, ends 36 months after a successful kidney transplant.
+define esrdCoverageEndsAfter36Months:
+  exists ([Condition: Condition | 'successful kidney transplant' in Condition.code.coding.display] 
+    where 'End-Stage Renal Disease (ESRD)' in Condition.subject.coverage.reference)
+
+-- Requirement 7: Medicare offers a benefit that may help you if you lose Part A coverage 36 months after a kidney transplant and you don’t have certain types of other health coverage.
+define medicareBenefitAfter36Months:
+  exists ([Condition: Condition | 'kidney transplant' in Condition.code.coding.display] 
+    where 'Part A' not in Condition.subject.coverage.reference and '36 months' in Condition.onsetString)
+
+-- Requirement 8: This benefit only covers your immunosuppressive drugs and no other items or services.
+define benefitCoversImmunosuppressiveDrugsOnly:
+  exists ([MedicationRequest: MedicationRequest | 'immunosuppressive drugs' in MedicationRequest.medicationCodeableConcept.coding.display] 
+    where 'benefit' in MedicationRequest.subject.coverage.reference)
+
+-- Requirement 9: It isn’t a substitute for full health coverage.
+define notSubstituteForFullCoverage:
+  exists ([Coverage: Coverage] 
+    where 'benefit' in Coverage.id)
+
+-- Requirement 10: If you qualify, you can sign up for this benefit any time after your Part A coverage ends.
+define signUpAfterPartACoverageEnds:
+  exists ([Patient: Patient] 
+    where 'Part A' not in Patient.coverage.reference)
+
+-- Requirement 11: To sign up, call Social Security at 1-877-465-0355. TTY users can call 1-800-325-0788.
+define signUpContactNumber:
+  '1-877-465-0355'
+
+-- Requirement 12: In 2023, the monthly premium for the immunosuppressive drug benefit is $97.10*.
+define monthlyPremium2023:
+  97.10
+
+-- Requirement 13: In 2023, there is a $226 deductible for the immunosuppressive drug benefit.
+define deductible2023:
+  226
+
+-- Requirement 14: Once you've met the deductible, you'll pay 20% of the Medicare-approved amount for your immunosuppressive drugs.
+define paymentAfterDeductible:
+  0.2 * [MedicationRequest: MedicationRequest | 'immunosuppressive drugs' in MedicationRequest.medicationCodeableConcept.coding.display].dispenseRequest.quantity.value
+
+-- Final decision based on the requirements
+define meetsInsurancePolicyRequirements:
+  medicareCoversTransplantDrugTherapy and
+  hasPartAAtTransplant and
+  hasPartBAtImmunosuppressiveDrugs and
+  (partDCoversImmunosuppressiveDrugs or joinMedicareDrugPlan) and
+  (not esrdCoverageEndsAfter36Months or medicareBenefitAfter36Months) and
+  benefitCoversImmunosuppressiveDrugsOnly and
+  notSubstituteForFullCoverage and
+  signUpAfterPartACoverageEnds
+
+```
+```

@@ -1,0 +1,94 @@
+```solidity
+pragma solidity ^0.8.0;
+
+contract InsuranceContract {
+    struct Coverage {
+        bool isTransplantDrugTherapyCovered;
+        bool hasPartA;
+        bool hasPartB;
+        bool hasMedicareDrugCoverage;
+        bool hasJoinedMedicareDrugPlan;
+        bool doesMedicareCoverageEnd;
+        bool hasBenefitForLossOfPartA;
+        bool coversOnlyImmunosuppressiveDrugs;
+        bool isBenefitSubstituteForFullCoverage;
+        bool canSignUpForBenefit;
+    }
+
+    struct PremiumAndDeductible {
+        uint premium;
+        uint deductible;
+    }
+
+    Coverage public coverage;
+    PremiumAndDeductible public premiumAndDeductible;
+    uint public percentageToPayForDrugs;
+
+    constructor() {
+        coverage.isTransplantDrugTherapyCovered = true;
+        coverage.hasPartA = true;
+        coverage.hasPartB = true;
+        coverage.hasMedicareDrugCoverage = true;
+        coverage.hasJoinedMedicareDrugPlan = true;
+        coverage.doesMedicareCoverageEnd = true;
+        coverage.hasBenefitForLossOfPartA = true;
+        coverage.coversOnlyImmunosuppressiveDrugs = true;
+        coverage.isBenefitSubstituteForFullCoverage = false;
+        coverage.canSignUpForBenefit = true;
+
+        premiumAndDeductible.premium = 9710;
+        premiumAndDeductible.deductible = 226;
+
+        percentageToPayForDrugs = 20;
+    }
+
+    function isTransplantDrugTherapyCovered() public view returns (bool) {
+        return coverage.isTransplantDrugTherapyCovered;
+    }
+
+    function hasPartA() public view returns (bool) {
+        return coverage.hasPartA;
+    }
+
+    function hasPartB() public view returns (bool) {
+        return coverage.hasPartB;
+    }
+
+    function hasMedicareDrugCoverage() public view returns (bool) {
+        return coverage.hasMedicareDrugCoverage;
+    }
+
+    function hasJoinedMedicareDrugPlan() public view returns (bool) {
+        return coverage.hasJoinedMedicareDrugPlan;
+    }
+
+    function doesMedicareCoverageEnd() public view returns (bool) {
+        return coverage.doesMedicareCoverageEnd;
+    }
+
+    function hasBenefitForLossOfPartA() public view returns (bool) {
+        return coverage.hasBenefitForLossOfPartA;
+    }
+
+    function coversOnlyImmunosuppressiveDrugs() public view returns (bool) {
+        return coverage.coversOnlyImmunosuppressiveDrugs;
+    }
+
+    function isBenefitSubstituteForFullCoverage() public view returns (bool) {
+        return coverage.isBenefitSubstituteForFullCoverage;
+    }
+
+    function canSignUpForBenefit() public view returns (bool) {
+        return coverage.canSignUpForBenefit;
+    }
+
+    function getPremiumAndDeductibleFor2023() public view returns (uint, uint) {
+        return (premiumAndDeductible.premium, premiumAndDeductible.deductible);
+    }
+
+    function getPercentageToPayForDrugs() public view returns (uint) {
+        return percentageToPayForDrugs;
+    }
+}
+```
+```
