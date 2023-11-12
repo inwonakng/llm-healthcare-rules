@@ -32,10 +32,9 @@ def generate(
         verify=False
     )
     if response.status_code == 200:
-        assistant_message = response.json()['choices'][0]['message']['content']
-        # print(assistant_message)
+        model_output = response.json()['choices'][0]['message']['content']
     else:
         raise Exception(f"Response returned with code {response.status_code}, message: {response.content.decode()}")
     
-    return assistant_message
+    return model_output
     
