@@ -1,0 +1,66 @@
+Certainly! Below is a set of Solidity unit tests that correspond to the insurance policy document, its summary, and the N3 logic rules we discussed. These tests are written for a hypothetical smart contract that would handle the logic of Medicare Part B coverage for IVIG provided at home.
+
+```solidity
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+import "remix_tests.sol"; // this import is automatically injected by Remix
+import "../contracts/{ContractName}.sol"; // replace with the actual contract name
+
+// Define a struct to encapsulate patient information for cleaner code
+struct Patient {
+    bool hasPrimaryImmuneDeficiency;
+    bool hasDoctorApproval;
+    bool receivesIVIGAtHome;
+}
+
+// The hypothetical contract that should be tested
+contract MedicarePartBIVIGCoverage {
+    function isEligibleForCoverage(Patient memory patient) public pure returns (bool) {
+        // This function should implement the logic to determine eligibility
+        // for Medicare Part B IVIG coverage based on the patient's information.
+        // For the purpose of this example, we'll return false.
+        return false;
+    }
+}
+
+// Define the test contract
+contract MedicarePartBIVIGCoverageTest {
+    MedicarePartBIVIGCoverage coverageContract;
+
+    // Create a new instance of the contract before each test
+    function beforeEach() public {
+        coverageContract = new MedicarePartBIVIGCoverage();
+    }
+
+    // Test for a patient with all conditions met
+    function testEligiblePatient() public {
+        Patient memory patient = Patient(true, true, true);
+        bool result = coverageContract.isEligibleForCoverage(patient);
+        Assert.equal(result, true, "Patient should be eligible for coverage");
+    }
+
+    // Test for a patient without primary immune deficiency
+    function testIneligiblePatientNoPrimaryImmuneDeficiency() public {
+        Patient memory patient = Patient(false, true, true);
+        bool result = coverageContract.isEligibleForCoverage(patient);
+        Assert.equal(result, false, "Patient without primary immune deficiency should not be eligible for coverage");
+    }
+
+    // Test for a patient without doctor's approval
+    function testIneligiblePatientNoDoctorApproval() public {
+        Patient memory patient = Patient(true, false, true);
+        bool result = coverageContract.isEligibleForCoverage(patient);
+        Assert.equal(result, false, "Patient without doctor's approval should not be eligible for coverage");
+    }
+
+    // Test for a patient who does not receive IVIG at home
+    function testIneligiblePatientNotReceivingIVIGAtHome() public {
+        Patient memory patient = Patient(true, true, false);
+        bool result = coverageContract.isEligibleForCoverage(patient);
+        Assert.equal(result, false, "Patient not receiving IVIG at home should not be eligible for coverage");
+    }
+}
+```
+
+Please note that the actual implementation of the `isEligibleForCoverage` function in the `MedicarePartBIVIGCoverage` contract is not provided here, as the task was to only implement the unit tests. The tests assume that the contract's function correctly implements the logic based on the patient's information. The `Assert.equal` function is used to check if the result from the contract matches the expected outcome.

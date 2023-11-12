@@ -1,0 +1,44 @@
+```
+@prefix : <http://example.org/insurance#>.
+
+# Rule 1: Medicare covers transplant drug therapy if it contributed to the payment for the organ transplant.
+{ ?person :hasMedicareContribution "true" } => { ?person :eligibleForTransplantDrugTherapy "true" }.
+
+# Rule 2: The individual must have Medicare Part A at the time of the transplant to be eligible for coverage.
+{ ?person :hasPartA "true" } => { ?person :eligibleForTransplantCoverage "true" }.
+
+# Rule 3: The individual must have Medicare Part B at the time they receive immunosuppressive drugs for coverage to apply.
+{ ?person :hasPartB "true" } => { ?person :eligibleForImmunosuppressiveDrugsCoverage "true" }.
+
+# Rule 4: If Medicare Part B does not cover the immunosuppressive drugs, Medicare Part D will provide coverage.
+{ ?person :hasPartB "false" } => { ?person :eligibleForPartDCoverage "true" }.
+
+# Rule 5: Individuals with Original Medicare can join a Medicare drug plan to receive Medicare drug coverage.
+{ ?person :hasOriginalMedicare "true" } => { ?person :canJoinMedicareDrugPlan "true" }.
+
+# Rule 6: If an individual's Medicare coverage is due to ESRD, their Medicare coverage, including immunosuppressive drug coverage, will end 36 months after a successful kidney transplant.
+{ ?person :hasESRDMedicare "true" } => { ?person :medicareCoverageEnds "36MonthsAfterTransplant" }.
+
+# Rule 7: Medicare offers a specific benefit for individuals who lose Part A coverage 36 months after a kidney transplant and do not have other health coverage that includes immunosuppressive drugs.
+{ ?person :losesPartA36MonthsPostTransplant "true" .
+  ?person :lacksOtherHealthCoverage "true" } => { ?person :eligibleForSpecificBenefit "true" }.
+
+# Rule 8: The benefit mentioned in requirement 7 only covers immunosuppressive drugs and does not extend to other items or services.
+{ ?person :eligibleForSpecificBenefit "true" } => { ?person :benefitCoversImmunosuppressiveDrugsOnly "true" }.
+
+# Rule 9: The benefit is not a replacement for comprehensive health coverage.
+{ ?person :eligibleForSpecificBenefit "true" } => { ?person :benefitNotFullCoverageReplacement "true" }.
+
+# Rule 10: Individuals who qualify for the benefit described in requirement 7 can enroll at any time after their Part A coverage ends.
+{ ?person :eligibleForSpecificBenefit "true" } => { ?person :canEnrollAfterPartAEnds "true" }.
+
+# Rule 11: To enroll in the benefit for immunosuppressive drugs, individuals can call Social Security.
+{ ?person :wantsToEnrollInDrugBenefit "true" } => { ?person :shouldCallSocialSecurity "true" }.
+
+# Rule 12: In 2023, the monthly premium for the immunosuppressive drug benefit is $97.10, and there is a $226 deductible.
+{ ?person :enrollsIn2023 "true" } => { ?person :monthlyPremium "97.10" .
+                                          ?person :annualDeductible "226" }.
+
+# Rule 13: After meeting the deductible mentioned in requirement 12, the individual will pay 20% of the Medicare-approved amount for their immunosuppressive drugs.
+{ ?person :metDeductible "true" } => { ?person :paysPercentageOfApprovedAmount "20" }.
+```

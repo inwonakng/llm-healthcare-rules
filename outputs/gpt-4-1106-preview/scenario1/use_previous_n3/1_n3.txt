@@ -1,0 +1,21 @@
+```
+@prefix : <http://example.org/rules#>.
+@prefix ins: <http://example.org/insurance#>.
+
+{
+  ?person a ins:Woman;
+          ins:DiagnosedWith ins:Osteoporosis;
+          ins:MeetsCriteria ins:MedicareHomeHealthBenefit;
+          ins:HasCertifiedFracture ins:PostMenopausalOsteoporosisRelatedFracture;
+          ins:CannotSelfAdminister ins:InjectableOsteoporosisDrug.
+  
+  ?doctor ins:Certifies ?person ins:HasCertifiedFracture;
+          ins:Certifies ?person ins:CannotSelfAdminister.
+
+  ?familyOrCaregivers ins:UnableOrUnwillingToAdminister ins:InjectableOsteoporosisDrug.
+  
+} => {
+  ?person ins:EligibleFor ins:MedicareCoverageInjectableOsteoporosisDrugs.
+  ?person ins:EligibleFor ins:HomeHealthNurseOrAide.
+}.
+```

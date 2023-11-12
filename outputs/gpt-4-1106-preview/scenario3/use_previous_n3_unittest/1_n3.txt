@@ -1,0 +1,85 @@
+```
+@prefix : <http://example.org/insurance#>.
+
+{ 
+  ?person :hasMedicarePartA true;
+          :hasMedicarePartB true;
+          :receivedOrganTransplant true;
+          :medicareContributedToTransplant true.
+} => {
+  ?person :eligibleForTransplantDrugTherapyCoverage true.
+}.
+
+{
+  ?person :hasMedicarePartB true;
+          :needsImmunosuppressiveDrugs true.
+} => {
+  ?person :eligibleForImmunosuppressiveDrugsCoverage true.
+}.
+
+{
+  ?person :hasMedicarePartB false;
+          :needsImmunosuppressiveDrugs true.
+} => {
+  ?person :eligibleForMedicarePartDCoverage true.
+}.
+
+{
+  ?person :hasOriginalMedicare true.
+} => {
+  ?person :canJoinMedicareDrugPlan true.
+}.
+
+{
+  ?person :hasMedicareDueToESRD true;
+          :monthsAfterKidneyTransplant 36.
+} => {
+  ?person :medicareCoverageEnds true.
+}.
+
+{
+  ?person :lostPartACoveragePost36Months true;
+          :lacksOtherHealthCoverage true.
+} => {
+  ?person :eligibleForSpecificBenefit true.
+}.
+
+{
+  ?person :eligibleForSpecificBenefit true.
+} => {
+  ?person :specificBenefitCoversImmunosuppressiveDrugs true;
+          :specificBenefitDoesNotCoverOtherItemsOrServices true;
+          :specificBenefitIsNotFullHealthCoverage true.
+}.
+
+{
+  ?person :eligibleForSpecificBenefit true;
+          :partACoverageEnded true.
+} => {
+  ?person :canSignUpForSpecificBenefit true.
+}.
+
+{
+  ?person :wantsToSignUpForSpecificBenefit true.
+} => {
+  ?person :callSocialSecurity "1-877-465-0355";
+          :callTTY "1-800-325-0788".
+}.
+
+{
+  ?person :signedUpForImmunosuppressiveDrugBenefit true;
+          :year 2023.
+} => {
+  ?person :paysMonthlyPremium 97.10;
+          :hasDeductible 226.
+}.
+
+{
+  ?person :metDeductible true;
+          :hasMedicareApprovedAmount ?amount.
+} => {
+  ?person :paysPercentageOfApprovedAmount 20%.
+}.
+```
+
+Please note that the above N3 logic rules are based on the provided insurance policy document and its summary. The rules assume that the variables such as `?person`, `?amount`, etc., are placeholders for actual data that would be provided in a real-world scenario. The rules also assume that the predicates like `:hasMedicarePartA`, `:needsImmunosuppressiveDrugs`, etc., are defined elsewhere in the ontology or schema that these rules would be a part of. The rules are designed to be used in a system that can process N3 logic and make inferences based on the provided information.

@@ -1,0 +1,25 @@
+```
+@prefix : <http://example.org/rules#> .
+@prefix ivig: <http://example.org/terms/ivig#> .
+@prefix medicare: <http://example.org/terms/medicare#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+{
+  ?patient ivig:diagnosedWith ivig:PrimaryImmuneDeficiencyDisease;
+            ivig:prescribedIVIG true;
+            ivig:doctorDeemsAppropriate true;
+            ivig:receivesIVIGAt ?location.
+  
+  ?location a ivig:Home.
+  
+} => {
+  ?patient medicare:eligibleForIVIGCoverage true.
+}.
+
+{
+  ?patient medicare:eligibleForIVIGCoverage true.
+} => {
+  ?patient medicare:PartBCoversIVIG true.
+  ?patient medicare:PartBDoesNotCoverRelatedServices true.
+}.
+```

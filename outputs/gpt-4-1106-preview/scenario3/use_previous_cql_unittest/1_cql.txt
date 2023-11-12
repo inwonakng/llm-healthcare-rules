@@ -1,0 +1,77 @@
+```
+library MedicareTransplantDrugCoverage version '1.0'
+
+using FHIR version '4.0.0'
+
+// Define the context for the expressions (e.g., Patient, Encounter)
+context Patient
+
+// Named expressions for each requirement
+
+define MedicareContributionForTransplant:
+  // Expression to check if Medicare contributed to the payment for the organ transplant
+  [Procedure: code in "Organ Transplant Procedure Codes"] 
+    where Medicare.covered and Procedure.successful
+
+define HasPartAAtTransplant:
+  // Expression to check if the individual had Part A at the time of the transplant
+  Patient.partAActiveDuring(Procedure.performed)
+
+define HasPartBForImmunosuppressiveDrugs:
+  // Expression to check if the individual has Part B when receiving immunosuppressive drugs
+  Patient.partBActiveDuring([MedicationRequest: code in "Immunosuppressive Drug Codes"].authoredOn)
+
+define PartDCoverageForImmunosuppressiveDrugs:
+  // Expression to check if Part D covers immunosuppressive drugs when Part B does not
+  Coalesce(Patient.partBCoverageFor([MedicationRequest: code in "Immunosuppressive Drug Codes"]), Patient.partDCoverage)
+
+define OriginalMedicareDrugPlanEnrollment:
+  // Expression to check if individuals with Original Medicare can join a drug plan
+  Patient.originalMedicare and Patient.eligibleForDrugPlan
+
+define ESRDCoverageEndsPostTransplant:
+  // Expression to check if Medicare coverage ends 36 months after a successful kidney transplant for ESRD patients
+  Patient.hasESRD and Procedure.successful and 
+    DaysBetween(Procedure.performed, Today()) > (36 * 30) // Approximate 36 months as 36 * 30 days
+
+define SpecificBenefitForPost36Months:
+  // Expression to check for eligibility for the specific benefit after 36 months post-kidney transplant
+  not Patient.hasOtherHealthCoverage and ESRDCoverageEndsPostTransplant
+
+define SpecificBenefitCoversDrugsOnly:
+  // Expression to indicate the specific benefit covers only immunosuppressive drugs
+  SpecificBenefitForPost36Months and [MedicationRequest: code in "Immunosuppressive Drug Codes"]
+
+define NotFullHealthCoverage:
+  // Expression to indicate the specific benefit is not a substitute for full health coverage
+  not SpecificBenefitCoversDrugsOnly.includes([ServiceRequest])
+
+define EligibleForBenefitEnrollment:
+  // Expression to check if an individual is eligible to enroll in the benefit after Part A ends
+  SpecificBenefitForPost36Months and not Patient.partAActive
+
+define EnrollmentContactInformation:
+  // Expression to provide contact information for enrollment
+  { "Phone": "1-877-465-0355", "TTY": "1-800-325-0788" }
+
+define MonthlyPremium2023:
+  // Expression for the monthly premium in 2023
+  97.10
+
+define Deductible2023:
+  // Expression for the deductible in 2023
+  226
+
+define CoinsuranceAfterDeductible:
+  // Expression for the 20% coinsurance after meeting the deductible
+  0.20 * Patient.medicareApprovedAmountFor([MedicationRequest: code in "Immunosuppressive Drug Codes"])
+
+// Final decision expression that combines all the necessary conditions
+define FinalCoverageDecision:
+  MedicareContributionForTransplant and
+  (HasPartAAtTransplant or HasPartBForImmunosuppressiveDrugs or PartDCoverageForImmunosuppressiveDrugs) and
+  (not ESRDCoverageEndsPostTransplant or SpecificBenefitForPost36Months) and
+  (not SpecificBenefitCoversDrugsOnly or EligibleForBenefitEnrollment)
+```
+
+Please note that the above CQL expressions are based on the provided document and summary. The actual implementation would require access to the specific code systems and value sets (e.g., "Organ Transplant Procedure Codes", "Immunosuppressive Drug Codes") that define the medical procedures and medications referenced in the policy. Additionally, the logic assumes the existence of certain patient attributes and functions (e.g., `partAActiveDuring`, `partBActiveDuring`, `hasESRD`, `medicareApprovedAmountFor`) that would need to be defined in the context of the healthcare data model being used.

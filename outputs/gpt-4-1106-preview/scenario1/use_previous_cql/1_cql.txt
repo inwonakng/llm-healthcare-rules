@@ -1,0 +1,45 @@
+```
+library InjectableOsteoporosisDrugsCoverage version '1.0'
+
+using FHIR version '4.0.0'
+
+context Patient
+
+define IsFemale:
+  Patient.gender = 'female'
+
+define HasOsteoporosis:
+  exists ([Condition: code in 'M81.0' /* Osteoporosis without current pathological fracture */])
+
+define QualifiesForMedicareHomeHealthBenefit:
+  // Assuming there is a flag or some criteria in the patient's record indicating qualification
+  [PatientCharacteristic: code = 'MedicareHomeHealthBenefitEligible'] BooleanValue
+
+define HasPostmenopausalOsteoporosisFracture:
+  exists ([Condition: code in 'M80.0' /* Osteoporosis with current pathological fracture, postmenopausal */])
+
+define UnableToSelfAdminister:
+  // Assuming there is documentation or a flag indicating the patient's inability to self-administer
+  [PatientCharacteristic: code = 'UnableToSelfAdministerInjection'] BooleanValue
+
+define CaregiversUnableOrUnwilling:
+  // Assuming there is documentation or a flag indicating the caregiver's inability or unwillingness
+  [PatientCharacteristic: code = 'CaregiverUnableOrUnwillingToInject'] BooleanValue
+
+define InjectableOsteoporosisDrugCoverageCriteria:
+  IsFemale and
+  HasOsteoporosis and
+  QualifiesForMedicareHomeHealthBenefit and
+  HasPostmenopausalOsteoporosisFracture and
+  UnableToSelfAdminister
+
+define HomeHealthNurseOrAideCoverageCriteria:
+  InjectableOsteoporosisDrugCoverageCriteria and
+  CaregiversUnableOrUnwilling
+
+define CoverageDecision:
+  InjectableOsteoporosisDrugCoverageCriteria or
+  HomeHealthNurseOrAideCoverageCriteria
+``` 
+
+This CQL library defines the necessary conditions for coverage of injectable osteoporosis drugs under Medicare as described in the insurance policy document and its summary. The `CoverageDecision` named expression will yield `true` if the patient meets the criteria for either the drug coverage itself or the coverage of a home health nurse or aide to administer the drug.

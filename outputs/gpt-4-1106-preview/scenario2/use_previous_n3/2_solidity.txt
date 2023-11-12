@@ -1,0 +1,73 @@
+Below is a Solidity smart contract that encapsulates the logic described in the insurance policy summary and the N3 logic rules. The contract uses structs to represent a patient and Medicare coverage, and functions to evaluate the conditions for coverage.
+
+```solidity
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+contract MedicareCoverageContract {
+    struct Patient {
+        string diagnosis;
+        bool hasDoctorApproval;
+        bool eligibleForHomeIVIGCoverage;
+    }
+
+    struct Medicare {
+        bool partBCoversIVIG;
+        bool coversIVIG;
+        bool coversIVIGMedication;
+        bool doesNotCoverRelatedItemsAndServices;
+    }
+
+    Medicare public medicare;
+
+    constructor() {
+        // Initialize Medicare coverage according to the policy
+        medicare.partBCoversIVIG = true;
+        medicare.coversIVIG = false;
+        medicare.coversIVIGMedication = false;
+        medicare.doesNotCoverRelatedItemsAndServices = false;
+    }
+
+    function checkEligibilityForHomeIVIGCoverage(Patient memory patient) public returns (bool) {
+        // Check if the patient is diagnosed with primary immune deficiency disease and has doctor's approval
+        if (keccak256(abi.encodePacked(patient.diagnosis)) == keccak256(abi.encodePacked("primary immune deficiency disease")) && patient.hasDoctorApproval) {
+            patient.eligibleForHomeIVIGCoverage = true;
+            medicare.coversIVIG = true;
+        } else {
+            patient.eligibleForHomeIVIGCoverage = false;
+            medicare.coversIVIG = false;
+        }
+        return patient.eligibleForHomeIVIGCoverage;
+    }
+
+    function updateMedicareCoverage() public {
+        if (medicare.coversIVIG && medicare.partBCoversIVIG) {
+            medicare.coversIVIGMedication = true;
+            medicare.doesNotCoverRelatedItemsAndServices = true;
+        } else {
+            medicare.coversIVIGMedication = false;
+            medicare.doesNotCoverRelatedItemsAndServices = false;
+        }
+    }
+
+    // Function to simulate the process of checking coverage for a patient
+    function processCoverage(string memory diagnosis, bool hasDoctorApproval) public returns (bool, bool, bool) {
+        Patient memory patient = Patient({
+            diagnosis: diagnosis,
+            hasDoctorApproval: hasDoctorApproval,
+            eligibleForHomeIVIGCoverage: false
+        });
+
+        bool isEligible = checkEligibilityForHomeIVIGCoverage(patient);
+        updateMedicareCoverage();
+
+        return (
+            isEligible,
+            medicare.coversIVIGMedication,
+            medicare.doesNotCoverRelatedItemsAndServices
+        );
+    }
+}
+```
+
+This contract provides a `processCoverage` function that takes a patient's diagnosis and whether they have doctor approval as inputs. It then checks if the patient is eligible for home IVIG coverage and updates the Medicare coverage accordingly. The function returns a tuple indicating whether the patient is eligible for coverage, whether Medicare covers the IVIG medication, and whether Medicare does not cover related items and services.

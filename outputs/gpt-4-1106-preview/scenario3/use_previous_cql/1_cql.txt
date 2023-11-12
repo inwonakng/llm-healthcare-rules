@@ -1,0 +1,80 @@
+```
+library MedicareTransplantDrugCoverage version '1.0'
+
+using FHIR version '4.0.0'
+
+// Define the context for the library
+context Patient
+
+// Named expressions for the policy document and summary
+
+define MedicareContributionForTransplant:
+  // Expression to check if Medicare contributed to the payment for the organ transplant
+  [Procedure: code in "Organ Transplant Procedure Codes"] O
+    where O.performed is not null
+      and O.extension contains [Extension: url = "http://example.org/fhir/StructureDefinition/medicareContribution" value = true]
+
+define HasPartAAtTransplant:
+  // Expression to check if the patient had Part A at the time of the transplant
+  exists ([Coverage] C
+    where C.beneficiary = Patient
+      and C.type.coding contains [Coding: system = "http://example.org/fhir/CodeSystem/insurance-type" code = "PartA"]
+      and C.period.start <= MedicareContributionForTransplant.performed
+      and (C.period.end is null or C.period.end >= MedicareContributionForTransplant.performed))
+
+define HasPartBForImmunosuppressiveDrugs:
+  // Expression to check if the patient has Part B when receiving immunosuppressive drugs
+  exists ([Coverage] C
+    where C.beneficiary = Patient
+      and C.type.coding contains [Coding: system = "http://example.org/fhir/CodeSystem/insurance-type" code = "PartB"]
+      and C.period.start <= Today()
+      and (C.period.end is null or C.period.end >= Today()))
+
+define HasPartDForImmunosuppressiveDrugs:
+  // Expression to check if the patient has Part D for immunosuppressive drugs when Part B does not cover
+  exists ([Coverage] C
+    where C.beneficiary = Patient
+      and C.type.coding contains [Coding: system = "http://example.org/fhir/CodeSystem/insurance-type" code = "PartD"]
+      and C.period.start <= Today()
+      and (C.period.end is null or C.period.end >= Today()))
+
+define ESRDCoverageEnds:
+  // Expression to check if the patient's Medicare coverage ends 36 months after a successful kidney transplant
+  exists ([Condition: code in "End-Stage Renal Disease Codes"] ESRD
+    where ESRD.onset is not null
+      and PeriodBetween(ESRD.onset, Today()) > 36 months)
+
+define EligibleForImmunosuppressiveDrugBenefit:
+  // Expression to check if the patient is eligible for the immunosuppressive drug benefit
+  ESRDCoverageEnds
+    and not (HasPartAAtTransplant and HasPartBForImmunosuppressiveDrugs)
+    and not exists ([Coverage] C
+      where C.beneficiary = Patient
+        and C.type.coding in {"Group Health Plan", "TRICARE", "Medicaid"}
+        and C.period.start <= Today()
+        and (C.period.end is null or C.period.end >= Today()))
+
+define MonthlyPremium:
+  // Expression for the monthly premium for the immunosuppressive drug benefit
+  97.10
+
+define Deductible:
+  // Expression for the deductible for the immunosuppressive drug benefit
+  226
+
+define CoinsuranceRate:
+  // Expression for the coinsurance rate after meeting the deductible
+  0.20
+
+define PayableAfterDeductible:
+  // Expression to calculate the amount payable by the patient after meeting the deductible
+  (MedicareApprovedAmount - Deductible) * CoinsuranceRate
+
+// Final decision expression that combines all the necessary conditions
+define FinalCoverageDecision:
+  MedicareContributionForTransplant
+    and (HasPartAAtTransplant or HasPartBForImmunosuppressiveDrugs or HasPartDForImmunosuppressiveDrugs)
+    and (not ESRDCoverageEnds or EligibleForImmunosuppressiveDrugBenefit)
+```
+
+Please note that the above CQL expressions are based on the provided policy document and summary. The actual implementation would require access to the complete set of codes for organ transplant procedures, End-Stage Renal Disease, and insurance types, as well as the Medicare-approved amount for immunosuppressive drugs. The expressions also assume the existence of certain FHIR extensions and coding systems that would need to be defined in a real-world scenario.

@@ -1,0 +1,42 @@
+```
+library InjectableOsteoporosisDrugsCoverage version '1.0'
+
+using FHIR version '4.0.0'
+
+context Patient
+
+define IsFemaleWithOsteoporosis:
+  Patient.gender = 'female' and
+  Exists([Condition: code in "Osteoporosis"])
+
+define QualifiesForMedicareHomeHealthBenefit:
+  // This expression would be defined based on the specific criteria for the Medicare home health benefit
+  [PatientCharacteristic: code = "Medicare home health benefit qualification"]
+
+define HasPostmenopausalOsteoporosisFracture:
+  Exists([Condition: code in "Fracture" and relatedTo in "Postmenopausal Osteoporosis"])
+
+define UnableToSelfAdminister:
+  // This expression would be defined based on the doctor's certification regarding the patient's ability to self-administer
+  [PatientCharacteristic: code = "Unable to self-administer medication"]
+
+define FamilyOrCaregiversUnableToAdminister:
+  // This expression would be defined based on the availability and willingness of family or caregivers to administer the injection
+  [PatientCharacteristic: code = "Family or caregivers unable to administer medication"]
+
+define InjectableOsteoporosisDrugCoverageEligibility:
+  IsFemaleWithOsteoporosis and
+  QualifiesForMedicareHomeHealthBenefit and
+  HasPostmenopausalOsteoporosisFracture and
+  UnableToSelfAdminister
+
+define HomeHealthNurseOrAideCoverage:
+  InjectableOsteoporosisDrugCoverageEligibility and
+  FamilyOrCaregiversUnableToAdminister
+
+define FinalCoverageDecision:
+  InjectableOsteoporosisDrugCoverageEligibility or
+  HomeHealthNurseOrAideCoverage
+```
+
+This CQL library defines named expressions that represent the requirements for coverage of injectable osteoporosis drugs as described in the insurance policy document and its summary. The `FinalCoverageDecision` expression combines all the necessary conditions to determine if a patient is eligible for coverage under the policy. Please note that some expressions, such as `QualifiesForMedicareHomeHealthBenefit` and `UnableToSelfAdminister`, would need to be further defined based on the specific criteria set forth by Medicare and the patient's doctor's certification, respectively.

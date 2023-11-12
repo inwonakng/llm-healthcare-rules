@@ -1,0 +1,23 @@
+```
+@prefix : <http://example.org/rules#> .
+
+{
+    ?patient :hasDiagnosis :PrimaryImmuneDeficiencyDisease;
+              :hasDoctorApproval true;
+              :receivesIVIGAtHome true.
+} => {
+    ?patient :eligibleForIVIGCoverage true.
+}.
+
+{
+    ?patient :eligibleForIVIGCoverage true.
+} => {
+    ?patient :MedicarePartBCoversIVIG true.
+}.
+
+{
+    ?patient :receivesIVIGAtHome true.
+} => {
+    ?patient :MedicarePartBDoesNotCoverRelatedServices true.
+}.
+```

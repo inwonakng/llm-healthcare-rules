@@ -1,0 +1,71 @@
+```solidity
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+import "remix_tests.sol"; // this import is automatically injected by Remix.
+import "../contracts/IVIGCoverage.sol"; // This import path would need to be adjusted based on your project structure.
+
+// Mock contract to simulate patient conditions and doctor's decisions
+contract MockPatient {
+    bool public hasPrimaryImmuneDeficiency;
+    bool public medicallyAppropriateForHomeIVIG;
+
+    function setPrimaryImmuneDeficiency(bool _hasPrimaryImmuneDeficiency) public {
+        hasPrimaryImmuneDeficiency = _hasPrimaryImmuneDeficiency;
+    }
+
+    function setMedicallyAppropriateForHomeIVIG(bool _medicallyAppropriateForHomeIVIG) public {
+        medicallyAppropriateForHomeIVIG = _medicallyAppropriateForHomeIVIG;
+    }
+}
+
+// The actual IVIGCoverage contract should have functions that check the conditions
+// and return whether the IVIG is covered, including medication and services.
+
+/// @title Test suite for the IVIGCoverage contract
+contract IVIGCoverageTest {
+    MockPatient patient;
+    IVIGCoverage coverageContract;
+
+    // Run before every test function
+    function beforeEach() public {
+        patient = new MockPatient();
+        coverageContract = new IVIGCoverage(address(patient));
+    }
+
+    /// @notice Test coverage when patient has primary immune deficiency and it's medically appropriate for home IVIG
+    function testCoverageWithValidConditions() public {
+        patient.setPrimaryImmuneDeficiency(true);
+        patient.setMedicallyAppropriateForHomeIVIG(true);
+
+        (bool isCovered, bool isMedicationCovered, bool isServiceCovered) = coverageContract.checkCoverage();
+        Assert.equal(isCovered, true, "IVIG should be covered");
+        Assert.equal(isMedicationCovered, true, "IVIG medication should be covered");
+        Assert.equal(isServiceCovered, false, "IVIG related services should not be covered");
+    }
+
+    /// @notice Test coverage when patient does not have primary immune deficiency
+    function testCoverageWithoutPrimaryImmuneDeficiency() public {
+        patient.setPrimaryImmuneDeficiency(false);
+        patient.setMedicallyAppropriateForHomeIVIG(true);
+
+        (bool isCovered, bool isMedicationCovered, bool isServiceCovered) = coverageContract.checkCoverage();
+        Assert.equal(isCovered, false, "IVIG should not be covered");
+        Assert.equal(isMedicationCovered, false, "IVIG medication should not be covered");
+        Assert.equal(isServiceCovered, false, "IVIG related services should not be covered");
+    }
+
+    /// @notice Test coverage when it's not medically appropriate for home IVIG
+    function testCoverageWithNotMedicallyAppropriateForHomeIVIG() public {
+        patient.setPrimaryImmuneDeficiency(true);
+        patient.setMedicallyAppropriateForHomeIVIG(false);
+
+        (bool isCovered, bool isMedicationCovered, bool isServiceCovered) = coverageContract.checkCoverage();
+        Assert.equal(isCovered, false, "IVIG should not be covered");
+        Assert.equal(isMedicationCovered, false, "IVIG medication should not be covered");
+        Assert.equal(isServiceCovered, false, "IVIG related services should not be covered");
+    }
+}
+```
+
+Please note that the above code assumes the existence of a contract named `IVIGCoverage` which has a function `checkCoverage` that returns a tuple with three booleans indicating whether IVIG is covered, whether the medication is covered, and whether the related services are covered. The `MockPatient` contract is used to simulate the patient's conditions and doctor's decisions. The actual implementation of the `IVIGCoverage` contract would need to be developed to pass these tests.

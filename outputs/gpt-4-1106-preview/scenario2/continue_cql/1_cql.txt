@@ -1,0 +1,32 @@
+```
+library IVIGCoverageVersion1
+
+using FHIR version '4.0.0'
+
+context Patient
+
+define DiagnosisOfPrimaryImmuneDeficiency: 
+  exists ([Condition: Code from PrimaryImmuneDeficiencyDiseases] C
+    where C.subject.reference = Patient.id)
+
+define MedicallyAppropriateForHomeIVIG:
+  [ProcedureRequest: Code from HomeIVIGAppropriateCodes] P
+    where P.subject.reference = Patient.id
+      and P.reasonReference.reference = 'Condition/DiagnosisOfPrimaryImmuneDeficiency'
+
+define IVIGMedicationCoveredByPartB:
+  [Medication: Code from IVIGMedicationCodes] M
+    where M.subject.reference = Patient.id
+
+define NonCoveredItemsAndServicesRelatedToHomeIVIG:
+  [Claim: Category from NonCoveredIVIGRelatedItemsAndServices] C
+    where C.patient.reference = Patient.id
+
+define IVIGCoverageEligibility:
+  DiagnosisOfPrimaryImmuneDeficiency
+    and MedicallyAppropriateForHomeIVIG
+    and IVIGMedicationCoveredByPartB
+    and not NonCoveredItemsAndServicesRelatedToHomeIVIG
+```
+
+This CQL library defines named expressions that represent the requirements from the insurance policy document. The `IVIGCoverageEligibility` expression combines these requirements to determine if a patient is eligible for IVIG coverage under Medicare when administered at home. The actual codes for primary immune deficiency diseases, appropriate home IVIG procedure requests, IVIG medications, and non-covered items and services would need to be defined according to the specific coding system used (e.g., ICD-10, HCPCS) and included in the respective value sets referenced in the CQL.

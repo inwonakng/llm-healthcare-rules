@@ -1,0 +1,35 @@
+Certainly! Below is a Solidity smart contract that implements the logic described in the insurance policy document, its summary, and the N3 logic rules, as well as the conditions tested by the Solidity unit tests we discussed earlier.
+
+```solidity
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+// Define a struct to encapsulate patient information for cleaner code
+struct Patient {
+    bool hasPrimaryImmuneDeficiency;
+    bool hasDoctorApproval;
+    bool receivesIVIGAtHome;
+}
+
+// The smart contract that handles Medicare Part B IVIG coverage eligibility
+contract MedicarePartBIVIGCoverage {
+
+    // Function to determine if a patient is eligible for Medicare Part B IVIG coverage
+    function isEligibleForCoverage(Patient memory patient) public pure returns (bool eligible, bool coverageForIVIG, bool noCoverageForRelatedServices) {
+        // Check all conditions for eligibility
+        eligible = patient.hasPrimaryImmuneDeficiency && patient.hasDoctorApproval && patient.receivesIVIGAtHome;
+        // If eligible, Medicare Part B covers IVIG but not related services
+        coverageForIVIG = eligible;
+        noCoverageForRelatedServices = eligible;
+        return (eligible, coverageForIVIG, noCoverageForRelatedServices);
+    }
+}
+```
+
+This contract includes a single function, `isEligibleForCoverage`, which takes a `Patient` struct as input and returns three boolean values:
+
+1. `eligible`: Indicates whether the patient is eligible for coverage based on the conditions specified in the insurance policy.
+2. `coverageForIVIG`: Indicates whether Medicare Part B covers the IVIG for an eligible patient.
+3. `noCoverageForRelatedServices`: Indicates that Medicare Part B does not cover related services even if the patient is eligible for IVIG coverage.
+
+The contract assumes that the input data (patient's condition) is provided correctly. In a real-world scenario, additional checks and validations might be necessary to ensure data integrity and security.

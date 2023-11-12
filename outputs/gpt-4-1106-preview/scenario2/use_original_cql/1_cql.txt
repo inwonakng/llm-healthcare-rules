@@ -1,0 +1,40 @@
+```
+library IVIGCoverage version '1.0'
+
+using FHIR version '4.0.0'
+
+// Define a context for the patient
+context Patient
+
+// Define a code for primary immune deficiency disease
+define PrimaryImmuneDeficiencyDiseaseCode: 
+  Code 'D80.0' from ICD-10-CM // Example code, actual code may vary
+
+// Define a diagnosis of primary immune deficiency disease
+define HasPrimaryImmuneDeficiencyDisease:
+  exists ([Condition: code in PrimaryImmuneDeficiencyDiseaseCode])
+
+// Define if IVIG is medically appropriate for home administration
+define IVIGMedicallyAppropriateForHome:
+  [ProcedureRequest: code in "IVIG Administration" 
+    and status = 'active'
+    and intent = 'order'
+    and location = 'Patient\'s home'
+    and reasonCode in PrimaryImmuneDeficiencyDiseaseCode
+  ].exists()
+
+// Define coverage for IVIG under Medicare Part B
+define IVIGCoveredByMedicarePartB:
+  HasPrimaryImmuneDeficiencyDisease
+    and IVIGMedicallyAppropriateForHome
+
+// Define non-coverage for other items and services related to IVIG at home
+define OtherItemsAndServicesNotCovered:
+  not IVIGCoveredByMedicarePartB
+
+// Define the final decision for IVIG coverage at home
+define FinalDecisionForIVIGCoverageAtHome:
+  IVIGCoveredByMedicarePartB and not OtherItemsAndServicesNotCovered
+```
+
+Please note that the actual ICD-10-CM code for primary immune deficiency disease should be used in place of 'D80.0', which is provided here as an example. The CQL assumes that the "IVIG Administration" code set is defined elsewhere in the FHIR terminology service being used. The `location` attribute in the `IVIGMedicallyAppropriateForHome` definition is a simplification and may need to be more specifically defined based on the actual FHIR resource attributes available.

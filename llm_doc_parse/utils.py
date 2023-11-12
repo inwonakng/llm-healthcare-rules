@@ -17,6 +17,7 @@ def progress_bar(transient: bool = False):
         '[progress.description]{task.description}',
         rich.progress.BarColumn(),
         '[progress.percentage]{task.percentage:>3.0f}%',
+        '({task.completed}/{task.total})',
         rich.progress.TimeRemainingColumn(),
         rich.progress.TimeElapsedColumn(),
         transient = transient,

@@ -1,0 +1,46 @@
+```
+library InjectableOsteoporosisDrugsCoverage version '1.0'
+
+using FHIR version '4.0.0'
+
+context Patient
+
+define IsFemale:
+  Patient.gender = 'female'
+
+define HasOsteoporosis:
+  exists (from Condition c where c.code.coding.code = 'M81.0' and c.clinicalStatus = 'active')
+
+define MeetsMedicareHomeHealthBenefitCriteria:
+  // Assuming there is a function or a set of criteria to determine eligibility for Medicare home health benefit
+  [Patient] P where MeetsHomeHealthBenefitCriteria(P)
+
+define HasPostmenopausalOsteoporosisFracture:
+  exists (from Condition c where c.code.coding.code = 'M80.0' and c.clinicalStatus = 'active')
+
+define DoctorCertifiedFractureRelatedToOsteoporosis:
+  // Assuming there is a way to check for a doctor's certification within the patient's record
+  [Patient] P where DoctorCertifiedFractureRelatedToOsteoporosis(P)
+
+define CannotSelfAdministerInjection:
+  // Assuming there is a patient-reported outcome or a doctor's note indicating the patient's inability
+  [Patient] P where CannotSelfAdminister(P)
+
+define FamilyOrCaregiversUnableToAdminister:
+  // Assuming there is a way to check if family or caregivers are unable or unwilling to administer the drug
+  [Patient] P where FamilyOrCaregiversUnable(P)
+
+define NeedsHomeHealthNurseOrAide:
+  FamilyOrCaregiversUnableToAdminister
+
+define InjectableOsteoporosisDrugCoverageEligibility:
+  IsFemale and
+  HasOsteoporosis and
+  MeetsMedicareHomeHealthBenefitCriteria and
+  HasPostmenopausalOsteoporosisFracture and
+  DoctorCertifiedFractureRelatedToOsteoporosis and
+  CannotSelfAdministerInjection and
+  NeedsHomeHealthNurseOrAide
+```
+
+This CQL library defines the necessary conditions for a female Medicare patient to be eligible for coverage of injectable osteoporosis drugs. Each named expression corresponds to a specific requirement from the insurance policy document. The final decision on eligibility is determined by the `InjectableOsteoporosisDrugCoverageEligibility` expression, which combines all the individual conditions. Please note that some expressions assume the existence of certain data or functions (e.g., `MeetsHomeHealthBenefitCriteria`, `DoctorCertifiedFractureRelatedToOsteoporosis`, `CannotSelfAdminister`, `FamilyOrCaregiversUnable`) that would need to be defined based on the actual data model and business rules of the healthcare system.

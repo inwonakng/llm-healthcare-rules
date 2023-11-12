@@ -1,0 +1,114 @@
+```solidity
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+contract MedicareTransplantDrugCoverage {
+
+    struct Patient {
+        bool hasPartA;
+        bool hasPartB;
+        bool hasPartD;
+        bool hasMedicareDrugPlan;
+        bool hasESRD;
+        bool hadKidneyTransplant;
+        uint256 transplantDate;
+        bool hasGroupHealthPlan;
+        bool hasTricare;
+        bool hasMedicaid;
+        bool enrolledInImmunosuppressiveDrugBenefit;
+        uint256 immunosuppressiveDrugBenefitStartDate;
+        uint256 totalSpentOnDrugs;
+    }
+
+    uint256 constant public IMMUNOSUPPRESSIVE_DRUG_BENEFIT_PREMIUM_2023 = 97.10 ether;
+    uint256 constant public IMMUNOSUPPRESSIVE_DRUG_BENEFIT_DEDUCTIBLE_2023 = 226 ether;
+
+    mapping(address => Patient) public patients;
+
+    // Assume this function is called with the appropriate data when a patient's status is updated.
+    function updatePatientStatus(
+        address patientAddress,
+        bool hasPartA,
+        bool hasPartB,
+        bool hasPartD,
+        bool hasMedicareDrugPlan,
+        bool hasESRD,
+        bool hadKidneyTransplant,
+        uint256 transplantDate,
+        bool hasGroupHealthPlan,
+        bool hasTricare,
+        bool hasMedicaid,
+        bool enrolledInImmunosuppressiveDrugBenefit,
+        uint256 immunosuppressiveDrugBenefitStartDate,
+        uint256 totalSpentOnDrugs
+    ) public {
+        patients[patientAddress] = Patient({
+            hasPartA: hasPartA,
+            hasPartB: hasPartB,
+            hasPartD: hasPartD,
+            hasMedicareDrugPlan: hasMedicareDrugPlan,
+            hasESRD: hasESRD,
+            hadKidneyTransplant: hadKidneyTransplant,
+            transplantDate: transplantDate,
+            hasGroupHealthPlan: hasGroupHealthPlan,
+            hasTricare: hasTricare,
+            hasMedicaid: hasMedicaid,
+            enrolledInImmunosuppressiveDrugBenefit: enrolledInImmunosuppressiveDrugBenefit,
+            immunosuppressiveDrugBenefitStartDate: immunosuppressiveDrugBenefitStartDate,
+            totalSpentOnDrugs: totalSpentOnDrugs
+        });
+    }
+
+    function checkCoverage(address patientAddress) public view returns (bool isCovered, uint256 patientOOPCost) {
+        Patient memory patient = patients[patientAddress];
+
+        // Check if Medicare contributed to the payment for the organ transplant.
+        bool medicareContributionForTransplant = patient.hasPartA && patient.hadKidneyTransplant;
+
+        // Check if the patient had Medicare Part A at the time of the transplant.
+        bool hasPartAAtTimeOfTransplant = patient.hasPartA && (block.timestamp >= patient.transplantDate);
+
+        // Check if the patient has Medicare Part B when receiving immunosuppressive drugs.
+        bool hasPartBForImmunosuppressiveDrugs = patient.hasPartB;
+
+        // Check if Medicare Part D covers immunosuppressive drugs when Part B does not.
+        bool partDCoverageForImmunosuppressiveDrugs = !patient.hasPartB && patient.hasPartD;
+
+        // Check if a patient with Original Medicare has joined a Medicare drug plan.
+        bool originalMedicareDrugPlanEnrollment = patient.hasMedicareDrugPlan;
+
+        // Determine if Medicare coverage ends 36 months after a successful kidney transplant for ESRD patients.
+        bool esrdMedicareCoverageEnds = patient.hasESRD && (block.timestamp >= patient.transplantDate + 36 * 30 days);
+
+        // Check if the patient is eligible for the immunosuppressive drug benefit after losing Part A coverage.
+        bool eligibleForImmunosuppressiveDrugBenefit = esrdMedicareCoverageEnds &&
+            !patient.hasGroupHealthPlan &&
+            !patient.hasTricare &&
+            !patient.hasMedicaid;
+
+        // Check if the patient has enrolled in the immunosuppressive drug benefit.
+        bool immunosuppressiveDrugBenefitEnrollment = eligibleForImmunosuppressiveDrugBenefit &&
+            patient.enrolledInImmunosuppressiveDrugBenefit;
+
+        // Calculate the out-of-pocket cost for immunosuppressive drugs after meeting the deductible.
+        uint256 patientOOPCostAfterDeductible;
+        if (patient.totalSpentOnDrugs > IMMUNOSUPPRESSIVE_DRUG_BENEFIT_DEDUCTIBLE_2023) {
+            patientOOPCostAfterDeductible = (patient.totalSpentOnDrugs - IMMUNOSUPPRESSIVE_DRUG_BENEFIT_DEDUCTIBLE_2023) * 20 / 100;
+        }
+
+        // Compile the final decision on coverage based on the above conditions.
+        isCovered = medicareContributionForTransplant &&
+                     hasPartAAtTimeOfTransplant &&
+                     (hasPartBForImmunosuppressiveDrugs || partDCoverageForImmunosuppressiveDrugs || originalMedicareDrugPlanEnrollment) &&
+                     (!esrdMedicareCoverageEnds || immunosuppressiveDrugBenefitEnrollment);
+
+        patientOOPCost = isCovered ? patientOOPCostAfterDeductible : 0;
+
+        return (isCovered, patientOOPCost);
+    }
+}
+```
+
+This Solidity smart contract represents a simplified version of the insurance policy document and its summary. It includes a `Patient` struct to encapsulate patient data and a mapping to store patient records. The `updatePatientStatus` function allows updating patient data, and the `checkCoverage` function evaluates the coverage based on the conditions described in the policy document and its summary.
+
+Please note that this contract assumes that the patient's data is updated correctly and in a timely manner, which would typically be handled by an off-chain system or Oracle. Additionally, the contract does not handle the enrollment process, premium payments, or other financial transactions, which would require additional functions and security considerations.

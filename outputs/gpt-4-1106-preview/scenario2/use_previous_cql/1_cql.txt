@@ -1,0 +1,42 @@
+```cql
+library IVIGCoverage version '1.0'
+
+using FHIR version '4.0.0'
+
+codesystem "ICD-10-CM": 'http://hl7.org/fhir/sid/icd-10-cm'
+
+code "Primary Immune Deficiency Disease": 'D80' from "ICD-10-CM" display 'Primary immune deficiency disease'
+
+context Patient
+
+define InHomeIVIGCoverage:
+  IVIGProvidedInHome() and
+  HasPrimaryImmuneDeficiency() and
+  MedicallyAppropriateForHomeIVIG()
+
+define IVIGProvidedInHome:
+  [Procedure: Code 'IVIG Administration'] Procedure
+    where Procedure.location.display = 'Patient''s Home'
+
+define HasPrimaryImmuneDeficiency:
+  exists ([Condition: Code 'Primary Immune Deficiency Disease'] Condition)
+
+define MedicallyAppropriateForHomeIVIG:
+  [ProcedureRequest: Code 'IVIG Administration'] ProcedureRequest
+    where ProcedureRequest.reasonCode contains Code 'Primary Immune Deficiency Disease'
+      and ProcedureRequest.occurrenceDateTime during Patient.periodInHome
+      and ProcedureRequest.performer.qualification has { code: { coding: { system: 'http://terminology.hl7.org/CodeSystem/v2-0360/2.7', code: 'MD' } } }
+
+define PartBCoverageIVIG:
+  [Coverage: Code 'Medicare Part B'] Coverage
+    where Coverage.benefitPeriod during [Period: start lessOrEqual Today(), end greaterOrEqual Today()]
+
+define PartBDoesNotCoverRelatedServices:
+  not exists ([Claim: Category 'Related Services'] Claim
+    where Claim.insurance.reference = 'Medicare Part B')
+
+define FinalCoverageDecision:
+  InHomeIVIGCoverage and PartBCoverageIVIG and PartBDoesNotCoverRelatedServices
+```
+
+This CQL library defines the necessary conditions for IVIG coverage based on the insurance policy document and its summary. Each named expression corresponds to a specific requirement, and the `FinalCoverageDecision` expression combines them to determine overall coverage eligibility.

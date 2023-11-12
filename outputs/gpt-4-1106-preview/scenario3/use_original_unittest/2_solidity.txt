@@ -1,0 +1,110 @@
+```solidity
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+contract MedicareInsurancePolicy {
+    // Define a struct to encapsulate policy holder details
+    struct PolicyHolder {
+        bool hasPartA;
+        bool hasPartB;
+        bool hasPartD;
+        bool hasESRD;
+        uint256 transplantDate;
+        bool isEligibleForImmunosuppressiveDrugBenefit;
+        uint256 immunosuppressiveDrugBenefitStartDate;
+        uint256 paidDeductible;
+    }
+
+    // Define constants for the policy
+    uint256 public constant IMMUNOSUPPRESSIVE_DRUG_BENEFIT_PERIOD = 36 * 30 days; // 36 months
+    uint256 public constant MONTHLY_PREMIUM = 97.10 ether;
+    uint256 public constant ANNUAL_DEDUCTIBLE = 226 ether;
+    uint256 public constant COINSURANCE_PERCENTAGE = 20;
+
+    // State variables
+    mapping(address => PolicyHolder) public policyHolders;
+    uint256 public medicareApprovedAmount;
+
+    // Events
+    event PolicyHolderUpdated(address indexed policyHolderAddress, PolicyHolder policyHolder);
+    event PremiumPaid(address indexed policyHolderAddress, uint256 amount);
+    event DeductiblePaid(address indexed policyHolderAddress, uint256 amount);
+    event CoinsurancePaid(address indexed policyHolderAddress, uint256 amount);
+
+    // Modifier to check eligibility for immunosuppressive drug benefit
+    modifier onlyEligibleForImmunosuppressiveDrugBenefit(address _policyHolderAddress) {
+        require(
+            policyHolders[_policyHolderAddress].isEligibleForImmunosuppressiveDrugBenefit,
+            "Not eligible for immunosuppressive drug benefit"
+        );
+        _;
+    }
+
+    // Function to enroll a policy holder
+    function enrollPolicyHolder(
+        address _policyHolderAddress,
+        bool _hasPartA,
+        bool _hasPartB,
+        bool _hasPartD,
+        bool _hasESRD,
+        uint256 _transplantDate
+    ) external {
+        PolicyHolder storage holder = policyHolders[_policyHolderAddress];
+        holder.hasPartA = _hasPartA;
+        holder.hasPartB = _hasPartB;
+        holder.hasPartD = _hasPartD;
+        holder.hasESRD = _hasESRD;
+        holder.transplantDate = _transplantDate;
+        holder.isEligibleForImmunosuppressiveDrugBenefit = _hasESRD && (_transplantDate + IMMUNOSUPPRESSIVE_DRUG_BENEFIT_PERIOD > block.timestamp);
+        holder.immunosuppressiveDrugBenefitStartDate = block.timestamp;
+
+        emit PolicyHolderUpdated(_policyHolderAddress, holder);
+    }
+
+    // Function to pay monthly premium
+    function payMonthlyPremium(address _policyHolderAddress) external payable onlyEligibleForImmunosuppressiveDrugBenefit(_policyHolderAddress) {
+        require(msg.value == MONTHLY_PREMIUM, "Incorrect premium amount");
+        emit PremiumPaid(_policyHolderAddress, msg.value);
+    }
+
+    // Function to pay deductible
+    function payDeductible(address _policyHolderAddress) external payable onlyEligibleForImmunosuppressiveDrugBenefit(_policyHolderAddress) {
+        PolicyHolder storage holder = policyHolders[_policyHolderAddress];
+        require(holder.paidDeductible + msg.value <= ANNUAL_DEDUCTIBLE, "Deductible already met or amount too high");
+        holder.paidDeductible += msg.value;
+        emit DeductiblePaid(_policyHolderAddress, msg.value);
+    }
+
+    // Function to pay coinsurance for immunosuppressive drugs
+    function payCoinsurance(address _policyHolderAddress, uint256 _medicareApprovedAmount) external payable onlyEligibleForImmunosuppressiveDrugBenefit(_policyHolderAddress) {
+        PolicyHolder storage holder = policyHolders[_policyHolderAddress];
+        require(holder.paidDeductible == ANNUAL_DEDUCTIBLE, "Annual deductible not met");
+        uint256 coinsuranceAmount = (_medicareApprovedAmount * COINSURANCE_PERCENTAGE) / 100;
+        require(msg.value == coinsuranceAmount, "Incorrect coinsurance amount");
+        medicareApprovedAmount = _medicareApprovedAmount;
+        emit CoinsurancePaid(_policyHolderAddress, msg.value);
+    }
+
+    // Function to check if a policy holder is eligible for immunosuppressive drug benefit
+    function checkEligibilityForImmunosuppressiveDrugBenefit(address _policyHolderAddress) public view returns (bool) {
+        PolicyHolder memory holder = policyHolders[_policyHolderAddress];
+        return holder.isEligibleForImmunosuppressiveDrugBenefit;
+    }
+
+    // Function to update medicare approved amount for immunosuppressive drugs
+    function updateMedicareApprovedAmount(uint256 _newAmount) external {
+        medicareApprovedAmount = _newAmount;
+    }
+}
+```
+
+This Solidity smart contract represents a simplified version of the insurance policy document provided. It includes the following features:
+
+- Struct `PolicyHolder` to store policy holder details.
+- Constants for policy parameters such as premiums, deductibles, and coinsurance percentages.
+- A mapping to store policy holder details.
+- Functions to enroll policy holders, pay premiums, pay deductibles, and pay coinsurance.
+- Modifiers and checks to ensure that transactions meet the policy requirements.
+- Events to log important actions taken on the contract.
+
+Please note that this contract assumes that the `ether` unit is being used to represent the currency, which may not be the case in a real-world scenario. In practice, you would use a stablecoin or a smaller unit of ether (like wei) to represent fiat currency amounts. Additionally, this contract does not handle all aspects of policy management, such as policy expiration, renewal, or claims processing, and would need to be expanded to cover a full insurance policy lifecycle.

@@ -1,0 +1,56 @@
+```
+library MedicareTransplantDrugCoverage version '1.0'
+
+using FHIR version '4.0.1'
+
+// Define the context for the expressions
+context Patient
+
+// Define named expressions for the policy conditions
+
+define HasPartAAtTimeOfTransplant:
+  // This expression should check if the patient had Part A at the time of the transplant
+  [Patient] P where P.coverage.period includes the time of the transplant and P.coverage.benefit = 'Part A'
+
+define HasPartBAtTimeOfDrugs:
+  // This expression should check if the patient has Part B at the time they get immunosuppressive drugs
+  [Patient] P where P.coverage.period includes the time of the drug administration and P.coverage.benefit = 'Part B'
+
+define IsCoveredByPartD:
+  // This expression should check if Part D covers immunosuppressive drugs when Part B doesn’t cover them
+  [Patient] P where P.coverage.benefit = 'Part D' and not HasPartBAtTimeOfDrugs
+
+define HasOriginalMedicareAndJoinsDrugPlan:
+  // This expression should check if the patient with Original Medicare joins a Medicare drug plan
+  [Patient] P where P.coverage.benefit = 'Original Medicare' and P.coverage.benefit = 'Medicare drug plan'
+
+define HasESRDCoverageEndsAfter36Months:
+  // This expression should check if the patient's Medicare coverage ends 36 months after a successful kidney transplant
+  [Patient] P where P.condition = 'End-Stage Renal Disease' and DurationInMonthsBetween(P.procedure.date, Today()) > 36
+
+define QualifiesForImmunosuppressiveDrugBenefit:
+  // This expression should check if the patient qualifies for the immunosuppressive drug benefit after losing Part A coverage
+  HasESRDCoverageEndsAfter36Months and not (P.coverage.benefit in {'group health plan', 'TRICARE', 'Medicaid'})
+
+define MonthlyPremium:
+  // This expression defines the monthly premium for the immunosuppressive drug benefit
+  97.10
+
+define AnnualDeductible:
+  // This expression defines the annual deductible for the immunosuppressive drug benefit
+  226
+
+define CoinsuranceRate:
+  // This expression defines the coinsurance rate after meeting the deductible
+  0.20
+
+define PatientOwesAfterDeductible:
+  // This expression calculates the amount the patient owes after meeting the deductible
+  (MedicareApprovedAmountForDrugs - AnnualDeductible) * CoinsuranceRate
+
+// Define the final decision expression
+
+define IsCoveredForTransplantDrugTherapy:
+  // This expression determines if the patient is covered for transplant drug therapy
+  (HasPartAAtTimeOfTransplant and HasPartBAtTimeOfDrugs) or IsCoveredByPartD or (HasOriginalMedicareAndJoinsDrugPlan and QualifiesForImmunosuppressiveDrugBenefit)
+```

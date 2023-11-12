@@ -1,0 +1,61 @@
+```
+@prefix : <http://example.org/rules#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix medicare: <http://example.org/medicare#> .
+
+{
+    ?person medicare:hasPartA "true"^^xsd:boolean;
+            medicare:hasPartB "true"^^xsd:boolean;
+            medicare:hadOrganTransplant "true"^^xsd:boolean.
+} => {
+    ?person medicare:eligibleForTransplantDrugTherapy "true"^^xsd:boolean.
+}.
+
+{
+    ?person medicare:eligibleForTransplantDrugTherapy "true"^^xsd:boolean;
+            medicare:requiresImmunosuppressiveDrugs "true"^^xsd:boolean;
+            medicare:hasPartB "false"^^xsd:boolean.
+    ?person medicare:hasPartD "true"^^xsd:boolean.
+} => {
+    ?person medicare:PartDCoversImmunosuppressiveDrugs "true"^^xsd:boolean.
+}.
+
+{
+    ?person medicare:eligibleForTransplantDrugTherapy "true"^^xsd:boolean;
+            medicare:requiresImmunosuppressiveDrugs "true"^^xsd:boolean;
+            medicare:hasOriginalMedicare "true"^^xsd:boolean.
+} => {
+    ?person medicare:canJoinMedicareDrugPlan "true"^^xsd:boolean.
+}.
+
+{
+    ?person medicare:hasMedicareDueToESRD "true"^^xsd:boolean;
+            medicare:hadSuccessfulKidneyTransplant "true"^^xsd:boolean;
+            medicare:timeSinceTransplant "36"^^xsd:integer.
+} => {
+    ?person medicare:coverageEnds "true"^^xsd:boolean.
+}.
+
+{
+    ?person medicare:coverageEnds "true"^^xsd:boolean;
+            medicare:hasOtherHealthCoverage "false"^^xsd:boolean.
+} => {
+    ?person medicare:eligibleForImmunosuppressiveDrugBenefit "true"^^xsd:boolean.
+}.
+
+{
+    ?person medicare:eligibleForImmunosuppressiveDrugBenefit "true"^^xsd:boolean.
+} => {
+    ?person medicare:monthlyPremium "97.10"^^xsd:decimal;
+            medicare:annualDeductible "226"^^xsd:decimal.
+}.
+
+{
+    ?person medicare:eligibleForImmunosuppressiveDrugBenefit "true"^^xsd:boolean;
+            medicare:annualDeductiblePaid "true"^^xsd:boolean.
+} => {
+    ?person medicare:payPercentageOfApprovedAmount "20"^^xsd:integer.
+}.
+```
+
+Please note that the above N3 logic rules are a representation of the insurance policy document provided. The actual implementation may require additional details and context, such as defining the exact predicates and their URIs, and ensuring that the data provided to the system matches the expected formats and types. The rules assume that the necessary data about the person's Medicare parts, transplant status, and other conditions are available and represented in a compatible format.

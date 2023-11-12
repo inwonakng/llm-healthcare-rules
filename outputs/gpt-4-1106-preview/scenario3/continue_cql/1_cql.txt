@@ -1,0 +1,70 @@
+```
+library MedicareTransplantDrugCoverage version '1.0'
+
+using FHIR version '4.0.0'
+
+context Patient
+
+define "MedicareContributionForTransplant":
+  // This expression would evaluate whether Medicare contributed to the payment for the organ transplant.
+  [Procedure: code in "Organ Transplant Procedure Codes"] O
+    where O.performer.exists(p | p.actor.reference = 'Medicare')
+
+define "HasPartAAtTimeOfTransplant":
+  // This expression checks if the patient had Medicare Part A at the time of the transplant.
+  Patient.extension contains [Extension: url = 'http://example.com/MedicarePartA' and valueDateTime <= O.performed]
+
+define "HasPartBForImmunosuppressiveDrugs":
+  // This expression checks if the patient has Medicare Part B when receiving immunosuppressive drugs.
+  [MedicationRequest: code in "Immunosuppressive Drug Codes"] M
+    where M.authoredOn >= Patient.extension.where(url = 'http://example.com/MedicarePartB').valueDateTime
+
+define "PartDCoverageForImmunosuppressiveDrugs":
+  // This expression checks if Medicare Part D covers immunosuppressive drugs when Part B does not.
+  exists("HasPartBForImmunosuppressiveDrugs") = false and
+  [Coverage: type = 'PartD']
+
+define "OriginalMedicareDrugPlanEnrollment":
+  // This expression checks if a patient with Original Medicare has joined a Medicare drug plan.
+  [Coverage: type = 'MedicareDrugPlan' and payor.reference = 'Original Medicare']
+
+define "ESRDMedicareCoverageEnds":
+  // This expression determines if Medicare coverage ends 36 months after a successful kidney transplant for ESRD patients.
+  [Condition: code = 'End-Stage Renal Disease'] E
+    where E.onset <= Today() - 36 months and
+    [Procedure: code = 'Kidney Transplant' and performed <= Today() - 36 months]
+
+define "EligibleForImmunosuppressiveDrugBenefit":
+  // This expression checks if the patient is eligible for the immunosuppressive drug benefit after losing Part A coverage.
+  "ESRDMedicareCoverageEnds" and
+  not exists([Coverage: type in {'GroupHealthPlan', 'TRICARE', 'Medicaid'}])
+
+define "ImmunosuppressiveDrugBenefitEnrollment":
+  // This expression checks if the patient has enrolled in the immunosuppressive drug benefit.
+  "EligibleForImmunosuppressiveDrugBenefit" and
+  [Coverage: type = 'ImmunosuppressiveDrugBenefit']
+
+define "ImmunosuppressiveDrugBenefitPremium2023":
+  // This expression represents the monthly premium for the immunosuppressive drug benefit in 2023.
+  97.10
+
+define "ImmunosuppressiveDrugBenefitDeductible2023":
+  // This expression represents the deductible for the immunosuppressive drug benefit in 2023.
+  226
+
+define "PatientOOPCostAfterDeductible":
+  // This expression calculates the out-of-pocket cost for immunosuppressive drugs after meeting the deductible.
+  [Claim: type = 'ImmunosuppressiveDrugs'] C
+    where C.item.exists(i | i.adjudication.exists(a | a.category.coding.exists(c | c.code = 'deductible')))
+    and C.total.value > "ImmunosuppressiveDrugBenefitDeductible2023"
+    return (C.total.value - "ImmunosuppressiveDrugBenefitDeductible2023") * 0.2
+
+define "FinalCoverageDecision":
+  // This expression compiles the final decision on coverage based on the above conditions.
+  "MedicareContributionForTransplant" and
+  "HasPartAAtTimeOfTransplant" and
+  ("HasPartBForImmunosuppressiveDrugs" or "PartDCoverageForImmunosuppressiveDrugs" or "OriginalMedicareDrugPlanEnrollment") and
+  ("ESRDMedicareCoverageEnds" implies "ImmunosuppressiveDrugBenefitEnrollment") and
+  ("ImmunosuppressiveDrugBenefitEnrollment" implies ("PatientOOPCostAfterDeductible" and "ImmunosuppressiveDrugBenefitPremium2023"))
+```
+Please note that the actual implementation would require the definition of the value sets for "Organ Transplant Procedure Codes", "Immunosuppressive Drug Codes", and the coverage types such as 'PartD', 'MedicareDrugPlan', 'GroupHealthPlan', 'TRICARE', 'Medicaid', and 'ImmunosuppressiveDrugBenefit'. Additionally, the URLs for the Medicare Part A and Part B extensions would need to be defined according to the FHIR profiles used by the healthcare organization.

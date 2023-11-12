@@ -1,0 +1,77 @@
+Certainly! Below is a Solidity smart contract that implements the insurance policy document, its summary, and the set of N3 logic rules we discussed. This contract is a simplified representation and does not include all the real-world checks and security measures that would be necessary for a production contract.
+
+```solidity
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+contract MedicareInsurancePolicy {
+    struct Person {
+        bool hadTransplant;
+        bool hasPartA;
+        bool hasPartB;
+        bool hasPartD;
+        bool hasOriginalMedicare;
+        bool hasESRD;
+        uint monthsAfterTransplant;
+        bool hasOtherHealthCoverage;
+        bool partAEnded;
+        bool enrolledIn2023;
+        bool metDeductible;
+    }
+
+    struct Benefit {
+        bool eligibleForDrugTherapyCoverage;
+        bool eligibleForTransplantCoverage;
+        bool eligibleForImmunosuppressiveDrugs;
+        bool canJoinDrugPlan;
+        bool esrdCoverageEnds;
+        bool eligibleForSpecificBenefit;
+        bool benefitCoversDrugsOnly;
+        bool benefitIsNotFullCoverage;
+        bool canEnrollInBenefit;
+        bool shouldContactSocialSecurity;
+        uint monthlyPremium;
+        uint annualDeductible;
+        uint payPercentageAfterDeductible;
+    }
+
+    mapping(address => Person) public persons;
+    mapping(address => Benefit) public benefits;
+
+    function updatePersonStatus(address _personAddress, Person memory _person) public {
+        persons[_personAddress] = _person;
+        updateBenefits(_personAddress);
+    }
+
+    function updateBenefits(address _personAddress) internal {
+        Person memory person = persons[_personAddress];
+        Benefit storage benefit = benefits[_personAddress];
+
+        benefit.eligibleForDrugTherapyCoverage = person.hadTransplant;
+        benefit.eligibleForTransplantCoverage = person.hasPartA && person.hadTransplant;
+        benefit.eligibleForImmunosuppressiveDrugs = person.hasPartB;
+        benefit.canJoinDrugPlan = person.hasOriginalMedicare;
+        benefit.esrdCoverageEnds = person.hasESRD && person.monthsAfterTransplant > 36;
+        benefit.eligibleForSpecificBenefit = person.partAEnded && !person.hasOtherHealthCoverage && person.monthsAfterTransplant > 36;
+        benefit.benefitCoversDrugsOnly = benefit.eligibleForSpecificBenefit;
+        benefit.benefitIsNotFullCoverage = benefit.eligibleForSpecificBenefit;
+        benefit.canEnrollInBenefit = person.partAEnded;
+        benefit.shouldContactSocialSecurity = benefit.canEnrollInBenefit;
+
+        if (person.enrolledIn2023) {
+            benefit.monthlyPremium = 97;
+            benefit.annualDeductible = 226;
+        }
+
+        benefit.payPercentageAfterDeductible = person.metDeductible ? 20 : 0;
+    }
+
+    function getBenefit(address _personAddress) public view returns (Benefit memory) {
+        return benefits[_personAddress];
+    }
+}
+```
+
+This contract defines two structs, `Person` and `Benefit`, to encapsulate the parameters and outputs. The `updatePersonStatus` function allows updating the status of a person, and the `updateBenefits` function calculates the benefits based on the person's status. The `getBenefit` function returns the calculated benefits for a given person.
+
+Please note that this contract is highly simplified and does not handle various real-world considerations such as access control, data validation, and error handling. In a production environment, you would need to add functions to handle payments, time tracking for the months after transplant, and other complex logic. Additionally, the contract assumes that all monetary values are represented in the smallest units (e.g., cents) to avoid dealing with decimals in Solidity.
