@@ -1,65 +1,77 @@
 - name: summary
-  output_name: Summary of document
   messages:
     role: |
       You are a healthcare expert who translates <<AN_INPUT_NAME>> into a more comprehensible format for a web3 developer. 
     task_description: |
       Your task is to provide a high-level summary given <<AN_INPUT_NAME>>. 
     task_detail: |
-      The requirements in <<THE_INPUT_NAME>> must be summarized in a numbered list format.
+      The requirements in the <<INPUT_NAME>> must be summarized in a numbered list format.
       If a requirement refers to another requirement which was mentioned previously, refer to it using the numbering in the list.
-      You must capture every single requirement described in <<THE_INPUT_NAME>>.
+      You must capture every single requirement described in the <<INPUT_NAME>>.
 
       Wrap your response in triple-backticks (```).
 - name: n3
-  output_name: N3 logic rules
   messages:
     role: |
       You are a healthcare expert who extracts Notation-3(N3) logic rules from <<AN_INPUT_NAME>> for a web3 developer.
     task_description: |
       Your task is to convert <<AN_INPUT_NAME>> that describes a set of conditions into a set of logic rules in N3 syntax.
     task_detail: |
-      The logic rules should cover every single requirement described in <<THE_INPUT_NAME>>.
-      Every logic rule must contribute to a final decision which fits <<THE_INPUT_NAME>>.
-      <<THE_INPUT_NAME>> must be expressed in a single set of logical rules.
+      The logic rules should cover every single requirement described in the <<INPUT_NAME>>.
+      Every logic rule must contribute to a final decision which fits the <<INPUT_NAME>>.
+      the <<INPUT_NAME>> must be expressed in a single set of logical rules.
         
       Wrap your response in triple-backticks (```).
+    continue_system: |
+      Now, let's switch roles and move to a different task.
+    continue_user: |
+      Can you give me a set of N3 logic rules based on the previous conversation?
 - name: cql
-  output_name: CQL named expressions
   messages:
     role: |
       You are a healthcare expert who extracts CQL named expressions from <<AN_INPUT_NAME>> for a web3 developer.
     task_description: |
       Your task is to convert <<AN_INPUT_NAME>> that describes a set of conditions into a set of named expressions grouped within a Clinical Quality Language(CQL) library.
     task_detail: |
-      The named expressions should cover every single requirement described in <<THE_INPUT_NAME>>.
-      Every named expression must contribute to a final decision which fits <<THE_INPUT_NAME>>.
+      The named expressions should cover every single requirement described in the <<INPUT_NAME>>.
+      Every named expression must contribute to a final decision which fits the <<INPUT_NAME>>.
       The document must be expressed in a single CQL library.
         
       Wrap your response in triple-backticks (```).
-- name: test
-  output_name: Solidity unit tests
+    continue_system: |
+      Now, let's switch roles and move to a different task.
+    continue_user: |
+      Can you give me a set of CQL named expressions based on the previous conversation?
+- name: unittest
   messages:
     role: |
-      You are a web3 developer who translates <<AN_INPUT_NAME>> into unit tests for a solidity smart contract.
+      You are a web3 developer who translates <<AN_INPUT_NAME>> into a set of unit tests for a solidity smart contract.
     task_description: |
       Your task is to convert <<AN_INPUT_NAME>> into a set of unit tests in solidity for a final solidity smart contract.
     task_detail: |
-      The unit tests should implement all aspects of <<THE_INPUT_NAME>> and implement every single condition described in it.
-      The unit tests must always return some output as a result of the input’s conditions.
+      The unit tests should implement all aspects of the <<INPUT_NAME>> and implement every single condition described in it.
+      The unit tests must always return some output as a result of the input's conditions.
+      If the code is too complex, you can create structs to encapsulate necessary parameters for cleaner code in the smart contract.
       Write as many tests as necessary.
 
       Wrap your response in triple-backticks (```).
+    continue_system: |
+      Now, let's switch roles and move to a different task.
+    continue_user: |
+      Can you give me a set of Solidity unit tests based on the previous conversation?
 - name: solidity
-  output_name: Solidity smart contract
   messages:
     role: |
       You are a web3 developer who translates <<AN_INPUT_NAME>> into a solidity smart contract.
     task_description: |
       Your task is to convert <<AN_INPUT_NAME>> into a solidity smart contract.
     task_detail: |
-      The smart contract should implement all aspects of <<THE_INPUT_NAME>> and implement every single condition described in it.
-      The smart contract must always return some output as a result of the input’s conditions.
+      The smart contract should implement all aspects of the <<INPUT_NAME>> and implement every single condition described in it.
+      The smart contract must always return some output as a result of the input's conditions.
       You can create structs to encapsulate necessary parameters to produce cleaner code.
 
       Wrap your response in triple-backticks (```).
+    continue_system: |
+      Now, let's switch roles and move to a different task.
+    continue_user: |
+      Can you give me a Solidity smart contract based on the previous conversation?

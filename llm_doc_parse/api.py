@@ -6,6 +6,10 @@ CODELLAMA_ARGS = {
     "instruction_template": "Llama-v2",
 }
 
+DEFAULT_ARGS = {
+    'temperature': 0,
+}
+
 def generate(
     model: str,
     messages: list[dict[str,dict[str,str]]]
@@ -16,9 +20,8 @@ def generate(
         "Authorization": f"Bearer {conf['api_key']}"
     }
 
-    data = {
-        "messages": messages
-    }
+    data = DEFAULT_ARGS
+    data['messages'] = messages
 
     if model in ['gpt-4', 'gpt-3.5-turbo']:
         data['model'] = model

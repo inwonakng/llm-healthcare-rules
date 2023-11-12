@@ -1,6 +1,7 @@
 from typing import Self
 import yaml
 from dataclasses import dataclass, field
+from pathlib import Path
 
 from .custom_types import OpenAIMessage
 from .api import generate
@@ -10,77 +11,113 @@ VOWELS = 'aeiou'
 @dataclass
 class Task:
     name: str
-    output_name: str
     messages: dict[str,str]
 
 @dataclass
 class ExecutableInput:
     name: str
+    messages: list[str] = field(default_factory=list) 
     components: list[str] = field(default_factory=list) 
+
+@dataclass
+class ExecutableMessage:
+    messages: list[str] = field(default_factory=list) 
+    include_input: bool = False
 
 @dataclass
 class Executable:
     task: str
-    messages: list[str]
     input: ExecutableInput
-    prefix: str | None = None
+    system_message: ExecutableMessage
+    user_message: ExecutableMessage
     
     def __post_init__(self):
         self.input = ExecutableInput(**self.input)
+        self.system_message = ExecutableMessage(**self.system_message)
+        self.user_message = ExecutableMessage(**self.user_message)
 
 def replace_input_name(text, input_name):
     an_input_name = f'an {input_name}' if input_name[0].lower() in VOWELS else f'a {input_name}'
     text = text.replace(
         '<<AN_INPUT_NAME>>', an_input_name
     ).replace(
-        '<<THE_INPUT_NAME>>', f'the {input_name}'
+        '<<INPUT_NAME>>', input_name
     )
-    return text
+    return text.strip()
     
 class Prompt:
     tasks: dict[str,Task]
-    continue_message: str
     responses: dict[str,str]
 
-    def __init__(self, tasks: list[Task], continue_message: str) -> None:
+    def __init__(self, tasks: list[Task]) -> None:
         self.tasks = {
             task.name: task
             for task in tasks
         }
-        self.continue_message = continue_message
 
     def execute(
         self, 
         model: str,
         configs: list[dict[str,str|list[str]]], 
-        document: str
+        document: str,
+        continue_conversation: bool = False,
+        save_dir: Path|str|None = None,
     ) -> None:
         valid_input_components = dict(document=document)
-        for raw_conf in configs:
+        chat_history = []
+
+        if save_dir is not None:
+            save_dir = Path(save_dir)
+            save_dir.mkdir(parents=True, exist_ok=True)
+
+        for i, raw_conf in enumerate(configs):
             executable = Executable(**raw_conf)
             task = self.tasks[executable.task]
+
+            # build messages
             system_msg = '\n'.join(
                 replace_input_name(
                     task.messages[message],
                     executable.input.name,
                 )
-                for message in executable.messages
+                for message in executable.system_message.messages
             )
+            if executable.system_message.include_input:
+                system_msg += '\n\n'.join(
+                    f'### {input_component.capitalize()}\n' + 
+                    valid_input_components[input_component].strip()
+                    for input_component in executable.input.components
+                )
             user_msg = '\n'.join(
-                f'### {input_component.capitalize()}\n' + 
-                valid_input_components[input_component]
-                for input_component in executable.input.components
+                replace_input_name(
+                    task.messages[message],
+                    executable.input.name,
+                )
+                for message in executable.user_message.messages
             )
+            if executable.user_message.include_input:
+                user_msg += '\n\n'.join(
+                    f'### {input_component.capitalize()}\n' + 
+                    valid_input_components[input_component].strip()
+                    for input_component in executable.input.components
+                )
             messages = [
                 {'role': 'system', 'content': system_msg,},
-                {'role': 'user', 'content': user_msg,}
             ]
-            
+            if user_msg:
+                messages += [
+                    {'role': 'user', 'content': user_msg,},
+                ]            
+            chat_history += messages 
+
             output = generate(
                 model, 
-                messages
+                messages if not continue_conversation else chat_history,
             )
+            
             valid_input_components[executable.task] = output
+            
+            chat_history += [{'role': 'assistant', 'content': output,}]
             
             print('-'*20+'system'+'-'*20)
             print(system_msg)
@@ -90,10 +127,10 @@ class Prompt:
             print('-'*20+'assistant'+'-'*20)
             print(output)
             print('='*80)
-
+            
+            open(save_dir / f"{i:02d}_{executable.task}.txt",'w').write(output)
 
     @staticmethod
-    def load_from_files(tasks_file, cont_file) -> 'Prompt':
-        continue_message = open(cont_file).read()
+    def load_from_file(tasks_file) -> 'Prompt':
         tasks = [Task(**task) for task in yaml.safe_load(open(tasks_file))]
-        return Prompt(tasks, continue_message)
+        return Prompt(tasks)

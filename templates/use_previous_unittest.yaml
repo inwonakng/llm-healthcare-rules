@@ -10,11 +10,12 @@
       - task_detail
   user_message:
     include_input: true
-- task: n3
+- task: unittest
   input: 
-    name: insurance policy document
+    name: insurance policy document and its summary
     components:  
       - document
+      - summary
   system_message:
     messages:
       - role
@@ -24,9 +25,10 @@
     include_input: true
 - task: solidity
   input: 
-    name: insurance policy document
+    name: summary of an insurance policy document and a set of Solidity unit tests describing it
     components:  
-      - document
+      - summary
+      - uniitest
   system_message:
     messages:
       - role

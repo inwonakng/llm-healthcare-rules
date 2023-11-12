@@ -12,9 +12,23 @@
     include_input: true
 - task: n3
   input: 
-    name: insurance policy document
+    name: insurance policy document and its summary
     components:  
       - document
+      - summary
+  system_message:
+    messages:
+      - role
+      - task_description
+      - task_detail
+  user_message:
+    include_input: true
+- task: unittest
+  input: 
+    name: summary of an insurance policy document and a set of N3 logic rules describing it
+    components:  
+      - document
+      - summary
   system_message:
     messages:
       - role
@@ -24,9 +38,11 @@
     include_input: true
 - task: solidity
   input: 
-    name: insurance policy document
+    name: summary of an insurance policy document and a set of N3 logic rules and Solidity unit tests describing it
     components:  
-      - document
+      - summary
+      - n3
+      - uniitest
   system_message:
     messages:
       - role
