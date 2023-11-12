@@ -11,7 +11,8 @@ CODELLAMA_ARGS = {
 }
 
 DEFAULT_ARGS = {
-    'temperature': 1e-10,
+    'temperature': 1e-20,
+    'top_p': 0.1,
 }
 
 def generate(
