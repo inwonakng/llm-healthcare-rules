@@ -2,3 +2,12 @@ Warning: SPDX license identifier not provided in source file. Before publishing,
 --> contracts/SmartContract.sol
 
 
+TypeError: Invalid type for argument in function call. Invalid implicit conversion from struct InjectableOsteoporosisDrugsCoverage.Condition memory[3] memory to struct InjectableOsteoporosisDrugsCoverage.Condition memory[] memory requested.
+  --> contracts/SmartContract.sol:30:29:
+   |
+30 |                 conditions: [
+   |                             ^ (Relevant source part starts here and spans across multiple lines).
+
+
+Error HH600: Compilation failed
+For more info go to https://hardhat.org/HH600 or run Hardhat with --show-stack-traces

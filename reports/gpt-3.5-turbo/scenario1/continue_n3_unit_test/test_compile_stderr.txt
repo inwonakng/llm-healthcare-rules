@@ -6,11 +6,11 @@ Warning: SPDX license identifier not provided in source file. Before publishing,
 --> contracts/UnitTest.sol
 
 
-TypeError: Member "checkCondition1" not found or not visible after argument-dependent lookup in contract InsuranceContract.
+TypeError: Member "checkWomanWithOsteoporosis" not found or not visible after argument-dependent lookup in contract YourContract.
   --> contracts/UnitTest.sol:15:23:
    |
-15 |         bool result = insuranceContract.checkCondition1();
-   |                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+15 |         bool result = yourContract.checkWomanWithOsteoporosis();
+   |                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 
 Error HH600: Compilation failed

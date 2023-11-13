@@ -1,0 +1,71 @@
+pragma solidity ^0.8.0;
+
+contract InsurancePolicy {
+    struct Benefit {
+        uint monthlyPremium;
+        uint deductible;
+    }
+    
+    Benefit private benefit2023;
+    
+    constructor() {
+        benefit2023.monthlyPremium = 9710;
+        benefit2023.deductible = 226;
+    }
+    
+    function medicareCoversTransplantDrugTherapy() public pure returns (bool) {
+        return true;
+    }
+    
+    function mustHavePartAAtTimeOfCoveredTransplant() public pure returns (bool) {
+        return true;
+    }
+    
+    function mustHavePartBAtTimeOfImmunosuppressiveDrugs() public pure returns (bool) {
+        return true;
+    }
+    
+    function medicareDrugCoverageCoversImmunosuppressiveDrugs() public pure returns (bool) {
+        return true;
+    }
+    
+    function joinMedicareDrugPlanForDrugCoverage() public pure returns (bool) {
+        return true;
+    }
+    
+    function medicareCoverageEndsAfter36MonthsForESRD() public pure returns (bool) {
+        return true;
+    }
+    
+    function medicareBenefitForLossOfPartAAfter36Months() public pure returns (bool) {
+        return true;
+    }
+    
+    function benefitCoversOnlyImmunosuppressiveDrugs() public pure returns (bool) {
+        return true;
+    }
+    
+    function benefitIsNotSubstituteForFullHealthCoverage() public pure returns (bool) {
+        return true;
+    }
+    
+    function canSignUpForBenefitAfterPartACoverageEnds() public pure returns (bool) {
+        return true;
+    }
+    
+    function callSocialSecurityToSignUpForBenefit() public pure returns (bool) {
+        return true;
+    }
+    
+    function getMonthlyPremiumIn2023() public view returns (uint) {
+        return benefit2023.monthlyPremium;
+    }
+    
+    function getDeductibleIn2023() public view returns (uint) {
+        return benefit2023.deductible;
+    }
+    
+    function pay20PercentForImmunosuppressiveDrugs() public pure returns (uint) {
+        return 20;
+    }
+}

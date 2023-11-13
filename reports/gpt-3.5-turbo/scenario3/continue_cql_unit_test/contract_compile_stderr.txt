@@ -1,0 +1,13 @@
+Warning: SPDX license identifier not provided in source file. Before publishing, consider adding a comment containing "SPDX-License-Identifier: <SPDX-License>" to each source file. Use "SPDX-License-Identifier: UNLICENSED" for non-open-source code. Please see https://spdx.org for more information.
+--> contracts/SmartContract.sol
+
+
+TypeError: Invalid type for argument in function call. Invalid implicit conversion from rational_const 971 / 10 to uint256 requested.
+  --> contracts/SmartContract.sol:34:13:
+   |
+34 |             97.10,  // monthlyPremium2023
+   |             ^^^^^
+
+
+Error HH600: Compilation failed
+For more info go to https://hardhat.org/HH600 or run Hardhat with --show-stack-traces

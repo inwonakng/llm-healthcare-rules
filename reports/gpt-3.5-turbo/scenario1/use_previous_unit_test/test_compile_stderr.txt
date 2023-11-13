@@ -6,11 +6,23 @@ Warning: SPDX license identifier not provided in source file. Before publishing,
 --> contracts/UnitTest.sol
 
 
-TypeError: Member "isTrue" not found or not visible after argument-dependent lookup in type(library Assert).
-  --> contracts/UnitTest.sol:22:9:
+Warning: This declaration shadows an existing declaration.
+  --> contracts/SmartContract.sol:18:38:
    |
-22 |         Assert.isTrue(meetsConditions, "Should meet all coverage conditions");
-   |         ^^^^^^^^^^^^^
+18 |     function requiresHomeHealthNurse(bool requiresHomeHealthNurse) public pure returns (bool) {
+   |                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Note: The shadowed declaration is here:
+  --> contracts/SmartContract.sol:18:5:
+   |
+18 |     function requiresHomeHealthNurse(bool requiresHomeHealthNurse) public pure returns (bool) {
+   |     ^ (Relevant source part starts here and spans across multiple lines).
+
+
+TypeError: Member "meetsCriteriaForHomeHealthBenefit" not found or not visible after argument-dependent lookup in contract InjectableOsteoporosisDrugsCoverage.
+  --> contracts/UnitTest.sol:16:30:
+   |
+16 |         bool meetsCriteria = insurance.meetsCriteriaForHomeHealthBenefit(true);
+   |                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 
 Error HH600: Compilation failed

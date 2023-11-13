@@ -1,0 +1,173 @@
+pragma solidity ^0.8.0;
+
+contract InjectableOsteoporosisDrugs {
+    struct Condition {
+        string system;
+        string code;
+        string display;
+    }
+    
+    struct Coding {
+        string system;
+        string code;
+        string display;
+    }
+    
+    struct CodeableConcept {
+        Coding[] coding;
+    }
+    
+    struct Encounter {
+        string class;
+        CodeableConcept[] type;
+    }
+    
+    struct Procedure {
+        CodeableConcept code;
+    }
+    
+    struct Summary {
+        Condition[] conditions;
+        Encounter[] encounters;
+        Procedure[] procedures;
+    }
+    
+    Summary summary;
+    
+    constructor() {
+        summary.conditions.push(Condition({
+            system: "http://snomed.info/sct",
+            code: "64859006",
+            display: "Osteoporosis"
+        }));
+        
+        summary.encounters.push(Encounter({
+            class: "ambulatory",
+            type: [
+                CodeableConcept({
+                    coding: [
+                        Coding({
+                            system: "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+                            code: "AMB",
+                            display: "ambulatory"
+                        })
+                    ]
+                })
+            ]
+        }));
+        
+        summary.procedures.push(Procedure({
+            code: CodeableConcept({
+                coding: [
+                    Coding({
+                        system: "http://snomed.info/sct",
+                        code: "397897004",
+                        display: "Injection of therapeutic substance"
+                    })
+                ]
+            })
+        }));
+        
+        summary.conditions.push(Condition({
+            system: "http://snomed.info/sct",
+            code: "263102004",
+            display: "Fracture of bone"
+        }));
+        
+        summary.conditions.push(Condition({
+            system: "http://snomed.info/sct",
+            code: "71341001",
+            display: "Postmenopausal osteoporosis"
+        }));
+        
+        summary.procedures.push(Procedure({
+            code: CodeableConcept({
+                coding: [
+                    Coding({
+                        system: "http://snomed.info/sct",
+                        code: "182353008",
+                        display: "Certification of inability to self-administer medication"
+                    })
+                ]
+            })
+        }));
+        
+        summary.procedures.push(Procedure({
+            code: CodeableConcept({
+                coding: [
+                    Coding({
+                        system: "http://snomed.info/sct",
+                        code: "182352009",
+                        display: "Certification of inability to learn to self-administer medication"
+                    })
+                ]
+            })
+        }));
+        
+        summary.procedures.push(Procedure({
+            code: CodeableConcept({
+                coding: [
+                    Coding({
+                        system: "http://snomed.info/sct",
+                        code: "182354002",
+                        display: "Certification of inability to administer medication by injection"
+                    })
+                ]
+            })
+        }));
+    }
+    
+    function isWomanWithOsteoporosis() public view returns (bool) {
+        for (uint i = 0; i < summary.conditions.length; i++) {
+            if (compareStrings(summary.conditions[i].code, "64859006") && compareStrings(summary.conditions[i].display, "Osteoporosis")) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    function hasFractureRelatedToOsteoporosis() public view returns (bool) {
+        for (uint i = 0; i < summary.conditions.length; i++) {
+            if (compareStrings(summary.conditions[i].code, "263102004") && compareStrings(summary.conditions[i].display, "Fracture of bone")) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    function unableToSelfAdminister() public view returns (bool) {
+        for (uint i = 0; i < summary.procedures.length; i++) {
+            if (compareStrings(summary.procedures[i].code.coding[0].code, "182353008") && compareStrings(summary.procedures[i].code.coding[0].display, "Certification of inability to self-administer medication")) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    function familyOrCaregiversUnableOrUnwilling() public view returns (bool) {
+        for (uint i = 0; i < summary.procedures.length; i++) {
+            if (compareStrings(summary.procedures[i].code.coding[0].code, "182355001") && compareStrings(summary.procedures[i].code.coding[0].display, "Family or caregiver unable or unwilling to administer medication by injection")) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    function medicareCoversInjectableOsteoporosisDrugs() public view returns (bool) {
+        if (isWomanWithOsteoporosis() && hasFractureRelatedToOsteoporosis() && unableToSelfAdminister()) {
+            return true;
+        }
+        return false;
+    }
+    
+    function medicareCoversHomeHealthNurseOrAide() public view returns (bool) {
+        if (medicareCoversInjectableOsteoporosisDrugs() && !familyOrCaregiversUnableOrUnwilling()) {
+            return true;
+        }
+        return false;
+    }
+    
+    function compareStrings(string memory a, string memory b) private pure returns (bool) {
+        return (keccak256(abi.encodePacked((a))) == keccak256(abi.encodePacked((b))));
+    }
+}

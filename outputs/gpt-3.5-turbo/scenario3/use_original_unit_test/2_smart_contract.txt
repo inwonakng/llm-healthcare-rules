@@ -1,0 +1,95 @@
+```solidity
+pragma solidity 0.8.0;
+
+contract MedicareInsurance {
+    struct Transplant {
+        bool isCovered;
+        bool hasPartA;
+        bool hasPartB;
+        bool hasPartD;
+        bool hasMedicareDueToESRD;
+        bool hasOtherHealthCoverage;
+        bool hasLostPartACoverage;
+        bool hasSignedUpForBenefit;
+        bool hasMetDeductible;
+    }
+    
+    mapping(address => Transplant) public policyHolders;
+    
+    function applyForCoverage() external {
+        policyHolders[msg.sender] = Transplant(
+            true,
+            true,
+            true,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false
+        );
+    }
+    
+    function updatePartBStatus(address policyHolder, bool hasPartB) external {
+        require(policyHolders[policyHolder].isCovered, "Policy holder is not covered");
+        policyHolders[policyHolder].hasPartB = hasPartB;
+    }
+    
+    function updatePartDStatus(address policyHolder, bool hasPartD) external {
+        require(policyHolders[policyHolder].isCovered, "Policy holder is not covered");
+        policyHolders[policyHolder].hasPartD = hasPartD;
+    }
+    
+    function updateMedicareESRDStatus(address policyHolder, bool hasMedicareDueToESRD) external {
+        require(policyHolders[policyHolder].isCovered, "Policy holder is not covered");
+        policyHolders[policyHolder].hasMedicareDueToESRD = hasMedicareDueToESRD;
+    }
+    
+    function updateOtherHealthCoverageStatus(address policyHolder, bool hasOtherHealthCoverage) external {
+        require(policyHolders[policyHolder].isCovered, "Policy holder is not covered");
+        policyHolders[policyHolder].hasOtherHealthCoverage = hasOtherHealthCoverage;
+    }
+    
+    function updateLostPartACoverageStatus(address policyHolder, bool hasLostPartACoverage) external {
+        require(policyHolders[policyHolder].isCovered, "Policy holder is not covered");
+        policyHolders[policyHolder].hasLostPartACoverage = hasLostPartACoverage;
+    }
+    
+    function updateSignedUpForBenefitStatus(address policyHolder, bool hasSignedUpForBenefit) external {
+        require(policyHolders[policyHolder].isCovered, "Policy holder is not covered");
+        policyHolders[policyHolder].hasSignedUpForBenefit = hasSignedUpForBenefit;
+    }
+    
+    function updateMetDeductibleStatus(address policyHolder, bool hasMetDeductible) external {
+        require(policyHolders[policyHolder].isCovered, "Policy holder is not covered");
+        policyHolders[policyHolder].hasMetDeductible = hasMetDeductible;
+    }
+    
+    function calculateMonthlyPremium() external view returns (uint256) {
+        return 9710;
+    }
+    
+    function calculateDeductible() external view returns (uint256) {
+        return 226;
+    }
+    
+    function calculateDrugPayment(uint256 approvedAmount) external view returns (uint256) {
+        return approvedAmount * 20 / 100;
+    }
+}
+```
+In this smart contract, we have a struct `Transplant` that represents the insurance coverage for a policy holder. The struct contains boolean variables to represent the various conditions mentioned in the insurance policy document.
+
+The `policyHolders` mapping is used to store the insurance coverage details for each policy holder.
+
+The `applyForCoverage` function allows a policy holder to apply for insurance coverage.
+
+The `updatePartBStatus`, `updatePartDStatus`, `updateMedicareESRDStatus`, `updateOtherHealthCoverageStatus`, `updateLostPartACoverageStatus`, `updateSignedUpForBenefitStatus`, and `updateMetDeductibleStatus` functions are used to update the status of the various conditions for a policy holder.
+
+The `calculateMonthlyPremium` function returns the monthly premium amount.
+
+The `calculateDeductible` function returns the deductible amount.
+
+The `calculateDrugPayment` function calculates the payment amount for immunosuppressive drugs based on the approved amount.
+
+Please note that the premium and deductible amounts are hardcoded in this example. In a real-world scenario, these values would be dynamic and could be updated by the insurance provider.

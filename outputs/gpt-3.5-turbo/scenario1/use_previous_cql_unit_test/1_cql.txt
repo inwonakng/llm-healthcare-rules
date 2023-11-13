@@ -1,0 +1,82 @@
+```cql
+library InsurancePolicy
+
+using FHIR version '4.0.1'
+
+define InjectableOsteoporosisDrugsCoverage:
+  exists (
+    [Condition: Condition | 
+      Condition.code.coding.exists(coding: Coding | 
+        coding.system = 'http://snomed.info/sct' and 
+        coding.code = '64859006' and 
+        coding.display = 'Osteoporosis'
+      )
+    ],
+    [Encounter: Encounter | 
+      Encounter.class = 'ambulatory' and 
+      Encounter.type.exists(type: CodeableConcept | 
+        type.coding.exists(coding: Coding | 
+          coding.system = 'http://terminology.hl7.org/CodeSystem/v3-ActCode' and 
+          coding.code = 'AMB' and 
+          coding.display = 'ambulatory'
+        )
+      )
+    ],
+    [Procedure: Procedure | 
+      Procedure.code.coding.exists(coding: Coding | 
+        coding.system = 'http://snomed.info/sct' and 
+        coding.code = '397897004' and 
+        coding.display = 'Injection of therapeutic substance'
+      )
+    ],
+    [Condition: Condition | 
+      Condition.code.coding.exists(coding: Coding | 
+        coding.system = 'http://snomed.info/sct' and 
+        coding.code = '263102004' and 
+        coding.display = 'Fracture of bone'
+      ) and 
+      Condition.verificationStatus = 'confirmed'
+    ],
+    [Condition: Condition | 
+      Condition.code.coding.exists(coding: Coding | 
+        coding.system = 'http://snomed.info/sct' and 
+        coding.code = '71341001' and 
+        coding.display = 'Postmenopausal osteoporosis'
+      )
+    ],
+    [Procedure: Procedure | 
+      Procedure.code.coding.exists(coding: Coding | 
+        coding.system = 'http://snomed.info/sct' and 
+        coding.code = '182353008' and 
+        coding.display = 'Certification of inability to self-administer medication'
+      )
+    ],
+    [Procedure: Procedure | 
+      Procedure.code.coding.exists(coding: Coding | 
+        coding.system = 'http://snomed.info/sct' and 
+        coding.code = '182352009' and 
+        coding.display = 'Certification of inability to learn to self-administer medication'
+      )
+    ],
+    [Procedure: Procedure | 
+      Procedure.code.coding.exists(coding: Coding | 
+        coding.system = 'http://snomed.info/sct' and 
+        coding.code = '182354002' and 
+        coding.display = 'Certification of inability to administer medication by injection'
+      )
+    ]
+  )
+
+define HomeHealthNurseOrAideCoverage:
+  InjectableOsteoporosisDrugsCoverage and
+  not exists (
+    [Procedure: Procedure | 
+      Procedure.code.coding.exists(coding: Coding | 
+        coding.system = 'http://snomed.info/sct' and 
+        coding.code = '182355001' and 
+        coding.display = 'Family or caregiver unable or unwilling to administer medication by injection'
+      )
+    ]
+  )
+```
+```

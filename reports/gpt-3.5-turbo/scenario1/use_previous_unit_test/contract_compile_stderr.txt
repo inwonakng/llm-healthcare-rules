@@ -2,3 +2,15 @@ Warning: SPDX license identifier not provided in source file. Before publishing,
 --> contracts/SmartContract.sol
 
 
+Warning: This declaration shadows an existing declaration.
+  --> contracts/SmartContract.sol:18:38:
+   |
+18 |     function requiresHomeHealthNurse(bool requiresHomeHealthNurse) public pure returns (bool) {
+   |                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Note: The shadowed declaration is here:
+  --> contracts/SmartContract.sol:18:5:
+   |
+18 |     function requiresHomeHealthNurse(bool requiresHomeHealthNurse) public pure returns (bool) {
+   |     ^ (Relevant source part starts here and spans across multiple lines).
+
+

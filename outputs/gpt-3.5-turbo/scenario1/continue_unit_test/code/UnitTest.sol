@@ -1,0 +1,31 @@
+pragma solidity ^0.8.0;
+
+import "./SmartContract.sol";
+import "./remix_tests.sol";
+
+
+contract YourContractTest {
+    YourContract yourContract;
+
+    function beforeEach() public {
+        yourContract = new YourContract();
+    }
+
+    function testCoverageConditions() public {
+        // Condition 1: You are a woman with osteoporosis who meets the criteria for the Medicare home health benefit.
+        bool meetsCriteria = yourContract.meetsCriteriaForHomeHealthBenefit("osteoporosis", "woman");
+        Assert.isTrue(meetsCriteria, "Condition 1 not met");
+
+        // Condition 2: You have a bone fracture that a doctor certifies was related to post-menopausal osteoporosis.
+        bool hasCertifiedFracture = yourContract.hasCertifiedFracture("post-menopausal osteoporosis");
+        Assert.isTrue(hasCertifiedFracture, "Condition 2 not met");
+
+        // Condition 3: Your doctor certifies that you are unable to give yourself the injection or learn how to give yourself the drug by injection.
+        bool unableToSelfInject = yourContract.isUnableToSelfInject();
+        Assert.isTrue(unableToSelfInject, "Condition 3 not met");
+
+        // Condition 4: If your family or caregivers are unable or unwilling to give you the drug by injection, Medicare will cover the home health nurse or aide to provide the injection.
+        bool requiresHomeHealthNurse = yourContract.requiresHomeHealthNurse();
+        Assert.isTrue(requiresHomeHealthNurse, "Condition 4 not met");
+    }
+}

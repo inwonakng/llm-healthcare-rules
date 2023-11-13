@@ -1,0 +1,65 @@
+pragma solidity ^0.8.0;
+
+import "./SmartContract.sol";
+import "./remix_tests.sol";
+
+
+contract InsurancePolicyContractTest {
+    InsurancePolicyContract insurancePolicyContract;
+
+    function beforeEach() public {
+        insurancePolicyContract = new InsurancePolicyContract();
+    }
+
+    function medicareCoversTransplantDrugTherapyTest() public {
+        Assert.isTrue(insurancePolicyContract.medicareCoversTransplantDrugTherapy(), "Medicare should cover transplant drug therapy");
+    }
+
+    function hasPartAAtTransplantTest() public {
+        Assert.isTrue(insurancePolicyContract.hasPartAAtTransplant(), "You must have Part A at the time of the covered transplant");
+    }
+
+    function hasPartBAtImmunosuppressiveDrugsTest() public {
+        Assert.isTrue(insurancePolicyContract.hasPartBAtImmunosuppressiveDrugs(), "You must have Part B at the time you get immunosuppressive drugs");
+    }
+
+    function partDCoversImmunosuppressiveDrugsTest() public {
+        Assert.isTrue(insurancePolicyContract.partDCoversImmunosuppressiveDrugs(), "Medicare drug coverage (Part D) should cover immunosuppressive drugs if Part B doesn’t cover them");
+    }
+
+    function canJoinMedicareDrugPlanTest() public {
+        Assert.isTrue(insurancePolicyContract.canJoinMedicareDrugPlan(), "If you have Original Medicare, you should be able to join a Medicare drug plan to get Medicare drug coverage");
+    }
+
+    function coverageEndsAfterKidneyTransplantTest() public {
+        Assert.isTrue(insurancePolicyContract.coverageEndsAfterKidneyTransplant(), "If you only have Medicare because of End-Stage Renal Disease (ESRD), your Medicare coverage, including immunosuppressive drug coverage, should end 36 months after a successful kidney transplant");
+    }
+
+    function medicareBenefitAfterCoverageLossTest() public {
+        Assert.isTrue(insurancePolicyContract.medicareBenefitAfterCoverageLoss(), "Medicare should offer a benefit that may help you if you lose Part A coverage 36 months after a kidney transplant and you don’t have certain types of other health coverage");
+    }
+
+    function benefitCoversImmunosuppressiveDrugsOnlyTest() public {
+        Assert.isTrue(insurancePolicyContract.benefitCoversImmunosuppressiveDrugsOnly(), "The benefit should only cover immunosuppressive drugs and no other items or services");
+    }
+
+    function benefitNotSubstituteForFullCoverageTest() public {
+        Assert.isTrue(insurancePolicyContract.benefitNotSubstituteForFullCoverage(), "The benefit should not be a substitute for full health coverage");
+    }
+
+    function canSignUpForBenefitAfterPartACoverageEndsTest() public {
+        Assert.isTrue(insurancePolicyContract.canSignUpForBenefitAfterPartACoverageEnds(), "If you qualify, you should be able to sign up for the benefit any time after your Part A coverage ends");
+    }
+
+    function monthlyPremium2023Test() public {
+        Assert.equal(insurancePolicyContract.monthlyPremium2023(), 97.10, "In 2023, the monthly premium for the immunosuppressive drug benefit should be $97.10");
+    }
+
+    function deductible2023Test() public {
+        Assert.equal(insurancePolicyContract.deductible2023(), 226, "In 2023, there should be a $226 deductible for the immunosuppressive drug benefit");
+    }
+
+    function paymentAfterDeductibleMetTest() public {
+        Assert.equal(insurancePolicyContract.paymentAfterDeductibleMet(), 20, "Once the deductible is met, you should pay 20% of the Medicare-approved amount for your immunosuppressive drugs");
+    }
+}

@@ -1,0 +1,92 @@
+### CQL Named Expressions
+```
+1. isWomanWithOsteoporosis: You are a woman with osteoporosis who meets the criteria for the Medicare home health benefit.
+2. hasFractureRelatedToOsteoporosis: You have a bone fracture that a doctor certifies was related to post-menopausal osteoporosis.
+3. unableToSelfAdminister: Your doctor certifies that you are unable to give yourself the injection or learn how to give yourself the drug by injection.
+4. familyOrCaregiversUnableOrUnwilling: Your family or caregivers are unable or unwilling to give you the drug by injection.
+```
+
+### Solidity Unit Tests
+
+```solidity
+pragma solidity ^0.8.0;
+
+import "remix_tests.sol";
+import "./{ContractName}.sol";
+
+contract InjectableOsteoporosisDrugsTest {
+    InjectableOsteoporosisDrugs contractInstance;
+    
+    function beforeEach() public {
+        contractInstance = new InjectableOsteoporosisDrugs();
+    }
+    
+    function isWomanWithOsteoporosisTest() public {
+        bool result = contractInstance.isWomanWithOsteoporosis();
+        Assert.isTrue(result, "Failed: isWomanWithOsteoporosis");
+    }
+    
+    function hasFractureRelatedToOsteoporosisTest() public {
+        bool result = contractInstance.hasFractureRelatedToOsteoporosis();
+        Assert.isTrue(result, "Failed: hasFractureRelatedToOsteoporosis");
+    }
+    
+    function unableToSelfAdministerTest() public {
+        bool result = contractInstance.unableToSelfAdminister();
+        Assert.isTrue(result, "Failed: unableToSelfAdminister");
+    }
+    
+    function familyOrCaregiversUnableOrUnwillingTest() public {
+        bool result = contractInstance.familyOrCaregiversUnableOrUnwilling();
+        Assert.isTrue(result, "Failed: familyOrCaregiversUnableOrUnwilling");
+    }
+    
+    function medicareCoversInjectableOsteoporosisDrugsTest() public {
+        bool result = contractInstance.medicareCoversInjectableOsteoporosisDrugs();
+        Assert.isTrue(result, "Failed: medicareCoversInjectableOsteoporosisDrugs");
+    }
+    
+    function medicareCoversHomeHealthNurseOrAideTest() public {
+        bool result = contractInstance.medicareCoversHomeHealthNurseOrAide();
+        Assert.isTrue(result, "Failed: medicareCoversHomeHealthNurseOrAide");
+    }
+}
+```
+
+### Smart Contract
+
+```solidity
+pragma solidity ^0.8.0;
+
+contract InjectableOsteoporosisDrugs {
+    function isWomanWithOsteoporosis() public view returns (bool) {
+        // Implement condition a: You are a woman with osteoporosis who meets the criteria for the Medicare home health benefit.
+        // Return true if the condition is met, otherwise return false.
+    }
+    
+    function hasFractureRelatedToOsteoporosis() public view returns (bool) {
+        // Implement condition b: You have a bone fracture that a doctor certifies was related to post-menopausal osteoporosis.
+        // Return true if the condition is met, otherwise return false.
+    }
+    
+    function unableToSelfAdminister() public view returns (bool) {
+        // Implement condition c: Your doctor certifies that you are unable to give yourself the injection or learn how to give yourself the drug by injection.
+        // Return true if the condition is met, otherwise return false.
+    }
+    
+    function familyOrCaregiversUnableOrUnwilling() public view returns (bool) {
+        // Implement condition 4: Your family or caregivers are unable or unwilling to give you the drug by injection.
+        // Return true if the condition is met, otherwise return false.
+    }
+    
+    function medicareCoversInjectableOsteoporosisDrugs() public view returns (bool) {
+        // Implement the overall condition for Medicare coverage of injectable osteoporosis drugs.
+        // Return true if all conditions are met, otherwise return false.
+    }
+    
+    function medicareCoversHomeHealthNurseOrAide() public view returns (bool) {
+        // Implement the condition for Medicare coverage of home health nurse or aide to provide the injection.
+        // Return true if the condition is met, otherwise return false.
+    }
+}
+```

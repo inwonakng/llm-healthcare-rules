@@ -1,0 +1,104 @@
+```solidity
+pragma solidity ^0.8.0;
+
+contract MedicareInsurance {
+    struct Transplant {
+        bool isCovered;
+        bool hasPartA;
+        bool hasPartB;
+    }
+
+    struct DrugCoverage {
+        bool hasDrugCoverage;
+        bool joinedDrugPlan;
+    }
+
+    struct MedicareCoverage {
+        bool endsAfterKidneyTransplant;
+        bool hasBenefitForLossOfPartA;
+        bool onlyCoversDrugs;
+        bool isSubstituteForFullCoverage;
+        bool canSignUpForBenefit;
+    }
+
+    struct DrugBenefit {
+        uint premium;
+        uint deductible;
+        uint paymentAfterDeductible;
+    }
+
+    Transplant public transplant;
+    DrugCoverage public drugCoverage;
+    MedicareCoverage public medicareCoverage;
+    DrugBenefit public drugBenefit;
+
+    constructor() {
+        // Initialize default values
+        transplant.isCovered = true;
+        transplant.hasPartA = true;
+        transplant.hasPartB = true;
+
+        drugCoverage.hasDrugCoverage = true;
+        drugCoverage.joinedDrugPlan = true;
+
+        medicareCoverage.endsAfterKidneyTransplant = true;
+        medicareCoverage.hasBenefitForLossOfPartA = true;
+        medicareCoverage.onlyCoversDrugs = true;
+        medicareCoverage.isSubstituteForFullCoverage = false;
+        medicareCoverage.canSignUpForBenefit = true;
+
+        drugBenefit.premium = 9710;
+        drugBenefit.deductible = 226;
+        drugBenefit.paymentAfterDeductible = 20;
+    }
+
+    function isTransplantDrugTherapyCovered() public view returns (bool) {
+        return transplant.isCovered;
+    }
+
+    function hasPartA() public view returns (bool) {
+        return transplant.hasPartA;
+    }
+
+    function hasPartB() public view returns (bool) {
+        return transplant.hasPartB;
+    }
+
+    function hasMedicareDrugCoverage() public view returns (bool) {
+        return drugCoverage.hasDrugCoverage;
+    }
+
+    function joinMedicareDrugPlan() public view returns (bool) {
+        return drugCoverage.joinedDrugPlan;
+    }
+
+    function isCoverageEndsAfterKidneyTransplant() public view returns (bool) {
+        return medicareCoverage.endsAfterKidneyTransplant;
+    }
+
+    function hasMedicareBenefitForLossOfPartA() public view returns (bool) {
+        return medicareCoverage.hasBenefitForLossOfPartA;
+    }
+
+    function doesMedicareBenefitOnlyCoverDrugs() public view returns (bool) {
+        return medicareCoverage.onlyCoversDrugs;
+    }
+
+    function isMedicareBenefitSubstituteForFullCoverage() public view returns (bool) {
+        return medicareCoverage.isSubstituteForFullCoverage;
+    }
+
+    function canSignUpForMedicareBenefit() public view returns (bool) {
+        return medicareCoverage.canSignUpForBenefit;
+    }
+
+    function getPremiumAndDeductible() public view returns (uint, uint) {
+        return (drugBenefit.premium, drugBenefit.deductible);
+    }
+
+    function calculatePaymentAfterDeductible() public view returns (uint) {
+        return drugBenefit.paymentAfterDeductible;
+    }
+}
+```
+Note: The contract provided only implements the getter functions for the various conditions described in the insurance policy document. You can add additional functions and logic as needed.

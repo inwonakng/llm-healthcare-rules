@@ -1,0 +1,94 @@
+```solidity
+pragma solidity ^0.8.0;
+
+contract InsurancePolicyContract {
+    struct InsurancePolicy {
+        bool medicareCoversTransplantDrugTherapy;
+        bool hasPartAAtTransplant;
+        bool hasPartBAtImmunosuppressiveDrugs;
+        bool partDCoversImmunosuppressiveDrugs;
+        bool canJoinMedicareDrugPlan;
+        bool coverageEndsAfterKidneyTransplant;
+        bool medicareBenefitAfterCoverageLoss;
+        bool benefitCoversImmunosuppressiveDrugsOnly;
+        bool benefitNotSubstituteForFullCoverage;
+        bool canSignUpForBenefitAfterPartACoverageEnds;
+        uint256 monthlyPremium2023;
+        uint256 deductible2023;
+        uint256 paymentAfterDeductibleMet;
+    }
+
+    InsurancePolicy public insurancePolicy;
+
+    constructor() {
+        insurancePolicy = InsurancePolicy(
+            true,   // medicareCoversTransplantDrugTherapy
+            true,   // hasPartAAtTransplant
+            true,   // hasPartBAtImmunosuppressiveDrugs
+            true,   // partDCoversImmunosuppressiveDrugs
+            true,   // canJoinMedicareDrugPlan
+            true,   // coverageEndsAfterKidneyTransplant
+            true,   // medicareBenefitAfterCoverageLoss
+            true,   // benefitCoversImmunosuppressiveDrugsOnly
+            true,   // benefitNotSubstituteForFullCoverage
+            true,   // canSignUpForBenefitAfterPartACoverageEnds
+            97.10,  // monthlyPremium2023
+            226,    // deductible2023
+            20      // paymentAfterDeductibleMet
+        );
+    }
+
+    function medicareCoversTransplantDrugTherapy() public view returns (bool) {
+        return insurancePolicy.medicareCoversTransplantDrugTherapy;
+    }
+
+    function hasPartAAtTransplant() public view returns (bool) {
+        return insurancePolicy.hasPartAAtTransplant;
+    }
+
+    function hasPartBAtImmunosuppressiveDrugs() public view returns (bool) {
+        return insurancePolicy.hasPartBAtImmunosuppressiveDrugs;
+    }
+
+    function partDCoversImmunosuppressiveDrugs() public view returns (bool) {
+        return insurancePolicy.partDCoversImmunosuppressiveDrugs;
+    }
+
+    function canJoinMedicareDrugPlan() public view returns (bool) {
+        return insurancePolicy.canJoinMedicareDrugPlan;
+    }
+
+    function coverageEndsAfterKidneyTransplant() public view returns (bool) {
+        return insurancePolicy.coverageEndsAfterKidneyTransplant;
+    }
+
+    function medicareBenefitAfterCoverageLoss() public view returns (bool) {
+        return insurancePolicy.medicareBenefitAfterCoverageLoss;
+    }
+
+    function benefitCoversImmunosuppressiveDrugsOnly() public view returns (bool) {
+        return insurancePolicy.benefitCoversImmunosuppressiveDrugsOnly;
+    }
+
+    function benefitNotSubstituteForFullCoverage() public view returns (bool) {
+        return insurancePolicy.benefitNotSubstituteForFullCoverage;
+    }
+
+    function canSignUpForBenefitAfterPartACoverageEnds() public view returns (bool) {
+        return insurancePolicy.canSignUpForBenefitAfterPartACoverageEnds;
+    }
+
+    function monthlyPremium2023() public view returns (uint256) {
+        return insurancePolicy.monthlyPremium2023;
+    }
+
+    function deductible2023() public view returns (uint256) {
+        return insurancePolicy.deductible2023;
+    }
+
+    function paymentAfterDeductibleMet() public view returns (uint256) {
+        return insurancePolicy.paymentAfterDeductibleMet;
+    }
+}
+```
+```
