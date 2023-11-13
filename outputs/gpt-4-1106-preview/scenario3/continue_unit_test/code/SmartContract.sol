@@ -1,0 +1,124 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+contract TransplantDrugCoverage {
+    // Constants for premiums and deductibles
+    uint256 public constant MONTHLY_PREMIUM_CENTS = 9710; // $97.10
+    uint256 public constant DEDUCTIBLE_CENTS = 22600; // $226
+
+    // Struct to encapsulate user details
+    struct User {
+        bool hasMedicareContribution;
+        bool hasPartA;
+        bool hasPartB;
+        bool hasPartD;
+        bool hasESRD;
+        uint256 transplantDate;
+        bool hasOtherCoverage;
+        uint256 partAEndDate;
+        uint256 amountPaidTowardsDeductible;
+    }
+
+    // Mapping from user address to their details
+    mapping(address => User) public users;
+
+    // Events
+    event CoverageChecked(address user, bool isCovered);
+    event EligibilityChecked(address user, bool isEligible);
+    event BenefitCosts(uint256 premium, uint256 deductible);
+
+    // Function to check transplant drug coverage
+    function checkTransplantDrugCoverage(address userAddress) public returns (bool) {
+        User storage user = users[userAddress];
+        bool isCovered = user.hasMedicareContribution;
+        emit CoverageChecked(userAddress, isCovered);
+        return isCovered;
+    }
+
+    // Function to check Part A eligibility at the time of the transplant
+    function checkPartAEligibility(address userAddress) public returns (bool) {
+        User storage user = users[userAddress];
+        bool isEligible = user.hasPartA;
+        emit EligibilityChecked(userAddress, isEligible);
+        return isEligible;
+    }
+
+    // Function to check Part B eligibility when receiving immunosuppressive drugs
+    function checkPartBEligibility(address userAddress) public returns (bool) {
+        User storage user = users[userAddress];
+        bool isEligible = user.hasPartB;
+        emit EligibilityChecked(userAddress, isEligible);
+        return isEligible;
+    }
+
+    // Function to check Part D coverage if Part B does not cover
+    function checkPartDCoverage(address userAddress) public returns (bool) {
+        User storage user = users[userAddress];
+        bool isCovered = !user.hasPartB && user.hasPartD;
+        emit CoverageChecked(userAddress, isCovered);
+        return isCovered;
+    }
+
+    // Function to check if ESRD-based Medicare coverage ends 36 months after a successful kidney transplant
+    function checkESRDCoverageEnd(address userAddress) public returns (bool) {
+        User storage user = users[userAddress];
+        bool isCoverageEnded = user.hasESRD && (block.timestamp - user.transplantDate) > 36 * 30 days;
+        emit EligibilityChecked(userAddress, isCoverageEnded);
+        return isCoverageEnded;
+    }
+
+    // Function to check eligibility for immunosuppressive drug benefit after Part A ends and without other coverage
+    function checkImmunosuppressiveDrugBenefitEligibility(address userAddress) public returns (bool) {
+        User storage user = users[userAddress];
+        bool isEligibleForBenefit = !user.hasOtherCoverage && (block.timestamp > user.partAEndDate);
+        emit EligibilityChecked(userAddress, isEligibleForBenefit);
+        return isEligibleForBenefit;
+    }
+
+    // Function to get the costs for immunosuppressive drug benefit
+    function getImmunosuppressiveDrugBenefitCosts() public pure returns (uint256, uint256) {
+        emit BenefitCosts(MONTHLY_PREMIUM_CENTS, DEDUCTIBLE_CENTS);
+        return (MONTHLY_PREMIUM_CENTS, DEDUCTIBLE_CENTS);
+    }
+
+    // Function to pay towards deductible
+    function payTowardsDeductible(address userAddress, uint256 amountCents) public {
+        User storage user = users[userAddress];
+        user.amountPaidTowardsDeductible += amountCents;
+    }
+
+    // Function to calculate the cost after deductible is met
+    function calculateCostAfterDeductible(address userAddress, uint256 drugCostCents) public view returns (uint256) {
+        User storage user = users[userAddress];
+        if (user.amountPaidTowardsDeductible >= DEDUCTIBLE_CENTS) {
+            return drugCostCents * 20 / 100; // 20% of the Medicare-approved amount
+        } else {
+            return drugCostCents; // Full cost if deductible not met
+        }
+    }
+
+    // Function to register or update a user's details
+    function registerOrUpdateUser(
+        address userAddress,
+        bool hasMedicareContribution,
+        bool hasPartA,
+        bool hasPartB,
+        bool hasPartD,
+        bool hasESRD,
+        uint256 transplantDate,
+        bool hasOtherCoverage,
+        uint256 partAEndDate
+    ) public {
+        users[userAddress] = User({
+            hasMedicareContribution: hasMedicareContribution,
+            hasPartA: hasPartA,
+            hasPartB: hasPartB,
+            hasPartD: hasPartD,
+            hasESRD: hasESRD,
+            transplantDate: transplantDate,
+            hasOtherCoverage: hasOtherCoverage,
+            partAEndDate: partAEndDate,
+            amountPaidTowardsDeductible: 0
+        });
+    }
+}

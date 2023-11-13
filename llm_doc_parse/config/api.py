@@ -1,7 +1,7 @@
 import os
 from dotenv import load_dotenv
-from .path import DOTENV_PATH
-load_dotenv(DOTENV_PATH)
+from .path import DOTENV_DIR
+load_dotenv(DOTENV_DIR)
 
 def load_api_config(model_name):
     if model_name in ['gpt-4', 'gpt-4-1106-preview', 'gpt-3.5-turbo']:

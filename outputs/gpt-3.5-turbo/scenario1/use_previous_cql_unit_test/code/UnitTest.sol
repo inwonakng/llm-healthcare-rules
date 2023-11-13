@@ -1,0 +1,19 @@
+1. isWomanWithOsteoporosis: boolean
+   - Description: Checks if the person is a woman with osteoporosis.
+   - Expression: gender == "female" && osteoporosis == true
+
+2. meetsCriteriaForHomeHealthBenefit: boolean
+   - Description: Checks if the person meets the criteria for the Medicare home health benefit.
+   - Expression: criteriaForHomeHealthBenefit == true
+
+3. hasFractureRelatedToOsteoporosis: boolean
+   - Description: Checks if the person has a bone fracture that is related to post-menopausal osteoporosis.
+   - Expression: fractureRelatedToOsteoporosis == true
+
+4. unableToSelfAdministerInjection: boolean
+   - Description: Checks if the person is unable to give themselves the injection or learn how to give themselves the drug by injection.
+   - Expression: unableToSelfAdminister == true
+
+5. familyOrCaregiversUnableOrUnwilling: boolean
+   - Description: Checks if the person's family or caregivers are unable or unwilling to give them the drug by injection.
+   - Expression: familyOrCaregivers == "unableOrUnwilling"

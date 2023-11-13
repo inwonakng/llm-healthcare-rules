@@ -1,0 +1,72 @@
+TypeError: Wrong argument count for function call: 3 arguments given but expected 1.
+  --> contracts/UnitTest.sol:35:26:
+   |
+35 |         bool isCovered = ivigCoverageContract.isIVIGCovered(params.providedInHome, params.hasPrimaryImmuneDeficiency, params.medicallyAppropriate);
+   |                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+TypeError: Different number of components on the left hand side (1) than on the right hand side (3).
+  --> contracts/UnitTest.sol:35:9:
+   |
+35 |         bool isCovered = ivigCoverageContract.isIVIGCovered(params.providedInHome, params.hasPrimaryImmuneDeficiency, params.medicallyAppropriate);
+   |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+TypeError: Wrong argument count for function call: 3 arguments given but expected 1.
+  --> contracts/UnitTest.sol:49:26:
+   |
+49 |         bool isCovered = ivigCoverageContract.isIVIGCovered(params.providedInHome, params.hasPrimaryImmuneDeficiency, params.medicallyAppropriate);
+   |                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+TypeError: Different number of components on the left hand side (1) than on the right hand side (3).
+  --> contracts/UnitTest.sol:49:9:
+   |
+49 |         bool isCovered = ivigCoverageContract.isIVIGCovered(params.providedInHome, params.hasPrimaryImmuneDeficiency, params.medicallyAppropriate);
+   |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+TypeError: Wrong argument count for function call: 3 arguments given but expected 1.
+  --> contracts/UnitTest.sol:63:26:
+   |
+63 |         bool isCovered = ivigCoverageContract.isIVIGCovered(params.providedInHome, params.hasPrimaryImmuneDeficiency, params.medicallyAppropriate);
+   |                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+TypeError: Different number of components on the left hand side (1) than on the right hand side (3).
+  --> contracts/UnitTest.sol:63:9:
+   |
+63 |         bool isCovered = ivigCoverageContract.isIVIGCovered(params.providedInHome, params.hasPrimaryImmuneDeficiency, params.medicallyAppropriate);
+   |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+TypeError: Wrong argument count for function call: 3 arguments given but expected 1.
+  --> contracts/UnitTest.sol:77:26:
+   |
+77 |         bool isCovered = ivigCoverageContract.isIVIGCovered(params.providedInHome, params.hasPrimaryImmuneDeficiency, params.medicallyAppropriate);
+   |                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+TypeError: Different number of components on the left hand side (1) than on the right hand side (3).
+  --> contracts/UnitTest.sol:77:9:
+   |
+77 |         bool isCovered = ivigCoverageContract.isIVIGCovered(params.providedInHome, params.hasPrimaryImmuneDeficiency, params.medicallyAppropriate);
+   |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+TypeError: Wrong argument count for function call: 3 arguments given but expected 1.
+  --> contracts/UnitTest.sol:91:26:
+   |
+91 |         bool isCovered = ivigCoverageContract.isIVIGCovered(params.providedInHome, params.hasPrimaryImmuneDeficiency, params.medicallyAppropriate);
+   |                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+TypeError: Different number of components on the left hand side (1) than on the right hand side (3).
+  --> contracts/UnitTest.sol:91:9:
+   |
+91 |         bool isCovered = ivigCoverageContract.isIVIGCovered(params.providedInHome, params.hasPrimaryImmuneDeficiency, params.medicallyAppropriate);
+   |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+Error HH600: Compilation failed
+For more info go to https://hardhat.org/HH600 or run Hardhat with --show-stack-traces

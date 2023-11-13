@@ -1,11 +1,16 @@
 from typing import Literal
+import shutil
 import yaml
-import json
 import click
 
-from .config.path import OUTPUT_PATH, TEMPLATE_PATH, DOC_PATH
+from .config.path import OUTPUT_DIR, TEMPLATES_DIR, HARDHAT_DIR, REPORT_DIR
 from .prompt import Prompt
-from .utils import progress_bar, parse_mode, extract_codeblock, remove_imports
+from .utils import (
+    progress_bar,
+    parse_mode,
+    parse_solidity,
+    run_hardhat_compile,
+)
 
 @click.command()
 @click.argument('doc_name', default='scenario1')
@@ -22,8 +27,8 @@ def run(
     with progress_bar() as progress:    
         run_task = progress.add_task(f'{model} -- {doc_name}', total=len(modes_to_run))
         for mode in modes_to_run:
-            save_dir = OUTPUT_PATH/model/doc_name/mode
-            configs = yaml.safe_load(open(TEMPLATE_PATH/f'{mode}.yaml'))
+            save_dir = OUTPUT_DIR/model/doc_name/mode
+            configs = yaml.safe_load(open(TEMPLATES_DIR/f'{mode}.yaml'))
             output_files = [
                 (save_dir / f"{i}_{raw_conf['task']}.txt")
                 for i, raw_conf in enumerate(configs)
@@ -33,33 +38,75 @@ def run(
                 continue
 
             # load the unit_test and solidity file
-            unit_test_output, solidity_output = '', ''
+            unit_test_output, smart_contract_output = '', ''
             for f in output_files:
                 if 'unit_test' in f.name:
                     unit_test_output = open(f).read()
-                if 'solidity' in f.name:
-                    solidity_output = open(f).read()
+                if 'smart_contract' in f.name:
+                    smart_contract_output = open(f).read()
             if not unit_test_output:
                 print(f'{mode}: unit_test output is empty, skipping..')
-            if not solidity_output:
+            if not smart_contract_output:
                 print(f'{mode}: solidity output is empty, skipping..')
 
-            unit_test_code = remove_imports(extract_codeblock(unit_test_output))
-            solidity_code = extract_codeblock(solidity_output)
+            unit_test_code = parse_solidity(
+                unit_test_output,
+                solidity_version = '0.8.0',
+                new_imports = [
+                    './SmartContract.sol',
+                    './remix_tests.sol'
+                ]
+            )
+            smart_contract_code = parse_solidity(
+                smart_contract_output,
+                solidity_version = '0.8.0',
+            )
             
             code_save_dir = save_dir / 'code'
-            code_save_dir.mkdir(exist_ok=True, parents=True)
-            open(code_save_dir / 'unit_test.sol', 'w').write(unit_test_code)
-            open(code_save_dir / 'smart_contract.sol', 'w').write(solidity_code)
+            code_save_dir.mkdir(parents=True, exist_ok=True)
+            
+            unit_test_file = code_save_dir / 'UnitTest.sol'
+            smart_contract_file = code_save_dir / 'SmartContract.sol'
+            hardhat_unit_test_file = HARDHAT_DIR / 'contracts/UnitTest.sol'
+            hardhat_smart_contract_file = HARDHAT_DIR / 'contracts/SmartContract.sol'
+            hardhat_remix_test_file = HARDHAT_DIR / 'contracts/remix_tests.sol'
+            hardhat_remix_test_template_file = HARDHAT_DIR / 'remix/remix_tests.sol'
 
-            print('-'*20 + 'unit_test' + '-'*20)
-            print(unit_test_code)
-            print('-'*20 + 'smart contract' + '-'*20)
-            print(solidity_code)
-            print('='*50)
+            open(unit_test_file, 'w').write(unit_test_code)
+            open(smart_contract_file, 'w').write(smart_contract_code)
 
+            report_dir = REPORT_DIR/model/doc_name/mode
+            report_dir.mkdir(parents=True, exist_ok=True)
+
+            # Compile just the smart contract
+            shutil.copy(smart_contract_file, hardhat_smart_contract_file)
+            stdout_msg, stderr_msg = run_hardhat_compile()
+            open(report_dir / 'contract_compile_stdout.txt', 'w').write(stdout_msg)
+            open(report_dir / 'contract_compile_stderr.txt', 'w').write(stderr_msg)
+            # print('compiled contract')
+            # print(stdout_msg)
+            # print(stderr_msg)
+
+            # Compile the unit test with the smart contract
+            shutil.copy(hardhat_remix_test_template_file, hardhat_remix_test_file)
+            shutil.copy(unit_test_file, hardhat_unit_test_file)
+            stdout_msg, stderr_msg = run_hardhat_compile()
+            open(report_dir / 'test_compile_stdout.txt', 'w').write(stdout_msg)
+            open(report_dir / 'test_compile_stderr.txt', 'w').write(stderr_msg)
+            # print('compiled test')
+            # print(stdout_msg)
+            # print(stderr_msg)
+
+            # Clean up
+            if hardhat_remix_test_file.is_file():
+                hardhat_remix_test_file.unlink()
+            if hardhat_smart_contract_file.is_file():
+                hardhat_smart_contract_file.unlink()
+            if hardhat_unit_test_file.is_file():
+                hardhat_unit_test_file.unlink()
+            
             progress.advance(run_task)
-            break
+            # break
 
 if __name__ == "__main__":
     run()

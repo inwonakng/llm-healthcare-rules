@@ -1,0 +1,45 @@
+pragma solidity ^0.8.0;
+
+contract InsurancePolicy {
+    struct Patient {
+        string condition;
+        uint age;
+    }
+
+    struct Procedure {
+        string code;
+    }
+
+    struct Coverage {
+        string code;
+    }
+
+    function coverageForPrimaryImmuneDeficiency(string memory condition) public pure returns (bool) {
+        return keccak256(bytes(condition)) == keccak256(bytes("Primary Immune Deficiency Disease"));
+    }
+
+    function ivigInHomeMedicallyAppropriate(string memory procedureCode, uint age) public pure returns (bool) {
+        return keccak256(bytes(procedureCode)) == keccak256(bytes("Intravenous Immune Globulin (IVIG)")) && age >= 18;
+    }
+
+    function medicarePartBCoversIVIG(string memory coverageCode, string memory procedureCode) public pure returns (bool) {
+        return keccak256(bytes(coverageCode)) == keccak256(bytes("Medicare Part B")) && keccak256(bytes(procedureCode)) == keccak256(bytes("Intravenous Immune Globulin (IVIG)"));
+    }
+
+    function nonCoveredItemsAndServices(string memory procedureCode, string memory nonCoveredProcedureCode) public pure returns (bool) {
+        return keccak256(bytes(procedureCode)) == keccak256(bytes("Intravenous Immune Globulin (IVIG)")) && keccak256(bytes(nonCoveredProcedureCode)) != keccak256(bytes("IVIG Administration"));
+    }
+
+    function meetsInsurancePolicyRequirements(
+        string memory condition,
+        string memory procedureCode,
+        uint age,
+        string memory coverageCode,
+        string memory nonCoveredProcedureCode
+    ) public pure returns (bool) {
+        return coverageForPrimaryImmuneDeficiency(condition) &&
+            ivigInHomeMedicallyAppropriate(procedureCode, age) &&
+            medicarePartBCoversIVIG(coverageCode, procedureCode) &&
+            !nonCoveredItemsAndServices(procedureCode, nonCoveredProcedureCode);
+    }
+}

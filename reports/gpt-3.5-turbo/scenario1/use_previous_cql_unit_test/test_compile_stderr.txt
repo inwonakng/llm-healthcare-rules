@@ -1,0 +1,16 @@
+ParserError: Expected identifier but got 'type'
+  --> contracts/SmartContract.sol:24:27:
+   |
+24 |         CodeableConcept[] type;
+   |                           ^^^^
+
+
+ParserError: Expected pragma, import directive or contract/interface/library/struct/enum/constant/function definition.
+ --> contracts/UnitTest.sol:1:1:
+  |
+1 | 1. isWomanWithOsteoporosis: boolean
+  | ^
+
+
+Error HH600: Compilation failed
+For more info go to https://hardhat.org/HH600 or run Hardhat with --show-stack-traces

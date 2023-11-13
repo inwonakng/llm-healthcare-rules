@@ -1,0 +1,72 @@
+DeclarationError: Undeclared identifier.
+  --> contracts/UnitTest.sol:19:67:
+   |
+19 |         bool result = coverageContract.hasPartAAtTimeOfTransplant(patientId);
+   |                                                                   ^^^^^^^^^
+
+
+DeclarationError: Undeclared identifier.
+  --> contracts/UnitTest.sol:25:65:
+   |
+25 |         bool result = coverageContract.hasPartBWhenGettingDrugs(patientId);
+   |                                                                 ^^^^^^^^^
+
+
+DeclarationError: Undeclared identifier.
+  --> contracts/UnitTest.sol:31:60:
+   |
+31 |         bool result = coverageContract.hasOriginalMedicare(patientId);
+   |                                                            ^^^^^^^^^
+
+
+DeclarationError: Undeclared identifier.
+  --> contracts/UnitTest.sol:37:64:
+   |
+37 |         bool result = coverageContract.hasPartDIfPartBNotCover(patientId);
+   |                                                                ^^^^^^^^^
+
+
+DeclarationError: Undeclared identifier.
+  --> contracts/UnitTest.sol:43:72:
+   |
+43 |         bool result = coverageContract.hasESRDCoverageEndsPost36Months(patientId);
+   |                                                                        ^^^^^^^^^
+
+
+DeclarationError: Undeclared identifier.
+  --> contracts/UnitTest.sol:49:80:
+   |
+49 |         bool result = coverageContract.eligibleForImmunosuppressiveDrugBenefit(patientId);
+   |                                                                                ^^^^^^^^^
+
+
+DeclarationError: Undeclared identifier.
+  --> contracts/UnitTest.sol:55:73:
+   |
+55 |         bool result = coverageContract.immunodrugBenefitCoversDrugsOnly(patientId);
+   |                                                                         ^^^^^^^^^
+
+
+DeclarationError: Undeclared identifier.
+  --> contracts/UnitTest.sol:61:82:
+   |
+61 |         bool result = coverageContract.canEnrollInImmunodrugBenefitPostPartAEnds(patientId);
+   |                                                                                  ^^^^^^^^^
+
+
+DeclarationError: Undeclared identifier.
+  --> contracts/UnitTest.sol:79:67:
+   |
+79 |         bool result = coverageContract.pay20PercentPostDeductible(patientId);
+   |                                                                   ^^^^^^^^^
+
+
+DeclarationError: Undeclared identifier.
+  --> contracts/UnitTest.sol:85:54:
+   |
+85 |         bool result = coverageContract.finalDecision(patientId);
+   |                                                      ^^^^^^^^^
+
+
+Error HH600: Compilation failed
+For more info go to https://hardhat.org/HH600 or run Hardhat with --show-stack-traces

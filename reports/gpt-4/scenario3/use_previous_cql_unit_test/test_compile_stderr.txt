@@ -1,0 +1,16 @@
+ParserError: Expected ';' but got identifier
+  --> contracts/SmartContract.sol:44:126:
+   |
+44 |         return policyHolders[_policyHolder].hasESRD && (block.timestamp - policyHolders[_policyHolder].transplantTime) >= 36 months;
+   |                                                                                                                              ^^^^^^
+
+
+ParserError: Invalid character in string.
+  --> contracts/UnitTest.sol:27:36:
+   |
+27 |         Assert.equal(result, true, "Medicare drug coverage (Part D) should cover immunosuppressive drugs if Part B doesn’t cover them");
+   |                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+Error HH600: Compilation failed
+For more info go to https://hardhat.org/HH600 or run Hardhat with --show-stack-traces

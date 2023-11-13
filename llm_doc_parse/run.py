@@ -3,7 +3,7 @@ import yaml
 import json
 import click
 
-from .config.path import OUTPUT_PATH, TEMPLATE_PATH, DOC_PATH
+from .config.path import OUTPUT_DIR, TEMPLATES_DIR, DOCS_DIR
 from .prompt import Prompt
 from .utils import parse_mode, progress_bar
 
@@ -16,22 +16,23 @@ def run(
     model: Literal['gpt-3.5-turbo', 'gpt-4', 'gpt-4-1106-preview', 'codellama'],
     mode: str = 'all',
 ):
-    document = open(DOC_PATH/f'{doc_name}.txt').read()
-    prompt = Prompt.load_from_file(TEMPLATE_PATH/'tasks.yaml')
+    document = open(DOCS_DIR/f'{doc_name}.txt').read()
+    prompt = Prompt.load_from_file(TEMPLATES_DIR/'tasks.yaml')
     
     modes_to_run = parse_mode(mode)
     with progress_bar() as progress:    
         run_task = progress.add_task(f'{model} -- {doc_name}', total=len(modes_to_run))
         for mode in modes_to_run:
-            save_dir = OUTPUT_PATH/model/doc_name/mode
+            save_dir = OUTPUT_DIR/model/doc_name/mode
             save_dir.mkdir(parents=True, exist_ok=True)
             continue_conversation = 'continue' in mode
-            configs = yaml.safe_load(open(TEMPLATE_PATH/f'{mode}.yaml'))
+            configs = yaml.safe_load(open(TEMPLATES_DIR/f'{mode}.yaml'))
 
             if all(
                 (save_dir / f"{i}_{raw_conf['task']}.txt").is_file()
                 for i, raw_conf in enumerate(configs)
             ):
+                progress.advance(run_task)
                 continue
 
             prompt.execute(

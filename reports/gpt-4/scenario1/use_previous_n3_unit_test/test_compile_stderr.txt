@@ -1,0 +1,38 @@
+Warning: SPDX license identifier not provided in source file. Before publishing, consider adding a comment containing "SPDX-License-Identifier: <SPDX-License>" to each source file. Use "SPDX-License-Identifier: UNLICENSED" for non-open-source code. Please see https://spdx.org for more information.
+--> contracts/SmartContract.sol
+
+
+Warning: SPDX license identifier not provided in source file. Before publishing, consider adding a comment containing "SPDX-License-Identifier: <SPDX-License>" to each source file. Use "SPDX-License-Identifier: UNLICENSED" for non-open-source code. Please see https://spdx.org for more information.
+--> contracts/UnitTest.sol
+
+
+TypeError: Wrong argument count for function call: 2 arguments given but expected 1.
+  --> contracts/UnitTest.sol:11:23:
+   |
+11 |         bool result = medicareContract.checkEligibility(true, true);
+   |                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+TypeError: Invalid type for argument in function call. Invalid implicit conversion from bool to struct MedicareContract.Patient memory requested.
+  --> contracts/UnitTest.sol:17:58:
+   |
+17 |         bool result = medicareContract.checkBoneFracture(true);
+   |                                                          ^^^^
+
+
+TypeError: Invalid type for argument in function call. Invalid implicit conversion from bool to struct MedicareContract.Patient memory requested.
+  --> contracts/UnitTest.sol:23:67:
+   |
+23 |         bool result = medicareContract.checkSelfAdministerAbility(false);
+   |                                                                   ^^^^^
+
+
+TypeError: Wrong argument count for function call: 2 arguments given but expected 1.
+  --> contracts/UnitTest.sol:29:23:
+   |
+29 |         bool result = medicareContract.checkHomeHealthNurseCoverage(true, false);
+   |                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+Error HH600: Compilation failed
+For more info go to https://hardhat.org/HH600 or run Hardhat with --show-stack-traces

@@ -1,0 +1,12 @@
+Warning: This declaration shadows an existing declaration.
+  --> contracts/SmartContract.sol:49:42:
+   |
+49 |     function isEligibleForSpecialBenefit(bool isEligibleForSpecialBenefit, bool hasPartA) public pure returns (bool) {
+   |                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Note: The shadowed declaration is here:
+  --> contracts/SmartContract.sol:49:5:
+   |
+49 |     function isEligibleForSpecialBenefit(bool isEligibleForSpecialBenefit, bool hasPartA) public pure returns (bool) {
+   |     ^ (Relevant source part starts here and spans across multiple lines).
+
+

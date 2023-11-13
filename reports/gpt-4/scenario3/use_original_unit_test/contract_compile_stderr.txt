@@ -1,0 +1,9 @@
+ParserError: Expected ',' but got identifier
+  --> contracts/SmartContract.sol:51:45:
+   |
+51 |         require(patient.transplantTime + 36 months <= block.timestamp, "Must be 36 months after a successful kidney transplant");
+   |                                             ^^^^^^
+
+
+Error HH600: Compilation failed
+For more info go to https://hardhat.org/HH600 or run Hardhat with --show-stack-traces

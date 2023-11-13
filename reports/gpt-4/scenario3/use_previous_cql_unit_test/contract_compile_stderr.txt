@@ -1,0 +1,9 @@
+ParserError: Expected ';' but got identifier
+  --> contracts/SmartContract.sol:44:126:
+   |
+44 |         return policyHolders[_policyHolder].hasESRD && (block.timestamp - policyHolders[_policyHolder].transplantTime) >= 36 months;
+   |                                                                                                                              ^^^^^^
+
+
+Error HH600: Compilation failed
+For more info go to https://hardhat.org/HH600 or run Hardhat with --show-stack-traces

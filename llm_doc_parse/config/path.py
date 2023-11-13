@@ -1,7 +1,9 @@
 from pathlib import Path
 
-BASE_PATH = Path(__file__).parent.parent
-OUTPUT_PATH = BASE_PATH.parent / 'outputs'
-TEMPLATE_PATH = BASE_PATH.parent / 'templates'
-DOC_PATH = BASE_PATH.parent / 'documents'
-DOTENV_PATH = BASE_PATH.parent / '.env'
+BASE_DIR = Path(__file__).parent.parent
+OUTPUT_DIR = BASE_DIR.parent / 'outputs'
+REPORT_DIR = BASE_DIR.parent / 'reports'
+TEMPLATES_DIR = BASE_DIR.parent / 'templates'
+DOCS_DIR = BASE_DIR.parent / 'documents'
+DOTENV_DIR = BASE_DIR.parent / '.env'
+HARDHAT_DIR = BASE_DIR.parent / 'sandbox'

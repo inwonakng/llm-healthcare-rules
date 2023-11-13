@@ -1,0 +1,38 @@
+Warning: SPDX license identifier not provided in source file. Before publishing, consider adding a comment containing "SPDX-License-Identifier: <SPDX-License>" to each source file. Use "SPDX-License-Identifier: UNLICENSED" for non-open-source code. Please see https://spdx.org for more information.
+--> contracts/SmartContract.sol
+
+
+Warning: SPDX license identifier not provided in source file. Before publishing, consider adding a comment containing "SPDX-License-Identifier: <SPDX-License>" to each source file. Use "SPDX-License-Identifier: UNLICENSED" for non-open-source code. Please see https://spdx.org for more information.
+--> contracts/UnitTest.sol
+
+
+TypeError: Wrong argument count for function call: 4 arguments given but expected 1.
+  --> contracts/UnitTest.sol:11:23:
+   |
+11 |         bool result = insurancePolicy.isCovered("IVIG", true, "home", "primary immune deficiency");
+   |                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+TypeError: Wrong argument count for function call: 4 arguments given but expected 1.
+  --> contracts/UnitTest.sol:17:23:
+   |
+17 |         bool result = insurancePolicy.isCovered("IVIG", false, "home", "primary immune deficiency");
+   |                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+TypeError: Invalid type for argument in function call. Invalid implicit conversion from literal_string "IVIG" to address requested.
+  --> contracts/UnitTest.sol:23:63:
+   |
+23 |         uint coveredAmount = insurancePolicy.getCoveredAmount("IVIG", "Part B");
+   |                                                               ^^^^^^
+
+
+TypeError: Invalid type for argument in function call. Invalid implicit conversion from literal_string "Other Items" to address requested.
+  --> contracts/UnitTest.sol:29:63:
+   |
+29 |         uint coveredAmount = insurancePolicy.getCoveredAmount("Other Items", "Part B");
+   |                                                               ^^^^^^^^^^^^^
+
+
+Error HH600: Compilation failed
+For more info go to https://hardhat.org/HH600 or run Hardhat with --show-stack-traces

@@ -1,0 +1,9 @@
+TypeError: Member "eligibleForSpecificBenefit" not found or not visible after argument-dependent lookup in struct MedicareContract.PolicyHolder memory.
+  --> contracts/SmartContract.sol:54:16:
+   |
+54 |         return holder.eligibleForSpecificBenefit;
+   |                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+Error HH600: Compilation failed
+For more info go to https://hardhat.org/HH600 or run Hardhat with --show-stack-traces

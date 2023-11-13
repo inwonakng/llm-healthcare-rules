@@ -1,0 +1,7 @@
+Warning: Unused local variable.
+  --> contracts/UnitTest.sol:85:9:
+   |
+85 |         IVIGPolicyParameters memory params = IVIGPolicyParameters({
+   |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+

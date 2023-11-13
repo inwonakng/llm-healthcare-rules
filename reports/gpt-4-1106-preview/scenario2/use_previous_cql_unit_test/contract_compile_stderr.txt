@@ -1,0 +1,12 @@
+Warning: This declaration shadows an existing declaration.
+  --> contracts/SmartContract.sol:35:41:
+   |
+35 |     function NonCoveredItemsAndServices(bool isServicesCovered) private pure returns (bool) {
+   |                                         ^^^^^^^^^^^^^^^^^^^^^^
+Note: The shadowed declaration is here:
+  --> contracts/SmartContract.sol:53:5:
+   |
+53 |     function isServicesCovered(bool hasPrimaryImmuneDeficiency, bool isMedicallyAppropriate, bool isAtHome) public pure returns (bool) {
+   |     ^ (Relevant source part starts here and spans across multiple lines).
+
+

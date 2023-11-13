@@ -1,0 +1,9 @@
+TypeError: Member "isTrue" not found or not visible after argument-dependent lookup in type(library Assert).
+  --> contracts/UnitTest.sol:20:9:
+   |
+20 |         Assert.isTrue(result, "Medicare should cover transplant drug therapy if it paid for the organ transplant.");
+   |         ^^^^^^^^^^^^^
+
+
+Error HH600: Compilation failed
+For more info go to https://hardhat.org/HH600 or run Hardhat with --show-stack-traces
