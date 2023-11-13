@@ -55,7 +55,7 @@
       Do not implement the full smart contract, only implement the tests that it should pass.
       The name of the test should end with {ContractName}Test to signify that it is a test for that contract.
       Write as many tests as necessary.
-      Use Solidity version 0.8.0.
+      Use Solidity version 0.8.0 and use Remix's remix_tests.sol for test syntax.
 
       Wrap your response in triple-backticks (```).
     continue_system: |

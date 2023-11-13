@@ -1,7 +1,0 @@
-```
-1. IVIG must be provided in the patient's home to be covered.
-2. The patient must have a diagnosis of primary immune deficiency disease for coverage eligibility.
-3. The patient's doctor must determine that it is medically appropriate for the patient to receive IVIG at home.
-4. Medicare Part B covers the cost of the IVIG medication.
-5. Medicare Part B does not cover the cost of other items and services related to the administration of IVIG at home.
-```
