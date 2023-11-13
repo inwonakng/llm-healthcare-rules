@@ -4,7 +4,7 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 from .config.api import load_api_config
 
-OpenAIMessageType = list[dict[str,dict[str,str]]]
+OpenAIMessageType = list[dict[str,str]]
 
 CODELLAMA_ARGS = {
     "chat_instruct_command": '<|prompt|>',

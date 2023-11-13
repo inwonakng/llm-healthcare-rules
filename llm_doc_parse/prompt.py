@@ -117,15 +117,19 @@ class Prompt:
                 ]            
             chat_history += messages 
 
-            output = generate(
-                model, 
-                messages if not continue_conversation else chat_history,
-            )
+            try:
+                output = generate(
+                    model, 
+                    messages if not continue_conversation else chat_history,
+                )
+            except Exception as e:
+                output = str(e)
 
             valid_input_components[executable.task] = output
             chat_history += [{'role': 'assistant', 'content': output,}]
             
-            open(save_dir / f"{i}_{executable.task}.txt",'w').write(output)
+            if save_dir is not None:
+                open(save_dir / f"{i}_{executable.task}.txt",'w').write(output)
             
             if progress is not None:
                 progress.advance(p_task)
