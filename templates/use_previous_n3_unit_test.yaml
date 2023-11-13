@@ -23,12 +23,26 @@
       - task_detail
   user_message:
     include_input: true
-- task: smart_contract
+- task: unit_test
   input: 
     name: summary of an insurance policy document and a set of N3 logic rules describing it
     components:  
+      - document
+      - summary
+  system_message:
+    messages:
+      - role
+      - task_description
+      - task_detail
+  user_message:
+    include_input: true
+- task: smart_contract
+  input: 
+    name: summary of an insurance policy document and a set of N3 logic rules and Solidity unit tests describing it
+    components:  
       - summary
       - n3
+      - unit_test
   system_message:
     messages:
       - role

@@ -42,7 +42,7 @@
       Now, let's switch roles and move to a different task.
     continue_user: |
       Can you give me a set of CQL named expressions based on the previous conversation?
-- name: unittest
+- name: unit_test
   messages:
     role: |
       You are a web3 developer who translates <<AN_INPUT_NAME>> into a set of unit tests for a solidity smart contract.
@@ -61,7 +61,7 @@
       Now, let's switch roles and move to a different task.
     continue_user: |
       Can you give me a set of Solidity unit tests based on the previous conversation?
-- name: solidity
+- name: smart_contract
   messages:
     role: |
       You are a web3 developer who translates <<AN_INPUT_NAME>> into a solidity smart contract.

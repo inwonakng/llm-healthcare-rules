@@ -22,7 +22,7 @@
       - task_detail
   user_message:
     include_input: true
-- task: solidity
+- task: smart_contract
   input: 
     name: insurance policy document
     components:  

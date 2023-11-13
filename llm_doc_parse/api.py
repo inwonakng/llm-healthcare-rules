@@ -1,9 +1,10 @@
 import requests
 from requests.packages import urllib3
-
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 from .config.api import load_api_config
+
+OpenAIMessageType = list[dict[str,dict[str,str]]]
 
 CODELLAMA_ARGS = {
     "chat_instruct_command": '<|prompt|>',
@@ -17,7 +18,7 @@ DEFAULT_ARGS = {
 
 def generate(
     model: str,
-    messages: list[dict[str,dict[str,str]]]
+    messages: OpenAIMessageType,
 ):
     conf = load_api_config(model)
     headers = {
@@ -45,4 +46,3 @@ def generate(
         raise Exception(f"Response returned with code {response.status_code}, message: {response.content.decode()}")
     
     return model_output
-    

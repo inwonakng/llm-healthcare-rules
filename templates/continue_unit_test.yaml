@@ -10,7 +10,7 @@
       - task_detail
   user_message:
     include_input: true
-- task: n3
+- task: unit_test
   input: 
     name: insurance policy document and its summary
   system_message: 
@@ -24,7 +24,7 @@
       - continue_user
 - task: smart_contract
   input: 
-    name: insurance policy document, its summary and a set of N3 logic rules describing it
+    name: insurance policy document, its summary and a set of Solidity unit tests
   system_message:
     messages:
       - continue_system

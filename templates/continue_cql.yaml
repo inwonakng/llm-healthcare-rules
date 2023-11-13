@@ -22,7 +22,7 @@
   user_message:
     messages: 
       - continue_user
-- task: solidity
+- task: smart_contract
   input: 
     name: insurance policy document, its summary and a set of CQL named expressions describing it
   system_message:

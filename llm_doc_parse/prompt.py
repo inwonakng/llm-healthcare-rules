@@ -4,7 +4,6 @@ from pathlib import Path
 import rich.progress
 
 from .api import generate
-from .utils import progress_bar
 
 VOWELS = 'aeiou'
 
@@ -72,11 +71,6 @@ class Prompt:
         if save_dir is not None:
             save_dir = Path(save_dir)
             save_dir.mkdir(parents=True, exist_ok=True)
-            if skip_if_exist and all(
-                (save_dir / f"{i}_{raw_conf['task']}.txt").is_file()
-                for i, raw_conf in enumerate(configs)
-            ):
-                return
         
         if progress is not None:
             progress_msg = 'Executing..'

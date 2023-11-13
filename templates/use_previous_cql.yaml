@@ -23,7 +23,7 @@
       - task_detail
   user_message:
     include_input: true
-- task: solidity
+- task: smart_contract
   input: 
     name: summary of an insurance policy document and a set of CQL named expressions describing it
     components:  

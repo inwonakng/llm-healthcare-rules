@@ -67,7 +67,7 @@
         - role
         - task_description
         - instruction
-- task: solidity
+- task: smart_contract
   input: 
     name: an insurance policy document
     components:  
