@@ -83,9 +83,6 @@ def run(
             stdout_msg, stderr_msg = run_hardhat_compile()
             open(report_dir / 'contract_compile_stdout.txt', 'w').write(stdout_msg)
             open(report_dir / 'contract_compile_stderr.txt', 'w').write(stderr_msg)
-            # print('compiled contract')
-            # print(stdout_msg)
-            # print(stderr_msg)
 
             # Compile the unit test with the smart contract
             shutil.copy(hardhat_remix_test_template_file, hardhat_remix_test_file)
@@ -93,9 +90,6 @@ def run(
             stdout_msg, stderr_msg = run_hardhat_compile()
             open(report_dir / 'test_compile_stdout.txt', 'w').write(stdout_msg)
             open(report_dir / 'test_compile_stderr.txt', 'w').write(stderr_msg)
-            # print('compiled test')
-            # print(stdout_msg)
-            # print(stderr_msg)
 
             # Clean up
             if hardhat_remix_test_file.is_file():

@@ -55,7 +55,7 @@
       Do not implement the full smart contract, only implement the tests that it should pass.
       The name of the test should end with {ContractName}Test to signify that it is a test for that contract.
       Write as many tests as necessary.
-      Use Solidity version 0.8.0 and use Remix's remix_tests.sol for test syntax.
+      You should write your code to work with Solidity version 0.8.0 and use Remix's remix_tests.sol for the test syntax.
 
       Wrap your response in triple-backticks (```).
     continue_system: |
@@ -72,7 +72,7 @@
       The smart contract should implement all aspects of the <<INPUT_NAME>> and implement every single condition described in it.
       The smart contract must always return some output as a result of the input's conditions.
       You can create structs to encapsulate necessary parameters to produce cleaner code.
-      Use Solidity version 0.8.0.
+      You should write your code to work with Solidity version 0.8.0.
 
       Wrap your response in triple-backticks (```).
     continue_system: |
