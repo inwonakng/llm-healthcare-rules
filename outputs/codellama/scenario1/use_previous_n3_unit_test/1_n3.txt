@@ -1,0 +1,57 @@
+```
+# Injectable osteoporosis drugs
+:has_coverage
+  a owl:NamedIndividual ,
+  :has_condition
+    :is_a :woman ,
+    :has_osteoporosis ,
+    :meets_home_health_benefit_criteria ;
+  :has_fracture
+    :is_related_to :post_menopausal_osteoporosis ;
+  :has_certification
+    :can_not_give_injection ,
+    :can_not_learn_injection ;
+  :has_home_health_care
+    :is_covered_by :medicare .
+
+# Home health care
+:has_home_health_care
+  a owl:NamedIndividual ,
+  :is_covered_by :medicare ,
+  :has_nurse_or_aide
+    :is_covered_by :medicare .
+
+# Nurse or aide
+:has_nurse_or_aide
+  a owl:NamedIndividual ,
+  :is_covered_by :medicare .
+
+# Conditions
+:has_condition
+  a owl:NamedIndividual ,
+  :is_a :woman ,
+  :has_osteoporosis ,
+  :meets_home_health_benefit_criteria .
+
+:has_fracture
+  a owl:NamedIndividual ,
+  :is_related_to :post_menopausal_osteoporosis .
+
+:has_certification
+  a owl:NamedIndividual ,
+  :can_not_give_injection ,
+  :can_not_learn_injection .
+
+# Summary
+:has_summary
+  a owl:NamedIndividual ,
+  :has_requirement
+    :is_a :woman ,
+    :has_osteoporosis ,
+    :meets_home_health_benefit_criteria ,
+    :has_fracture ,
+    :is_related_to :post_menopausal_osteoporosis ,
+    :has_certification ,
+    :can_not_give_injection ,
+    :can_not_learn_injection .
+```
