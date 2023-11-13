@@ -1,0 +1,39 @@
+```solidity
+pragma solidity ^0.8.0;
+
+contract InsurancePolicy {
+    struct Policy {
+        string diagnosis;
+        bool isCoveredForIVIG;
+        bool canBeProvidedInHome;
+        bool isCoveredForIVIGCost;
+        bool isCoveredForOtherItemsAndServices;
+    }
+    
+    Policy public policy;
+    
+    constructor() {
+        policy.diagnosis = "primary immune deficiency disease";
+        policy.isCoveredForIVIG = true;
+        policy.canBeProvidedInHome = true;
+        policy.isCoveredForIVIGCost = true;
+        policy.isCoveredForOtherItemsAndServices = false;
+    }
+    
+    function isCoveredForIVIG(string memory diagnosis) public view returns (bool) {
+        return (keccak256(abi.encodePacked(diagnosis)) == keccak256(abi.encodePacked(policy.diagnosis))) && policy.isCoveredForIVIG;
+    }
+    
+    function canBeProvidedInHome(string memory diagnosis) public view returns (bool) {
+        return (keccak256(abi.encodePacked(diagnosis)) == keccak256(abi.encodePacked(policy.diagnosis))) && policy.canBeProvidedInHome;
+    }
+    
+    function isCoveredForIVIGCost(string memory diagnosis) public view returns (bool) {
+        return (keccak256(abi.encodePacked(diagnosis)) == keccak256(abi.encodePacked(policy.diagnosis))) && policy.isCoveredForIVIGCost;
+    }
+    
+    function isCoveredForOtherItemsAndServices() public view returns (bool) {
+        return policy.isCoveredForOtherItemsAndServices;
+    }
+}
+```

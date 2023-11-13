@@ -1,0 +1,44 @@
+TypeError: Invalid type for argument in function call. Invalid implicit conversion from struct OsteoporosisDrugCoverageTest.PatientInfo memory to struct OsteoporosisDrugCoverage.PatientInfo memory requested.
+  --> contracts/UnitTest.sol:38:60:
+   |
+38 |         bool isCovered = coverageContract.isPatientCovered(patient);
+   |                                                            ^^^^^^^
+
+
+TypeError: Invalid type for argument in function call. Invalid implicit conversion from struct OsteoporosisDrugCoverageTest.PatientInfo memory to struct OsteoporosisDrugCoverage.PatientInfo memory requested.
+  --> contracts/UnitTest.sol:53:60:
+   |
+53 |         bool isCovered = coverageContract.isPatientCovered(patient);
+   |                                                            ^^^^^^^
+
+
+TypeError: Invalid type for argument in function call. Invalid implicit conversion from struct OsteoporosisDrugCoverageTest.PatientInfo memory to struct OsteoporosisDrugCoverage.PatientInfo memory requested.
+  --> contracts/UnitTest.sol:68:60:
+   |
+68 |         bool isCovered = coverageContract.isPatientCovered(patient);
+   |                                                            ^^^^^^^
+
+
+TypeError: Invalid type for argument in function call. Invalid implicit conversion from struct OsteoporosisDrugCoverageTest.PatientInfo memory to struct OsteoporosisDrugCoverage.PatientInfo memory requested.
+  --> contracts/UnitTest.sol:69:69:
+   |
+69 |         bool aideCovered = coverageContract.isHomeHealthAideCovered(patient);
+   |                                                                     ^^^^^^^
+
+
+TypeError: Invalid type for argument in function call. Invalid implicit conversion from struct OsteoporosisDrugCoverageTest.PatientInfo memory to struct OsteoporosisDrugCoverage.PatientInfo memory requested.
+  --> contracts/UnitTest.sol:85:60:
+   |
+85 |         bool isCovered = coverageContract.isPatientCovered(patient);
+   |                                                            ^^^^^^^
+
+
+TypeError: Invalid type for argument in function call. Invalid implicit conversion from struct OsteoporosisDrugCoverageTest.PatientInfo memory to struct OsteoporosisDrugCoverage.PatientInfo memory requested.
+  --> contracts/UnitTest.sol:86:69:
+   |
+86 |         bool aideCovered = coverageContract.isHomeHealthAideCovered(patient);
+   |                                                                     ^^^^^^^
+
+
+Error HH600: Compilation failed
+For more info go to https://hardhat.org/HH600 or run Hardhat with --show-stack-traces

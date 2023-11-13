@@ -1,0 +1,26 @@
+```
+@prefix : <http://example.org/insurance#>.
+
+{ ?person a :Woman;
+          :DiagnosedWithOsteoporosis true;
+          :QualifiesForMedicareHomeHealthBenefit true;
+          :HasDoctorCertifiedFracture true;
+          :UnableToSelfAdministerInjection true -> 
+  [ a :CoverageDecision;
+    :IsCovered "Injectable osteoporosis drugs"^^xsd:string ] }.
+
+{ ?person a :CoverageDecision;
+            :IsCovered "Injectable osteoporosis drugs"^^xsd:string;
+            :HasUnwillingOrUnableFamily true -> 
+  [ a :CoverageDecision;
+    :IncludesHomeHealthAideCoverage "Yes"^^xsd:string ] }.
+
+:Woman a :Person.
+:DiagnosedWithOsteoporosis a :MedicalCondition.
+:QualifiesForMedicareHomeHealthBenefit a :Benefit.
+:HasDoctorCertifiedFracture a :MedicalEvent.
+:UnableToSelfAdministerInjection a :MedicalLimitation.
+:HasUnwillingOrUnableFamily a :FamilySituation.
+:CoverageDecision a :InsurancePolicyDecision.
+:IncludesHomeHealthAideCoverage a :CoverageFeature.
+```

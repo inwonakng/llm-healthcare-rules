@@ -1,0 +1,56 @@
+```
+pragma solidity ^0.8.0;
+
+contract InsurancePolicy {
+    struct Patient {
+        bool primaryImmuneDeficiencyDiseaseDiagnosis;
+        bool ivigMedicallyAppropriate;
+        bool ivigProvidedAtHome;
+        bool partBCoverage;
+    }
+
+    mapping(address => Patient) public patients;
+
+    function setPatient(
+        address _patientAddress,
+        bool _primaryImmuneDeficiencyDiseaseDiagnosis,
+        bool _ivigMedicallyAppropriate,
+        bool _ivigProvidedAtHome,
+        bool _partBCoverage
+    ) public {
+        Patient storage patient = patients[_patientAddress];
+        patient.primaryImmuneDeficiencyDiseaseDiagnosis = _primaryImmuneDeficiencyDiseaseDiagnosis;
+        patient.ivigMedicallyAppropriate = _ivigMedicallyAppropriate;
+        patient.ivigProvidedAtHome = _ivigProvidedAtHome;
+        patient.partBCoverage = _partBCoverage;
+    }
+
+    function checkPrimaryImmuneDeficiencyDiseaseDiagnosis(address _patientAddress) public view returns (bool) {
+        return patients[_patientAddress].primaryImmuneDeficiencyDiseaseDiagnosis;
+    }
+
+    function checkIVIGMedicallyAppropriate(address _patientAddress) public view returns (bool) {
+        return patients[_patientAddress].ivigMedicallyAppropriate;
+    }
+
+    function checkIVIGProvidedAtHome(address _patientAddress) public view returns (bool) {
+        return patients[_patientAddress].ivigProvidedAtHome;
+    }
+
+    function checkPartBCoverage(address _patientAddress) public view returns (bool) {
+        return patients[_patientAddress].partBCoverage;
+    }
+
+    function checkFinalCoverageDecision(address _patientAddress) public view returns (string memory) {
+        if (
+            patients[_patientAddress].primaryImmuneDeficiencyDiseaseDiagnosis &&
+            patients[_patientAddress].ivigMedicallyAppropriate &&
+            patients[_patientAddress].ivigProvidedAtHome &&
+            patients[_patientAddress].partBCoverage
+        ) {
+            return "Covered";
+        } else {
+            return "Not Covered";
+        }
+    }
+}

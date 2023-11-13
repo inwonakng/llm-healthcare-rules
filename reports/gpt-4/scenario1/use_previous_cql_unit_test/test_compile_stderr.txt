@@ -1,16 +1,12 @@
 Warning: SPDX license identifier not provided in source file. Before publishing, consider adding a comment containing "SPDX-License-Identifier: <SPDX-License>" to each source file. Use "SPDX-License-Identifier: UNLICENSED" for non-open-source code. Please see https://spdx.org for more information.
---> contracts/SmartContract.sol
-
-
-Warning: SPDX license identifier not provided in source file. Before publishing, consider adding a comment containing "SPDX-License-Identifier: <SPDX-License>" to each source file. Use "SPDX-License-Identifier: UNLICENSED" for non-open-source code. Please see https://spdx.org for more information.
 --> contracts/UnitTest.sol
 
 
-DeclarationError: Undeclared identifier.
- --> contracts/UnitTest.sol:7:50:
-  |
-7 |     MedicareContract medicare = MedicareContract(DeployedAddresses.MedicareContract());
-  |                                                  ^^^^^^^^^^^^^^^^^
+TypeError: Member "isWomanWithOsteoporosis" not found or not visible after argument-dependent lookup in contract MedicareContract.
+  --> contracts/UnitTest.sol:15:23:
+   |
+15 |         bool result = medicareContract.isWomanWithOsteoporosis(true, true);
+   |                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 
 Error HH600: Compilation failed

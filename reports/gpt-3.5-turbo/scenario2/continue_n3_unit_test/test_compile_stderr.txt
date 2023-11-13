@@ -6,11 +6,11 @@ Warning: SPDX license identifier not provided in source file. Before publishing,
 --> contracts/UnitTest.sol
 
 
-DeclarationError: Undeclared identifier.
-  --> contracts/UnitTest.sol:11:47:
+TypeError: Member "isTrue" not found or not visible after argument-dependent lookup in type(library Assert).
+  --> contracts/UnitTest.sol:32:9:
    |
-11 |         insuranceContract = InsuranceContract(DeployedAddresses.InsuranceContract());
-   |                                               ^^^^^^^^^^^^^^^^^
+32 |         Assert.isTrue(isIVIGCovered(policy), "IVIG should be covered");
+   |         ^^^^^^^^^^^^^
 
 
 Error HH600: Compilation failed

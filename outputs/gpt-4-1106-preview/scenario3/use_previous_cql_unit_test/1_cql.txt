@@ -1,0 +1,61 @@
+```
+library MedicareCoverage version '1.0'
+
+using FHIR version '4.0.0'
+
+// Define the context for the expressions (e.g., Patient, Encounter)
+context Patient
+
+define HasPartAAtTimeOfTransplant:
+  // Expression to check if the patient had Part A at the time of the transplant
+  [Patient] P where P.extension('http://example.org/fhir/StructureDefinition/medicarePartA').valuePeriod during [Procedure: code in 'Organ Transplant Procedure Codes'].performed
+
+define HasPartBWhenGettingDrugs:
+  // Expression to check if the patient has Part B when getting immunosuppressive drugs
+  [Patient] P where P.extension('http://example.org/fhir/StructureDefinition/medicarePartB').valueBoolean
+
+define PartDCoversDrugs:
+  // Expression to check if Part D covers drugs when Part B does not
+  not HasPartBWhenGettingDrugs and [Patient] P where P.extension('http://example.org/fhir/StructureDefinition/medicarePartD').valueBoolean
+
+define OriginalMedicareEnrollment:
+  // Expression to check if a patient with Original Medicare can join a drug plan
+  [Patient] P where P.extension('http://example.org/fhir/StructureDefinition/originalMedicare').valueBoolean
+
+define ESRDCoverageEnds:
+  // Expression to check if Medicare coverage ends 36 months after a successful kidney transplant for ESRD patients
+  [Patient] P where P.extension('http://example.org/fhir/StructureDefinition/esrd').valueBoolean
+    and Duration between ([Procedure: code in 'Kidney Transplant Procedure Codes'].performed, Today()) > 36 months
+
+define EligibleForImmunosuppressiveDrugBenefit:
+  // Expression to check if a patient is eligible for the immunosuppressive drug benefit
+  ESRDCoverageEnds and not [Patient] P where P.coverage.extension('http://example.org/fhir/StructureDefinition/otherHealthCoverage').valueBoolean
+
+define ImmunodrugBenefitCoversDrugsOnly:
+  // Expression to confirm that the immunosuppressive drug benefit only covers drugs
+  EligibleForImmunosuppressiveDrugBenefit and [Coverage] C where C.benefit.extension('http://example.org/fhir/StructureDefinition/drugCoverageOnly').valueBoolean
+
+define NotFullHealthCoverage:
+  // Expression to confirm that the immunosuppressive drug benefit is not a substitute for full health coverage
+  ImmunodrugBenefitCoversDrugsOnly and not [Coverage] C where C.benefit.extension('http://example.org/fhir/StructureDefinition/fullHealthCoverage').valueBoolean
+
+define CanEnrollAfterPartAEnds:
+  // Expression to check if a patient can enroll after Part A ends
+  EligibleForImmunosuppressiveDrugBenefit
+
+define MonthlyPremium2023:
+  // Expression for the monthly premium in 2023
+  97.10
+
+define Deductible2023:
+  // Expression for the deductible in 2023
+  226.0
+
+define CoinsuranceAfterDeductible:
+  // Expression for the 20% coinsurance after the deductible is met
+  0.20
+
+// Define additional expressions as needed to cover all requirements
+```
+
+This CQL library defines expressions based on the requirements from the insurance policy document and its summary. Each named expression corresponds to a specific requirement or condition that must be met for coverage or benefits to apply. The expressions use hypothetical FHIR extensions to represent Medicare parts and other coverage details, which would need to be adjusted to match the actual FHIR implementation.

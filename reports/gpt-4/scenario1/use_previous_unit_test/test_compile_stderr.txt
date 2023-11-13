@@ -1,30 +1,40 @@
 Warning: SPDX license identifier not provided in source file. Before publishing, consider adding a comment containing "SPDX-License-Identifier: <SPDX-License>" to each source file. Use "SPDX-License-Identifier: UNLICENSED" for non-open-source code. Please see https://spdx.org for more information.
---> contracts/SmartContract.sol
-
-
-Warning: SPDX license identifier not provided in source file. Before publishing, consider adding a comment containing "SPDX-License-Identifier: <SPDX-License>" to each source file. Use "SPDX-License-Identifier: UNLICENSED" for non-open-source code. Please see https://spdx.org for more information.
 --> contracts/UnitTest.sol
 
 
-Warning: Visibility for constructor is ignored. If you want the contract to be non-deployable, making it "abstract" is sufficient.
-  --> contracts/SmartContract.sol:19:5:
+TypeError: Wrong argument count for function call: 5 arguments given but expected 1.
+  --> contracts/UnitTest.sol:15:23:
    |
-19 |     constructor() public {
-   |     ^ (Relevant source part starts here and spans across multiple lines).
+15 |         bool result = insurancePolicy.isCovered(
+   |                       ^ (Relevant source part starts here and spans across multiple lines).
 
 
-TypeError: Wrong argument count for function call: 1 arguments given but expected 2.
-  --> contracts/UnitTest.sol:21:23:
+TypeError: Wrong argument count for function call: 5 arguments given but expected 1.
+  --> contracts/UnitTest.sol:26:23:
    |
-21 |         bool result = medicareContract.isFractureRelatedToPostMenopausalOsteoporosis(true);
-   |                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+26 |         bool result = insurancePolicy.isCovered(
+   |                       ^ (Relevant source part starts here and spans across multiple lines).
 
 
-TypeError: Wrong argument count for function call: 1 arguments given but expected 2.
-  --> contracts/UnitTest.sol:31:23:
+TypeError: Wrong argument count for function call: 5 arguments given but expected 1.
+  --> contracts/UnitTest.sol:37:23:
    |
-31 |         bool result = medicareContract.isHomeHealthNurseOrAideCovered(true);
-   |                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+37 |         bool result = insurancePolicy.isCovered(
+   |                       ^ (Relevant source part starts here and spans across multiple lines).
+
+
+TypeError: Wrong argument count for function call: 5 arguments given but expected 1.
+  --> contracts/UnitTest.sol:48:23:
+   |
+48 |         bool result = insurancePolicy.isCovered(
+   |                       ^ (Relevant source part starts here and spans across multiple lines).
+
+
+TypeError: Wrong argument count for function call: 5 arguments given but expected 1.
+  --> contracts/UnitTest.sol:59:23:
+   |
+59 |         bool result = insurancePolicy.isCovered(
+   |                       ^ (Relevant source part starts here and spans across multiple lines).
 
 
 Error HH600: Compilation failed

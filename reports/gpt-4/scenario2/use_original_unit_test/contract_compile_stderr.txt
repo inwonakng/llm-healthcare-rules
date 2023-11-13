@@ -1,7 +1,0 @@
-Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
-  --> contracts/SmartContract.sol:27:45:
-   |
-27 |     function isOtherItemsAndServicesCovered(address _patientAddress) public pure returns (bool) {
-   |                                             ^^^^^^^^^^^^^^^^^^^^^^^
-
-

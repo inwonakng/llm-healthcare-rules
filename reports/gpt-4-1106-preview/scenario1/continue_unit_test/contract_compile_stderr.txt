@@ -1,7 +1,0 @@
-Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
-  --> contracts/SmartContract.sol:21:9:
-   |
-21 |         bool hasCaregiver
-   |         ^^^^^^^^^^^^^^^^^
-
-

@@ -1,0 +1,29 @@
+Certainly! Below is a Solidity smart contract that implements the conditions described in the insurance policy document and its summary. This contract is designed to work with Solidity version 0.8.0.
+
+```solidity
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+contract IVIGCoverageContract {
+    // Define a struct to encapsulate patient information and requirements
+    struct Patient {
+        bool hasPrimaryImmuneDeficiency;
+        bool isMedicallyAppropriate;
+        bool isAtHome;
+    }
+
+    // Function to check if the patient is eligible for IVIG coverage
+    function checkCoverage(bool hasPrimaryImmuneDeficiency, bool isMedicallyAppropriate, bool isAtHome) public pure returns (bool) {
+        // Check all conditions for IVIG coverage
+        if (hasPrimaryImmuneDeficiency && isMedicallyAppropriate && isAtHome) {
+            // If all conditions are met, return true for coverage
+            return true;
+        } else {
+            // If any condition is not met, return false for no coverage
+            return false;
+        }
+    }
+}
+```
+
+This contract includes a `Patient` struct to encapsulate the necessary parameters and a `checkCoverage` function that takes these parameters as input and returns a boolean indicating whether the patient is eligible for IVIG coverage under Medicare Part B. The function checks if the patient has a primary immune deficiency disease, if it is medically appropriate for the patient to receive IVIG at home, and if the IVIG is provided at the patient's home. If all conditions are met, the function returns `true`, indicating that the patient is covered; otherwise, it returns `false`.

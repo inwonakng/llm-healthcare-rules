@@ -1,8 +1,8 @@
-ParserError: Expected ',' but got identifier
-  --> contracts/UnitTest.sol:58:103:
+ParserError: Invalid character in string.
+  --> contracts/UnitTest.sol:42:39:
    |
-58 |         PolicyHolder memory holder = PolicyHolder(true, true, true, false, true, block.timestamp - 37 months, false, 0);
-   |                                                                                                       ^^^^^^
+42 |         Assert.equal(isCovered, true, "Medicare Part D should cover immunosuppressive drugs if Part B doesn’t.");
+   |                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 
 Error HH600: Compilation failed

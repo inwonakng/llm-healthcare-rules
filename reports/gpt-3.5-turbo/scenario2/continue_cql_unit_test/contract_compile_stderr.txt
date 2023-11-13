@@ -2,3 +2,19 @@ Warning: SPDX license identifier not provided in source file. Before publishing,
 --> contracts/SmartContract.sol
 
 
+TypeError: Using "years" as a unit denomination is deprecated.
+  --> contracts/SmartContract.sol:32:44:
+   |
+32 |             birthDate <= block.timestamp - 18 years &&
+   |                                            ^^^^^^^^
+
+
+TypeError: Using "years" as a unit denomination is deprecated.
+  --> contracts/SmartContract.sol:53:44:
+   |
+53 |             birthDate <= block.timestamp - 18 years &&
+   |                                            ^^^^^^^^
+
+
+Error HH600: Compilation failed
+For more info go to https://hardhat.org/HH600 or run Hardhat with --show-stack-traces

@@ -1,0 +1,52 @@
+```solidity
+// SPDX-License-Identifier: MIT
+pragma solidity >=0.8.0;
+
+import "remix_tests.sol"; // this import is automatically injected by Remix.
+import "../contracts/InsurancePolicy.sol";
+
+contract InsurancePolicyTest {
+    InsurancePolicy insurancePolicy;
+
+    function beforeEach() public {
+        insurancePolicy = new InsurancePolicy();
+    }
+
+    /// Test if the insurance policy covers IVIG provided at home
+    function checkIVIGCoverageTest() public {
+        bool result = insurancePolicy.checkIVIGCoverage(true, true, true);
+        Assert.equal(result, true, "The insurance policy should cover IVIG if it is provided at home, the insured has a diagnosis of primary immune deficiency disease, and it is medically appropriate as per the doctor.");
+    }
+
+    /// Test if the insurance policy does not cover IVIG if not provided at home
+    function checkIVIGNotAtHomeTest() public {
+        bool result = insurancePolicy.checkIVIGCoverage(false, true, true);
+        Assert.equal(result, false, "The insurance policy should not cover IVIG if it is not provided at home.");
+    }
+
+    /// Test if the insurance policy does not cover IVIG if the insured does not have a diagnosis of primary immune deficiency disease
+    function checkNoDiagnosisTest() public {
+        bool result = insurancePolicy.checkIVIGCoverage(true, false, true);
+        Assert.equal(result, false, "The insurance policy should not cover IVIG if the insured does not have a diagnosis of primary immune deficiency disease.");
+    }
+
+    /// Test if the insurance policy does not cover IVIG if it is not medically appropriate as per the doctor
+    function checkNotMedicallyAppropriateTest() public {
+        bool result = insurancePolicy.checkIVIGCoverage(true, true, false);
+        Assert.equal(result, false, "The insurance policy should not cover IVIG if it is not medically appropriate as per the doctor.");
+    }
+
+    /// Test if the insurance policy under Part B covers the cost of IVIG itself
+    function checkPartBCoverageTest() public {
+        bool result = insurancePolicy.checkPartBCoverage(true);
+        Assert.equal(result, true, "The insurance policy under Part B should cover the cost of IVIG itself.");
+    }
+
+    /// Test if the insurance policy does not cover the cost of other items and services related to the insured receiving IVIG at home
+    function checkNoOtherItemsCoverageTest() public {
+        bool result = insurancePolicy.checkOtherItemsCoverage(false);
+        Assert.equal(result, false, "The insurance policy should not cover the cost of other items and services related to the insured receiving IVIG at home.");
+    }
+}
+```
+This is a set of unit tests for the InsurancePolicy contract. The tests check if the insurance policy covers IVIG provided at home, if the insured has a diagnosis of primary immune deficiency disease, and if it is medically appropriate as per the doctor. The tests also check if the insurance policy under Part B covers the cost of IVIG itself and if the policy does not cover the cost of other items and services related to the insured receiving IVIG at home.

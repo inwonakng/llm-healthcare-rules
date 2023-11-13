@@ -1,0 +1,102 @@
+```solidity
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+import "remix_tests.sol"; // import testing framework
+import "./MedicareContract.sol"; // this is the contract we are testing
+
+// Define the test contract
+contract MedicareContractTest {
+
+    // Define a struct to encapsulate policy parameters for cleaner code
+    struct PolicyParameters {
+        bool hasPartA;
+        bool hasPartB;
+        bool hasPartD;
+        bool hadTransplant;
+        bool hasESRD;
+        uint monthsAfterTransplant;
+        uint monthlyPremium;
+        uint deductible;
+        uint medicareApprovedAmount;
+    }
+
+    // Define the initial policy parameters
+    PolicyParameters defaultParams = PolicyParameters({
+        hasPartA: true,
+        hasPartB: true,
+        hasPartD: false,
+        hadTransplant: true,
+        hasESRD: false,
+        monthsAfterTransplant: 0,
+        monthlyPremium: 97.10 ether,
+        deductible: 226 ether,
+        medicareApprovedAmount: 1000 ether // Example amount
+    });
+
+    // Test for transplant drug therapy coverage
+    function testTransplantDrugTherapyCoverage() public {
+        // Create a new instance of the policy parameters
+        PolicyParameters memory params = defaultParams;
+
+        // Test case where the patient should be covered
+        params.hasPartA = true;
+        params.hasPartB = true;
+        params.hadTransplant = true;
+        bool isCovered = MedicareContract.isCovered(params.hasPartA, params.hasPartB, params.hadTransplant);
+        Assert.equal(isCovered, true, "Patient should be covered for transplant drug therapy");
+
+        // Test case where the patient should not be covered (no Part A)
+        params.hasPartA = false;
+        isCovered = MedicareContract.isCovered(params.hasPartA, params.hasPartB, params.hadTransplant);
+        Assert.equal(isCovered, false, "Patient without Part A should not be covered");
+    }
+
+    // Test for immunosuppressive drug coverage after 36 months of a successful kidney transplant
+    function testImmunosuppressiveDrugCoverageAfter36Months() public {
+        PolicyParameters memory params = defaultParams;
+        params.hasESRD = true;
+        params.monthsAfterTransplant = 36;
+
+        bool isCovered = MedicareContract.isImmunosuppressiveDrugCovered(params.hasESRD, params.monthsAfterTransplant);
+        Assert.equal(isCovered, false, "Patient should not be covered for immunosuppressive drugs after 36 months of a successful kidney transplant");
+    }
+
+    // Test for immunosuppressive drug benefit eligibility
+    function testImmunosuppressiveDrugBenefitEligibility() public {
+        PolicyParameters memory params = defaultParams;
+        params.monthsAfterTransplant = 37; // More than 36 months after transplant
+
+        bool isEligible = MedicareContract.isEligibleForImmunosuppressiveDrugBenefit(params.hasPartA, params.monthsAfterTransplant);
+        Assert.equal(isEligible, true, "Patient should be eligible for immunosuppressive drug benefit after Part A coverage ends");
+    }
+
+    // Test for immunosuppressive drug cost after deductible
+    function testImmunosuppressiveDrugCostAfterDeductible() public {
+        PolicyParameters memory params = defaultParams;
+        params.deductible = 226 ether; // Deductible met
+
+        uint patientCost = MedicareContract.calculateImmunosuppressiveDrugCost(params.deductible, params.medicareApprovedAmount);
+        uint expectedCost = (params.medicareApprovedAmount - params.deductible) * 20 / 100;
+        Assert.equal(patientCost, expectedCost, "Patient should pay 20% of the Medicare-approved amount after deductible is met");
+    }
+
+    // Test for monthly premium payment
+    function testMonthlyPremiumPayment() public {
+        PolicyParameters memory params = defaultParams;
+
+        uint premium = MedicareContract.getMonthlyPremium();
+        Assert.equal(premium, params.monthlyPremium, "Monthly premium should be $97.10");
+    }
+
+    // Test for deductible payment
+    function testDeductiblePayment() public {
+        PolicyParameters memory params = defaultParams;
+
+        uint deductible = MedicareContract.getDeductible();
+        Assert.equal(deductible, params.deductible, "Deductible should be $226");
+    }
+}
+```
+
+Please note that the actual implementation of the `MedicareContract` functions (`isCovered`, `isImmunosuppressiveDrugCovered`, `isEligibleForImmunosuppressiveDrugBenefit`, `calculateImmunosuppressiveDrugCost`, `getMonthlyPremium`, and `getDeductible`) is not provided here, as the task was to only implement the unit tests based on the insurance policy document. The tests assume that these functions are implemented correctly in the `MedicareContract` and will return the expected values based on the policy rules.

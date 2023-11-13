@@ -1,0 +1,70 @@
+```solidity
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+contract MedicareTransplantDrugCoverage {
+    // Define a struct to encapsulate patient parameters for cleaner code
+    struct Patient {
+        bool coveredTransplant;
+        bool hasPartA;
+        bool hasPartB;
+        bool hasPartD;
+        bool hasOriginalMedicare;
+        bool hasDrugPlan;
+        bool hasESRDCoverage;
+        uint transplantDate;
+        bool hasGroupHealthPlan;
+        bool hasTRICARE;
+        bool hasMedicaid;
+    }
+
+    // Define constants for premiums and deductibles
+    uint constant public monthlyPremium2023 = 97.10 ether; // Monthly premium for the immunosuppressive drug benefit
+    uint constant public annualDeductible2023 = 226 ether; // Annual deductible for the immunosuppressive drug benefit
+    uint constant public coinsuranceRate = 20; // Coinsurance rate after meeting the deductible (20%)
+
+    // Check if a patient is eligible for transplant drug therapy
+    function isEligibleForTransplantDrugTherapy(bool coveredTransplant, bool hasPartA, bool hasPartB) public pure returns (bool) {
+        return coveredTransplant && hasPartA && hasPartB;
+    }
+
+    // Check if a patient is covered by Part D when Part B doesn't cover
+    function isCoveredByPartD(bool hasPartB, bool hasPartD) public pure returns (bool) {
+        return !hasPartB && hasPartD;
+    }
+
+    // Check if a patient with Original Medicare can join a drug plan
+    function hasOriginalMedicareAndDrugPlan(bool hasOriginalMedicare, bool hasDrugPlan) public pure returns (bool) {
+        return hasOriginalMedicare && hasDrugPlan;
+    }
+
+    // Check if ESRD coverage ends after 36 months post successful kidney transplant
+    function hasESRDCoverageEndsPost36Months(bool hasESRDCoverage, uint transplantDate) public view returns (bool) {
+        return hasESRDCoverage && (block.timestamp - transplantDate > 36 * 30 days);
+    }
+
+    // Check if a patient is eligible for the immunosuppressive drug benefit
+    function isEligibleForImmunosuppressiveDrugBenefit(uint transplantDate, bool hasGroupHealthPlan, bool hasTRICARE, bool hasMedicaid) public view returns (bool) {
+        return (block.timestamp - transplantDate > 36 * 30 days) && !(hasGroupHealthPlan || hasTRICARE || hasMedicaid);
+    }
+
+    // Check the final decision for a patient's coverage
+    function finalDecision(Patient memory patient) public view returns (bool) {
+        bool eligibleForTransplantDrugTherapy = isEligibleForTransplantDrugTherapy(patient.coveredTransplant, patient.hasPartA, patient.hasPartB);
+        bool coveredByPartD = isCoveredByPartD(patient.hasPartB, patient.hasPartD);
+        bool originalMedicareAndDrugPlan = hasOriginalMedicareAndDrugPlan(patient.hasOriginalMedicare, patient.hasDrugPlan);
+        bool esrdCoverageEnds = hasESRDCoverageEndsPost36Months(patient.hasESRDCoverage, patient.transplantDate);
+        bool eligibleForImmunosuppressiveBenefit = isEligibleForImmunosuppressiveDrugBenefit(patient.transplantDate, patient.hasGroupHealthPlan, patient.hasTRICARE, patient.hasMedicaid);
+
+        return eligibleForTransplantDrugTherapy || coveredByPartD || originalMedicareAndDrugPlan || (esrdCoverageEnds && eligibleForImmunosuppressiveBenefit);
+    }
+}
+```
+
+This Solidity smart contract implements the logic based on the insurance policy document, its summary, and the set of CQL named expressions and Solidity unit tests provided in the previous conversation. The contract includes functions that check the eligibility of a patient for transplant drug therapy, coverage by Part D, and the immunosuppressive drug benefit, among other conditions.
+
+The `Patient` struct encapsulates the necessary parameters to determine a patient's eligibility for various benefits. The contract uses constants to define the monthly premium and annual deductible for the immunosuppressive drug benefit, as well as the coinsurance rate after meeting the deductible.
+
+The `finalDecision` function combines all the checks to determine if a patient is covered under the policy. It returns a boolean value indicating whether the patient is eligible for coverage based on the conditions described in the policy.
+
+Please note that this contract is a simplified representation and does not handle all aspects of a real-world healthcare insurance policy, such as payment processing, detailed patient records, or integration with external data sources. Additional features and security measures would be required for a production-ready contract.

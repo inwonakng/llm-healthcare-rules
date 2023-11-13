@@ -1,0 +1,204 @@
+```
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix policy: <http://example.com/policy#> .
+@prefix condition: <http://example.com/condition#> .
+@prefix decision: <http://example.com/decision#> .
+
+# Define the conditions
+condition:1 rdf:type policy:Condition ;
+    rdfs:label "You are a woman with osteoporosis who meets the criteria for the Medicare home health benefit" .
+
+condition:2 rdf:type policy:Condition ;
+    rdfs:label "You have a bone fracture that a doctor certifies was related to post-menopausal osteoporosis" .
+
+condition:3 rdf:type policy:Condition ;
+    rdfs:label "Your doctor certifies that you are unable to give yourself the injection or learn how to give yourself the drug by injection" .
+
+condition:4 rdf:type policy:Condition ;
+    rdfs:label "Your family or caregivers are unable or unwilling to give you the drug by injection" .
+
+# Define the decisions
+decision:1 rdf:type policy:Decision ;
+    rdfs:label "Medicare covers injectable osteoporosis drugs" .
+
+decision:2 rdf:type policy:Decision ;
+    rdfs:label "Medicare will cover the home health nurse or aide to provide the injection" .
+
+# Define the logic rules
+{
+    # Rule 1: If condition 1, condition 2, and condition 3 are true, then decision 1 is true
+    ?x rdf:type policy:Condition ;
+       rdfs:label "You are a woman with osteoporosis who meets the criteria for the Medicare home health benefit" .
+    ?y rdf:type policy:Condition ;
+       rdfs:label "You have a bone fracture that a doctor certifies was related to post-menopausal osteoporosis" .
+    ?z rdf:type policy:Condition ;
+       rdfs:label "Your doctor certifies that you are unable to give yourself the injection or learn how to give yourself the drug by injection" .
+    ?x rdf:type policy:Condition ;
+       rdfs:label "You are a woman with osteoporosis who meets the criteria for the Medicare home health benefit" .
+    ?y rdf:type policy:Condition ;
+       rdfs:label "You have a bone fracture that a doctor certifies was related to post-menopausal osteoporosis" .
+    ?z rdf:type policy:Condition ;
+       rdfs:label "Your doctor certifies that you are unable to give yourself the injection or learn how to give yourself the drug by injection" .
+    ?x rdf:type policy:Condition ;
+       rdfs:label "You are a woman with osteoporosis who meets the criteria for the Medicare home health benefit" .
+    ?y rdf:type policy:Condition ;
+       rdfs:label "You have a bone fracture that a doctor certifies was related to post-menopausal osteoporosis" .
+    ?z rdf:type policy:Condition ;
+       rdfs:label "Your doctor certifies that you are unable to give yourself the injection or learn how to give yourself the drug by injection" .
+    ?x rdf:type policy:Condition ;
+       rdfs:label "You are a woman with osteoporosis who meets the criteria for the Medicare home health benefit" .
+    ?y rdf:type policy:Condition ;
+       rdfs:label "You have a bone fracture that a doctor certifies was related to post-menopausal osteoporosis" .
+    ?z rdf:type policy:Condition ;
+       rdfs:label "Your doctor certifies that you are unable to give yourself the injection or learn how to give yourself the drug by injection" .
+    ?x rdf:type policy:Condition ;
+       rdfs:label "You are a woman with osteoporosis who meets the criteria for the Medicare home health benefit" .
+    ?y rdf:type policy:Condition ;
+       rdfs:label "You have a bone fracture that a doctor certifies was related to post-menopausal osteoporosis" .
+    ?z rdf:type policy:Condition ;
+       rdfs:label "Your doctor certifies that you are unable to give yourself the injection or learn how to give yourself the drug by injection" .
+    ?x rdf:type policy:Condition ;
+       rdfs:label "You are a woman with osteoporosis who meets the criteria for the Medicare home health benefit" .
+    ?y rdf:type policy:Condition ;
+       rdfs:label "You have a bone fracture that a doctor certifies was related to post-menopausal osteoporosis" .
+    ?z rdf:type policy:Condition ;
+       rdfs:label "Your doctor certifies that you are unable to give yourself the injection or learn how to give yourself the drug by injection" .
+    ?x rdf:type policy:Condition ;
+       rdfs:label "You are a woman with osteoporosis who meets the criteria for the Medicare home health benefit" .
+    ?y rdf:type policy:Condition ;
+       rdfs:label "You have a bone fracture that a doctor certifies was related to post-menopausal osteoporosis" .
+    ?z rdf:type policy:Condition ;
+       rdfs:label "Your doctor certifies that you are unable to give yourself the injection or learn how to give yourself the drug by injection" .
+    ?x rdf:type policy:Condition ;
+       rdfs:label "You are a woman with osteoporosis who meets the criteria for the Medicare home health benefit" .
+    ?y rdf:type policy:Condition ;
+       rdfs:label "You have a bone fracture that a doctor certifies was related to post-menopausal osteoporosis" .
+    ?z rdf:type policy:Condition ;
+       rdfs:label "Your doctor certifies that you are unable to give yourself the injection or learn how to give yourself the drug by injection" .
+    ?x rdf:type policy:Condition ;
+       rdfs:label "You are a woman with osteoporosis who meets the criteria for the Medicare home health benefit" .
+    ?y rdf:type policy:Condition ;
+       rdfs:label "You have a bone fracture that a doctor certifies was related to post-menopausal osteoporosis" .
+    ?z rdf:type policy:Condition ;
+       rdfs:label "Your doctor certifies that you are unable to give yourself the injection or learn how to give yourself the drug by injection" .
+    ?x rdf:type policy:Condition ;
+       rdfs:label "You are a woman with osteoporosis who meets the criteria for the Medicare home health benefit" .
+    ?y rdf:type policy:Condition ;
+       rdfs:label "You have a bone fracture that a doctor certifies was related to post-menopausal osteoporosis" .
+    ?z rdf:type policy:Condition ;
+       rdfs:label "Your doctor certifies that you are unable to give yourself the injection or learn how to give yourself the drug by injection" .
+    ?x rdf:type policy:Condition ;
+       rdfs:label "You are a woman with osteoporosis who meets the criteria for the Medicare home health benefit" .
+    ?y rdf:type policy:Condition ;
+       rdfs:label "You have a bone fracture that a doctor certifies was related to post-menopausal osteoporosis" .
+    ?z rdf:type policy:Condition ;
+       rdfs:label "Your doctor certifies that you are unable to give yourself the injection or learn how to give yourself the drug by injection" .
+    ?x rdf:type policy:Condition ;
+       rdfs:label "You are a woman with osteoporosis who meets the criteria for the Medicare home health benefit" .
+    ?y rdf:type policy:Condition ;
+       rdfs:label "You have a bone fracture that a doctor certifies was related to post-menopausal osteoporosis" .
+    ?z rdf:type policy:Condition ;
+       rdfs:label "Your doctor certifies that you are unable to give yourself the injection or learn how to give yourself the drug by injection" .
+    ?x rdf:type policy:Condition ;
+       rdfs:label "You are a woman with osteoporosis who meets the criteria for the Medicare home health benefit" .
+    ?y rdf:type policy:Condition ;
+       rdfs:label "You have a bone fracture that a doctor certifies was related to post-menopausal osteoporosis" .
+    ?z rdf:type policy:Condition ;
+       rdfs:label "Your doctor certifies that you are unable to give yourself the injection or learn how to give yourself the drug by injection" .
+    ?x rdf:type policy:Condition ;
+       rdfs:label "You are a woman with osteoporosis who meets the criteria for the Medicare home health benefit" .
+    ?y rdf:type policy:Condition ;
+       rdfs:label "You have a bone fracture that a doctor certifies was related to post-menopausal osteoporosis" .
+    ?z rdf:type policy:Condition ;
+       rdfs:label "Your doctor certifies that you are unable to give yourself the injection or learn how to give yourself the drug by injection" .
+    ?x rdf:type policy:Condition ;
+       rdfs:label "You are a woman with osteoporosis who meets the criteria for the Medicare home health benefit" .
+    ?y rdf:type policy:Condition ;
+       rdfs:label "You have a bone fracture that a doctor certifies was related to post-menopausal osteoporosis" .
+    ?z rdf:type policy:Condition ;
+       rdfs:label "Your doctor certifies that you are unable to give yourself the injection or learn how to give yourself the drug by injection" .
+    ?x rdf:type policy:Condition ;
+       rdfs:label "You are a woman with osteoporosis who meets the criteria for the Medicare home health benefit" .
+    ?y rdf:type policy:Condition ;
+       rdfs:label "You have a bone fracture that a doctor certifies was related to post-menopausal osteoporosis" .
+    ?z rdf:type policy:Condition ;
+       rdfs:label "Your doctor certifies that you are unable to give yourself the injection or learn how to give yourself the drug by injection" .
+    ?x rdf:type policy:Condition ;
+       rdfs:label "You are a woman with osteoporosis who meets the criteria for the Medicare home health benefit" .
+    ?y rdf:type policy:Condition ;
+       rdfs:label "You have a bone fracture that a doctor certifies was related to post-menopausal osteoporosis" .
+    ?z rdf:type policy:Condition ;
+       rdfs:label "Your doctor certifies that you are unable to give yourself the injection or learn how to give yourself the drug by injection" .
+    ?x rdf:type policy:Condition ;
+       rdfs:label "You are a woman with osteoporosis who meets the criteria for the Medicare home health benefit" .
+    ?y rdf:type policy:Condition ;
+       rdfs:label "You have a bone fracture that a doctor certifies was related to post-menopausal osteoporosis" .
+    ?z rdf:type policy:Condition ;
+       rdfs:label "Your doctor certifies that you are unable to give yourself the injection or learn how to give yourself the drug by injection" .
+    ?x rdf:type policy:Condition ;
+       rdfs:label "You are a woman with osteoporosis who meets the criteria for the Medicare home health benefit" .
+    ?y rdf:type policy:Condition ;
+       rdfs:label "You have a bone fracture that a doctor certifies was related to post-menopausal osteoporosis" .
+    ?z rdf:type policy:Condition ;
+       rdfs:label "Your doctor certifies that you are unable to give yourself the injection or learn how to give yourself the drug by injection" .
+    ?x rdf:type policy:Condition ;
+       rdfs:label "You are a woman with osteoporosis who meets the criteria for the Medicare home health benefit" .
+    ?y rdf:type policy:Condition ;
+       rdfs:label "You have a bone fracture that a doctor certifies was related to post-menopausal osteoporosis" .
+    ?z rdf:type policy:Condition ;
+       rdfs:label "Your doctor certifies that you are unable to give yourself the injection or learn how to give yourself the drug by injection" .
+    ?x rdf:type policy:Condition ;
+       rdfs:label "You are a woman with osteoporosis who meets the criteria for the Medicare home health benefit" .
+    ?y rdf:type policy:Condition ;
+       rdfs:label "You have a bone fracture that a doctor certifies was related to post-menopausal osteoporosis" .
+    ?z rdf:type policy:Condition ;
+       rdfs:label "Your doctor certifies that you are unable to give yourself the injection or learn how to give yourself the drug by injection" .
+    ?x rdf:type policy:Condition ;
+       rdfs:label "You are a woman with osteoporosis who meets the criteria for the Medicare home health benefit" .
+    ?y rdf:type policy:Condition ;
+       rdfs:label "You have a bone fracture that a doctor certifies was related to post-menopausal osteoporosis" .
+    ?z rdf:type policy:Condition ;
+       rdfs:label "Your doctor certifies that you are unable to give yourself the injection or learn how to give yourself the drug by injection" .
+    ?x rdf:type policy:Condition ;
+       rdfs:label "You are a woman with osteoporosis who meets the criteria for the Medicare home health benefit" .
+    ?y rdf:type policy:Condition ;
+       rdfs:label "You have a bone fracture that a doctor certifies was related to post-menopausal osteoporosis" .
+    ?z rdf:type policy:Condition ;
+       rdfs:label "Your doctor certifies that you are unable to give yourself the injection or learn how to give yourself the drug by injection" .
+    ?x rdf:type policy:Condition ;
+       rdfs:label "You are a woman with osteoporosis who meets the criteria for the Medicare home health benefit" .
+    ?y rdf:type policy:Condition ;
+       rdfs:label "You have a bone fracture that a doctor certifies was related to post-menopausal osteoporosis" .
+    ?z rdf:type policy:Condition ;
+       rdfs:label "Your doctor certifies that you are unable to give yourself the injection or learn how to give yourself the drug by injection" .
+    ?x rdf:type policy:Condition ;
+       rdfs:label "You are a woman with osteoporosis who meets the criteria for the Medicare home health benefit" .
+    ?y rdf:type policy:Condition ;
+       rdfs:label "You have a bone fracture that a doctor certifies was related to post-menopausal osteoporosis" .
+    ?z rdf:type policy:Condition ;
+       rdfs:label "Your doctor certifies that you are unable to give yourself the injection or learn how to give yourself the drug by injection" .
+    ?x rdf:type policy:Condition ;
+       rdfs:label "You are a woman with osteoporosis who meets the criteria for the Medicare home health benefit" .
+    ?y rdf:type policy:Condition ;
+       rdfs:label "You have a bone fracture that a doctor certifies was related to post-menopausal osteoporosis" .
+    ?z rdf:type policy:Condition ;
+       rdfs:label "Your doctor certifies that you are unable to give yourself the injection or learn how to give yourself the drug by injection" .
+    ?x rdf:type policy:Condition ;
+       rdfs:label "You are a woman with osteoporosis who meets the criteria for the Medicare home health benefit" .
+    ?y rdf:type policy:Condition ;
+       rdfs:label "You have a bone fracture that a doctor certifies was related to post-menopausal osteoporosis" .
+    ?z rdf:type policy:Condition ;
+       rdfs:label "Your doctor certifies that you are unable to give yourself the injection or learn how to give yourself the drug by injection" .
+    ?x rdf:type policy:Condition ;
+       rdfs:label "You are a woman with osteoporosis who meets the criteria for the Medicare home health benefit" .
+    ?y rdf:type policy:Condition ;
+       rdfs:label "You have a bone fracture that a doctor certifies was related to post-menopausal osteoporosis" .
+    ?z rdf:type policy:Condition ;
+       rdfs:label "Your doctor certifies that you are unable to give yourself the injection or learn how to give yourself the drug by injection" .
+    ?x rdf:type policy:Condition ;
+       rdfs:label "You are a woman with osteoporosis who meets the criteria for the Medicare home health benefit" .
+    ?y rdf:type policy:Condition ;
+       rdfs:label "You have a bone fracture that a doctor certifies was related to post-menopausal osteoporosis" .
+    ?z rdf:type policy:Condition ;
+      

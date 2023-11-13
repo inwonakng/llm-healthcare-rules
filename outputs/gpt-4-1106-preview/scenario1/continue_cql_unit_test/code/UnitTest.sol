@@ -1,0 +1,90 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+import "./SmartContract.sol";
+import "./remix_tests.sol";
+
+
+contract InjectableOsteoporosisDrugsCoverageContractTest {
+    
+    InjectableOsteoporosisDrugsCoverageContract coverageContract;
+
+    // Define a struct to encapsulate patient information for cleaner code
+    struct PatientInfo {
+        bool isFemale;
+        bool hasOsteoporosis;
+        bool qualifiesForMedicareHomeHealth;
+        bool hasPostmenopausalFracture;
+        bool unableToSelfAdminister;
+        bool familyUnableToAdminister;
+    }
+
+    // Create a patient info instance for testing
+    PatientInfo patient;
+
+    // Run before each test function
+    function beforeEach() public {
+        coverageContract = new InjectableOsteoporosisDrugsCoverageContract();
+        patient = PatientInfo(false, false, false, false, false, false);
+    }
+
+    /// Test if a female patient with osteoporosis who meets all criteria is covered
+    function testCoverageForEligibleFemalePatient() public {
+        patient.isFemale = true;
+        patient.hasOsteoporosis = true;
+        patient.qualifiesForMedicareHomeHealth = true;
+        patient.hasPostmenopausalFracture = true;
+        patient.unableToSelfAdminister = true;
+        Assert.equal(coverageContract.isCovered(patient.isFemale, patient.hasOsteoporosis, patient.qualifiesForMedicareHomeHealth, patient.hasPostmenopausalFracture, patient.unableToSelfAdminister), true, "Eligible female patient should be covered.");
+    }
+
+    /// Test if a male patient is not covered
+    function testCoverageForMalePatient() public {
+        patient.isFemale = false;
+        Assert.equal(coverageContract.isCovered(patient.isFemale, patient.hasOsteoporosis, patient.qualifiesForMedicareHomeHealth, patient.hasPostmenopausalFracture, patient.unableToSelfAdminister), false, "Male patient should not be covered.");
+    }
+
+    /// Test if a female patient without osteoporosis is not covered
+    function testCoverageForFemalePatientWithoutOsteoporosis() public {
+        patient.isFemale = true;
+        patient.hasOsteoporosis = false;
+        Assert.equal(coverageContract.isCovered(patient.isFemale, patient.hasOsteoporosis, patient.qualifiesForMedicareHomeHealth, patient.hasPostmenopausalFracture, patient.unableToSelfAdminister), false, "Female patient without osteoporosis should not be covered.");
+    }
+
+    /// Test if a female patient with osteoporosis but without a qualifying fracture is not covered
+    function testCoverageForFemalePatientWithoutQualifyingFracture() public {
+        patient.isFemale = true;
+        patient.hasOsteoporosis = true;
+        patient.hasPostmenopausalFracture = false;
+        Assert.equal(coverageContract.isCovered(patient.isFemale, patient.hasOsteoporosis, patient.qualifiesForMedicareHomeHealth, patient.hasPostmenopausalFracture, patient.unableToSelfAdminister), false, "Female patient without a qualifying fracture should not be covered.");
+    }
+
+    /// Test if a female patient with osteoporosis and a qualifying fracture but able to self-administer is not covered
+    function testCoverageForSelfAdministeringFemalePatient() public {
+        patient.isFemale = true;
+        patient.hasOsteoporosis = true;
+        patient.hasPostmenopausalFracture = true;
+        patient.unableToSelfAdminister = false;
+        Assert.equal(coverageContract.isCovered(patient.isFemale, patient.hasOsteoporosis, patient.qualifiesForMedicareHomeHealth, patient.hasPostmenopausalFracture, patient.unableToSelfAdminister), false, "Female patient able to self-administer should not be covered.");
+    }
+
+    /// Test if a female patient with osteoporosis, a qualifying fracture, unable to self-administer, but with family able to administer is covered
+    function testCoverageWithFamilyAbleToAdminister() public {
+        patient.isFemale = true;
+        patient.hasOsteoporosis = true;
+        patient.hasPostmenopausalFracture = true;
+        patient.unableToSelfAdminister = true;
+        patient.familyUnableToAdminister = false;
+        Assert.equal(coverageContract.isCoveredWithFamily(patient.isFemale, patient.hasOsteoporosis, patient.qualifiesForMedicareHomeHealth, patient.hasPostmenopausalFracture, patient.unableToSelfAdminister, patient.familyUnableToAdminister), true, "Female patient with family able to administer should be covered.");
+    }
+
+    /// Test if a female patient with osteoporosis, a qualifying fracture, unable to self-administer, and with family unable to administer is covered
+    function testCoverageWithFamilyUnableToAdminister() public {
+        patient.isFemale = true;
+        patient.hasOsteoporosis = true;
+        patient.hasPostmenopausalFracture = true;
+        patient.unableToSelfAdminister = true;
+        patient.familyUnableToAdminister = true;
+        Assert.equal(coverageContract.isCoveredWithFamily(patient.isFemale, patient.hasOsteoporosis, patient.qualifiesForMedicareHomeHealth, patient.hasPostmenopausalFracture, patient.unableToSelfAdminister, patient.familyUnableToAdminister), true, "Female patient with family unable to administer should be covered.");
+    }
+}

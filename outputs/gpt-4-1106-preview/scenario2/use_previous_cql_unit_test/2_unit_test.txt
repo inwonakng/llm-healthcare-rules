@@ -1,0 +1,74 @@
+```solidity
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+import "remix_tests.sol"; // import the testing contract
+import "./IVIGCoverageContract.sol"; // import the contract to test
+
+contract IVIGCoverageContractTest {
+    IVIGCoverageContract ivigCoverageContract;
+
+    // Create a new instance of IVIGCoverageContract before each test
+    function beforeEach() public {
+        ivigCoverageContract = new IVIGCoverageContract();
+    }
+
+    /// Test if IVIG is provided in the patient's home
+    function testIVIGProvidedInHome() public {
+        bool isProvidedInHome = true;
+        bool result = ivigCoverageContract.isIVIGCovered(isProvidedInHome);
+        Assert.equal(result, true, "IVIG should be covered when provided in home");
+    }
+
+    /// Test if IVIG is not covered when not provided in the patient's home
+    function testIVIGNotProvidedInHome() public {
+        bool isProvidedInHome = false;
+        bool result = ivigCoverageContract.isIVIGCovered(isProvidedInHome);
+        Assert.equal(result, false, "IVIG should not be covered when not provided in home");
+    }
+
+    /// Test if patient is eligible for coverage with primary immune deficiency disease
+    function testEligibilityWithPrimaryImmuneDeficiency() public {
+        bool hasPrimaryImmuneDeficiency = true;
+        bool result = ivigCoverageContract.isPatientEligible(hasPrimaryImmuneDeficiency);
+        Assert.equal(result, true, "Patient should be eligible with primary immune deficiency disease");
+    }
+
+    /// Test if patient is not eligible for coverage without primary immune deficiency disease
+    function testEligibilityWithoutPrimaryImmuneDeficiency() public {
+        bool hasPrimaryImmuneDeficiency = false;
+        bool result = ivigCoverageContract.isPatientEligible(hasPrimaryImmuneDeficiency);
+        Assert.equal(result, false, "Patient should not be eligible without primary immune deficiency disease");
+    }
+
+    /// Test if IVIG is medically appropriate for the patient to receive at home as per doctor's determination
+    function testMedicalAppropriatenessForHomeIVIG() public {
+        bool isMedicallyAppropriate = true;
+        bool result = ivigCoverageContract.isMedicalAppropriatenessDetermined(isMedicallyAppropriate);
+        Assert.equal(result, true, "IVIG should be medically appropriate as per doctor's determination");
+    }
+
+    /// Test if IVIG is not medically appropriate for the patient to receive at home as per doctor's determination
+    function testMedicalInappropriatenessForHomeIVIG() public {
+        bool isMedicallyAppropriate = false;
+        bool result = ivigCoverageContract.isMedicalAppropriatenessDetermined(isMedicallyAppropriate);
+        Assert.equal(result, false, "IVIG should not be medically appropriate as per doctor's determination");
+    }
+
+    /// Test if Medicare Part B covers the cost of IVIG
+    function testMedicarePartBCoversIVIG() public {
+        bool isCoveredByMedicarePartB = true;
+        bool result = ivigCoverageContract.isCoveredByMedicarePartB(isCoveredByMedicarePartB);
+        Assert.equal(result, true, "Medicare Part B should cover the cost of IVIG");
+    }
+
+    /// Test if Medicare Part B does not cover the cost of other items and services related to IVIG administration at home
+    function testMedicarePartBDoesNotCoverOtherItemsAndServices() public {
+        bool hasOtherItemsAndServices = true;
+        bool result = ivigCoverageContract.isOtherItemsAndServicesCovered(hasOtherItemsAndServices);
+        Assert.equal(result, false, "Medicare Part B should not cover the cost of other items and services related to IVIG administration at home");
+    }
+}
+```
+
+Please note that the actual implementation of the `IVIGCoverageContract` is not provided here, as the task was to only implement the unit tests for the contract. The contract functions used in the tests (`isIVIGCovered`, `isPatientEligible`, `isMedicalAppropriatenessDetermined`, `isCoveredByMedicarePartB`, `isOtherItemsAndServicesCovered`) are assumed to exist in the `IVIGCoverageContract` and should be implemented to handle the logic described in the insurance policy summary.

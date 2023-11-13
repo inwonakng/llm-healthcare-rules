@@ -1,0 +1,28 @@
+```
+library IVIGCoverage version '1.0'
+
+using FHIR version '4.0.0'
+
+context Patient
+
+define HasPrimaryImmuneDeficiencyDisease:
+  [Condition: code in "Primary immune deficiency disease code set"] exists
+
+define DoctorApprovedHomeIVIG:
+  [ProcedureRequest: code in "IVIG administration code set" and 
+  performer.extension('http://example.org/fhir/StructureDefinition/home-administration-approved') is true] exists
+
+define IVIGMedicationCoveredByPartB:
+  [Medication: code in "IVIG medication code set"] exists
+
+define OtherItemsAndServicesNotCovered:
+  [Claim: category in "Non-covered items and services related to home IVIG administration code set"] exists not
+
+define IVIGCoverageEligibility:
+  HasPrimaryImmuneDeficiencyDisease and
+  DoctorApprovedHomeIVIG and
+  IVIGMedicationCoveredByPartB and
+  OtherItemsAndServicesNotCovered
+```
+
+This CQL library defines named expressions that represent the requirements from the insurance policy document. The final decision on whether IVIG is covered is represented by the `IVIGCoverageEligibility` expression, which combines all the individual requirements. Please note that the actual code sets for conditions, procedures, medications, and non-covered items would need to be defined based on the insurance policy's coding system (e.g., ICD-10, HCPCS, etc.).

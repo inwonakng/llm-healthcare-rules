@@ -1,9 +1,0 @@
-TypeError: Member "isTrue" not found or not visible after argument-dependent lookup in type(library Assert).
-  --> contracts/UnitTest.sol:45:9:
-   |
-45 |         Assert.isTrue(isCovered, "Patient should be covered for injectable osteoporosis drugs.");
-   |         ^^^^^^^^^^^^^
-
-
-Error HH600: Compilation failed
-For more info go to https://hardhat.org/HH600 or run Hardhat with --show-stack-traces

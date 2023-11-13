@@ -1,0 +1,90 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+import "./SmartContract.sol";
+import "./remix_tests.sol";
+
+
+// The following is a set of unit tests for the MedicareContract
+// These tests are designed to ensure that the contract adheres to the insurance policy document and its summary
+
+contract MedicareContractTest {
+    MedicareContract medicareContract;
+
+    // Run before every test function
+    function beforeEach() public {
+        medicareContract = new MedicareContract();
+    }
+
+    /// Test if transplant drug therapy is covered when Medicare contributed to the payment for the organ transplant
+    function testTransplantDrugCoverage() public {
+        bool hasPartA = true;
+        bool hasPartB = true;
+        bool medicareContributed = true;
+        bool isCovered = medicareContract.checkTransplantDrugCoverage(hasPartA, hasPartB, medicareContributed);
+        Assert.equal(isCovered, true, "Transplant drug therapy should be covered");
+    }
+
+    /// Test if Medicare Part A is required at the time of the transplant
+    function testPartARequirementAtTransplant() public {
+        bool hasPartA = false;
+        bool hasPartB = true;
+        bool medicareContributed = true;
+        bool isCovered = medicareContract.checkTransplantDrugCoverage(hasPartA, hasPartB, medicareContributed);
+        Assert.equal(isCovered, false, "Coverage should require Part A at the time of transplant");
+    }
+
+    /// Test if Medicare Part B is required at the time of receiving immunosuppressive drugs
+    function testPartBRequirementForDrugs() public {
+        bool hasPartA = true;
+        bool hasPartB = false;
+        bool medicareContributed = true;
+        bool isCovered = medicareContract.checkTransplantDrugCoverage(hasPartA, hasPartB, medicareContributed);
+        Assert.equal(isCovered, false, "Coverage should require Part B when receiving drugs");
+    }
+
+    /// Test if Medicare Part D covers drugs when Part B does not
+    function testPartDCoverageWhenPartBDoesNot() public {
+        bool hasPartD = true;
+        bool hasPartB = false;
+        bool isCovered = medicareContract.checkPartDCoverage(hasPartD, hasPartB);
+        Assert.equal(isCovered, true, "Part D should cover when Part B does not");
+    }
+
+    /// Test if Medicare coverage ends 36 months after a successful kidney transplant due to ESRD
+    function testCoverageEndAfterKidneyTransplant() public {
+        uint transplantDate = block.timestamp - 37 months;
+        bool hasESRD = true;
+        bool isCovered = medicareContract.checkCoverageAfterTransplant(transplantDate, hasESRD);
+        Assert.equal(isCovered, false, "Coverage should end 36 months after a successful kidney transplant due to ESRD");
+    }
+
+    /// Test if the specific benefit for immunosuppressive drugs is available after losing Part A coverage
+    function testBenefitAvailabilityAfterPartAEnds() public {
+        uint partAEndDate = block.timestamp - 1 days;
+        bool hasOtherCoverage = false;
+        bool isEligible = medicareContract.checkBenefitEligibility(partAEndDate, hasOtherCoverage);
+        Assert.equal(isEligible, true, "Benefit should be available after Part A ends and no other coverage exists");
+    }
+
+    /// Test the monthly premium for the immunosuppressive drug benefit
+    function testMonthlyPremiumForDrugBenefit() public {
+        uint premium = medicareContract.getMonthlyPremium();
+        Assert.equal(premium, 9710, "Monthly premium should be 9710 (in cents)");
+    }
+
+    /// Test the annual deductible for the immunosuppressive drug benefit
+    function testAnnualDeductibleForDrugBenefit() public {
+        uint deductible = medicareContract.getAnnualDeductible();
+        Assert.equal(deductible, 22600, "Annual deductible should be 22600 (in cents)");
+    }
+
+    /// Test the cost after deductible for immunosuppressive drugs
+    function testCostAfterDeductible() public {
+        uint deductible = 22600; // in cents
+        uint medicareApprovedAmount = 100000; // in cents, hypothetical amount
+        uint costAfterDeductible = medicareContract.getCostAfterDeductible(deductible, medicareApprovedAmount);
+        uint expectedCost = medicareApprovedAmount * 20 / 100; // 20% of the approved amount
+        Assert.equal(costAfterDeductible, expectedCost, "Cost after deductible should be 20% of the Medicare-approved amount");
+    }
+}

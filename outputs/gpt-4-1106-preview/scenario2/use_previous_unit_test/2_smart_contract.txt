@@ -1,0 +1,48 @@
+Based on the summary and unit tests provided, here is a possible implementation of the `IVIGInsurancePolicy` Solidity smart contract:
+
+```solidity
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+contract IVIGInsurancePolicy {
+    // Struct to encapsulate patient details and treatment conditions
+    struct PatientTreatment {
+        bool hasPrimaryImmuneDeficiency;
+        bool isMedicallyAppropriate;
+        bool isAtHome;
+    }
+
+    // Function to check if IVIG is covered under the policy
+    function isCovered(
+        string memory treatmentType,
+        bool hasPrimaryImmuneDeficiency,
+        bool isMedicallyAppropriate,
+        bool isAtHome
+    ) public pure returns (bool) {
+        // Check if the treatment is IVIG
+        if (keccak256(abi.encodePacked(treatmentType)) == keccak256(abi.encodePacked("IVIG"))) {
+            // Check if all conditions are met
+            if (hasPrimaryImmuneDeficiency && isMedicallyAppropriate && isAtHome) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // Function to check if Medicare Part B covers the IVIG medication
+    function partBCoverage(string memory treatmentType) public pure returns (bool) {
+        // Check if the treatment is IVIG
+        return keccak256(abi.encodePacked(treatmentType)) == keccak256(abi.encodePacked("IVIG"));
+    }
+
+    // Function to check if Medicare Part B covers additional items or services
+    function partBCoverageForServices(string memory treatmentType) public pure returns (bool) {
+        // Medicare Part B does not cover additional items or services for IVIG
+        return false;
+    }
+}
+```
+
+This contract includes the necessary functions to determine if IVIG is covered under the policy, if Medicare Part B covers the IVIG medication, and if Medicare Part B covers additional items or services. The `isCovered` function checks all the conditions mentioned in the summary, and the `partBCoverage` and `partBCoverageForServices` functions return the appropriate coverage status based on the treatment type.
+
+Please note that in a real-world scenario, additional checks, security considerations, and state management might be necessary. This implementation is a simplified version based on the provided summary and unit tests.

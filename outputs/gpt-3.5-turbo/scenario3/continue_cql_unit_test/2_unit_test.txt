@@ -1,0 +1,81 @@
+```solidity
+pragma solidity ^0.8.0;
+
+import "remix_tests.sol";
+import "./InsurancePolicyContract.sol";
+
+contract InsurancePolicyContractTest {
+    InsurancePolicyContract contractUnderTest;
+
+    function beforeEach() public {
+        contractUnderTest = new InsurancePolicyContract();
+    }
+
+    function medicareCoversTransplantDrugTherapyTest() public {
+        bool result = contractUnderTest.medicareCoversTransplantDrugTherapy();
+        Assert.isTrue(result, "Medicare should cover transplant drug therapy");
+    }
+
+    function hasPartAAtTransplantTest() public {
+        bool result = contractUnderTest.hasPartAAtTransplant();
+        Assert.isTrue(result, "You must have Part A at the time of the covered transplant");
+    }
+
+    function hasPartBAtImmunosuppressiveDrugsTest() public {
+        bool result = contractUnderTest.hasPartBAtImmunosuppressiveDrugs();
+        Assert.isTrue(result, "You must have Part B at the time you get immunosuppressive drugs");
+    }
+
+    function partDCoversImmunosuppressiveDrugsTest() public {
+        bool result = contractUnderTest.partDCoversImmunosuppressiveDrugs();
+        Assert.isTrue(result, "Medicare drug coverage (Part D) should cover immunosuppressive drugs if Part B doesn’t cover them");
+    }
+
+    function joinMedicareDrugPlanTest() public {
+        bool result = contractUnderTest.joinMedicareDrugPlan();
+        Assert.isTrue(result, "If you have Original Medicare, you should be able to join a Medicare drug plan to get Medicare drug coverage");
+    }
+
+    function esrdCoverageEndsAfterTransplantTest() public {
+        bool result = contractUnderTest.esrdCoverageEndsAfterTransplant();
+        Assert.isTrue(result, "If you only have Medicare because of End-Stage Renal Disease (ESRD), your Medicare coverage, including immunosuppressive drug coverage, should end 36 months after a successful kidney transplant");
+    }
+
+    function medicareBenefitAfterCoverageLossTest() public {
+        bool result = contractUnderTest.medicareBenefitAfterCoverageLoss();
+        Assert.isTrue(result, "Medicare should offer a benefit that may help you if you lose Part A coverage 36 months after a kidney transplant and you don’t have certain types of other health coverage");
+    }
+
+    function benefitCoversImmunosuppressiveDrugsOnlyTest() public {
+        bool result = contractUnderTest.benefitCoversImmunosuppressiveDrugsOnly();
+        Assert.isTrue(result, "The benefit should only cover your immunosuppressive drugs and no other items or services");
+    }
+
+    function notSubstituteForFullCoverageTest() public {
+        bool result = contractUnderTest.notSubstituteForFullCoverage();
+        Assert.isTrue(result, "The benefit should not be a substitute for full health coverage");
+    }
+
+    function signUpAfterPartACoverageEndsTest() public {
+        bool result = contractUnderTest.signUpAfterPartACoverageEnds();
+        Assert.isTrue(result, "If you qualify, you should be able to sign up for the benefit any time after your Part A coverage ends");
+    }
+
+    function signUpContactInformationTest() public {
+        string memory result = contractUnderTest.signUpContactInformation();
+        Assert.equal(result, "Call Social Security at 1-877-465-0355. TTY users can call 1-800-325-0788.", "The contact information should be correct");
+    }
+
+    function monthlyPremium2023Test() public {
+        uint256 result = contractUnderTest.monthlyPremium2023();
+        Assert.equal(result, 97.10, "The monthly premium for 2023 should be $97.10");
+    }
+
+    function deductible2023Test() public {
+        uint256 result = contractUnderTest.deductible2023();
+        Assert.equal(result, 226, "The deductible for 2023 should be $226");
+    }
+
+    function paymentAfterDeductibleTest() public {
+        bool result = contractUnderTest.paymentAfterDeductible();
+        Assert.isTrue(result, "Once you've met the deductible, you should pay

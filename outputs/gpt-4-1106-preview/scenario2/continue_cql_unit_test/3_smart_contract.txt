@@ -1,0 +1,32 @@
+```solidity
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+contract IVIGCoverageContract {
+    // Define a struct to encapsulate patient information for cleaner code
+    struct PatientInfo {
+        bool hasPrimaryImmuneDeficiencyDisease;
+        bool doctorApprovedHomeIVIG;
+        bool ivigMedicationCoveredByPartB;
+        bool otherItemsAndServicesNotCovered;
+    }
+
+    // Function to check the eligibility of IVIG coverage based on the patient's information
+    function checkEligibility(
+        bool hasPrimaryImmuneDeficiencyDisease,
+        bool doctorApprovedHomeIVIG,
+        bool ivigMedicationCoveredByPartB,
+        bool otherItemsAndServicesNotCovered
+    ) public pure returns (bool) {
+        // Check all conditions for eligibility
+        return (
+            hasPrimaryImmuneDeficiencyDisease &&
+            doctorApprovedHomeIVIG &&
+            ivigMedicationCoveredByPartB &&
+            otherItemsAndServicesNotCovered
+        );
+    }
+}
+```
+
+This Solidity smart contract implements the logic required to determine the eligibility of IVIG coverage based on the insurance policy document, its summary, and the CQL named expressions. The `checkEligibility` function takes four boolean parameters that represent the conditions outlined in the policy and returns a boolean indicating whether the patient is eligible for coverage. The contract assumes that the input parameters are provided correctly according to the policy requirements.

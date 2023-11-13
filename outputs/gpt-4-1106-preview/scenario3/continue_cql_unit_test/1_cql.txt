@@ -1,0 +1,64 @@
+```
+library MedicareTransplantDrugCoverage version '1.0'
+
+using FHIR version '4.0.0'
+
+context Patient
+
+define IsEligibleForTransplantDrugTherapy:
+  Medicare.coveredTransplant and HasPartAAtTimeOfTransplant and HasPartBWhenReceivingDrugs
+
+define HasPartAAtTimeOfTransplant:
+  Patient.MedicarePartA status at time of transplant is 'active'
+
+define HasPartBWhenReceivingDrugs:
+  Patient.MedicarePartB status when receiving immunosuppressive drugs is 'active'
+
+define IsCoveredByPartD:
+  not HasPartBWhenReceivingDrugs and Patient.MedicarePartD status is 'active'
+
+define HasOriginalMedicareAndDrugPlan:
+  Patient.OriginalMedicare status is 'active' and Patient.MedicareDrugPlan status is 'active'
+
+define HasESRDCoverageEndsPost36Months:
+  Patient.ESRDCoverage and DurationSinceSuccessfulKidneyTransplant() > 36 months
+
+define DurationSinceSuccessfulKidneyTransplant:
+  // Assuming there is a function to calculate the duration since the transplant
+  CalculateDurationSinceTransplant(Patient.TransplantDate)
+
+define IsEligibleForImmunosuppressiveDrugBenefit:
+  not HasPartAAfter36Months and not HasOtherHealthCoverage
+
+define HasPartAAfter36Months:
+  DurationSinceSuccessfulKidneyTransplant() <= 36 months
+
+define HasOtherHealthCoverage:
+  Patient.GroupHealthPlan or Patient.TRICARE or Patient.Medicaid
+
+define ImmunodrugBenefitOnlyCoversDrugs:
+  IsEligibleForImmunosuppressiveDrugBenefit and not CoverageIncludesOtherItemsOrServices
+
+define CoverageIncludesOtherItemsOrServices:
+  // This expression would check for coverage of items or services other than immunosuppressive drugs
+  ExistsOtherItemsOrServicesCoverage()
+
+define CanEnrollInImmunosuppressiveDrugBenefit:
+  IsEligibleForImmunosuppressiveDrugBenefit and PartACoverageEnded
+
+define PartACoverageEnded:
+  not HasPartAAtTimeOfTransplant
+
+define MonthlyPremium2023:
+  97.10 // Note: This value may be subject to change or conditions
+
+define AnnualDeductible2023:
+  226 // Note: This value may be subject to change or conditions
+
+define CoinsuranceAfterDeductible:
+  0.20 // 20% coinsurance rate
+
+define FinalDecision:
+  IsEligibleForTransplantDrugTherapy or IsCoveredByPartD or HasOriginalMedicareAndDrugPlan or (HasESRDCoverageEndsPost36Months and CanEnrollInImmunosuppressiveDrugBenefit)
+```
+Please note that the above CQL expressions are hypothetical and based on the provided summary. In a real-world scenario, the expressions would need to be validated for accuracy and completeness against the actual data model and business rules of the Medicare system. Additionally, the expressions assume the existence of certain functions (like `CalculateDurationSinceTransplant`) and patient attributes that would need to be defined in a real implementation.

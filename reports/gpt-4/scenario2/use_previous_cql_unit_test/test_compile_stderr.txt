@@ -1,16 +1,40 @@
 Warning: SPDX license identifier not provided in source file. Before publishing, consider adding a comment containing "SPDX-License-Identifier: <SPDX-License>" to each source file. Use "SPDX-License-Identifier: UNLICENSED" for non-open-source code. Please see https://spdx.org for more information.
---> contracts/SmartContract.sol
-
-
-Warning: SPDX license identifier not provided in source file. Before publishing, consider adding a comment containing "SPDX-License-Identifier: <SPDX-License>" to each source file. Use "SPDX-License-Identifier: UNLICENSED" for non-open-source code. Please see https://spdx.org for more information.
 --> contracts/UnitTest.sol
 
 
-TypeError: Member "isCovered" not found or not visible after argument-dependent lookup in contract InsurancePolicy.
-  --> contracts/UnitTest.sol:10:23:
+TypeError: Invalid type for argument in function call. Invalid implicit conversion from bool to address requested.
+  --> contracts/UnitTest.sol:16:53:
    |
-10 |         bool result = insurancePolicy.isCovered("IVIG", true, "primary immune deficiency disease", true);
-   |                       ^^^^^^^^^^^^^^^^^^^^^^^^^
+16 |         bool result = insurancePolicy.isIVIGCovered(true);
+   |                                                     ^^^^
+
+
+TypeError: Invalid type for argument in function call. Invalid implicit conversion from bool to address requested.
+  --> contracts/UnitTest.sol:22:60:
+   |
+22 |         bool result = insurancePolicy.isCoveredWithDisease(true);
+   |                                                            ^^^^
+
+
+TypeError: Invalid type for argument in function call. Invalid implicit conversion from bool to address requested.
+  --> contracts/UnitTest.sol:28:67:
+   |
+28 |         bool result = insurancePolicy.isCoveredWithDoctorApproval(true);
+   |                                                                   ^^^^
+
+
+TypeError: Invalid type for argument in function call. Invalid implicit conversion from bool to address requested.
+  --> contracts/UnitTest.sol:34:59:
+   |
+34 |         bool result = insurancePolicy.isCoveredUnderPartB(true);
+   |                                                           ^^^^
+
+
+TypeError: Invalid type for argument in function call. Invalid implicit conversion from bool to address requested.
+  --> contracts/UnitTest.sol:40:59:
+   |
+40 |         bool result = insurancePolicy.isOtherItemsCovered(false);
+   |                                                           ^^^^^
 
 
 Error HH600: Compilation failed

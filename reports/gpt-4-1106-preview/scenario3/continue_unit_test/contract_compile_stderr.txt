@@ -1,9 +1,0 @@
-TypeError: Function declared as pure, but this expression (potentially) modifies the state and thus requires non-payable (the default) or payable.
-  --> contracts/SmartContract.sol:80:14:
-   |
-80 |         emit BenefitCosts(MONTHLY_PREMIUM_CENTS, DEDUCTIBLE_CENTS);
-   |              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-
-Error HH600: Compilation failed
-For more info go to https://hardhat.org/HH600 or run Hardhat with --show-stack-traces

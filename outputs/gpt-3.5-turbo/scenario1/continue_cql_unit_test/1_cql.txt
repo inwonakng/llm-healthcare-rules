@@ -1,0 +1,44 @@
+```cql
+library InjectableOsteoporosisDrugsCoverage
+
+using FHIR version '4.0.1'
+
+-- Named expressions for Injectable Osteoporosis Drugs Coverage
+
+-- Condition 1: You're a woman with osteoporosis who meets the criteria for the Medicare home health benefit.
+define meetsCriteriaForHomeHealthBenefit:
+  -- Add logic to determine if the patient is a woman with osteoporosis and meets the criteria for the Medicare home health benefit
+  -- Example: [Insert logic here]
+
+-- Condition 2: You have a bone fracture that a doctor certifies was related to post-menopausal osteoporosis.
+define hasPostMenopausalOsteoporosisFracture:
+  -- Add logic to determine if the patient has a bone fracture related to post-menopausal osteoporosis
+  -- Example: [Insert logic here]
+
+-- Condition 3: Your doctor certifies that you can't give yourself the injection or learn how to give yourself the drug by injection.
+define unableToSelfAdministerInjection:
+  -- Add logic to determine if the patient is unable to self-administer the injection or learn how to do so
+  -- Example: [Insert logic here]
+
+-- Condition 4: Medicare will cover the home health nurse or aide to provide the injection if your family or caregivers are unable or unwilling to give you the drug by injection.
+define familyOrCaregiversUnableOrUnwilling:
+  -- Add logic to determine if the patient's family or caregivers are unable or unwilling to give the drug by injection
+  -- Example: [Insert logic here]
+
+-- Final Decision: Injectable osteoporosis drugs coverage under Medicare
+define coverage:
+  meetsCriteriaForHomeHealthBenefit and
+  hasPostMenopausalOsteoporosisFracture and
+  unableToSelfAdministerInjection and
+  familyOrCaregiversUnableOrUnwilling
+
+```
+
+Summary:
+The CQL library "InjectableOsteoporosisDrugsCoverage" includes the following named expressions:
+
+1. `meetsCriteriaForHomeHealthBenefit`: Determines if the patient is a woman with osteoporosis who meets the criteria for the Medicare home health benefit.
+2. `hasPostMenopausalOsteoporosisFracture`: Determines if the patient has a bone fracture related to post-menopausal osteoporosis.
+3. `unableToSelfAdministerInjection`: Determines if the patient is unable to self-administer the injection or learn how to do so.
+4. `familyOrCaregiversUnableOrUnwilling`: Determines if the patient's family or caregivers are unable or unwilling to give the drug by injection.
+5. `coverage`: Represents the final decision for Injectable osteoporosis drugs coverage under Medicare, based on the combination of the above conditions.

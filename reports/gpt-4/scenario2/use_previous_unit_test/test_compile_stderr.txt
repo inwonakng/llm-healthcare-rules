@@ -1,30 +1,40 @@
 Warning: SPDX license identifier not provided in source file. Before publishing, consider adding a comment containing "SPDX-License-Identifier: <SPDX-License>" to each source file. Use "SPDX-License-Identifier: UNLICENSED" for non-open-source code. Please see https://spdx.org for more information.
---> contracts/SmartContract.sol
-
-
-Warning: SPDX license identifier not provided in source file. Before publishing, consider adding a comment containing "SPDX-License-Identifier: <SPDX-License>" to each source file. Use "SPDX-License-Identifier: UNLICENSED" for non-open-source code. Please see https://spdx.org for more information.
 --> contracts/UnitTest.sol
 
 
-TypeError: Wrong argument count for function call: 4 arguments given but expected 3.
-  --> contracts/UnitTest.sol:10:23:
+TypeError: Wrong argument count for function call: 0 arguments given but expected 1.
+  --> contracts/UnitTest.sol:16:23:
    |
-10 |         bool result = insurancePolicy.isCovered("IVIG", true, true, true);
-   |                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+16 |         bool result = insurancePolicy.isIVIGCoveredAtHome();
+   |                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 
-TypeError: Wrong argument count for function call: 4 arguments given but expected 3.
-  --> contracts/UnitTest.sol:15:23:
+TypeError: Wrong argument count for function call: 0 arguments given but expected 1.
+  --> contracts/UnitTest.sol:22:23:
    |
-15 |         bool result = insurancePolicy.isCovered("IVIG", true, false, true);
-   |                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+22 |         bool result = insurancePolicy.isCoveredForPrimaryImmuneDeficiency();
+   |                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 
-TypeError: Wrong argument count for function call: 4 arguments given but expected 3.
-  --> contracts/UnitTest.sol:20:23:
+TypeError: Wrong argument count for function call: 0 arguments given but expected 1.
+  --> contracts/UnitTest.sol:28:23:
    |
-20 |         bool result = insurancePolicy.isCovered("IVIG", true, true, false);
-   |                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+28 |         bool result = insurancePolicy.isMedicallyAppropriate();
+   |                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+TypeError: Wrong argument count for function call: 0 arguments given but expected 1.
+  --> contracts/UnitTest.sol:34:23:
+   |
+34 |         bool result = insurancePolicy.isPartBCoveringIVIG();
+   |                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+TypeError: Wrong argument count for function call: 0 arguments given but expected 1.
+  --> contracts/UnitTest.sol:40:23:
+   |
+40 |         bool result = insurancePolicy.isPartBNotCoveringOtherItems();
+   |                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 
 Error HH600: Compilation failed

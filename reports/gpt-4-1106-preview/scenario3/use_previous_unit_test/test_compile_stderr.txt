@@ -1,8 +1,8 @@
 ParserError: Expected ';' but got identifier
-  --> contracts/UnitTest.sol:61:60:
+  --> contracts/UnitTest.sol:56:52:
    |
-61 |         policyHolder.transplantDate = block.timestamp - 37 months; // Simulate a transplant that occurred 37 months ago
-   |                                                            ^^^^^^
+56 |         uint transplantDate = block.timestamp - 37 months;
+   |                                                    ^^^^^^
 
 
 Error HH600: Compilation failed

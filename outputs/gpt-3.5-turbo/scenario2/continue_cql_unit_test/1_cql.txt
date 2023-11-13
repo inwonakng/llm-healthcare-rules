@@ -1,0 +1,40 @@
+```cql
+library InsurancePolicyDocument
+
+using FHIR version '4.0.1'
+
+-- Named expressions for the insurance policy document requirements
+
+-- Requirement 1: Medicare covers IVIG if you have a diagnosis of primary immune deficiency disease
+define coverageForPrimaryImmuneDeficiency:
+  [Condition: code in "Primary Immune Deficiency Disease"]
+
+-- Requirement 2: IVIG can be provided in your home if your doctor determines it is medically appropriate
+define ivigInHomeMedicallyAppropriate:
+  [Procedure: code in "Intravenous Immune Globulin (IVIG)"]
+    where (subject.birthDate <= today() - 18 years) -- Assuming the patient is at least 18 years old
+    and (context: encounter.period.start <= today()) -- Assuming the encounter has already started
+    and (context: encounter.period.end >= today()) -- Assuming the encounter is ongoing
+    and (context: encounter.provider.specialty in "General Practice") -- Assuming the provider is a general practitioner
+
+-- Requirement 3: Medicare Part B covers the cost of the IVIG itself
+define ivigCoverageByMedicarePartB:
+  [Coverage: code in "Medicare Part B"]
+    where (beneficiary = Patient)
+
+-- Requirement 4: Medicare does not cover other items and services related to receiving IVIG at home
+define nonCoveredItemsAndServices:
+  [Procedure: code in "Other Items and Services"]
+    where (subject.birthDate <= today() - 18 years) -- Assuming the patient is at least 18 years old
+    and (context: encounter.period.start <= today()) -- Assuming the encounter has already started
+    and (context: encounter.period.end >= today()) -- Assuming the encounter is ongoing
+    and (context: encounter.provider.specialty in "General Practice") -- Assuming the provider is a general practitioner
+
+-- Final decision based on the insurance policy document requirements
+define finalDecision:
+  exists coverageForPrimaryImmuneDeficiency
+    and exists ivigInHomeMedicallyAppropriate
+    and exists ivigCoverageByMedicarePartB
+    and not exists nonCoveredItemsAndServices
+
+```

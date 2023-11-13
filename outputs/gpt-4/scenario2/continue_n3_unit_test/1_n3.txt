@@ -1,0 +1,21 @@
+```
+```
+@prefix : <http://example.org#> .
+
+{
+    :Patient a :Person .
+    :Patient :hasDiagnosis :PrimaryImmuneDeficiencyDisease .
+    :Doctor :decides :MedicallyAppropriateForIVIGAtHome .
+    :IVIG :providedAt :Home .
+} => {
+    :Patient :eligibleFor :IVIGCoverageUnderPartB .
+} .
+
+{
+    :Patient :receives :IVIGAtHome .
+    :IVIG :associatedWith :OtherItemsAndServices .
+} => {
+    :Patient :notEligibleFor :OtherItemsAndServicesCoverage .
+} .
+```
+```

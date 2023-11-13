@@ -1,0 +1,73 @@
+```
+@prefix : <http://example.org/> .
+
+{
+    :patient :hasMedicare :yes;
+             :medicarePaidForTransplant :yes;
+             :hasPartAAtTransplant :yes.
+} => {
+    :patient :eligibleForTransplantDrugTherapy :yes.
+}.
+
+{
+    :patient :hasMedicare :yes;
+             :hasPartBAtDrugReceipt :yes.
+} => {
+    :patient :eligibleForImmunosuppressiveDrugs :yes.
+}.
+
+{
+    :patient :hasMedicare :yes;
+             :hasPartBAtDrugReceipt :no;
+             :hasPartD :yes.
+} => {
+    :patient :eligibleForImmunosuppressiveDrugs :yes.
+}.
+
+{
+    :patient :hasOriginalMedicare :yes.
+} => {
+    :patient :eligibleForMedicareDrugPlan :yes.
+}.
+
+{
+    :patient :hasMedicareForESRD :yes;
+             :monthsAfterKidneyTransplant :months
+} => {
+    :patient :medicareCoverageEnds :months.
+}.
+
+{
+    :patient :lostPartAAfter36Months :yes;
+             :hasOtherHealthCoverage :no.
+} => {
+    :patient :eligibleForImmunosuppressiveDrugBenefit :yes.
+}.
+
+{
+    :patient :eligibleForImmunosuppressiveDrugBenefit :yes.
+} => {
+    :patient :coverageForImmunosuppressiveDrugsOnly :yes.
+}.
+
+{
+    :patient :eligibleForImmunosuppressiveDrugBenefit :yes;
+             :partACoverageEnds :when.
+} => {
+    :patient :canSignUpForBenefit :when.
+}.
+
+{
+    :patient :signUpForImmunosuppressiveDrugBenefit :yes;
+             :year :2023.
+} => {
+    :patient :monthlyPremium "$97.10";
+             :deductible "$226".
+}.
+
+{
+    :patient :metDeductible :yes.
+} => {
+    :patient :payPercentageOfApprovedAmount "20%".
+}.
+```

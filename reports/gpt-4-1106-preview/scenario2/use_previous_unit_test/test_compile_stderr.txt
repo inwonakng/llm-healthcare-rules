@@ -1,7 +1,7 @@
-Warning: Unused local variable.
-  --> contracts/UnitTest.sol:85:9:
+Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+  --> contracts/SmartContract.sol:36:39:
    |
-85 |         IVIGPolicyParameters memory params = IVIGPolicyParameters({
-   |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+36 |     function partBCoverageForServices(string memory treatmentType) public pure returns (bool) {
+   |                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 

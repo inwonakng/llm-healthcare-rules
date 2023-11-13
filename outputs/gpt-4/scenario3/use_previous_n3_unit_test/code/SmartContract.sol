@@ -1,0 +1,67 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+contract MedicareContract {
+    struct Patient {
+        bool hasMedicare;
+        bool medicarePaidForTransplant;
+        bool hasPartAAtTransplant;
+        bool hasPartBAtDrugReceipt;
+        bool hasPartD;
+        bool hasOriginalMedicare;
+        bool hasMedicareForESRD;
+        uint monthsAfterKidneyTransplant;
+        bool lostPartAAfter36Months;
+        bool hasOtherHealthCoverage;
+        bool eligibleForImmunosuppressiveDrugBenefit;
+        bool signUpForImmunosuppressiveDrugBenefit;
+        bool metDeductible;
+        uint year;
+    }
+
+    function checkTransplantDrugCoverage(Patient memory patient) public pure returns (bool) {
+        return patient.hasMedicare && patient.medicarePaidForTransplant && patient.hasPartAAtTransplant;
+    }
+
+    function checkPartBCoverageAtDrugTime(Patient memory patient) public pure returns (bool) {
+        return patient.hasMedicare && patient.hasPartBAtDrugReceipt;
+    }
+
+    function checkPartDCoverageIfPartBNotCovered(Patient memory patient) public pure returns (bool) {
+        return patient.hasMedicare && !patient.hasPartBAtDrugReceipt && patient.hasPartD;
+    }
+
+    function checkMedicareDrugPlanEligibility(Patient memory patient) public pure returns (bool) {
+        return patient.hasOriginalMedicare;
+    }
+
+    function checkMedicareCoverageEndAfter36Months(Patient memory patient) public pure returns (bool) {
+        return patient.hasMedicareForESRD && patient.monthsAfterKidneyTransplant > 36;
+    }
+
+    function checkBenefitAfterPartAEnds(Patient memory patient) public pure returns (bool) {
+        return patient.lostPartAAfter36Months && !patient.hasOtherHealthCoverage;
+    }
+
+    function checkBenefitCoverage(Patient memory patient) public pure returns (bool) {
+        return patient.eligibleForImmunosuppressiveDrugBenefit;
+    }
+
+    function checkSignupAfterPartAEnds(Patient memory patient) public pure returns (bool) {
+        return patient.eligibleForImmunosuppressiveDrugBenefit;
+    }
+
+    function checkMonthlyPremiumAndDeductible(Patient memory patient) public pure returns (uint, uint) {
+        if (patient.signUpForImmunosuppressiveDrugBenefit && patient.year == 2023) {
+            return (9710, 22600); // values in wei
+        }
+        return (0, 0);
+    }
+
+    function checkPaymentAfterDeductible(Patient memory patient, uint approvedAmount) public pure returns (uint) {
+        if (patient.metDeductible) {
+            return approvedAmount / 5; // 20% of the approved amount
+        }
+        return 0;
+    }
+}

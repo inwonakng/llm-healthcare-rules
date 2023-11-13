@@ -1,8 +1,15 @@
-ParserError: Expected pragma, import directive or contract/interface/library/struct/enum/constant/function definition.
- --> contracts/UnitTest.sol:1:1:
+ParserError: Expected identifier but got 'type'
+ --> contracts/SmartContract.sol:9:16:
   |
-1 | 1. hasDiagnosisOfPrimaryImmuneDeficiency: patient.diagnosis = "primary immune deficiency disease"
-  | ^
+9 |         string type;
+  |                ^^^^
+
+
+ParserError: Expected identifier but got '{'
+ --> contracts/UnitTest.sol:7:10:
+  |
+7 | contract {ContractName}Test {
+  |          ^
 
 
 Error HH600: Compilation failed

@@ -1,0 +1,71 @@
+pragma solidity ^0.8.0;
+
+import "./SmartContract.sol";
+import "./remix_tests.sol";
+
+
+contract MedicareContractTest {
+    MedicareContract medicareContract;
+    
+    function beforeEach() public {
+        medicareContract = new MedicareContract();
+    }
+    
+    function checkTransplantDrugCoverage() public {
+        bool result = medicareContract.checkTransplantDrugCoverage(true);
+        Assert.equal(result, true, "Medicare should cover transplant drug therapy if it helped pay for the organ transplant");
+    }
+    
+    function checkPartACoverageAtTransplantTime() public {
+        bool result = medicareContract.checkPartACoverageAtTransplantTime(true);
+        Assert.equal(result, true, "Part A must be active at the time of the covered transplant");
+    }
+    
+    function checkPartBCoverageAtDrugTime() public {
+        bool result = medicareContract.checkPartBCoverageAtDrugTime(true);
+        Assert.equal(result, true, "Part B must be active at the time you get immunosuppressive drugs");
+    }
+    
+    function checkPartDCoverageIfPartBNotCovered() public {
+        bool result = medicareContract.checkPartDCoverageIfPartBNotCovered(false);
+        Assert.equal(result, true, "Part D should cover immunosuppressive drugs if Part B doesn’t cover them");
+    }
+    
+    function checkMedicareCoverageEndAfter36Months() public {
+        bool result = medicareContract.checkMedicareCoverageEndAfter36Months(37);
+        Assert.equal(result, true, "Medicare coverage should end 36 months after a successful kidney transplant");
+    }
+    
+    function checkBenefitAfterPartAEnds() public {
+        bool result = medicareContract.checkBenefitAfterPartAEnds(37, false);
+        Assert.equal(result, true, "Benefit should be available if you lose Part A coverage 36 months after a kidney transplant and you don’t have certain types of other health coverage");
+    }
+    
+    function checkBenefitCoverage() public {
+        bool result = medicareContract.checkBenefitCoverage();
+        Assert.equal(result, true, "Benefit should only cover immunosuppressive drugs and no other items or services");
+    }
+    
+    function checkBenefitNotSubstituteForFullCoverage() public {
+        bool result = medicareContract.checkBenefitNotSubstituteForFullCoverage();
+        Assert.equal(result, true, "Benefit isn’t a substitute for full health coverage");
+    }
+    
+    function checkSignupAfterPartAEnds() public {
+        bool result = medicareContract.checkSignupAfterPartAEnds(37);
+        Assert.equal(result, true, "You should be able to sign up for this benefit any time after your Part A coverage ends");
+    }
+    
+    function checkMonthlyPremiumAndDeductible() public {
+        uint premium;
+        uint deductible;
+        (premium, deductible) = medicareContract.checkMonthlyPremiumAndDeductible();
+        Assert.equal(premium, 97.10 ether, "Monthly premium should be $97.10");
+        Assert.equal(deductible, 226 ether, "Deductible should be $226");
+    }
+    
+    function checkPaymentAfterDeductible() public {
+        uint payment = medicareContract.checkPaymentAfterDeductible(1000 ether);
+        Assert.equal(payment, 200 ether, "You should pay 20% of the Medicare-approved amount for your immunosuppressive drugs after meeting the deductible");
+    }
+}

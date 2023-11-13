@@ -1,0 +1,51 @@
+pragma solidity ^0.8.0;
+
+contract InsuranceContract {
+    struct IVIGCoverage {
+        string diagnosis;
+        bool isCovered;
+    }
+
+    struct IVIGInHome {
+        string diagnosis;
+        bool isInHome;
+    }
+
+    bool public isIVIGCostCovered;
+    bool public isOtherItemsAndServicesCovered;
+
+    IVIGCoverage[] public ivigCoverages;
+    IVIGInHome[] public ivigInHomes;
+
+    constructor() {
+        // Initialize IVIG coverages
+        ivigCoverages.push(IVIGCoverage("primary immune deficiency disease", true));
+
+        // Initialize IVIG in-home
+        ivigInHomes.push(IVIGInHome("primary immune deficiency disease", true));
+
+        // Set IVIG cost coverage
+        isIVIGCostCovered = true;
+
+        // Set other items and services coverage
+        isOtherItemsAndServicesCovered = false;
+    }
+
+    function isIVIGCovered(string memory _diagnosis) public view returns (bool) {
+        for (uint256 i = 0; i < ivigCoverages.length; i++) {
+            if (keccak256(bytes(ivigCoverages[i].diagnosis)) == keccak256(bytes(_diagnosis))) {
+                return ivigCoverages[i].isCovered;
+            }
+        }
+        return false;
+    }
+
+    function isIVIGInHome(string memory _diagnosis) public view returns (bool) {
+        for (uint256 i = 0; i < ivigInHomes.length; i++) {
+            if (keccak256(bytes(ivigInHomes[i].diagnosis)) == keccak256(bytes(_diagnosis))) {
+                return ivigInHomes[i].isInHome;
+            }
+        }
+        return false;
+    }
+}

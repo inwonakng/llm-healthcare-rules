@@ -1,0 +1,70 @@
+```solidity
+pragma solidity >=0.8.0;
+
+import "remix_tests.sol"; // this import is automatically injected by Remix.
+import "../contracts/InsurancePolicy.sol";
+
+contract InsurancePolicyTest {
+    InsurancePolicy insurancePolicy;
+
+    function beforeEach() public {
+        insurancePolicy = new InsurancePolicy();
+    }
+
+    function checkPolicyCoverage() public {
+        bool result = insurancePolicy.isCovered(
+            true, // isWoman
+            true, // hasOsteoporosis
+            true, // qualifiesForMedicareHomeHealthBenefit
+            true, // hasCertifiedFracture
+            true  // cannotSelfAdminister
+        );
+        Assert.equal(result, true, "The policy should cover this case");
+    }
+
+    function checkPolicyCoverageWithoutQualificationForMedicare() public {
+        bool result = insurancePolicy.isCovered(
+            true, // isWoman
+            true, // hasOsteoporosis
+            false, // qualifiesForMedicareHomeHealthBenefit
+            true, // hasCertifiedFracture
+            true  // cannotSelfAdminister
+        );
+        Assert.equal(result, false, "The policy should not cover this case");
+    }
+
+    function checkPolicyCoverageWithoutCertifiedFracture() public {
+        bool result = insurancePolicy.isCovered(
+            true, // isWoman
+            true, // hasOsteoporosis
+            true, // qualifiesForMedicareHomeHealthBenefit
+            false, // hasCertifiedFracture
+            true  // cannotSelfAdminister
+        );
+        Assert.equal(result, false, "The policy should not cover this case");
+    }
+
+    function checkPolicyCoverageWithSelfAdministerAbility() public {
+        bool result = insurancePolicy.isCovered(
+            true, // isWoman
+            true, // hasOsteoporosis
+            true, // qualifiesForMedicareHomeHealthBenefit
+            true, // hasCertifiedFracture
+            false  // cannotSelfAdminister
+        );
+        Assert.equal(result, false, "The policy should not cover this case");
+    }
+
+    function checkPolicyCoverageForMan() public {
+        bool result = insurancePolicy.isCovered(
+            false, // isWoman
+            true, // hasOsteoporosis
+            true, // qualifiesForMedicareHomeHealthBenefit
+            true, // hasCertifiedFracture
+            true  // cannotSelfAdminister
+        );
+        Assert.equal(result, false, "The policy should not cover this case");
+    }
+}
+```
+This test suite covers all the conditions mentioned in the policy document and its summary. It checks if the policy covers a woman with osteoporosis who qualifies for the Medicare home health benefit, has a certified fracture related to post-menopausal osteoporosis, and cannot self-administer the injection. It also checks the negative cases where any of these conditions are not met.

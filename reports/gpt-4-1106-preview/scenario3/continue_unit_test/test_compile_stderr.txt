@@ -1,8 +1,36 @@
-ParserError: Expected ';' but got identifier
-  --> contracts/UnitTest.sol:48:52:
+TypeError: Invalid type for argument in function call. Invalid implicit conversion from bool to address requested.
+  --> contracts/UnitTest.sol:24:61:
    |
-48 |         uint transplantDate = block.timestamp - 37 months;
-   |                                                    ^^^^^^
+24 |         bool hasPartA = coverageContract.checkPartACoverage(true);
+   |                                                             ^^^^
+
+
+TypeError: Invalid type for argument in function call. Invalid implicit conversion from bool to address requested.
+  --> contracts/UnitTest.sol:30:61:
+   |
+30 |         bool hasPartB = coverageContract.checkPartBCoverage(true);
+   |                                                             ^^^^
+
+
+TypeError: Invalid type for argument in function call. Invalid implicit conversion from bool to address requested.
+  --> contracts/UnitTest.sol:42:81:
+   |
+42 |         bool canJoin = coverageContract.checkOriginalMedicareDrugPlanEnrollment(true);
+   |                                                                                 ^^^^
+
+
+TypeError: Invalid type for argument in function call. Invalid implicit conversion from int_const 37 to address requested.
+  --> contracts/UnitTest.sol:48:72:
+   |
+48 |         bool coverageEnds = coverageContract.checkMedicareCoverageEnds(37);
+   |                                                                        ^^
+
+
+TypeError: Invalid type for argument in function call. Invalid implicit conversion from bool to address requested.
+  --> contracts/UnitTest.sol:54:89:
+   |
+54 |         bool benefitAvailable = coverageContract.checkBenefitAvailabilityAfterPartAEnds(true);
+   |                                                                                         ^^^^
 
 
 Error HH600: Compilation failed

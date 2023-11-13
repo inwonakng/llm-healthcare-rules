@@ -1,0 +1,73 @@
+```
+@prefix : <http://example.org/rules#> .
+@prefix ins: <http://example.org/insurance#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+{
+  ?person ins:hadTransplant true;
+          ins:hasMedicarePartA "at time of transplant";
+          ins:hasMedicarePartB "at time of getting immunosuppressive drugs".
+} => {
+  ?person ins:eligibleForTransplantDrugTherapyCoverage true.
+}.
+
+{
+  ?person ins:hasOriginalMedicare true.
+} => {
+  ?person ins:canJoinMedicareDrugPlan true.
+}.
+
+{
+  ?person ins:hasMedicarePartB false;
+          ins:hasMedicarePartD true.
+} => {
+  ?person ins:eligibleForImmunosuppressiveDrugsCoverage true.
+}.
+
+{
+  ?person ins:hasESRDMedicareCoverage true;
+          ins:monthsAfterKidneyTransplant 36.
+} => {
+  ?person ins:medicareCoverageEnds true.
+}.
+
+{
+  ?person ins:lostPartACoverage true;
+          ins:lacksOtherHealthCoverage true.
+} => {
+  ?person ins:eligibleForImmunosuppressiveDrugBenefit true.
+}.
+
+{
+  ?person ins:eligibleForImmunosuppressiveDrugBenefit true.
+} => {
+  ?person ins:canSignUpForBenefit true.
+}.
+
+{
+  ?person ins:signedUpForImmunosuppressiveDrugBenefit true.
+} => {
+  ?person ins:monthlyPremium "97.10"^^xsd:decimal;
+          ins:annualDeductible "226"^^xsd:decimal.
+}.
+
+{
+  ?person ins:metDeductible true;
+          ins:hasMedicareApprovedAmount ?amount.
+} => {
+  ?person ins:owesAmount [ 
+    ins:calcPayment20PercentOf ?amount 
+  ].
+}.
+
+# Function to calculate 20% of the Medicare-approved amount
+{
+  ?amount ins:calcPayment20PercentOf ?totalAmount.
+} => {
+  ?amount math:product [ 
+    math:quotient 1 5;
+    ?totalAmount 
+  ].
+}.
+```
+Please note that the above N3 logic rules are a simplified representation of the insurance policy document and its summary. The actual implementation may require additional details and conditions to be fully compliant with the policy. The rules assume the existence of a base ontology for insurance terms (ins:) and the math namespace for calculations. The `?person` variable represents an individual policyholder, and the `?amount` variable represents the amount to be paid. The rules also assume that the necessary data about the policyholder's status and actions are available for evaluation.

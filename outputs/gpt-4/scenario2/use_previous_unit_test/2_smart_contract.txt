@@ -1,0 +1,38 @@
+```solidity
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+contract InsurancePolicy {
+    struct Insured {
+        bool hasPrimaryImmuneDeficiency;
+        bool isMedicallyAppropriateForIVIG;
+    }
+
+    mapping(address => Insured) public insureds;
+
+    function setInsured(address _insured, bool _hasPrimaryImmuneDeficiency, bool _isMedicallyAppropriateForIVIG) public {
+        insureds[_insured] = Insured(_hasPrimaryImmuneDeficiency, _isMedicallyAppropriateForIVIG);
+    }
+
+    function isIVIGCoveredAtHome(address _insured) public view returns (bool) {
+        return insureds[_insured].hasPrimaryImmuneDeficiency && insureds[_insured].isMedicallyAppropriateForIVIG;
+    }
+
+    function isCoveredForPrimaryImmuneDeficiency(address _insured) public view returns (bool) {
+        return insureds[_insured].hasPrimaryImmuneDeficiency;
+    }
+
+    function isMedicallyAppropriate(address _insured) public view returns (bool) {
+        return insureds[_insured].isMedicallyAppropriateForIVIG;
+    }
+
+    function isPartBCoveringIVIG(address _insured) public view returns (bool) {
+        return insureds[_insured].hasPrimaryImmuneDeficiency && insureds[_insured].isMedicallyAppropriateForIVIG;
+    }
+
+    function isPartBNotCoveringOtherItems(address _insured) public view returns (bool) {
+        return insureds[_insured].hasPrimaryImmuneDeficiency && insureds[_insured].isMedicallyAppropriateForIVIG;
+    }
+}
+```
+This contract allows to set the insured's medical condition and check if the policy covers IVIG at home, if the insured has a diagnosis of primary immune deficiency disease, if it's medically appropriate for the insured to receive IVIG at home, if the coverage under Part B of the policy includes the cost of IVIG itself and if Part B of the policy does not cover the cost of other items and services related to the insured receiving IVIG at home.

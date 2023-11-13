@@ -1,0 +1,48 @@
+```
+```
+@prefix : <http://example.org/> .
+
+{
+    :patient :hasMedicare :yes .
+    :patient :organTransplantPaidByMedicare :yes .
+    :patient :hasPartAAtTransplantTime :yes .
+    :patient :hasPartBAtDrugTime :yes .
+} => {
+    :patient :eligibleForTransplantDrugTherapy :yes .
+} .
+
+{
+    :patient :hasMedicare :yes .
+    :patient :hasPartBAtDrugTime :no .
+} => {
+    :patient :eligibleForPartDCoverage :yes .
+} .
+
+{
+    :patient :hasMedicare :yes .
+    :patient :hasESRD :yes .
+    :patient :monthsAfterKidneyTransplant :months .
+    :months math:greaterThan 36 .
+} => {
+    :patient :medicareCoverageEnds :yes .
+} .
+
+{
+    :patient :hasPartAAtTransplantTime :no .
+    :patient :monthsAfterKidneyTransplant :months .
+    :months math:greaterThan 36 .
+    :patient :hasOtherHealthCoverage :no .
+} => {
+    :patient :eligibleForImmunosuppressiveDrugBenefit :yes .
+} .
+
+{
+    :patient :eligibleForImmunosuppressiveDrugBenefit :yes .
+    :patient :signedUpForBenefit :yes .
+    :patient :paidMonthlyPremium :yes .
+    :patient :paidDeductible :yes .
+} => {
+    :patient :eligibleForImmunosuppressiveDrugs :yes .
+} .
+```
+```

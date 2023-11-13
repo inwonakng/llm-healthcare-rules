@@ -1,0 +1,62 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+contract InsurancePolicy {
+    struct Patient {
+        bool isWoman;
+        bool hasOsteoporosis;
+        bool meetsHomeHealthBenefit;
+        bool hasFracture;
+        bool fractureRelatedToOsteoporosis;
+        bool unableToSelfInject;
+    }
+
+    struct Caregiver {
+        bool isAbleToInject;
+    }
+
+    mapping(address => Patient) public patients;
+    mapping(address => Caregiver) public caregivers;
+
+    function registerPatient(
+        address _patient,
+        bool _isWoman,
+        bool _hasOsteoporosis,
+        bool _meetsHomeHealthBenefit,
+        bool _hasFracture,
+        bool _fractureRelatedToOsteoporosis,
+        bool _unableToSelfInject
+    ) public {
+        patients[_patient] = Patient(
+            _isWoman,
+            _hasOsteoporosis,
+            _meetsHomeHealthBenefit,
+            _hasFracture,
+            _fractureRelatedToOsteoporosis,
+            _unableToSelfInject
+        );
+    }
+
+    function registerCaregiver(address _caregiver, bool _isAbleToInject) public {
+        caregivers[_caregiver] = Caregiver(_isAbleToInject);
+    }
+
+    function isEligibleForCoverage(address _patient, address _caregiver) public view returns (bool) {
+        Patient memory patient = patients[_patient];
+        Caregiver memory caregiver = caregivers[_caregiver];
+
+        if (
+            patient.isWoman &&
+            patient.hasOsteoporosis &&
+            patient.meetsHomeHealthBenefit &&
+            patient.hasFracture &&
+            patient.fractureRelatedToOsteoporosis &&
+            patient.unableToSelfInject &&
+            !caregiver.isAbleToInject
+        ) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+}

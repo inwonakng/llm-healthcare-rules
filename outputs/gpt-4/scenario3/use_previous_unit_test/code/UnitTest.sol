@@ -1,0 +1,55 @@
+pragma solidity ^0.8.0;
+
+import "./SmartContract.sol";
+import "./remix_tests.sol";
+
+contract MedicareContractTest {
+    MedicareContract medicare;
+    
+    function beforeEach() public {
+        medicare = new MedicareContract();
+    }
+    
+    function checkTransplantCoverage() public {
+        bool result = medicare.checkTransplantCoverage(true, true);
+        Assert.equal(result, true, "Medicare should cover transplant drug therapy if it helped pay for the organ transplant and Part A is active");
+    }
+    
+    function checkImmunosuppressiveDrugCoverage() public {
+        bool result = medicare.checkImmunosuppressiveDrugCoverage(true, true, false);
+        Assert.equal(result, true, "Medicare should cover immunosuppressive drugs if Part B is active or Part D is active");
+    }
+    
+    function checkCoverageEndAfterKidneyTransplant() public {
+        bool result = medicare.checkCoverageEndAfterKidneyTransplant(true, 37);
+        Assert.equal(result, false, "Medicare coverage should end 36 months after a successful kidney transplant if the patient only has Medicare because of ESRD");
+    }
+    
+    function checkBenefitAfterPartACoverageEnds() public {
+        bool result = medicare.checkBenefitAfterPartACoverageEnds(false, 37, false);
+        Assert.equal(result, true, "Medicare should offer a benefit if the patient loses Part A coverage 36 months after a kidney transplant and doesn’t have certain types of other health coverage");
+    }
+    
+    function checkBenefitCoverage() public {
+        bool result = medicare.checkBenefitCoverage();
+        Assert.equal(result, true, "The benefit should only cover immunosuppressive drugs and no other items or services");
+    }
+    
+    function checkSignupAfterPartACoverageEnds() public {
+        bool result = medicare.checkSignupAfterPartACoverageEnds(false);
+        Assert.equal(result, true, "The patient should be able to sign up for the benefit any time after Part A coverage ends");
+    }
+    
+    function checkMonthlyPremiumAndDeductible() public {
+        uint premium;
+        uint deductible;
+        (premium, deductible) = medicare.checkMonthlyPremiumAndDeductible(2023);
+        Assert.equal(premium, 97.10 ether, "The monthly premium in 2023 should be $97.10");
+        Assert.equal(deductible, 226 ether, "The deductible in 2023 should be $226");
+    }
+    
+    function checkPaymentAfterDeductible() public {
+        uint payment = medicare.checkPaymentAfterDeductible(1000 ether);
+        Assert.equal(payment, 200 ether, "The patient should pay 20% of the Medicare-approved amount for immunosuppressive drugs after meeting the deductible");
+    }
+}

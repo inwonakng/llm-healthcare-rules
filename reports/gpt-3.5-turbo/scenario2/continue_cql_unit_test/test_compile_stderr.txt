@@ -6,10 +6,24 @@ Warning: SPDX license identifier not provided in source file. Before publishing,
 --> contracts/UnitTest.sol
 
 
-TypeError: Member "isTrue" not found or not visible after argument-dependent lookup in type(library Assert).
-  --> contracts/UnitTest.sol:17:9:
+TypeError: Using "years" as a unit denomination is deprecated.
+  --> contracts/SmartContract.sol:32:44:
    |
-17 |         Assert.isTrue(isCovered, "IVIG should be covered for primary immune deficiency disease");
+32 |             birthDate <= block.timestamp - 18 years &&
+   |                                            ^^^^^^^^
+
+
+TypeError: Using "years" as a unit denomination is deprecated.
+  --> contracts/SmartContract.sol:53:44:
+   |
+53 |             birthDate <= block.timestamp - 18 years &&
+   |                                            ^^^^^^^^
+
+
+TypeError: Member "isTrue" not found or not visible after argument-dependent lookup in type(library Assert).
+  --> contracts/UnitTest.sol:16:9:
+   |
+16 |         Assert.isTrue(result, "Coverage for primary immune deficiency should be true");
    |         ^^^^^^^^^^^^^
 
 

@@ -1,0 +1,38 @@
+```solidity
+pragma solidity ^0.8.0;
+
+import "remix_tests.sol";
+import "./{ContractName}.sol";
+
+contract InsurancePolicyTest {
+    InsurancePolicy insurancePolicy;
+    
+    function beforeEach() public {
+        insurancePolicy = new InsurancePolicy();
+    }
+    
+    function testCoverageForIVIGWithPrimaryImmuneDeficiencyDisease() public {
+        bool isCovered = insurancePolicy.isCoveredForIVIG("primary immune deficiency disease");
+        
+        Assert.isTrue(isCovered, "IVIG should be covered for primary immune deficiency disease");
+    }
+    
+    function testIVIGCanBeProvidedInHomeIfMedicallyAppropriate() public {
+        bool canBeProvidedInHome = insurancePolicy.canBeProvidedInHome("primary immune deficiency disease");
+        
+        Assert.isTrue(canBeProvidedInHome, "IVIG should be able to be provided in home if medically appropriate");
+    }
+    
+    function testMedicarePartBCoversCostOfIVIGItself() public {
+        bool isCovered = insurancePolicy.isCoveredForIVIG("primary immune deficiency disease");
+        
+        Assert.isTrue(isCovered, "Medicare Part B should cover the cost of IVIG itself");
+    }
+    
+    function testMedicareDoesNotCoverOtherItemsAndServices() public {
+        bool isCovered = insurancePolicy.isCoveredForOtherItemsAndServices();
+        
+        Assert.isFalse(isCovered, "Medicare should not cover other items and services related to receiving IVIG at home");
+    }
+}
+```

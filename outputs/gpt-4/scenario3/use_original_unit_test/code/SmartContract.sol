@@ -1,0 +1,57 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+contract MedicareInsurance {
+    struct Patient {
+        bool isInsured;
+        bool hasPartA;
+        bool hasPartB;
+        bool hasPartD;
+        bool hasESRD;
+        bool hasTransplant;
+        uint256 transplantDate;
+        uint256 deductible;
+        uint256 premium;
+    }
+
+    mapping(address => Patient) public patients;
+
+    uint256 public constant MONTHS_AFTER_TRANSPLANT = 36;
+    uint256 public constant PREMIUM = 9710; // in wei
+    uint256 public constant DEDUCTIBLE = 226 ether; // in wei
+
+    function registerPatient(address _patient, bool _hasPartA, bool _hasPartB, bool _hasPartD, bool _hasESRD) public {
+        patients[_patient] = Patient(true, _hasPartA, _hasPartB, _hasPartD, _hasESRD, false, 0, DEDUCTIBLE, PREMIUM);
+    }
+
+    function registerTransplant(address _patient) public {
+        require(patients[_patient].hasPartA, "Patient must have Part A at the time of the covered transplant");
+        patients[_patient].hasTransplant = true;
+        patients[_patient].transplantDate = block.timestamp;
+    }
+
+    function getImmunosuppressiveDrugs(address _patient) public view returns (bool) {
+        require(patients[_patient].isInsured, "Patient is not insured");
+        require(patients[_patient].hasTransplant, "Patient did not have a transplant");
+
+        if(patients[_patient].hasPartB) {
+            return true;
+        } else if(patients[_patient].hasPartD) {
+            return true;
+        } else if(patients[_patient].hasESRD && block.timestamp <= patients[_patient].transplantDate + MONTHS_AFTER_TRANSPLANT * 30 days) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    function payPremium(address _patient) public payable {
+        require(msg.value == patients[_patient].premium, "Incorrect premium amount");
+        patients[_patient].deductible -= msg.value;
+    }
+
+    function payDeductible(address _patient) public payable {
+        require(msg.value == patients[_patient].deductible, "Incorrect deductible amount");
+        patients[_patient].deductible = 0;
+    }
+}

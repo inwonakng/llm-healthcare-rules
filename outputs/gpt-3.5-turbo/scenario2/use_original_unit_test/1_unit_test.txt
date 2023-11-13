@@ -1,0 +1,61 @@
+```solidity
+pragma solidity ^0.8.0;
+
+import "remix_tests.sol"; // this import is automatically injected by Remix.
+import "../contracts/InsuranceContract.sol"; // import the contract to be tested
+
+contract InsuranceContractTest {
+    InsuranceContract insuranceContract;
+
+    function beforeEach() public {
+        insuranceContract = new InsuranceContract();
+    }
+
+    function testIVIGCoverage() public {
+        // Set the diagnosis of the patient
+        insuranceContract.setDiagnosis("primary immune deficiency disease");
+
+        // Set the medical appropriateness of IVIG in home
+        insuranceContract.setMedicalAppropriateness(true);
+
+        // Check if IVIG is covered by Medicare
+        bool isCovered = insuranceContract.isIVIGCovered();
+
+        Assert.isTrue(isCovered, "IVIG should be covered by Medicare");
+    }
+
+    function testIVIGCoverage_NotCovered() public {
+        // Set the diagnosis of the patient
+        insuranceContract.setDiagnosis("other disease");
+
+        // Set the medical appropriateness of IVIG in home
+        insuranceContract.setMedicalAppropriateness(true);
+
+        // Check if IVIG is covered by Medicare
+        bool isCovered = insuranceContract.isIVIGCovered();
+
+        Assert.isFalse(isCovered, "IVIG should not be covered by Medicare");
+    }
+
+    function testIVIGCoverage_NotMedicallyAppropriate() public {
+        // Set the diagnosis of the patient
+        insuranceContract.setDiagnosis("primary immune deficiency disease");
+
+        // Set the medical appropriateness of IVIG in home
+        insuranceContract.setMedicalAppropriateness(false);
+
+        // Check if IVIG is covered by Medicare
+        bool isCovered = insuranceContract.isIVIGCovered();
+
+        Assert.isFalse(isCovered, "IVIG should not be covered by Medicare");
+    }
+}
+```
+
+In the above code, we have implemented three tests for the insurance policy related to Intravenous Immune Globulin (IVIG) coverage.
+
+1. `testIVIGCoverage`: This test checks if IVIG is covered by Medicare when the patient has a diagnosis of primary immune deficiency disease and the doctor determines that it's medically appropriate to receive IVIG at home.
+
+2. `testIVIGCoverage_NotCovered`: This test checks if IVIG is not covered by Medicare when the patient has a diagnosis other than primary immune deficiency disease, but the doctor determines that it's medically appropriate to receive IVIG at home.
+
+3. `testIVIGCoverage_NotMedicallyAppropriate`: This test checks if IVIG is not covered by Medicare when the patient has a diagnosis of primary immune deficiency disease, but the doctor determines that it's not medically appropriate to receive IVIG at home.

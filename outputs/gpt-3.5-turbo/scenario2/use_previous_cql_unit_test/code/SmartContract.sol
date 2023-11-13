@@ -1,0 +1,49 @@
+pragma solidity ^0.8.0;
+
+contract InsurancePolicyDocument {
+    struct Condition {
+        string code;
+    }
+    
+    struct Encounter {
+        string type;
+        address subject;
+    }
+    
+    struct Coverage {
+        string code;
+        address subscriber;
+    }
+    
+    function existsCondition(string memory code, address patient) private view returns (bool) {
+        // Implement logic to check if condition exists
+    }
+    
+    function existsEncounter(string memory type, address patient) private view returns (bool) {
+        // Implement logic to check if encounter exists
+    }
+    
+    function existsCoverage(string memory code, address subscriber) private view returns (bool) {
+        // Implement logic to check if coverage exists
+    }
+    
+    function isMedicareCoverage(string memory diagnosis) public view returns (bool) {
+        Condition memory condition = Condition(diagnosis);
+        return existsCondition(condition.code, msg.sender);
+    }
+    
+    function isMedicallyAppropriate() public view returns (bool) {
+        Encounter memory encounter = Encounter("Home", msg.sender);
+        return existsEncounter(encounter.type, encounter.subject);
+    }
+    
+    function isPartBCovered() public view returns (bool) {
+        Coverage memory coverage = Coverage("Medicare Part B", msg.sender);
+        return existsCoverage(coverage.code, coverage.subscriber);
+    }
+    
+    function isOtherItemsAndServicesCovered() public view returns (bool) {
+        Coverage memory coverage = Coverage("Medicare Part B", msg.sender);
+        return !existsCoverage(coverage.code, coverage.subscriber);
+    }
+}

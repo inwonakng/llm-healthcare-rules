@@ -1,0 +1,41 @@
+```cql
+library IVIGCoverage version '1.0'
+
+using FHIR version '4.0.0'
+
+// Define the context for the expressions
+context Patient
+
+// Named expression for IVIG provided in the patient's home
+define IVIGProvidedInHome:
+  [ServiceRequest: code in "IVIGHomeAdministrationCodeSet"] 
+    where location.display = 'Home'
+
+// Named expression for diagnosis of primary immune deficiency disease
+define DiagnosisOfPrimaryImmuneDeficiency:
+  [Condition: code in "PrimaryImmuneDeficiencyDiseaseCodeSet"]
+
+// Named expression for medical appropriateness as determined by the doctor
+define MedicallyAppropriateForHomeIVIG:
+  exists ([ServiceRequest: code in "IVIGHomeAdministrationCodeSet"] 
+    where reasonCode in "MedicalAppropriatenessCodeSet")
+
+// Named expression for coverage by Medicare Part B for IVIG
+define CoveredByMedicarePartB:
+  [Coverage: payor in "MedicarePartBPayorCodeSet"]
+
+// Named expression for exclusion of other items and services related to home IVIG administration
+define ExclusionOfOtherItemsAndServices:
+  not exists ([Claim: item in "ExcludedItemsAndServicesCodeSet"]
+    where category = 'IVIGRelatedServices')
+
+// Final decision for IVIG coverage eligibility
+define IVIGCoverageEligibility:
+  IVIGProvidedInHome and
+  DiagnosisOfPrimaryImmuneDeficiency and
+  MedicallyAppropriateForHomeIVIG and
+  CoveredByMedicarePartB and
+  ExclusionOfOtherItemsAndServices
+```
+
+Please note that the actual codes for the code systems (e.g., "IVIGHomeAdministrationCodeSet", "PrimaryImmuneDeficiencyDiseaseCodeSet", "MedicalAppropriatenessCodeSet", "MedicarePartBPayorCodeSet", "ExcludedItemsAndServicesCodeSet") would need to be defined based on the specific coding system used by the healthcare provider or insurer. These are placeholders to illustrate how the CQL library would reference the necessary codes.

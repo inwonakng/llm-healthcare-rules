@@ -1,0 +1,20 @@
+```
+@prefix : <http://example.org/insurance#>.
+
+{ 
+  ?person a :Woman;
+          :DiagnosedWith :Osteoporosis;
+          :MeetsCriteriaFor :MedicareHomeHealthBenefit;
+          :HasBoneFracture :CertifiedRelatedToPostMenopausalOsteoporosis;
+          :UnableToSelfAdministerOrLearnInjection true.
+} => {
+  ?person :EligibleFor :InjectableOsteoporosisDrugCoverage.
+}.
+
+{
+  ?person :EligibleFor :InjectableOsteoporosisDrugCoverage;
+          :HasFamilyOrCaregivers :UnableOrUnwillingToAdministerInjection true.
+} => {
+  ?person :EligibleFor :HomeHealthNurseOrAideCoverage.
+}.
+```

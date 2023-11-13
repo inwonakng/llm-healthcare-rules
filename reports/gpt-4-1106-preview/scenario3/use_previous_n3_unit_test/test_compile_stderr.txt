@@ -1,8 +1,8 @@
-ParserError: Expected ',' but got identifier
-  --> contracts/UnitTest.sol:65:106:
+TypeError: Wrong argument count for function call: 2 arguments given but expected 1.
+  --> contracts/UnitTest.sol:27:23:
    |
-65 |         PolicyHolder memory holder = PolicyHolder(false, false, false, false, true, block.timestamp - 37 months, true, false);
-   |                                                                                                          ^^^^^^
+27 |         bool result = medicare.isDrugCoverageApplicable(false, true);
+   |                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 
 Error HH600: Compilation failed

@@ -1,0 +1,88 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+import "./SmartContract.sol";
+import "./remix_tests.sol";
+
+
+contract MedicareContractTest {
+    
+    // Test if Medicare covers transplant drug therapy when it contributed to the payment for the organ transplant
+    function testMedicareContributionForTransplant() public {
+        MedicareContract medicare = new MedicareContract();
+        bool result = medicare.isTransplantDrugTherapyCovered(true);
+        Assert.equal(result, true, "Medicare should cover transplant drug therapy if it contributed to the payment for the organ transplant.");
+    }
+    
+    // Test if individual with Part A at the time of transplant is eligible for coverage
+    function testEligibilityWithPartAAtTransplantTime() public {
+        MedicareContract medicare = new MedicareContract();
+        bool result = medicare.isEligibleForCoverage(true, false);
+        Assert.equal(result, true, "Individual should be eligible for coverage with Part A at the time of transplant.");
+    }
+    
+    // Test if individual with Part B at the time they receive immunosuppressive drugs is covered
+    function testCoverageWithPartBForDrugs() public {
+        MedicareContract medicare = new MedicareContract();
+        bool result = medicare.isDrugCoverageApplicable(false, true);
+        Assert.equal(result, true, "Individual should be covered with Part B at the time they receive immunosuppressive drugs.");
+    }
+    
+    // Test if Medicare Part D covers immunosuppressive drugs when Part B does not
+    function testPartDCoverageWhenPartBDoesNot() public {
+        MedicareContract medicare = new MedicareContract();
+        bool result = medicare.isPartDCoverageApplicable(false);
+        Assert.equal(result, true, "Medicare Part D should cover immunosuppressive drugs if Part B does not.");
+    }
+    
+    // Test if individuals with Original Medicare can join a Medicare drug plan
+    function testJoiningMedicareDrugPlan() public {
+        MedicareContract medicare = new MedicareContract();
+        bool result = medicare.canJoinMedicareDrugPlan(true);
+        Assert.equal(result, true, "Individuals with Original Medicare should be able to join a Medicare drug plan.");
+    }
+    
+    // Test if Medicare coverage ends 36 months after a successful kidney transplant for individuals with ESRD
+    function testMedicareCoverageEndAfterKidneyTransplant() public {
+        MedicareContract medicare = new MedicareContract();
+        bool result = medicare.doesCoverageEndAfterTransplant(true, 36);
+        Assert.equal(result, true, "Medicare coverage should end 36 months after a successful kidney transplant for individuals with ESRD.");
+    }
+    
+    // Test if Medicare offers a specific benefit for immunosuppressive drugs after losing Part A coverage
+    function testSpecificBenefitAfterLosingPartA() public {
+        MedicareContract medicare = new MedicareContract();
+        bool result = medicare.isSpecificBenefitAvailable(false, true);
+        Assert.equal(result, true, "Medicare should offer a specific benefit for immunosuppressive drugs after losing Part A coverage.");
+    }
+    
+    // Test if the specific benefit only covers immunosuppressive drugs
+    function testBenefitCoversOnlyDrugs() public {
+        MedicareContract medicare = new MedicareContract();
+        bool result = medicare.doesBenefitCoverOnlyDrugs(true);
+        Assert.equal(result, true, "The specific benefit should only cover immunosuppressive drugs.");
+    }
+    
+    // Test if the specific benefit is not a substitute for full health coverage
+    function testBenefitIsNotFullCoverageSubstitute() public {
+        MedicareContract medicare = new MedicareContract();
+        bool result = medicare.isBenefitFullCoverageSubstitute(false);
+        Assert.equal(result, true, "The specific benefit should not be a substitute for full health coverage.");
+    }
+    
+    // Test the monthly premium and deductible for the immunosuppressive drug benefit in 2023
+    function testPremiumAndDeductibleFor2023() public {
+        MedicareContract medicare = new MedicareContract();
+        (uint premium, uint deductible) = medicare.getPremiumAndDeductibleFor2023();
+        Assert.equal(premium, 97.10 ether, "The monthly premium for the immunosuppressive drug benefit in 2023 should be $97.10.");
+        Assert.equal(deductible, 226 ether, "The deductible for the immunosuppressive drug benefit in 2023 should be $226.");
+    }
+    
+    // Test if individuals pay 20% of the Medicare-approved amount after meeting the deductible
+    function testPaymentAfterDeductible() public {
+        MedicareContract medicare = new MedicareContract();
+        uint approvedAmount = 1000 ether; // Example Medicare-approved amount
+        uint payment = medicare.calculatePaymentAfterDeductible(approvedAmount);
+        Assert.equal(payment, 200 ether, "Individuals should pay 20% of the Medicare-approved amount for their immunosuppressive drugs after meeting the deductible.");
+    }
+}

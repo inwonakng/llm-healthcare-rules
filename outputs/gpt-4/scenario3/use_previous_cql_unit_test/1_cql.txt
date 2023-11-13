@@ -1,0 +1,47 @@
+```
+library MedicareInsurancePolicy version '1.0'
+
+using QDM version '5.5'
+
+context Patient
+
+define "Medicare Covers Transplant Drug Therapy":
+  exists(["Medication, Order": "Transplant Drug Therapy"]) and 
+  ["Procedure, Performed": "Organ Transplant"] reimbursement by "Medicare"
+
+define "Part A Coverage at Transplant Time":
+  exists(["InsurancePolicy": "Medicare Part A"]) during ["Procedure, Performed": "Organ Transplant"]
+
+define "Part B Coverage at Immunosuppressive Drugs Time":
+  exists(["InsurancePolicy": "Medicare Part B"]) during ["Medication, Order": "Immunosuppressive Drugs"]
+
+define "Part D Coverage for Immunosuppressive Drugs":
+  exists(["InsurancePolicy": "Medicare Part D"]) and not "Part B Coverage at Immunosuppressive Drugs Time"
+
+define "Original Medicare with Drug Plan":
+  exists(["InsurancePolicy": "Original Medicare"]) and exists(["InsurancePolicy": "Medicare Drug Plan"])
+
+define "ESRD Medicare Coverage Ends":
+  exists(["Diagnosis": "End-Stage Renal Disease"]) and 
+  ["Procedure, Performed": "Kidney Transplant"] ends 36 months after start of ["InsurancePolicy": "Medicare"]
+
+define "Part A Coverage Loss After Kidney Transplant":
+  not exists(["InsurancePolicy": "Medicare Part A"]) 36 months after ["Procedure, Performed": "Kidney Transplant"]
+
+define "Immunosuppressive Drug Benefit":
+  "Part A Coverage Loss After Kidney Transplant" and 
+  not exists(["InsurancePolicy": {"Group Health Plan", "TRICARE", "Medicaid"}])
+
+define "Full Health Coverage Substitute":
+  not "Immunosuppressive Drug Benefit"
+
+define "Qualification for Benefit":
+  "Immunosuppressive Drug Benefit" after end of ["InsurancePolicy": "Medicare Part A"]
+
+define "2023 Premium and Deductible":
+  ["InsurancePolicy": "Medicare"] with monthly premium $97.10 and deductible $226 in year 2023
+
+define "20% Payment After Deductible":
+  ["InsurancePolicy": "Medicare"] with payment 20% of approved amount for ["Medication, Order": "Immunosuppressive Drugs"] after deductible met
+```
+This CQL library represents the conditions described in the insurance policy document and its summary. Each named expression corresponds to a requirement or condition in the document. The final decision would be based on the evaluation of these expressions for a given patient.

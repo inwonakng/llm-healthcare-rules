@@ -1,0 +1,27 @@
+```solidity
+pragma solidity ^0.8.0;
+
+contract InsurancePolicy {
+    // Struct to represent the policy document
+    struct Policy {
+        bool hasPrimaryImmuneDeficiency;
+        bool isMedicallyAppropriate;
+    }
+    
+    // Function to check if Medicare covers IVIG based on the policy document
+    function isIVIGCovered(Policy memory policy) internal pure returns (bool) {
+        return policy.hasPrimaryImmuneDeficiency && policy.isMedicallyAppropriate;
+    }
+    
+    // Function to check if Medicare Part B covers the cost of IVIG
+    function isIVIGCostCovered() internal pure returns (bool) {
+        return true;
+    }
+    
+    // Function to check if Medicare covers other items and services related to IVIG at home
+    function isOtherServicesCovered() internal pure returns (bool) {
+        return false;
+    }
+}
+```
+```

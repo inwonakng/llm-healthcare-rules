@@ -1,0 +1,41 @@
+Certainly! Below is a Solidity smart contract that implements the insurance policy document, its summary, and the N3 logic rules we discussed. This contract is designed to work with Solidity version 0.8.0.
+
+```solidity
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+contract IVIGCoverageContract {
+    // Define a struct to encapsulate patient information
+    struct Patient {
+        bool hasPrimaryImmuneDeficiencyDisease;
+        bool hasDoctorApproval;
+        bool receivesIVIGAtHome;
+    }
+
+    // Function to check if the patient is eligible for IVIG coverage
+    function checkCoverage(
+        bool hasPrimaryImmuneDeficiencyDisease,
+        bool hasDoctorApproval,
+        bool receivesIVIGAtHome
+    ) public pure returns (bool) {
+        // Check all conditions for eligibility
+        return hasPrimaryImmuneDeficiencyDisease && hasDoctorApproval && receivesIVIGAtHome;
+    }
+
+    // Function to check if the patient is covered for related services
+    function checkRelatedServicesCoverage(
+        bool receivesIVIGAtHome
+    ) public pure returns (bool) {
+        // Patients are not covered for related services when receiving IVIG at home
+        return !receivesIVIGAtHome;
+    }
+}
+```
+
+This contract provides two functions:
+
+1. `checkCoverage`: This function takes three boolean arguments representing whether the patient has a primary immune deficiency disease, has doctor approval, and receives IVIG at home. It returns `true` if all conditions are met, indicating that the patient is eligible for IVIG coverage under Medicare Part B.
+
+2. `checkRelatedServicesCoverage`: This function takes a boolean argument representing whether the patient receives IVIG at home. It returns `false` because, according to the policy, Medicare Part B does not cover related services when IVIG is administered at home.
+
+Please note that this contract is a simplified representation and does not handle patient records or actual insurance claims. In a real-world application, additional functionality would be required to manage patient data securely and to integrate with healthcare providers and insurance systems.

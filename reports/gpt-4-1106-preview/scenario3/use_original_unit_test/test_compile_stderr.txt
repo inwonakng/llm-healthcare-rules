@@ -1,8 +1,50 @@
-ParserError: Invalid character in string.
-  --> contracts/UnitTest.sol:42:39:
+DeclarationError: Undeclared identifier.
+  --> contracts/UnitTest.sol:46:26:
    |
-42 |         Assert.equal(isCovered, true, "Part D should cover immunosuppressive drugs when Part B doesn’t");
-   |                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+46 |         bool isCovered = MedicareContract.isCovered(params.hasPartA, params.hasPartB, params.hadTransplant);
+   |                          ^^^^^^^^^^^^^^^^
+
+
+DeclarationError: Undeclared identifier.
+  --> contracts/UnitTest.sol:51:21:
+   |
+51 |         isCovered = MedicareContract.isCovered(params.hasPartA, params.hasPartB, params.hadTransplant);
+   |                     ^^^^^^^^^^^^^^^^
+
+
+DeclarationError: Undeclared identifier.
+  --> contracts/UnitTest.sol:61:26:
+   |
+61 |         bool isCovered = MedicareContract.isImmunosuppressiveDrugCovered(params.hasESRD, params.monthsAfterTransplant);
+   |                          ^^^^^^^^^^^^^^^^
+
+
+DeclarationError: Undeclared identifier.
+  --> contracts/UnitTest.sol:70:27:
+   |
+70 |         bool isEligible = MedicareContract.isEligibleForImmunosuppressiveDrugBenefit(params.hasPartA, params.monthsAfterTransplant);
+   |                           ^^^^^^^^^^^^^^^^
+
+
+DeclarationError: Undeclared identifier.
+  --> contracts/UnitTest.sol:79:28:
+   |
+79 |         uint patientCost = MedicareContract.calculateImmunosuppressiveDrugCost(params.deductible, params.medicareApprovedAmount);
+   |                            ^^^^^^^^^^^^^^^^
+
+
+DeclarationError: Undeclared identifier.
+  --> contracts/UnitTest.sol:88:24:
+   |
+88 |         uint premium = MedicareContract.getMonthlyPremium();
+   |                        ^^^^^^^^^^^^^^^^
+
+
+DeclarationError: Undeclared identifier.
+  --> contracts/UnitTest.sol:96:27:
+   |
+96 |         uint deductible = MedicareContract.getDeductible();
+   |                           ^^^^^^^^^^^^^^^^
 
 
 Error HH600: Compilation failed

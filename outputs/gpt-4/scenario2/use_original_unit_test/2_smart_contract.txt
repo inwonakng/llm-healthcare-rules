@@ -1,0 +1,49 @@
+```solidity
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+contract InsurancePolicy {
+    enum Status { NotProvided, Provided }
+    enum Diagnosis { None, PrimaryImmuneDeficiencyDisease }
+
+    struct Patient {
+        Diagnosis diagnosis;
+        bool isMedicallyAppropriate;
+        bool isAtHome;
+        Status ivigStatus;
+    }
+
+    mapping(address => Patient) public patients;
+
+    function setPatient(
+        address _patientAddress,
+        Diagnosis _diagnosis,
+        bool _isMedicallyAppropriate,
+        bool _isAtHome
+    ) public {
+        patients[_patientAddress] = Patient(_diagnosis, _isMedicallyAppropriate, _isAtHome, Status.NotProvided);
+    }
+
+    function provideIVIG(address _patientAddress) public returns (string memory) {
+        Patient storage patient = patients[_patientAddress];
+
+        if (patient.diagnosis == Diagnosis.PrimaryImmuneDeficiencyDisease && patient.isMedicallyAppropriate && patient.isAtHome) {
+            patient.ivigStatus = Status.Provided;
+            return "IVIG provided at home.";
+        } else {
+            return "IVIG not provided. Patient does not meet the conditions.";
+        }
+    }
+
+    function getIVIGStatus(address _patientAddress) public view returns (string memory) {
+        Patient storage patient = patients[_patientAddress];
+
+        if (patient.ivigStatus == Status.Provided) {
+            return "IVIG provided at home.";
+        } else {
+            return "IVIG not provided.";
+        }
+    }
+}
+```
+This smart contract represents the insurance policy document. It has a `Patient` struct that stores the patient's diagnosis, whether it's medically appropriate for them to receive IVIG at home, and whether they are at home. The `setPatient` function is used to set these parameters for a patient. The `provideIVIG` function checks if the patient meets the conditions for receiving IVIG at home and updates the `ivigStatus` accordingly. The `getIVIGStatus` function returns the current status of IVIG provision for a patient.

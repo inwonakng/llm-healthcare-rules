@@ -1,16 +1,12 @@
 Warning: SPDX license identifier not provided in source file. Before publishing, consider adding a comment containing "SPDX-License-Identifier: <SPDX-License>" to each source file. Use "SPDX-License-Identifier: UNLICENSED" for non-open-source code. Please see https://spdx.org for more information.
---> contracts/SmartContract.sol
-
-
-Warning: SPDX license identifier not provided in source file. Before publishing, consider adding a comment containing "SPDX-License-Identifier: <SPDX-License>" to each source file. Use "SPDX-License-Identifier: UNLICENSED" for non-open-source code. Please see https://spdx.org for more information.
 --> contracts/UnitTest.sol
 
 
-DeclarationError: Identifier not found or not unique.
- --> contracts/UnitTest.sol:8:5:
-  |
-8 |     MedicareContract medicare = MedicareContract(DeployedAddresses.MedicareContract());
-  |     ^^^^^^^^^^^^^^^^
+TypeError: Member "isEligibleForInjectableOsteoporosisDrugs" not found or not visible after argument-dependent lookup in contract InsurancePolicy.
+  --> contracts/UnitTest.sol:29:23:
+   |
+29 |         bool result = insurancePolicy.isEligibleForInjectableOsteoporosisDrugs(
+   |                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 
 Error HH600: Compilation failed

@@ -1,0 +1,45 @@
+```
+library InjectableOsteoporosisDrugCoverage version '1.0'
+
+using FHIR version '4.0.0'
+
+context Patient
+
+define IsFemale:
+  Patient.gender = 'female'
+
+define HasOsteoporosis:
+  exists([Condition: code in "M81.0" /* Osteoporosis without current pathological fracture */])
+
+define QualifiesForMedicareHomeHealthBenefit:
+  // This expression should be defined based on the specific criteria for the Medicare home health benefit eligibility
+
+define HasPostmenopausalOsteoporosisFracture:
+  exists([Condition: code in "M80.0" /* Osteoporosis with current pathological fracture, postmenopausal */])
+
+define DoctorCertifiedFractureRelatedToOsteoporosis:
+  // This expression should be defined based on the documentation of a doctor's certification linking the fracture to postmenopausal osteoporosis
+
+define UnableToSelfAdminister:
+  // This expression should be defined based on the doctor's certification regarding the patient's ability to self-administer the injection
+
+define FamilyOrCaregiversUnableToAdminister:
+  // This expression should be defined based on the information about the family or caregivers' ability or willingness to administer the injection
+
+define InjectableOsteoporosisDrugCoverageCriteriaMet:
+  IsFemale and
+  HasOsteoporosis and
+  QualifiesForMedicareHomeHealthBenefit and
+  HasPostmenopausalOsteoporosisFracture and
+  UnableToSelfAdminister
+
+define HomeHealthAideCoverageCriteriaMet:
+  InjectableOsteoporosisDrugCoverageCriteriaMet and
+  FamilyOrCaregiversUnableToAdminister
+
+define InjectableOsteoporosisDrugCoverageEligible:
+  InjectableOsteoporosisDrugCoverageCriteriaMet or
+  HomeHealthAideCoverageCriteriaMet
+```
+
+Please note that the expressions `QualifiesForMedicareHomeHealthBenefit`, `DoctorCertifiedFractureRelatedToOsteoporosis`, `UnableToSelfAdminister`, and `FamilyOrCaregiversUnableToAdminister` need to be further defined based on the specific criteria and documentation available for the Medicare home health benefit eligibility, doctor's certification process, and information about the patient's and family's ability to administer the injection. These are placeholders and would require additional information to be fully implemented.

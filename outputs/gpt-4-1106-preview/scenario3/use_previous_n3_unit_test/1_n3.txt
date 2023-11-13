@@ -1,0 +1,53 @@
+```
+@prefix : <http://example.org/insurance#>.
+
+# Rule 1: Medicare covers transplant drug therapy if it paid for the organ transplant.
+{ ?person :medicarePaidForTransplant true } => { ?person :eligibleForTransplantDrugTherapy true }.
+
+# Rule 2: Individual must have Part A at the time of transplant.
+{ ?person :hadPartAAtTimeOfTransplant true } => { ?person :eligibleForTransplantDrugTherapy true }.
+
+# Rule 3: Individual must have Part B to get immunosuppressive drugs.
+{ ?person :hasPartB true } => { ?person :eligibleForImmunosuppressiveDrugs true }.
+
+# Rule 4: Part D covers immunosuppressive drugs if Part B does not.
+{ ?person :hasPartB false } => { ?person :partDCoversImmunosuppressiveDrugs true }.
+
+# Rule 5: Individuals with Original Medicare can join a drug plan.
+{ ?person :hasOriginalMedicare true } => { ?person :canJoinMedicareDrugPlan true }.
+
+# Rule 6: Medicare coverage ends 36 months after a successful kidney transplant if due to ESRD.
+{ ?person :hasESRD true; :successfulKidneyTransplant true; :monthsAfterTransplant 36 } => { ?person :medicareCoverageEnds true }.
+
+# Rule 7: Specific benefit for those who lose Part A coverage after 36 months without other coverage.
+{ ?person :monthsAfterTransplant 36; :hasOtherHealthCoverage false } => { ?person :eligibleForSpecificBenefit true }.
+
+# Rule 8: Specific benefit only covers immunosuppressive drugs.
+{ ?person :eligibleForSpecificBenefit true } => { ?person :specificBenefitCoversOnlyImmunosuppressiveDrugs true }.
+
+# Rule 9: Specific benefit is not a full health coverage substitute.
+{ ?person :eligibleForSpecificBenefit true } => { ?person :specificBenefitNotFullCoverage true }.
+
+# Rule 10: Eligible individuals can enroll in specific benefit after Part A ends.
+{ ?person :partAEnded true } => { ?person :canEnrollInSpecificBenefit true }.
+
+# Rule 11: Enrollment process for the specific benefit.
+{ ?person :wantsToEnrollInSpecificBenefit true } => { ?person :callSocialSecurityForEnrollment true }.
+
+# Rule 12: Premium and deductible costs for 2023.
+{ ?person :enrolledIn2023 true } => { ?person :monthlyPremium "97.10"; :annualDeductible "226" }.
+
+# Rule 13: Post-deductible cost for immunosuppressive drugs.
+{ ?person :metDeductible true } => { ?person :payPercentageOfApprovedAmount "20%" }.
+
+# Additional rules to combine conditions for eligibility and costs
+{ ?person :eligibleForTransplantDrugTherapy true; :eligibleForImmunosuppressiveDrugs true } => { ?person :coveredForTransplantDrugs true }.
+{ ?person :partDCoversImmunosuppressiveDrugs true } => { ?person :eligibleForImmunosuppressiveDrugs true }.
+{ ?person :canJoinMedicareDrugPlan true; :wantsDrugCoverage true } => { ?person :hasMedicareDrugCoverage true }.
+{ ?person :medicareCoverageEnds true } => { ?person :notEligibleForMedicareBenefits true }.
+{ ?person :eligibleForSpecificBenefit true; :canEnrollInSpecificBenefit true } => { ?person :hasSpecificBenefitCoverage true }.
+{ ?person :callSocialSecurityForEnrollment true; :contactedSocialSecurity true } => { ?person :enrolledInSpecificBenefit true }.
+{ ?person :monthlyPremium ?premium; :annualDeductible ?deductible; :payPercentageOfApprovedAmount ?percentage } => { ?person :knowsCosts true }.
+```
+
+Please note that the above N3 logic rules are a representation of the insurance policy document and its summary provided. The actual implementation may require additional context and information about the individuals and their specific circumstances to accurately apply these rules.

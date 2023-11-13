@@ -1,0 +1,34 @@
+```
+```
+library OsteoporosisDrugCoverage version '1.0'
+
+using FHIR version '4.0.0'
+
+include 'Terminology' version '1.0' called Terminology
+
+context Patient
+
+define "WomanWithOsteoporosis":
+  Patient.gender.value = 'female' and
+  exists([Condition: "Osteoporosis"])
+
+define "QualifiesForMedicareHomeHealthBenefit":
+  [Coverage: "Medicare Home Health Benefit"] Coverage.status.value = 'active'
+
+define "FractureDueToPostMenopausalOsteoporosis":
+  exists([Condition: "Fracture"] E where E.cause.value = 'post-menopausal osteoporosis')
+
+define "UnableToSelfAdminister":
+  [Observation: "Self Administration Ability"] Observation.value.value = 'unable'
+
+define "FamilyOrCaregiversUnableOrUnwilling":
+  [Observation: "Family or Caregiver Injection Ability"] Observation.value.value in {'unable', 'unwilling'}
+
+define "EligibleForCoverage":
+  "WomanWithOsteoporosis" and
+  "QualifiesForMedicareHomeHealthBenefit" and
+  "FractureDueToPostMenopausalOsteoporosis" and
+  "UnableToSelfAdminister" and
+  "FamilyOrCaregiversUnableOrUnwilling"
+```
+```

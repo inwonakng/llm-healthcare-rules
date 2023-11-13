@@ -1,0 +1,47 @@
+```
+library InjectableOsteoporosisDrugCoverage version '1.0'
+
+using FHIR version '4.0.0'
+
+include FHIRHelpers version '4.0.0' called FHIRHelpers
+
+codesystem "LOINC": 'http://loinc.org'
+
+code "Osteoporosis": '64859006' from "SNOMED-CT" display 'Osteoporosis'
+code "Postmenopausal osteoporosis": '36348005' from "SNOMED-CT" display 'Postmenopausal osteoporosis'
+code "Bone fracture": '72704001' from "SNOMED-CT" display 'Fracture of bone'
+code "Injectable osteoporosis drugs": '73639000' from "SNOMED-CT" display 'Injectable osteoporosis drugs'
+
+context Patient
+
+define "IsFemale":
+  Patient.gender.value = 'female'
+
+define "HasOsteoporosis":
+  exists([Condition: "Osteoporosis"])
+
+define "QualifiesForMedicareHomeHealthBenefit":
+  // The logic to determine if a patient qualifies for the Medicare home health benefit goes here
+
+define "HasBoneFractureRelatedToPostmenopausalOsteoporosis":
+  exists([Condition: "Bone fracture"] C
+    where C.clinicalStatus = 'active'
+      and C.verificationStatus = 'confirmed'
+      and exists([Condition: "Postmenopausal osteoporosis"] P
+        where P.onset <= C.onset))
+
+define "CannotSelfAdministerInjection":
+  // The logic to determine if a patient cannot self-administer the injection goes here
+
+define "FamilyOrCaregiversCannotAdministerInjection":
+  // The logic to determine if a patient's family or caregivers cannot administer the injection goes here
+
+define "CoverageForInjectableOsteoporosisDrugs":
+  "IsFemale"
+    and "HasOsteoporosis"
+    and "QualifiesForMedicareHomeHealthBenefit"
+    and "HasBoneFractureRelatedToPostmenopausalOsteoporosis"
+    and "CannotSelfAdministerInjection"
+    and "FamilyOrCaregiversCannotAdministerInjection"
+```
+This CQL library defines a set of named expressions that represent the conditions described in the insurance policy document and its summary. The final named expression, "CoverageForInjectableOsteoporosisDrugs", combines all the other conditions to determine if a patient is covered for injectable osteoporosis drugs.

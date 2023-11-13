@@ -1,0 +1,33 @@
+pragma solidity ^0.8.0;
+
+import "./SmartContract.sol";
+import "./remix_tests.sol";
+
+
+contract {ContractName}Test {
+    {ContractName} contractInstance;
+    
+    function beforeEach() public {
+        contractInstance = new {ContractName}();
+    }
+    
+    function testMedicareCoverage() public {
+        bool isCovered = contractInstance.isMedicareCoverage("primary immune deficiency disease");
+        Assert.isTrue(isCovered, "Medicare should cover IVIG for primary immune deficiency disease");
+    }
+    
+    function testMedicallyAppropriate() public {
+        bool isMedicallyAppropriate = contractInstance.isMedicallyAppropriate();
+        Assert.isTrue(isMedicallyAppropriate, "IVIG should be medically appropriate for home administration");
+    }
+    
+    function testPartBCoverage() public {
+        bool isPartBCovered = contractInstance.isPartBCovered();
+        Assert.isTrue(isPartBCovered, "Medicare Part B should cover the cost of IVIG");
+    }
+    
+    function testOtherItemsAndServices() public {
+        bool isOtherItemsAndServicesCovered = contractInstance.isOtherItemsAndServicesCovered();
+        Assert.isFalse(isOtherItemsAndServicesCovered, "Medicare should not cover other items and services related to IVIG at home");
+    }
+}
