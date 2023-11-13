@@ -1,0 +1,27 @@
+```
+pragma solidity ^0.8.0;
+
+import "remix_tests.sol"; // this import is automatically injected by Remix.
+
+contract InjectableOsteoporosisDrugsTest {
+    function testWomanWithOsteoporosis() public {
+        // Test that a woman with osteoporosis who meets the criteria for the Medicare home health benefit is covered
+        assertTrue(isCovered(/* woman with osteoporosis */), "Woman with osteoporosis should be covered");
+    }
+
+    function testBoneFracture() public {
+        // Test that a bone fracture that a doctor certifies was related to post-menopausal osteoporosis is covered
+        assertTrue(isCovered(/* bone fracture */), "Bone fracture should be covered");
+    }
+
+    function testInjectionCertification() public {
+        // Test that a doctor's certification that a patient can't give themselves the injection or learn how to give themselves the drug by injection is covered
+        assertTrue(isCovered(/* doctor's certification */), "Doctor's certification should be covered");
+    }
+
+    function testHomeHealthCoverage() public {
+        // Test that Medicare will cover the home health nurse or aide to provide the injection if the patient's family or caregivers are unable or unwilling to give the drug by injection
+        assertTrue(isCovered(/* home health nurse or aide */), "Home health nurse or aide should be covered");
+    }
+}
+```

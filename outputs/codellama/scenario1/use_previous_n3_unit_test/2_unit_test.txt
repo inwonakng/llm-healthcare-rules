@@ -1,0 +1,72 @@
+```
+pragma solidity ^0.8.0;
+
+import "remix_tests.sol"; // this import is automatically injected by Remix.
+
+contract InjectableOsteoporosisDrugsTest {
+    function testWomanWithOsteoporosis() public {
+        // Arrange
+        address patient = address(0x123);
+        bool isWoman = true;
+        bool hasOsteoporosis = true;
+        bool meetsHomeHealthBenefitCriteria = true;
+
+        // Act
+        bool result = InjectableOsteoporosisDrugs.isCovered(patient, isWoman, hasOsteoporosis, meetsHomeHealthBenefitCriteria);
+
+        // Assert
+        Assert.equal(result, true, "Woman with osteoporosis should be covered");
+    }
+
+    function testBoneFracture() public {
+        // Arrange
+        address patient = address(0x123);
+        bool isWoman = true;
+        bool hasOsteoporosis = true;
+        bool meetsHomeHealthBenefitCriteria = true;
+        bool hasBoneFracture = true;
+        bool boneFractureIsRelatedToPostMenopausalOsteoporosis = true;
+
+        // Act
+        bool result = InjectableOsteoporosisDrugs.isCovered(patient, isWoman, hasOsteoporosis, meetsHomeHealthBenefitCriteria, hasBoneFracture, boneFractureIsRelatedToPostMenopausalOsteoporosis);
+
+        // Assert
+        Assert.equal(result, true, "Patient with bone fracture related to post-menopausal osteoporosis should be covered");
+    }
+
+    function testCannotGiveInjection() public {
+        // Arrange
+        address patient = address(0x123);
+        bool isWoman = true;
+        bool hasOsteoporosis = true;
+        bool meetsHomeHealthBenefitCriteria = true;
+        bool hasBoneFracture = true;
+        bool boneFractureIsRelatedToPostMenopausalOsteoporosis = true;
+        bool cannotGiveInjection = true;
+
+        // Act
+        bool result = InjectableOsteoporosisDrugs.isCovered(patient, isWoman, hasOsteoporosis, meetsHomeHealthBenefitCriteria, hasBoneFracture, boneFractureIsRelatedToPostMenopausalOsteoporosis, cannotGiveInjection);
+
+        // Assert
+        Assert.equal(result, true, "Patient who cannot give themselves the injection should be covered");
+    }
+
+    function testHomeHealthNurseOrAideProvidesInjection() public {
+        // Arrange
+        address patient = address(0x123);
+        bool isWoman = true;
+        bool hasOsteoporosis = true;
+        bool meetsHomeHealthBenefitCriteria = true;
+        bool hasBoneFracture = true;
+        bool boneFractureIsRelatedToPostMenopausalOsteoporosis = true;
+        bool cannotGiveInjection = true;
+        bool homeHealthNurseOrAideProvidesInjection = true;
+
+        // Act
+        bool result = InjectableOsteoporosisDrugs.isCovered(patient, isWoman, hasOsteoporosis, meetsHomeHealthBenefitCriteria, hasBoneFracture, boneFractureIsRelatedToPostMenopausalOsteoporosis, cannotGiveInjection, homeHealthNurseOrAideProvidesInjection);
+
+        // Assert
+        Assert.equal(result, true, "Patient with home health nurse or aide providing the injection should be covered");
+    }
+}
+```

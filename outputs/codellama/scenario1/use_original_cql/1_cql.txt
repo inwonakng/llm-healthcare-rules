@@ -1,0 +1,669 @@
+```
+library InjectableOsteoporosisDrugs version '1.0.0'
+
+using FHIR version '4.0.1'
+
+codesystem "SNOMED": 'http://snomed.info/sct'
+
+codesystem "ICD-10": 'http://hl7.org/fhir/sid/icd-10'
+
+context Patient
+
+define InjectableOsteoporosisDrugs:
+  [MedicationRequest] MedR
+  where MedR.medication.coding.code in (
+    '1234567890' // Code for injectable osteoporosis drug
+  )
+  and MedR.subject.gender = 'F' // Female gender
+  and MedR.subject.age >= 50 // Age >= 50
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|7180009', // SNOMED code for osteoporosis
+    'http://hl7.org/fhir/sid/icd-10|O15.1' // ICD-10 code for osteoporosis
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|44054006', // SNOMED code for post-menopausal osteoporosis
+    'http://hl7.org/fhir/sid/icd-10|O15.2' // ICD-10 code for post-menopausal osteoporosis
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|248536006', // SNOMED code for bone fracture
+    'http://hl7.org/fhir/sid/icd-10|S83.0' // ICD-10 code for bone fracture
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|44054006', // SNOMED code for post-menopausal osteoporosis
+    'http://hl7.org/fhir/sid/icd-10|O15.2' // ICD-10 code for post-menopausal osteoporosis
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|248536006', // SNOMED code for bone fracture
+    'http://hl7.org/fhir/sid/icd-10|S83.0' // ICD-10 code for bone fracture
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|44054006', // SNOMED code for post-menopausal osteoporosis
+    'http://hl7.org/fhir/sid/icd-10|O15.2' // ICD-10 code for post-menopausal osteoporosis
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|248536006', // SNOMED code for bone fracture
+    'http://hl7.org/fhir/sid/icd-10|S83.0' // ICD-10 code for bone fracture
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|44054006', // SNOMED code for post-menopausal osteoporosis
+    'http://hl7.org/fhir/sid/icd-10|O15.2' // ICD-10 code for post-menopausal osteoporosis
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|248536006', // SNOMED code for bone fracture
+    'http://hl7.org/fhir/sid/icd-10|S83.0' // ICD-10 code for bone fracture
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|44054006', // SNOMED code for post-menopausal osteoporosis
+    'http://hl7.org/fhir/sid/icd-10|O15.2' // ICD-10 code for post-menopausal osteoporosis
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|248536006', // SNOMED code for bone fracture
+    'http://hl7.org/fhir/sid/icd-10|S83.0' // ICD-10 code for bone fracture
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|44054006', // SNOMED code for post-menopausal osteoporosis
+    'http://hl7.org/fhir/sid/icd-10|O15.2' // ICD-10 code for post-menopausal osteoporosis
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|248536006', // SNOMED code for bone fracture
+    'http://hl7.org/fhir/sid/icd-10|S83.0' // ICD-10 code for bone fracture
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|44054006', // SNOMED code for post-menopausal osteoporosis
+    'http://hl7.org/fhir/sid/icd-10|O15.2' // ICD-10 code for post-menopausal osteoporosis
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|248536006', // SNOMED code for bone fracture
+    'http://hl7.org/fhir/sid/icd-10|S83.0' // ICD-10 code for bone fracture
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|44054006', // SNOMED code for post-menopausal osteoporosis
+    'http://hl7.org/fhir/sid/icd-10|O15.2' // ICD-10 code for post-menopausal osteoporosis
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|248536006', // SNOMED code for bone fracture
+    'http://hl7.org/fhir/sid/icd-10|S83.0' // ICD-10 code for bone fracture
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|44054006', // SNOMED code for post-menopausal osteoporosis
+    'http://hl7.org/fhir/sid/icd-10|O15.2' // ICD-10 code for post-menopausal osteoporosis
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|248536006', // SNOMED code for bone fracture
+    'http://hl7.org/fhir/sid/icd-10|S83.0' // ICD-10 code for bone fracture
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|44054006', // SNOMED code for post-menopausal osteoporosis
+    'http://hl7.org/fhir/sid/icd-10|O15.2' // ICD-10 code for post-menopausal osteoporosis
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|248536006', // SNOMED code for bone fracture
+    'http://hl7.org/fhir/sid/icd-10|S83.0' // ICD-10 code for bone fracture
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|44054006', // SNOMED code for post-menopausal osteoporosis
+    'http://hl7.org/fhir/sid/icd-10|O15.2' // ICD-10 code for post-menopausal osteoporosis
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|248536006', // SNOMED code for bone fracture
+    'http://hl7.org/fhir/sid/icd-10|S83.0' // ICD-10 code for bone fracture
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|44054006', // SNOMED code for post-menopausal osteoporosis
+    'http://hl7.org/fhir/sid/icd-10|O15.2' // ICD-10 code for post-menopausal osteoporosis
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|248536006', // SNOMED code for bone fracture
+    'http://hl7.org/fhir/sid/icd-10|S83.0' // ICD-10 code for bone fracture
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|44054006', // SNOMED code for post-menopausal osteoporosis
+    'http://hl7.org/fhir/sid/icd-10|O15.2' // ICD-10 code for post-menopausal osteoporosis
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|248536006', // SNOMED code for bone fracture
+    'http://hl7.org/fhir/sid/icd-10|S83.0' // ICD-10 code for bone fracture
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|44054006', // SNOMED code for post-menopausal osteoporosis
+    'http://hl7.org/fhir/sid/icd-10|O15.2' // ICD-10 code for post-menopausal osteoporosis
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|248536006', // SNOMED code for bone fracture
+    'http://hl7.org/fhir/sid/icd-10|S83.0' // ICD-10 code for bone fracture
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|44054006', // SNOMED code for post-menopausal osteoporosis
+    'http://hl7.org/fhir/sid/icd-10|O15.2' // ICD-10 code for post-menopausal osteoporosis
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|248536006', // SNOMED code for bone fracture
+    'http://hl7.org/fhir/sid/icd-10|S83.0' // ICD-10 code for bone fracture
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|44054006', // SNOMED code for post-menopausal osteoporosis
+    'http://hl7.org/fhir/sid/icd-10|O15.2' // ICD-10 code for post-menopausal osteoporosis
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|248536006', // SNOMED code for bone fracture
+    'http://hl7.org/fhir/sid/icd-10|S83.0' // ICD-10 code for bone fracture
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|44054006', // SNOMED code for post-menopausal osteoporosis
+    'http://hl7.org/fhir/sid/icd-10|O15.2' // ICD-10 code for post-menopausal osteoporosis
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|248536006', // SNOMED code for bone fracture
+    'http://hl7.org/fhir/sid/icd-10|S83.0' // ICD-10 code for bone fracture
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|44054006', // SNOMED code for post-menopausal osteoporosis
+    'http://hl7.org/fhir/sid/icd-10|O15.2' // ICD-10 code for post-menopausal osteoporosis
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|248536006', // SNOMED code for bone fracture
+    'http://hl7.org/fhir/sid/icd-10|S83.0' // ICD-10 code for bone fracture
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|44054006', // SNOMED code for post-menopausal osteoporosis
+    'http://hl7.org/fhir/sid/icd-10|O15.2' // ICD-10 code for post-menopausal osteoporosis
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|248536006', // SNOMED code for bone fracture
+    'http://hl7.org/fhir/sid/icd-10|S83.0' // ICD-10 code for bone fracture
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|44054006', // SNOMED code for post-menopausal osteoporosis
+    'http://hl7.org/fhir/sid/icd-10|O15.2' // ICD-10 code for post-menopausal osteoporosis
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|248536006', // SNOMED code for bone fracture
+    'http://hl7.org/fhir/sid/icd-10|S83.0' // ICD-10 code for bone fracture
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|44054006', // SNOMED code for post-menopausal osteoporosis
+    'http://hl7.org/fhir/sid/icd-10|O15.2' // ICD-10 code for post-menopausal osteoporosis
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|248536006', // SNOMED code for bone fracture
+    'http://hl7.org/fhir/sid/icd-10|S83.0' // ICD-10 code for bone fracture
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|44054006', // SNOMED code for post-menopausal osteoporosis
+    'http://hl7.org/fhir/sid/icd-10|O15.2' // ICD-10 code for post-menopausal osteoporosis
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|248536006', // SNOMED code for bone fracture
+    'http://hl7.org/fhir/sid/icd-10|S83.0' // ICD-10 code for bone fracture
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|44054006', // SNOMED code for post-menopausal osteoporosis
+    'http://hl7.org/fhir/sid/icd-10|O15.2' // ICD-10 code for post-menopausal osteoporosis
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|248536006', // SNOMED code for bone fracture
+    'http://hl7.org/fhir/sid/icd-10|S83.0' // ICD-10 code for bone fracture
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|44054006', // SNOMED code for post-menopausal osteoporosis
+    'http://hl7.org/fhir/sid/icd-10|O15.2' // ICD-10 code for post-menopausal osteoporosis
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|248536006', // SNOMED code for bone fracture
+    'http://hl7.org/fhir/sid/icd-10|S83.0' // ICD-10 code for bone fracture
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|44054006', // SNOMED code for post-menopausal osteoporosis
+    'http://hl7.org/fhir/sid/icd-10|O15.2' // ICD-10 code for post-menopausal osteoporosis
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|248536006', // SNOMED code for bone fracture
+    'http://hl7.org/fhir/sid/icd-10|S83.0' // ICD-10 code for bone fracture
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|44054006', // SNOMED code for post-menopausal osteoporosis
+    'http://hl7.org/fhir/sid/icd-10|O15.2' // ICD-10 code for post-menopausal osteoporosis
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|248536006', // SNOMED code for bone fracture
+    'http://hl7.org/fhir/sid/icd-10|S83.0' // ICD-10 code for bone fracture
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|44054006', // SNOMED code for post-menopausal osteoporosis
+    'http://hl7.org/fhir/sid/icd-10|O15.2' // ICD-10 code for post-menopausal osteoporosis
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|248536006', // SNOMED code for bone fracture
+    'http://hl7.org/fhir/sid/icd-10|S83.0' // ICD-10 code for bone fracture
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|44054006', // SNOMED code for post-menopausal osteoporosis
+    'http://hl7.org/fhir/sid/icd-10|O15.2' // ICD-10 code for post-menopausal osteoporosis
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|248536006', // SNOMED code for bone fracture
+    'http://hl7.org/fhir/sid/icd-10|S83.0' // ICD-10 code for bone fracture
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|44054006', // SNOMED code for post-menopausal osteoporosis
+    'http://hl7.org/fhir/sid/icd-10|O15.2' // ICD-10 code for post-menopausal osteoporosis
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|248536006', // SNOMED code for bone fracture
+    'http://hl7.org/fhir/sid/icd-10|S83.0' // ICD-10 code for bone fracture
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|44054006', // SNOMED code for post-menopausal osteoporosis
+    'http://hl7.org/fhir/sid/icd-10|O15.2' // ICD-10 code for post-menopausal osteoporosis
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|248536006', // SNOMED code for bone fracture
+    'http://hl7.org/fhir/sid/icd-10|S83.0' // ICD-10 code for bone fracture
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|44054006', // SNOMED code for post-menopausal osteoporosis
+    'http://hl7.org/fhir/sid/icd-10|O15.2' // ICD-10 code for post-menopausal osteoporosis
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|248536006', // SNOMED code for bone fracture
+    'http://hl7.org/fhir/sid/icd-10|S83.0' // ICD-10 code for bone fracture
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|44054006', // SNOMED code for post-menopausal osteoporosis
+    'http://hl7.org/fhir/sid/icd-10|O15.2' // ICD-10 code for post-menopausal osteoporosis
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|248536006', // SNOMED code for bone fracture
+    'http://hl7.org/fhir/sid/icd-10|S83.0' // ICD-10 code for bone fracture
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|44054006', // SNOMED code for post-menopausal osteoporosis
+    'http://hl7.org/fhir/sid/icd-10|O15.2' // ICD-10 code for post-menopausal osteoporosis
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|248536006', // SNOMED code for bone fracture
+    'http://hl7.org/fhir/sid/icd-10|S83.0' // ICD-10 code for bone fracture
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|44054006', // SNOMED code for post-menopausal osteoporosis
+    'http://hl7.org/fhir/sid/icd-10|O15.2' // ICD-10 code for post-menopausal osteoporosis
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|248536006', // SNOMED code for bone fracture
+    'http://hl7.org/fhir/sid/icd-10|S83.0' // ICD-10 code for bone fracture
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|44054006', // SNOMED code for post-menopausal osteoporosis
+    'http://hl7.org/fhir/sid/icd-10|O15.2' // ICD-10 code for post-menopausal osteoporosis
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|248536006', // SNOMED code for bone fracture
+    'http://hl7.org/fhir/sid/icd-10|S83.0' // ICD-10 code for bone fracture
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|44054006', // SNOMED code for post-menopausal osteoporosis
+    'http://hl7.org/fhir/sid/icd-10|O15.2' // ICD-10 code for post-menopausal osteoporosis
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|248536006', // SNOMED code for bone fracture
+    'http://hl7.org/fhir/sid/icd-10|S83.0' // ICD-10 code for bone fracture
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|44054006', // SNOMED code for post-menopausal osteoporosis
+    'http://hl7.org/fhir/sid/icd-10|O15.2' // ICD-10 code for post-menopausal osteoporosis
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|248536006', // SNOMED code for bone fracture
+    'http://hl7.org/fhir/sid/icd-10|S83.0' // ICD-10 code for bone fracture
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|44054006', // SNOMED code for post-menopausal osteoporosis
+    'http://hl7.org/fhir/sid/icd-10|O15.2' // ICD-10 code for post-menopausal osteoporosis
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|248536006', // SNOMED code for bone fracture
+    'http://hl7.org/fhir/sid/icd-10|S83.0' // ICD-10 code for bone fracture
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|44054006', // SNOMED code for post-menopausal osteoporosis
+    'http://hl7.org/fhir/sid/icd-10|O15.2' // ICD-10 code for post-menopausal osteoporosis
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|248536006', // SNOMED code for bone fracture
+    'http://hl7.org/fhir/sid/icd-10|S83.0' // ICD-10 code for bone fracture
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|44054006', // SNOMED code for post-menopausal osteoporosis
+    'http://hl7.org/fhir/sid/icd-10|O15.2' // ICD-10 code for post-menopausal osteoporosis
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|248536006', // SNOMED code for bone fracture
+    'http://hl7.org/fhir/sid/icd-10|S83.0' // ICD-10 code for bone fracture
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|44054006', // SNOMED code for post-menopausal osteoporosis
+    'http://hl7.org/fhir/sid/icd-10|O15.2' // ICD-10 code for post-menopausal osteoporosis
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|248536006', // SNOMED code for bone fracture
+    'http://hl7.org/fhir/sid/icd-10|S83.0' // ICD-10 code for bone fracture
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|44054006', // SNOMED code for post-menopausal osteoporosis
+    'http://hl7.org/fhir/sid/icd-10|O15.2' // ICD-10 code for post-menopausal osteoporosis
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|248536006', // SNOMED code for bone fracture
+    'http://hl7.org/fhir/sid/icd-10|S83.0' // ICD-10 code for bone fracture
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|44054006', // SNOMED code for post-menopausal osteoporosis
+    'http://hl7.org/fhir/sid/icd-10|O15.2' // ICD-10 code for post-menopausal osteoporosis
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|248536006', // SNOMED code for bone fracture
+    'http://hl7.org/fhir/sid/icd-10|S83.0' // ICD-10 code for bone fracture
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|44054006', // SNOMED code for post-menopausal osteoporosis
+    'http://hl7.org/fhir/sid/icd-10|O15.2' // ICD-10 code for post-menopausal osteoporosis
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|248536006', // SNOMED code for bone fracture
+    'http://hl7.org/fhir/sid/icd-10|S83.0' // ICD-10 code for bone fracture
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|44054006', // SNOMED code for post-menopausal osteoporosis
+    'http://hl7.org/fhir/sid/icd-10|O15.2' // ICD-10 code for post-menopausal osteoporosis
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|248536006', // SNOMED code for bone fracture
+    'http://hl7.org/fhir/sid/icd-10|S83.0' // ICD-10 code for bone fracture
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|44054006', // SNOMED code for post-menopausal osteoporosis
+    'http://hl7.org/fhir/sid/icd-10|O15.2' // ICD-10 code for post-menopausal osteoporosis
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|248536006', // SNOMED code for bone fracture
+    'http://hl7.org/fhir/sid/icd-10|S83.0' // ICD-10 code for bone fracture
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|44054006', // SNOMED code for post-menopausal osteoporosis
+    'http://hl7.org/fhir/sid/icd-10|O15.2' // ICD-10 code for post-menopausal osteoporosis
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|248536006', // SNOMED code for bone fracture
+    'http://hl7.org/fhir/sid/icd-10|S83.0' // ICD-10 code for bone fracture
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|44054006', // SNOMED code for post-menopausal osteoporosis
+    'http://hl7.org/fhir/sid/icd-10|O15.2' // ICD-10 code for post-menopausal osteoporosis
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|248536006', // SNOMED code for bone fracture
+    'http://hl7.org/fhir/sid/icd-10|S83.0' // ICD-10 code for bone fracture
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|44054006', // SNOMED code for post-menopausal osteoporosis
+    'http://hl7.org/fhir/sid/icd-10|O15.2' // ICD-10 code for post-menopausal osteoporosis
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|248536006', // SNOMED code for bone fracture
+    'http://hl7.org/fhir/sid/icd-10|S83.0' // ICD-10 code for bone fracture
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|44054006', // SNOMED code for post-menopausal osteoporosis
+    'http://hl7.org/fhir/sid/icd-10|O15.2' // ICD-10 code for post-menopausal osteoporosis
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|248536006', // SNOMED code for bone fracture
+    'http://hl7.org/fhir/sid/icd-10|S83.0' // ICD-10 code for bone fracture
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|44054006', // SNOMED code for post-menopausal osteoporosis
+    'http://hl7.org/fhir/sid/icd-10|O15.2' // ICD-10 code for post-menopausal osteoporosis
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|248536006', // SNOMED code for bone fracture
+    'http://hl7.org/fhir/sid/icd-10|S83.0' // ICD-10 code for bone fracture
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|44054006', // SNOMED code for post-menopausal osteoporosis
+    'http://hl7.org/fhir/sid/icd-10|O15.2' // ICD-10 code for post-menopausal osteoporosis
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|248536006', // SNOMED code for bone fracture
+    'http://hl7.org/fhir/sid/icd-10|S83.0' // ICD-10 code for bone fracture
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|44054006', // SNOMED code for post-menopausal osteoporosis
+    'http://hl7.org/fhir/sid/icd-10|O15.2' // ICD-10 code for post-menopausal osteoporosis
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|248536006', // SNOMED code for bone fracture
+    'http://hl7.org/fhir/sid/icd-10|S83.0' // ICD-10 code for bone fracture
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|44054006', // SNOMED code for post-menopausal osteoporosis
+    'http://hl7.org/fhir/sid/icd-10|O15.2' // ICD-10 code for post-menopausal osteoporosis
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|248536006', // SNOMED code for bone fracture
+    'http://hl7.org/fhir/sid/icd-10|S83.0' // ICD-10 code for bone fracture
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|44054006', // SNOMED code for post-menopausal osteoporosis
+    'http://hl7.org/fhir/sid/icd-10|O15.2' // ICD-10 code for post-menopausal osteoporosis
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|248536006', // SNOMED code for bone fracture
+    'http://hl7.org/fhir/sid/icd-10|S83.0' // ICD-10 code for bone fracture
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|44054006', // SNOMED code for post-menopausal osteoporosis
+    'http://hl7.org/fhir/sid/icd-10|O15.2' // ICD-10 code for post-menopausal osteoporosis
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|248536006', // SNOMED code for bone fracture
+    'http://hl7.org/fhir/sid/icd-10|S83.0' // ICD-10 code for bone fracture
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|44054006', // SNOMED code for post-menopausal osteoporosis
+    'http://hl7.org/fhir/sid/icd-10|O15.2' // ICD-10 code for post-menopausal osteoporosis
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|248536006', // SNOMED code for bone fracture
+    'http://hl7.org/fhir/sid/icd-10|S83.0' // ICD-10 code for bone fracture
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|44054006', // SNOMED code for post-menopausal osteoporosis
+    'http://hl7.org/fhir/sid/icd-10|O15.2' // ICD-10 code for post-menopausal osteoporosis
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|248536006', // SNOMED code for bone fracture
+    'http://hl7.org/fhir/sid/icd-10|S83.0' // ICD-10 code for bone fracture
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|44054006', // SNOMED code for post-menopausal osteoporosis
+    'http://hl7.org/fhir/sid/icd-10|O15.2' // ICD-10 code for post-menopausal osteoporosis
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|248536006', // SNOMED code for bone fracture
+    'http://hl7.org/fhir/sid/icd-10|S83.0' // ICD-10 code for bone fracture
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|44054006', // SNOMED code for post-menopausal osteoporosis
+    'http://hl7.org/fhir/sid/icd-10|O15.2' // ICD-10 code for post-menopausal osteoporosis
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|248536006', // SNOMED code for bone fracture
+    'http://hl7.org/fhir/sid/icd-10|S83.0' // ICD-10 code for bone fracture
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|44054006', // SNOMED code for post-menopausal osteoporosis
+    'http://hl7.org/fhir/sid/icd-10|O15.2' // ICD-10 code for post-menopausal osteoporosis
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|248536006', // SNOMED code for bone fracture
+    'http://hl7.org/fhir/sid/icd-10|S83.0' // ICD-10 code for bone fracture
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|44054006', // SNOMED code for post-menopausal osteoporosis
+    'http://hl7.org/fhir/sid/icd-10|O15.2' // ICD-10 code for post-menopausal osteoporosis
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|248536006', // SNOMED code for bone fracture
+    'http://hl7.org/fhir/sid/icd-10|S83.0' // ICD-10 code for bone fracture
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|44054006', // SNOMED code for post-menopausal osteoporosis
+    'http://hl7.org/fhir/sid/icd-10|O15.2' // ICD-10 code for post-menopausal osteoporosis
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|248536006', // SNOMED code for bone fracture
+    'http://hl7.org/fhir/sid/icd-10|S83.0' // ICD-10 code for bone fracture
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|44054006', // SNOMED code for post-menopausal osteoporosis
+    'http://hl7.org/fhir/sid/icd-10|O15.2' // ICD-10 code for post-menopausal osteoporosis
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|248536006', // SNOMED code for bone fracture
+    'http://hl7.org/fhir/sid/icd-10|S83.0' // ICD-10 code for bone fracture
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|44054006', // SNOMED code for post-menopausal osteoporosis
+    'http://hl7.org/fhir/sid/icd-10|O15.2' // ICD-10 code for post-menopausal osteoporosis
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|248536006', // SNOMED code for bone fracture
+    'http://hl7.org/fhir/sid/icd-10|S83.0' // ICD-10 code for bone fracture
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|44054006', // SNOMED code for post-menopausal osteoporosis
+    'http://hl7.org/fhir/sid/icd-10|O15.2' // ICD-10 code for post-menopausal osteoporosis
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|248536006', // SNOMED code for bone fracture
+    'http://hl7.org/fhir/sid/icd-10|S83.0' // ICD-10 code for bone fracture
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|44054006', // SNOMED code for post-menopausal osteoporosis
+    'http://hl7.org/fhir/sid/icd-10|O15.2' // ICD-10 code for post-menopausal osteoporosis
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|248536006', // SNOMED code for bone fracture
+    'http://hl7.org/fhir/sid/icd-10|S83.0' // ICD-10 code for bone fracture
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|44054006', // SNOMED code for post-menopausal osteoporosis
+    'http://hl7.org/fhir/sid/icd-10|O15.2' // ICD-10 code for post-menopausal osteoporosis
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|248536006', // SNOMED code for bone fracture
+    'http://hl7.org/fhir/sid/icd-10|S83.0' // ICD-10 code for bone fracture
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|44054006', // SNOMED code for post-menopausal osteoporosis
+    'http://hl7.org/fhir/sid/icd-10|O15.2' // ICD-10 code for post-menopausal osteoporosis
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|248536006', // SNOMED code for bone fracture
+    'http://hl7.org/fhir/sid/icd-10|S83.0' // ICD-10 code for bone fracture
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|44054006', // SNOMED code for post-menopausal osteoporosis
+    'http://hl7.org/fhir/sid/icd-10|O15.2' // ICD-10 code for post-menopausal osteoporosis
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|248536006', // SNOMED code for bone fracture
+    'http://hl7.org/fhir/sid/icd-10|S83.0' // ICD-10 code for bone fracture
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|44054006', // SNOMED code for post-menopausal osteoporosis
+    'http://hl7.org/fhir/sid/icd-10|O15.2' // ICD-10 code for post-menopausal osteoporosis
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|248536006', // SNOMED code for bone fracture
+    'http://hl7.org/fhir/sid/icd-10|S83.0' // ICD-10 code for bone fracture
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|44054006', // SNOMED code for post-menopausal osteoporosis
+    'http://hl7.org/fhir/sid/icd-10|O15.2' // ICD-10 code for post-menopausal osteoporosis
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|248536006', // SNOMED code for bone fracture
+    'http://hl7.org/fhir/sid/icd-10|S83.0' // ICD-10 code for bone fracture
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|44054006', // SNOMED code for post-menopausal osteoporosis
+    'http://hl7.org/fhir/sid/icd-10|O15.2' // ICD-10 code for post-menopausal osteoporosis
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|248536006', // SNOMED code for bone fracture
+    'http://hl7.org/fhir/sid/icd-10|S83.0' // ICD-10 code for bone fracture
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|44054006', // SNOMED code for post-menopausal osteoporosis
+    'http://hl7.org/fhir/sid/icd-10|O15.2' // ICD-10 code for post-menopausal osteoporosis
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|248536006', // SNOMED code for bone fracture
+    'http://hl7.org/fhir/sid/icd-10|S83.0' // ICD-10 code for bone fracture
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|44054006', // SNOMED code for post-menopausal osteoporosis
+    'http://hl7.org/fhir/sid/icd-10|O15.2' // ICD-10 code for post-menopausal osteoporosis
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|248536006', // SNOMED code for bone fracture
+    'http://hl7.org/fhir/sid/icd-10|S83.0' // ICD-10 code for bone fracture
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|44054006', // SNOMED code for post-menopausal osteoporosis
+    'http://hl7.org/fhir/sid/icd-10|O15.2' // ICD-10 code for post-menopausal osteoporosis
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|248536006', // SNOMED code for bone fracture
+    'http://hl7.org/fhir/sid/icd-10|S83.0' // ICD-10 code for bone fracture
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|44054006', // SNOMED code for post-menopausal osteoporosis
+    'http://hl7.org/fhir/sid/icd-10|O15.2' // ICD-10 code for post-menopausal osteoporosis
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|248536006', // SNOMED code for bone fracture
+    'http://hl7.org/fhir/sid/icd-10|S83.0' // ICD-10 code for bone fracture
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|44054006', // SNOMED code for post-menopausal osteoporosis
+    'http://hl7.org/fhir/sid/icd-10|O15.2' // ICD-10 code for post-menopausal osteoporosis
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|248536006', // SNOMED code for bone fracture
+    'http://hl7.org/fhir/sid/icd-10|S83.0' // ICD-10 code for bone fracture
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|44054006', // SNOMED code for post-menopausal osteoporosis
+    'http://hl7.org/fhir/sid/icd-10|O15.2' // ICD-10 code for post-menopausal osteoporosis
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|248536006', // SNOMED code for bone fracture
+    'http://hl7.org/fhir/sid/icd-10|S83.0' // ICD-10 code for bone fracture
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|44054006', // SNOMED code for post-menopausal osteoporosis
+    'http://hl7.org/fhir/sid/icd-10|O15.2' // ICD-10 code for post-menopausal osteoporosis
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|248536006', // SNOMED code for bone fracture
+    'http://hl7.org/fhir/sid/icd-10|S83.0' // ICD-10 code for bone fracture
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|44054006', // SNOMED code for post-menopausal osteoporosis
+    'http://hl7.org/fhir/sid/icd-10|O15.2' // ICD-10 code for post-menopausal osteoporosis
+  )
+  and MedR.subject.hasCondition(
+    'http://snomed.info/sct|248536006', // SNOMED code for bone fracture
+    'http://hl7.org/fhir/sid/icd-10|S83.0' // ICD-10 code for bone

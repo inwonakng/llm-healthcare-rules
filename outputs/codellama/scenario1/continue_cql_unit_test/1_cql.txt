@@ -1,0 +1,13 @@
+Sure, here is a set of CQL named expressions based on the previous conversation:
+
+1. `IsFemale`: `true` if the patient is female, `false` otherwise.
+2. `HasOsteoporosis`: `true` if the patient has osteoporosis, `false` otherwise.
+3. `HasBoneFracture`: `true` if the patient has a bone fracture, `false` otherwise.
+4. `FractureRelatedToOsteoporosis`: `true` if the patient's bone fracture is related to osteoporosis, `false` otherwise.
+5. `CanSelfAdministerDrug`: `true` if the patient can self-administer the drug, `false` otherwise.
+6. `HasCaregiver`: `true` if the patient has a caregiver, `false` otherwise.
+7. `CaregiverUnwillingOrUnableToAdministerDrug`: `true` if the patient's caregiver is unwilling or unable to administer the drug, `false` otherwise.
+8. `MedicareCoverage`: `true` if the patient is covered by Medicare, `false` otherwise.
+9. `InjectableOsteoporosisDrugCoverage`: `true` if the patient's injectable osteoporosis drug is covered by Medicare, `false` otherwise.
+
+These named expressions can be used to create a CQL library that captures the requirements for Medicare coverage of injectable osteoporosis drugs.

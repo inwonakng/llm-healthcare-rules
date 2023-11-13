@@ -1,0 +1,7 @@
+Sure, here is a set of N3 logic rules based on the previous conversation:
+
+1. If a patient is a woman with osteoporosis who meets the criteria for the Medicare home health benefit, and they have a bone fracture that a doctor certifies was related to post-menopausal osteoporosis, then Medicare will cover the cost of injectable osteoporosis drugs.
+2. If a patient is unable or unwilling to give themselves the injection or learn how to give themselves the drug by injection, then Medicare will cover the cost of a home health nurse or aide to provide the injection.
+3. If a patient meets the criteria for the Medicare home health benefit and has a bone fracture that a doctor certifies was related to post-menopausal osteoporosis, and they are unable or unwilling to give themselves the injection or learn how to give themselves the drug by injection, then Medicare will cover the cost of both the injectable osteoporosis drugs and the home health nurse or aide to provide the injection.
+
+These rules can be used to determine whether Medicare will cover the cost of injectable osteoporosis drugs and a home health nurse or aide to provide the injection for a patient who meets the criteria for the Medicare home health benefit and has a bone fracture that a doctor certifies was related to post-menopausal osteoporosis.
