@@ -1,4 +1,5 @@
 import requests
+from time import sleep
 from requests.packages import urllib3
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
@@ -44,5 +45,8 @@ def generate(
         model_output = response.json()['choices'][0]['message']['content']
     else:
         raise Exception(f"Response returned with code {response.status_code}, message: {response.content.decode()}")
-    
+
+    # does this fix the 502 bad gateway error?
+    sleep(1)
+
     return model_output
