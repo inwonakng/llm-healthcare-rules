@@ -1,0 +1,76 @@
+```solidity
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+import "remix_tests.sol";
+import "./YourContract.sol"; // Replace with the actual contract file name
+
+contract MedicareTransplantCoveragePolicyTest {
+    
+    // Test for Requirement 1: Medicare covers transplant drug therapy if Medicare helped pay for your organ transplant.
+    function testCoverageForTransplantTherapy() public {
+        YourContract contract = new YourContract();
+        Assert.equal(contract.coverageForTransplantTherapy(), true, "Coverage for transplant therapy should be true");
+    }
+
+    // Test for Requirement 2: You must have Part A at the time of the covered transplant.
+    function testHasPartAAtTransplantTime() public {
+        YourContract contract = new YourContract();
+        Assert.equal(contract.hasPartAAtTransplantTime(), true, "Should have Part A at transplant time");
+    }
+
+    // Test for Requirement 3: You must have Part B at the time you get immunosuppressive drugs.
+    function testHasPartBAtDrugTime() public {
+        YourContract contract = new YourContract();
+        Assert.equal(contract.hasPartBAtDrugTime(), true, "Should have Part B at drug time");
+    }
+
+    // Test for Requirement 4: Medicare drug coverage (Part D) covers immunosuppressive drugs if Part B doesn’t cover them.
+    function testPartDCoversImmunosuppressiveDrugs() public {
+        YourContract contract = new YourContract();
+        Assert.equal(contract.partDCoversImmunosuppressiveDrugs(), true, "Part D should cover immunosuppressive drugs if Part B doesn't cover them");
+    }
+
+    // Test for Requirement 5: If you have Original Medicare, you may join a Medicare drug plan to get Medicare drug coverage.
+    function testJoinMedicareDrugPlan() public {
+        YourContract contract = new YourContract();
+        Assert.equal(contract.joinMedicareDrugPlan(), true, "Should be able to join a Medicare drug plan if you have Original Medicare");
+    }
+
+    // Test for Requirement 6: If you only have Medicare because of End-Stage Renal Disease (ESRD), your Medicare coverage, including immunosuppressive drug coverage, ends 36 months after a successful kidney transplant.
+    function testEndOfMedicareCoverageAfterTransplant() public {
+        YourContract contract = new YourContract();
+        Assert.equal(contract.endOfMedicareCoverageAfterTransplant(), true, "Medicare coverage should end 36 months after a successful kidney transplant if due to ESRD");
+    }
+
+    // Test for Requirement 7: Medicare offers a benefit if you lose Part A coverage 36 months after a kidney transplant and don’t have certain types of other health coverage. This benefit only covers your immunosuppressive drugs and no other items or services.
+    function testMedicareBenefitAfterTransplantLoss() public {
+        YourContract contract = new YourContract();
+        Assert.equal(contract.medicareBenefitAfterTransplantLoss(), true, "Should offer a benefit if Part A coverage is lost 36 months after a kidney transplant and no other health coverage exists");
+    }
+
+    // Test for Requirement 8: The benefit isn’t a substitute for full health coverage.
+    function testBenefitNotSubstituteForFullCoverage() public {
+        YourContract contract = new YourContract();
+        Assert.equal(contract.benefitNotSubstituteForFullCoverage(), true, "The benefit should not be a substitute for full health coverage");
+    }
+
+    // Test for Requirement 9: If you qualify for the benefit, you can sign up any time after your Part A coverage ends by calling Social Security at 1-877-465-0355. TTY users can call 1-800-325-0788.
+    function testQualifyForBenefit() public {
+        YourContract contract = new YourContract();
+        Assert.equal(contract.qualifyForBenefit(), true, "Should be able to sign up for the benefit after Part A coverage ends if qualified");
+    }
+
+    // Test for Requirement 10: In 2023, the monthly premium for the immunosuppressive drug benefit is $97.10* and there is a $226 deductible if you sign up for the benefit.
+    function testMonthlyPremiumIn2023() public {
+        YourContract contract = new YourContract();
+        Assert.equal(contract.monthlyPremiumIn2023(), true, "Monthly premium and deductible should match the specified amounts for 2023");
+    }
+
+    // Test for Requirement 11: Once you’ve met the deductible, you’ll pay 20% of the Medicare-approved amount for your immunosuppressive drugs.
+    function testPayPercentageAfterDeductibleMet() public {
+        YourContract contract = new YourContract();
+        Assert.equal(contract.payPercentageAfterDeductibleMet(), true, "Should pay 20% of the Medicare-approved amount after meeting the deductible");
+    }
+}
+```

@@ -1,0 +1,30 @@
+```n3
+# Logic rules based on the insurance policy document and its summary
+
+# Rule 1: Medicare covers IVIG if the patient has a diagnosis of primary immune deficiency disease.
+{?patient a :Person ;
+         :hasDiagnosis :primaryImmuneDeficiencyDisease .
+} => {
+    ?patient :isCoveredForIVIG true .
+}.
+
+# Rule 2: The patient's doctor must determine that it is medically appropriate for the patient to receive IVIG at home.
+{?patient a :Person ;
+         :hasDoctor ?doctor .
+  ?doctor :determinesMedicalAppropriateness ?patient, :IVIG, :atHome .
+} => {
+    ?patient :isCoveredForIVIGAtHome true .
+}.
+
+# Rule 3: Medicare Part B covers the cost of the IVIG itself.
+{?patient :isCoveredForIVIG true .
+} => {
+    ?patient :isCoveredByMedicarePartB true .
+}.
+
+# Rule 4: Medicare Part B does not cover other items and services related to the patient receiving IVIG at home.
+{?patient :isCoveredForIVIGAtHome true .
+} => {
+    ?patient :isCoveredByMedicarePartB false .
+}.
+```

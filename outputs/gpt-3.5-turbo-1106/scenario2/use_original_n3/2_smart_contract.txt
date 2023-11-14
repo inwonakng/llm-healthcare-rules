@@ -1,0 +1,22 @@
+```solidity
+// SPDX-License-Identifier: MIT
+pragma solidity 0.8.0;
+
+contract MedicareInsurance {
+    
+    struct IVIGCoverage {
+        bool isCovered;
+        bool isMedicallyAppropriate;
+        bool isHomeDelivery;
+    }
+    
+    mapping(address => IVIGCoverage) public coverageStatus;
+
+    function requestIVIGCoverage(bool _isMedicallyAppropriate, bool _isHomeDelivery) external {
+        require(_isMedicallyAppropriate, "IVIG is not medically appropriate for you");
+        require(_isHomeDelivery, "IVIG must be delivered to your home");
+        
+        coverageStatus[msg.sender] = IVIGCoverage(true, _isMedicallyAppropriate, _isHomeDelivery);
+    }
+}
+```

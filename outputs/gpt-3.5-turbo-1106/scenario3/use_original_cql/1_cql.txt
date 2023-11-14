@@ -1,0 +1,47 @@
+```cql
+library MedicareCoveragePolicy
+
+using FHIR version '4.0.1'
+
+context Patient
+
+// Medicare covers transplant drug therapy if Medicare helped pay for your organ transplant.
+define coversTransplantDrugTherapy:
+  exists (Claim where category in "medical" and item.subDetail.code in "organ transplant") 
+
+// You must have Part A at the time of the covered transplant
+define hasPartAAtTransplantTime:
+  exists (Coverage where type in "Part A" and period.start <= @coversTransplantDrugTherapy.start)
+
+// You must have Part B at the time you get immunosuppressive drugs
+define hasPartBAtDrugTime:
+  exists (Coverage where type in "Part B" and period.start <= @coversImmunosuppressiveDrugs.start)
+
+// Medicare drug coverage (Part D) covers immunosuppressive drugs if Part B doesn’t cover them
+define partDCoversImmunosuppressiveDrugs:
+  exists (Coverage where type in "Part D" and period.start <= @coversImmunosuppressiveDrugs.start)
+
+// If you have Original Medicare, you may join a Medicare drug plan to get Medicare drug coverage
+define joinMedicareDrugPlan:
+  exists (Coverage where type in "Medicare drug plan")
+
+// If you only have Medicare because of End-Stage Renal Disease (ESRD), your Medicare coverage, including immunosuppressive drug coverage, ends 36 months after a successful kidney transplant
+define coverageEndsAfterKidneyTransplant:
+  exists (Condition where code in "End-Stage Renal Disease") and @coversTransplantDrugTherapy.start + 36 months >= today()
+
+// Medicare offers a benefit that may help you, if you lose Part A coverage 36 months after a kidney transplant, and you don’t have certain types of other health coverage
+define losePartABenefit:
+  exists (Benefit where type in "immunosuppressive drugs" and 
+  (not exists (Coverage where type in "group health plan" or type in "TRICARE" or type in "Medicaid" and period.start <= @losePartABenefit.start)))
+
+// In 2023, you’ll pay a monthly premium of $97.10* and $226 deductible if you sign up for the immunosuppressive drug benefit
+define monthlyPremium:
+  97.10
+
+define deductible:
+  226
+
+// Once you’ve met the deductible, you’ll pay 20% of the Medicare-approved amount for your immunosuppressive drugs
+define payPercentageAfterDeductible:
+  20
+```

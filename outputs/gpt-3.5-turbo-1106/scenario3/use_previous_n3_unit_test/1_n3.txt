@@ -1,0 +1,65 @@
+```
+# N3 Logic Rules for Medicare Insurance Policy
+
+# Rule 1
+{?person a :MedicareBeneficiary.
+ ?person :hadOrganTransplant true.
+ ?person :receivedMedicareCoverage true.
+} => {?person :eligibleForTransplantDrugTherapy true}.
+
+# Rule 2
+{?person a :MedicareBeneficiary.
+ ?person :hadOrganTransplant true.
+ ?person :hasPartA true.
+} => {?person :eligibleForTransplantDrugTherapy true}.
+
+# Rule 3
+{?person a :MedicareBeneficiary.
+ ?person :receivedImmunosuppressiveDrugs true.
+ ?person :hasPartB true.
+} => {?person :eligibleForTransplantDrugTherapy true}.
+
+# Rule 4
+{?person a :MedicareBeneficiary.
+ ?person :receivedImmunosuppressiveDrugs true.
+ ?person :hasPartB false.
+ ?person :hasPartD true.
+} => {?person :eligibleForTransplantDrugTherapy true}.
+
+# Rule 5
+{?person a :MedicareBeneficiary.
+ ?person :hasOriginalMedicare true.
+} => {?person :eligibleForMedicareDrugCoverage true}.
+
+# Rule 6
+{?person a :MedicareBeneficiary.
+ ?person :hasESRD true.
+ ?person :hadSuccessfulKidneyTransplant true.
+ ?person :monthsSinceTransplant 36.
+} => {?person :immunosuppressiveDrugCoverageEnds true}.
+
+# Rule 7
+{?person a :MedicareBeneficiary.
+ ?person :lostPartACoverage true.
+ ?person :monthsSinceKidneyTransplant 36.
+ ?person :hasCertainHealthCoverage false.
+} => {?person :eligibleForImmunosuppressiveDrugBenefit true}.
+
+# Rule 8
+{?person a :MedicareBeneficiary.
+ ?person :eligibleForImmunosuppressiveDrugBenefit true.
+} => {?person :canSignUpForBenefit true}.
+
+# Rule 9
+{?person a :MedicareBeneficiary.
+ ?person :signUpYear 2023.
+ ?person :monthlyPremium 97.10.
+ ?person :deductible 226.
+} => {?person :eligibleForImmunosuppressiveDrugBenefit true}.
+
+# Rule 10
+{?person a :MedicareBeneficiary.
+ ?person :metDeductible true.
+ ?person :paysPercentage 20.
+} => {?person :eligibleForImmunosuppressiveDrugBenefit true}.
+```

@@ -1,0 +1,25 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+contract MedicareInsurance {
+    
+    struct IVIGCoverage {
+        bool isCovered;
+        bool isMedicallyAppropriate;
+        bool isInHome;
+    }
+    
+    IVIGCoverage public ivigCoverage;
+
+    constructor() {
+        ivigCoverage.isCovered = true;
+    }
+
+    function checkCoverage(bool hasPrimaryImmuneDeficiency, bool isMedicallyAppropriate, bool isInHome) public view returns (bool) {
+        if (hasPrimaryImmuneDeficiency && isMedicallyAppropriate && isInHome) {
+            return ivigCoverage.isCovered;
+        } else {
+            return false;
+        }
+    }
+}

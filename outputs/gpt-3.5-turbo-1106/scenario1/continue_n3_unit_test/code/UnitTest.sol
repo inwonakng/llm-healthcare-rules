@@ -1,0 +1,44 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+import "./SmartContract.sol";
+import "./remix_tests.sol";
+
+
+contract InsurancePolicyTest {
+    // Define the struct to encapsulate individual's information
+    struct Individual {
+        bool meetsCriteriaForHomeHealthBenefit;
+        bool hasFractureRelatedToOsteoporosis;
+        bool unableToSelfAdminister;
+        bool familyOrCaregiversUnableOrUnwilling;
+    }
+
+    // Test to check if coverage is provided for women with osteoporosis who meet the criteria for the Medicare home health benefit
+    function testCoverageForOsteoporosis() public {
+        YourContract yourContract = new YourContract(); // Replace with the actual contract name
+        Individual memory individual = Individual(true, false, false, false);
+        Assert.equal(yourContract.checkCoverage(individual), true, "Coverage should be provided for women with osteoporosis meeting the criteria for the Medicare home health benefit");
+    }
+
+    // Test to check if coverage is provided if the individual has a bone fracture certified by a doctor to be related to post-menopausal osteoporosis
+    function testCoverageForFractureRelatedToOsteoporosis() public {
+        YourContract yourContract = new YourContract(); // Replace with the actual contract name
+        Individual memory individual = Individual(true, true, false, false);
+        Assert.equal(yourContract.checkCoverage(individual), true, "Coverage should be provided for individuals with a bone fracture related to post-menopausal osteoporosis");
+    }
+
+    // Test to check if coverage is provided when the individual's doctor certifies that they are unable to self-administer the injection
+    function testCoverageForUnableToSelfAdminister() public {
+        YourContract yourContract = new YourContract(); // Replace with the actual contract name
+        Individual memory individual = Individual(true, false, true, false);
+        Assert.equal(yourContract.checkCoverage(individual), true, "Coverage should be provided when the individual's doctor certifies that they are unable to self-administer the injection");
+    }
+
+    // Test to check if coverage is provided when the family or caregivers are unable or unwilling to administer the injection
+    function testCoverageForFamilyOrCaregivers() public {
+        YourContract yourContract = new YourContract(); // Replace with the actual contract name
+        Individual memory individual = Individual(true, false, false, true);
+        Assert.equal(yourContract.checkCoverage(individual), true, "Coverage should be provided when the family or caregivers are unable or unwilling to administer the injection");
+    }
+}

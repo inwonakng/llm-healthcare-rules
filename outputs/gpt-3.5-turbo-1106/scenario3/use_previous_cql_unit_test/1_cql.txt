@@ -1,0 +1,70 @@
+```cql
+library MedicareCoveragePolicy
+
+using FHIR version '4.0.1'
+
+// Named expressions for Medicare coverage policy
+
+// Medicare covers transplant drug therapy if Medicare helped pay for your organ transplant
+define coverage_for_transplant_drug_therapy:
+  exists([Condition: "Medicare helped pay for organ transplant"])
+
+// You must have Part A at the time of the covered transplant
+define has_Part_A_at_transplant_time:
+  exists([Condition: "Has Part A at time of covered transplant"])
+
+// You must have Part B at the time you get immunosuppressive drugs
+define has_Part_B_at_immunosuppressive_drugs_time:
+  exists([Condition: "Has Part B at time of immunosuppressive drugs"])
+
+// Medicare drug coverage (Part D) covers immunosuppressive drugs if Part B doesn’t cover them
+define Part_D_covers_immunosuppressive_drugs:
+  exists([Condition: "Part D covers immunosuppressive drugs if Part B doesn't cover them"])
+
+// If you have Original Medicare, you may join a Medicare drug plan to get Medicare drug coverage
+define join_Medicare_drug_plan:
+  exists([Condition: "Join Medicare drug plan for drug coverage"])
+
+// If you only have Medicare because of End-Stage Renal Disease (ESRD), your Medicare coverage, including immunosuppressive drug coverage, ends 36 months after a successful kidney transplant
+define Medicare_coverage_ends_after_36_months_post_kidney_transplant:
+  exists([Condition: "Medicare coverage ends 36 months after successful kidney transplant for ESRD"])
+
+// Medicare offers a benefit if you lose Part A coverage 36 months after a kidney transplant and don’t have certain types of other health coverage. This benefit only covers immunosuppressive drugs and no other items or services
+define Medicare_benefit_for_lost_Part_A_coverage:
+  exists([Condition: "Medicare benefit for lost Part A coverage after 36 months post kidney transplant"])
+
+// The benefit isn’t a substitute for full health coverage
+define benefit_not_substitute_for_full_coverage:
+  exists([Condition: "Benefit not substitute for full health coverage"])
+
+// In 2023, the monthly premium for the immunosuppressive drug benefit is $97.10* and there is a $226 deductible
+define monthly_premium_and_deductible_2023:
+  exists([Condition: "Monthly premium $97.10 and $226 deductible in 2023"])
+
+// Once the deductible is met, you’ll pay 20% of the Medicare-approved amount for your immunosuppressive drugs
+define payment_after_deductible_met:
+  exists([Condition: "Pay 20% after deductible is met"])
+
+// If you qualify for the benefit, you can sign up any time after your Part A coverage ends by calling Social Security at 1-877-465-0355
+define sign_up_for_benefit_after_Part_A_ends:
+  exists([Condition: "Sign up for benefit after Part A coverage ends by calling Social Security"])
+
+// TTY users can call 1-800-325-0788
+define TTY_users_call_number:
+  exists([Condition: "TTY users can call 1-800-325-0788"])
+
+// Final decision based on all conditions
+define final_decision:
+  coverage_for_transplant_drug_therapy and
+  has_Part_A_at_transplant_time and
+  has_Part_B_at_immunosuppressive_drugs and
+  Part_D_covers_immunosuppressive_drugs and
+  join_Medicare_drug_plan and
+  Medicare_coverage_ends_after_36_months_post_kidney_transplant and
+  Medicare_benefit_for_lost_Part_A_coverage and
+  benefit_not_substitute_for_full_coverage and
+  monthly_premium_and_deductible_2023 and
+  payment_after_deductible_met and
+  sign_up_for_benefit_after_Part_A_ends and
+  TTY_users_call_number
+```

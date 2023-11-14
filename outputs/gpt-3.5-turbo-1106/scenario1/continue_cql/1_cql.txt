@@ -1,0 +1,30 @@
+```cql
+library MedicareCoveragePolicy
+
+using FHIR version '4.0.1'
+
+// Named expressions
+define isWomanWithOsteoporosisAndMeetsCriteriaForHomeHealthBenefit:
+  // Expression for "Medicare covers injectable osteoporosis drugs for women with osteoporosis who meet the criteria for the Medicare home health benefit"
+  // Insert logic here to determine if the individual is a woman with osteoporosis and meets the criteria for the Medicare home health benefit
+
+define hasFractureRelatedToPostMenopausalOsteoporosis:
+  // Expression for "Coverage is provided if the individual has a bone fracture certified by a doctor to be related to post-menopausal osteoporosis"
+  // Insert logic here to determine if the individual has a bone fracture related to post-menopausal osteoporosis
+
+define unableToSelfAdministerOrLearnInjection:
+  // Expression for "The individual's doctor must certify that they are unable to self-administer the injection or learn how to do so"
+  // Insert logic here to determine if the individual is unable to self-administer the injection or learn how to do so
+
+define familyOrCaregiversUnableOrUnwillingToAdministerInjection:
+  // Expression for "If the individual's family or caregivers are unable or unwilling to administer the injection, Medicare will cover the home health nurse or aide to provide it"
+  // Insert logic here to determine if the family or caregivers are unable or unwilling to administer the injection
+
+// Final decision
+define MedicareCoversInjectableOsteoporosisDrugs:
+  // Decision logic based on the named expressions
+  isWomanWithOsteoporosisAndMeetsCriteriaForHomeHealthBenefit and
+  hasFractureRelatedToPostMenopausalOsteoporosis and
+  unableToSelfAdministerOrLearnInjection and
+  familyOrCaregiversUnableOrUnwillingToAdministerInjection
+```

@@ -1,0 +1,23 @@
+```
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix : <http://example.org/insurance-policy#> .
+
+:InjectableOsteoporosisDrugsCoverage a :CoverageOption ;
+    :requiresCondition1,
+    :requiresCondition2,
+    :requiresCondition3,
+    :requiresCondition4 .
+
+:requiresCondition1 a :Condition ;
+    :description "You’re a woman with osteoporosis who meets the criteria for the Medicare home health benefit." .
+
+:requiresCondition2 a :Condition ;
+    :description "You have a bone fracture that a doctor certifies was related to post-menopausal osteoporosis." .
+
+:requiresCondition3 a :Condition ;
+    :description "Your doctor certifies that you can’t give yourself the injection or learn how to give yourself the drug by injection." .
+
+:requiresCondition4 a :Condition ;
+    :description "Medicare will cover the home health nurse or aide to provide the injection if your family or caregivers are unable or unwilling to give you the drug by injection." .
+```

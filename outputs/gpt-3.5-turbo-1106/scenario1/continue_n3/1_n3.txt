@@ -1,0 +1,24 @@
+```n3
+# Logic rules for Medicare coverage of injectable osteoporosis drugs
+
+# Rule 1: Medicare covers injectable osteoporosis drugs for women with osteoporosis who meet the criteria for the Medicare home health benefit.
+{?patient a :Person.
+ ?patient :hasCondition :Osteoporosis.
+ ?patient :meetsCriteriaForBenefit :MedicareHomeHealthBenefit.} => {?patient :isCoveredForDrug :OsteoporosisDrug}.
+
+# Rule 2: Coverage is provided if the individual has a bone fracture certified by a doctor to be related to post-menopausal osteoporosis.
+{?patient a :Person.
+ ?patient :hasCondition :Osteoporosis.
+ ?patient :hasBoneFractureCertifiedBy ?doctor.
+ ?doctor :certifiesFractureRelatedTo :PostMenopausalOsteoporosis.} => {?patient :isCoveredForDrug :OsteoporosisDrug}.
+
+# Rule 3: The individual's doctor must certify that the patient is unable to self-administer the injection or learn how to do so.
+{?patient a :Person.
+ ?patient :hasDoctorCertification :UnableToSelfAdminister.} => {?patient :isCoveredForDrug :OsteoporosisDrug}.
+
+# Rule 4: If the patient's family or caregivers are unable or unwilling to administer the injection, Medicare will cover the home health nurse or aide to provide the injection.
+{?patient a :Person.
+ ?patient :isCoveredForDrug :OsteoporosisDrug.
+ ?patient :hasFamilyOrCaregivers ?familyOrCaregivers.
+ ?familyOrCaregivers :unwillingOrUnableToAdminister ?patient.} => {?patient :isCoveredBy :HomeHealthNurseOrAide}.
+```

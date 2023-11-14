@@ -1,0 +1,39 @@
+```cql
+library InsurancePolicyCoverage
+
+using FHIR version '4.0.1'
+
+-- Named expression for the condition of being a woman with osteoporosis
+define WomanWithOsteoporosis:
+  exists([Condition: "Osteoporosis"]) and
+  exists([Patient.gender.where(coding: "female")])
+
+-- Named expression for the condition of meeting the criteria for the Medicare home health benefit
+define MeetCriteriaForHomeHealthBenefit:
+  exists([Coverage: "Medicare"]) and
+  exists([ServiceRequest: "Home Health"])
+
+-- Named expression for the condition of having a bone fracture related to post-menopausal osteoporosis
+define BoneFractureRelatedToOsteoporosis:
+  exists([Condition: "Bone Fracture"]) and
+  exists([Condition.assertedDate]) and
+  DateDifferenceInYears([Condition.assertedDate], [Patient.birthDate]) > 50
+
+-- Named expression for the condition of being unable to self-administer the injection or learn how to do so
+define UnableToSelfAdministerInjection:
+  exists([ProcedureRequest: "Injection"]) and
+  not exists([ProcedureRequest.performer])
+
+-- Named expression for the condition of family or caregivers being unable or unwilling to provide the injection
+define FamilyOrCaregiversUnableOrUnwilling:
+  not exists([ProcedureRequest.performer.where(qualifier: "family")]) and
+  not exists([ProcedureRequest.performer.where(qualifier: "caregiver")])
+
+-- Named expression for the final decision of Medicare coverage for injectable osteoporosis drugs
+define MedicareCoverageForOsteoporosisDrugs:
+  WomanWithOsteoporosis and
+  MeetCriteriaForHomeHealthBenefit and
+  BoneFractureRelatedToOsteoporosis and
+  UnableToSelfAdministerInjection and
+  FamilyOrCaregiversUnableOrUnwilling
+```

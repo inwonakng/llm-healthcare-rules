@@ -1,0 +1,37 @@
+```cql
+library InsurancePolicyCoverage
+
+using FHIR version '4.0.1'
+
+// Named expression for coverage of IVIG for primary immune deficiency disease
+define coverageForPrimaryImmuneDeficiency:
+  exists(
+    [Condition: "Primary Immune Deficiency Disease"]
+      where (Condition.category.coding.exists(coding: Code '439401001', system: 'http://snomed.info/sct'))
+  )
+
+// Named expression for medical appropriateness of IVIG in home
+define ivigMedicallyAppropriateInHome: 
+  exists(
+    [ProcedureRequest: "Intravenous Immune Globulin"]
+      where (ProcedureRequest.intent = 'order' and ProcedureRequest.doNotPerform = false)
+  )
+
+// Named expression for Medicare Part B coverage of IVIG
+define medicarePartBCoversIVIG: 
+  exists(
+    [Coverage: "Medicare Part B"]
+      where (Coverage.type.coding.exists(coding: Code 'PartB', system: 'http://hl7.org/fhir/coverage-type'))
+  )
+
+// Named expression for non-coverage of other items and services related to IVIG at home
+define nonCoverageOfOtherItemsAndServices: 
+  not exists(
+    [Coverage: "Other Items and Services"]
+      where (Coverage.type.coding.exists(coding: Code 'OtherItemsAndServices', system: 'http://hl7.org/fhir/coverage-type'))
+  )
+
+// Final decision based on all conditions
+define finalDecision: 
+  coverageForPrimaryImmuneDeficiency and ivigMedicallyAppropriateInHome and medicarePartBCoversIVIG and nonCoverageOfOtherItemsAndServices
+```

@@ -1,0 +1,28 @@
+```solidity
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+contract OsteoporosisInsurance {
+
+    struct Patient {
+        bool isWoman;
+        bool hasOsteoporosis;
+        bool meetsHomeHealthCriteria;
+        bool hasFractureRelatedToOsteoporosis;
+        bool needsAssistanceWithInjection;
+    }
+
+    function isCovered(Patient memory patient, bool familyOrCaregiversUnableOrUnwilling) public pure returns (bool) {
+        if (patient.isWoman &&
+            patient.hasOsteoporosis &&
+            patient.meetsHomeHealthCriteria &&
+            patient.hasFractureRelatedToOsteoporosis &&
+            patient.needsAssistanceWithInjection &&
+            (familyOrCaregiversUnableOrUnwilling)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+}
+```

@@ -1,0 +1,22 @@
+```
+### N3 Logic Rules
+
+### Rule 1: Coverage Conditions
+If
+  - hasDiagnosis(?patient, "primary immune deficiency disease") and
+  - medicallyAppropriate(?doctor, ?patient, "IVIG in home")
+Then
+  MedicareCovers(?patient, "IVIG in home").
+
+### Rule 2: Coverage Details
+If
+  MedicareCovers(?patient, "IVIG in home")
+Then
+  PartBCovers(?patient, "IVIG").
+
+### Rule 3: Exclusion
+If
+  MedicareCovers(?patient, "IVIG in home")
+Then
+  not(PartBCovers(?patient, "other items and services related to IVIG in home")).
+```

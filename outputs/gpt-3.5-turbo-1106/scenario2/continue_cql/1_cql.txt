@@ -1,0 +1,33 @@
+```cql
+library MedicareCoveragePolicy
+
+using FHIR version '4.0.1'
+
+// Named expressions
+define hasPrimaryImmuneDeficiency:
+  // Condition: Diagnosis of primary immune deficiency disease
+  // This expression evaluates to true if the patient has a diagnosis of primary immune deficiency disease
+  // Insert logic here to determine if the patient has a diagnosis of primary immune deficiency disease
+
+define isIVIGMedicallyAppropriate:
+  // Condition: Medically appropriate for the patient to receive IVIG at home
+  // This expression evaluates to true if the patient's doctor determines that it is medically appropriate for the patient to receive IVIG at home
+  // Insert logic here to determine if IVIG is medically appropriate for the patient to receive at home
+
+define coversIVIGCost:
+  // Condition: Medicare Part B covers the cost of the IVIG itself
+  // This expression evaluates to true if Medicare Part B covers the cost of the IVIG itself
+  // Insert logic here to determine if Medicare Part B covers the cost of the IVIG itself
+
+define doesNotCoverOtherItemsAndServices:
+  // Condition: Medicare Part B does not cover other items and services related to the patient receiving IVIG at home
+  // This expression evaluates to true if Medicare Part B does not cover other items and services related to the patient receiving IVIG at home
+  // Insert logic here to determine if Medicare Part B does not cover other items and services related to the patient receiving IVIG at home
+
+// Final decision
+define IVIGCoverageDecision:
+  // Decision: Medicare coverage for IVIG
+  // This expression evaluates to true if all the conditions for Medicare coverage of IVIG are met
+  // Insert logic here to determine if Medicare covers IVIG based on the named expressions above
+  hasPrimaryImmuneDeficiency and isIVIGMedicallyAppropriate and coversIVIGCost and doesNotCoverOtherItemsAndServices
+```

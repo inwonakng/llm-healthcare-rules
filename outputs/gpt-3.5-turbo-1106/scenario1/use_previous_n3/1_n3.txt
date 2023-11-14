@@ -1,0 +1,40 @@
+```
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix : <http://example.org/insurance#> .
+
+:InjectableOsteoporosisDrugsCoverage a :InsurancePolicy ;
+    :applicableTo :WomanWithOsteoporosis ;
+    :requiresCriteriaForHomeHealthBenefit ;
+    :requiresBoneFractureRelatedToOsteoporosis ;
+    :requiresInabilityToSelfAdministerInjection ;
+    :providesHomeHealthNurseOrAideIfFamilyUnableOrUnwilling .
+
+:WomanWithOsteoporosis a :CriteriaForCoverage .
+
+:CriteriaForCoverage a :Condition ;
+    rdfs:subClassOf :InsuranceCondition .
+
+:requiresCriteriaForHomeHealthBenefit a :CoverageRequirement ;
+    rdfs:subClassOf :ConditionRequirement .
+
+:requiresBoneFractureRelatedToOsteoporosis a :CoverageRequirement ;
+    rdfs:subClassOf :ConditionRequirement .
+
+:requiresInabilityToSelfAdministerInjection a :CoverageRequirement ;
+    rdfs:subClassOf :ConditionRequirement .
+
+:providesHomeHealthNurseOrAideIfFamilyUnableOrUnwilling a :CoverageBenefit ;
+    rdfs:subClassOf :InsuranceBenefit .
+
+:CoverageBenefit a :InsuranceBenefit .
+
+:ConditionRequirement a :InsuranceRequirement .
+
+:InsurancePolicy a rdf:Resource .
+
+:Condition a rdf:Resource .
+
+:InsuranceBenefit a rdf:Resource .
+
+```

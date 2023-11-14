@@ -1,0 +1,42 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+contract MedicareCoverage {
+    struct Patient {
+        bool hasPrimaryImmuneDeficiencyDisease;
+        bool isMedicallyAppropriateForHomeIVIG;
+    }
+
+    struct Encounter {
+        bool isHomeEncounter;
+    }
+
+    struct Procedure {
+        bool isIVIGProcedure;
+    }
+
+    struct MedicationRequest {
+        bool isIVIGMedicationRequest;
+    }
+
+    struct Coverage {
+        bool isMedicarePartB;
+        bool isOtherItemsAndServicesCovered;
+    }
+
+    function isPrimaryImmuneDeficiencyDisease(bool hasPrimaryImmuneDeficiencyDisease) public pure returns (bool) {
+        return hasPrimaryImmuneDeficiencyDisease;
+    }
+
+    function isMedicallyAppropriateForHomeIVIG(bool isMedicallyAppropriate, bool hasPrimaryImmuneDeficiencyDisease) public pure returns (bool) {
+        return isMedicallyAppropriate && hasPrimaryImmuneDeficiencyDisease;
+    }
+
+    function isMedicarePartBCoveredIVIG(bool hasPrimaryImmuneDeficiencyDisease, bool isHomeEncounter, bool isIVIGProcedure, bool isMedicarePartB) public pure returns (bool) {
+        return hasPrimaryImmuneDeficiencyDisease && isHomeEncounter && isIVIGProcedure && isMedicarePartB;
+    }
+
+    function isMedicarePartBDoesNotCoverOtherServices(bool hasPrimaryImmuneDeficiencyDisease, bool isHomeEncounter, bool isIVIGProcedure, bool isOtherItemsAndServicesCovered) public pure returns (bool) {
+        return hasPrimaryImmuneDeficiencyDisease && isHomeEncounter && isIVIGProcedure && !isOtherItemsAndServicesCovered;
+    }
+}

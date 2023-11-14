@@ -1,0 +1,62 @@
+```solidity
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+import "remix_tests.sol";
+import "./YourContract.sol";
+
+contract MedicarePolicyTest {
+    YourContract contractInstance;
+
+    function beforeAll() public {
+        contractInstance = new YourContract();
+    }
+
+    function checkMedicareCoversTransplantDrugTherapy() public {
+        Assert.equal(contractInstance.isMedicareCoveringTransplantDrugTherapy(), true, "Medicare should cover transplant drug therapy");
+    }
+
+    function checkPartARequirementAtTimeOfTransplant() public {
+        Assert.equal(contractInstance.hasPartAAtTimeOfTransplant(), true, "Should have Part A at the time of the covered transplant");
+    }
+
+    function checkPartBRequirementAtTimeOfImmunosuppressiveDrugs() public {
+        Assert.equal(contractInstance.hasPartBAtTimeOfImmunosuppressiveDrugs(), true, "Should have Part B at the time of getting immunosuppressive drugs");
+    }
+
+    function checkMedicareDrugCoverageForImmunosuppressiveDrugs() public {
+        Assert.equal(contractInstance.hasMedicareDrugCoverageForImmunosuppressiveDrugs(), true, "Medicare drug coverage should cover immunosuppressive drugs if Part B doesn’t cover them");
+    }
+
+    function checkJoiningMedicareDrugPlanForDrugCoverage() public {
+        Assert.equal(contractInstance.canJoinMedicareDrugPlan(), true, "Should be able to join a Medicare drug plan to get Medicare drug coverage");
+    }
+
+    function checkMedicareCoverageEndsAfterSuccessfulKidneyTransplant() public {
+        Assert.equal(contractInstance.isMedicareCoverageEndingAfterKidneyTransplant(), true, "Medicare coverage, including immunosuppressive drug coverage, should end 36 months after a successful kidney transplant if only have Medicare because of End-Stage Renal Disease (ESRD)");
+    }
+
+    function checkBenefitForLosingPartAAfterKidneyTransplant() public {
+        Assert.equal(contractInstance.hasBenefitForLosingPartAAfterKidneyTransplant(), true, "Should have a benefit if lose Part A coverage 36 months after a kidney transplant and don’t have certain types of other health coverage");
+    }
+
+    function checkBenefitNotSubstituteForFullHealthCoverage() public {
+        Assert.equal(contractInstance.isBenefitNotSubstituteForFullHealthCoverage(), true, "The benefit isn’t a substitute for full health coverage");
+    }
+
+    function checkSigningUpForBenefitAfterLosingPartA() public {
+        Assert.equal(contractInstance.canSignUpForBenefitAfterLosingPartA(), true, "Should be able to sign up for the benefit any time after Part A coverage ends");
+    }
+
+    function checkMonthlyPremiumAndDeductibleFor2023() public {
+        (uint monthlyPremium, uint deductible) = contractInstance.getMonthlyPremiumAndDeductible(2023);
+        Assert.equal(monthlyPremium, 9710, "Monthly premium for 2023 should be $97.10");
+        Assert.equal(deductible, 226, "Deductible for 2023 should be $226");
+    }
+
+    function checkPaymentForImmunosuppressiveDrugsAfterDeductibleMet() public {
+        uint paymentPercentage = contractInstance.getPaymentPercentageAfterDeductibleMet();
+        Assert.equal(paymentPercentage, 20, "Should pay 20% of the Medicare-approved amount for immunosuppressive drugs after the deductible is met");
+    }
+}
+```

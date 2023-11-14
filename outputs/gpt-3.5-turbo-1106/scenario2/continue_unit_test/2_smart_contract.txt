@@ -1,0 +1,35 @@
+```solidity
+// SPDX-License-Identifier: MIT
+pragma solidity 0.8.0;
+
+contract MedicareCoverage {
+
+    struct IVIGRequest {
+        bool hasPrimaryImmuneDeficiency;
+        bool isMedicallyAppropriate;
+    }
+
+    function isIVIGCovered(bool _hasPrimaryImmuneDeficiency, bool _isMedicallyAppropriate) public pure returns (bool) {
+        if (_hasPrimaryImmuneDeficiency && _isMedicallyAppropriate) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    function isMedicallyAppropriate() public pure returns (bool) {
+        // Logic to determine if IVIG is medically appropriate
+        return true;
+    }
+
+    function isIVIGCovered() public pure returns (bool) {
+        // Logic to determine if Medicare Part B covers IVIG
+        return true;
+    }
+
+    function isOtherItemsAndServicesCovered() public pure returns (bool) {
+        // Logic to determine if Medicare Part B covers other items and services related to IVIG at home
+        return false;
+    }
+}
+```

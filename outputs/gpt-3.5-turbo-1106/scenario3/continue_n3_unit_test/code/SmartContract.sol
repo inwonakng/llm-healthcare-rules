@@ -1,0 +1,60 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+contract MedicareInsurance {
+
+    struct MedicareCoverage {
+        bool coversTransplantDrugTherapy;
+        bool helpedPayForOrganTransplant;
+        bool requiresPartAAtTransplant;
+        bool requiresPartBAtImmunosuppressiveDrugs;
+        bool coversImmunosuppressiveDrugsWithPartD;
+        bool partBDoesNotCoverImmunosuppressiveDrugs;
+        bool isOriginalMedicare;
+        bool isMedicareDueToESRD;
+        bool offersBenefitAfterCoverageLoss;
+    }
+
+    struct ImmunosuppressiveDrugBenefit {
+        uint monthlyPremium;
+        uint deductible;
+        bool isForYear2023;
+        bool hasDeductibleMet;
+    }
+
+    function checkTransplantDrugTherapyCoverage(MedicareCoverage memory coverage) public pure returns (bool) {
+        return coverage.coversTransplantDrugTherapy && coverage.helpedPayForOrganTransplant;
+    }
+
+    function checkPartARequirement(MedicareCoverage memory coverage) public pure returns (bool) {
+        return coverage.requiresPartAAtTransplant;
+    }
+
+    function checkPartBRequirement(MedicareCoverage memory coverage) public pure returns (bool) {
+        return coverage.requiresPartBAtImmunosuppressiveDrugs;
+    }
+
+    function checkImmunosuppressiveDrugCoverageWithPartD(MedicareCoverage memory coverage) public pure returns (bool) {
+        return coverage.coversImmunosuppressiveDrugsWithPartD && coverage.partBDoesNotCoverImmunosuppressiveDrugs;
+    }
+
+    function checkJoinMedicareDrugPlan(MedicareCoverage memory coverage) public pure returns (bool) {
+        return coverage.isOriginalMedicare;
+    }
+
+    function checkMedicareCoverageEndsAfter36Months(MedicareCoverage memory coverage) public pure returns (bool) {
+        return coverage.isMedicareDueToESRD;
+    }
+
+    function checkReceiveImmunosuppressiveDrugBenefit(MedicareCoverage memory coverage) public pure returns (bool) {
+        return coverage.offersBenefitAfterCoverageLoss;
+    }
+
+    function checkImmunosuppressiveDrugBenefitDetails(ImmunosuppressiveDrugBenefit memory benefit) public pure returns (bool) {
+        return benefit.isForYear2023;
+    }
+
+    function checkPay20PercentForImmunosuppressiveDrugs(ImmunosuppressiveDrugBenefit memory benefit) public pure returns (bool) {
+        return benefit.hasDeductibleMet;
+    }
+}

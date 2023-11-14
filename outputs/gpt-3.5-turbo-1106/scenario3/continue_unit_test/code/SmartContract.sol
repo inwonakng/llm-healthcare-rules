@@ -1,0 +1,60 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+contract MedicareCoverage {
+    struct DrugCoverage {
+        bool coversTransplantDrugTherapy;
+        bool mustHavePartAAtTimeOfCoveredTransplant;
+        bool mustHavePartBAtTimeOfImmunosuppressiveDrugs;
+        bool medicareDrugCoverageCoversImmunosuppressiveDrugs;
+        bool coversImmunosuppressiveDrugsForESRDPatients;
+        bool benefitForLosingPartAAfterKidneyTransplant;
+    }
+
+    struct PremiumAndDeductible {
+        uint monthlyPremium;
+        uint deductible;
+    }
+
+    DrugCoverage public drugCoverage;
+    mapping(uint => PremiumAndDeductible) public monthlyPremiumAndDeductible;
+    uint public payPercentageForImmunosuppressiveDrugs;
+
+    constructor() {
+        drugCoverage = DrugCoverage(true, true, true, true, true, true);
+        monthlyPremiumAndDeductible[2023] = PremiumAndDeductible(9710, 226);
+        payPercentageForImmunosuppressiveDrugs = 20;
+    }
+
+    function coversTransplantDrugTherapy() public view returns (bool) {
+        return drugCoverage.coversTransplantDrugTherapy;
+    }
+
+    function mustHavePartAAtTimeOfCoveredTransplant() public view returns (bool) {
+        return drugCoverage.mustHavePartAAtTimeOfCoveredTransplant;
+    }
+
+    function mustHavePartBAtTimeOfImmunosuppressiveDrugs() public view returns (bool) {
+        return drugCoverage.mustHavePartBAtTimeOfImmunosuppressiveDrugs;
+    }
+
+    function medicareDrugCoverageCoversImmunosuppressiveDrugs() public view returns (bool) {
+        return drugCoverage.medicareDrugCoverageCoversImmunosuppressiveDrugs;
+    }
+
+    function coversImmunosuppressiveDrugsForESRDPatients() public view returns (bool) {
+        return drugCoverage.coversImmunosuppressiveDrugsForESRDPatients;
+    }
+
+    function benefitForLosingPartAAfterKidneyTransplant() public view returns (bool) {
+        return drugCoverage.benefitForLosingPartAAfterKidneyTransplant;
+    }
+
+    function getMonthlyPremiumAndDeductible(uint year) public view returns (uint, uint) {
+        return (monthlyPremiumAndDeductible[year].monthlyPremium, monthlyPremiumAndDeductible[year].deductible);
+    }
+
+    function getPayPercentageForImmunosuppressiveDrugs() public view returns (uint) {
+        return payPercentageForImmunosuppressiveDrugs;
+    }
+}

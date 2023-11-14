@@ -1,0 +1,35 @@
+```
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix ex: <http://example.org/> .
+@prefix policy: <http://example.org/policy/> .
+@prefix condition: <http://example.org/condition/> .
+@prefix decision: <http://example.org/decision/> .
+
+# IVIG Coverage Conditions
+condition:diagnosis a rdf:Statement ;
+    rdf:subject ex:patient ;
+    rdf:predicate ex:hasDiagnosis ;
+    rdf:object ex:primaryImmuneDeficiencyDisease .
+
+condition:medicallyAppropriate a rdf:Statement ;
+    rdf:subject ex:doctor ;
+    rdf:predicate ex:determines ;
+    rdf:object ex:IVIGInHomeMedicallyAppropriate .
+
+condition:partBCoversIVIG a rdf:Statement ;
+    rdf:subject ex:MedicarePartB ;
+    rdf:predicate ex:covers ;
+    rdf:object ex:IVIG .
+
+condition:partBDoesNotCoverOthers a rdf:Statement ;
+    rdf:subject ex:MedicarePartB ;
+    rdf:predicate ex:doesNotCover ;
+    rdf:object ex:otherItemsAndServicesRelatedToIVIGAtHome .
+
+# IVIG Coverage Decision
+decision:IVIGCoverage a rdf:Statement ;
+    rdf:subject ex:Medicare ;
+    rdf:predicate ex:covers ;
+    rdf:object ex:IVIG .
+```

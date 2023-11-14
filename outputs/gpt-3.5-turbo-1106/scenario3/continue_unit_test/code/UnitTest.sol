@@ -1,0 +1,49 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+import "./SmartContract.sol";
+import "./remix_tests.sol";
+
+
+contract MedicareCoverageTest {
+    MedicareCoverage medCoverage;
+
+    function beforeEach() public {
+        medCoverage = new MedicareCoverage();
+    }
+
+    function testMedicareCoversTransplantDrugTherapy() public {
+        Assert.equal(medCoverage.coversTransplantDrugTherapy(), true, "Medicare should cover transplant drug therapy");
+    }
+
+    function testMustHavePartAAtTimeOfCoveredTransplant() public {
+        Assert.equal(medCoverage.mustHavePartAAtTimeOfCoveredTransplant(), true, "Must have Part A at the time of the covered transplant");
+    }
+
+    function testMustHavePartBAtTimeOfImmunosuppressiveDrugs() public {
+        Assert.equal(medCoverage.mustHavePartBAtTimeOfImmunosuppressiveDrugs(), true, "Must have Part B at the time of getting immunosuppressive drugs");
+    }
+
+    function testMedicareDrugCoverageCoversImmunosuppressiveDrugs() public {
+        Assert.equal(medCoverage.medicareDrugCoverageCoversImmunosuppressiveDrugs(), true, "Medicare drug coverage should cover immunosuppressive drugs if Part B doesn’t cover them");
+    }
+
+    function testMedicareCoversImmunosuppressiveDrugsForESRDPatients() public {
+        Assert.equal(medCoverage.coversImmunosuppressiveDrugsForESRDPatients(), true, "Medicare should cover immunosuppressive drugs for ESRD patients for 36 months after a successful kidney transplant");
+    }
+
+    function testBenefitForLosingPartAAfterKidneyTransplant() public {
+        Assert.equal(medCoverage.benefitForLosingPartAAfterKidneyTransplant(), true, "Benefit should be offered if Part A coverage is lost 36 months after a kidney transplant and certain types of other health coverage are not available");
+    }
+
+    function testMonthlyPremiumAndDeductibleIn2023() public {
+        (uint monthlyPremium, uint deductible) = medCoverage.getMonthlyPremiumAndDeductible(2023);
+        Assert.equal(monthlyPremium, 9710, "Monthly premium for 2023 should be $97.10");
+        Assert.equal(deductible, 226, "Deductible for 2023 should be $226");
+    }
+
+    function testPayPercentageForImmunosuppressiveDrugs() public {
+        uint percentage = medCoverage.getPayPercentageForImmunosuppressiveDrugs();
+        Assert.equal(percentage, 20, "Percentage to pay for immunosuppressive drugs should be 20%");
+    }
+}

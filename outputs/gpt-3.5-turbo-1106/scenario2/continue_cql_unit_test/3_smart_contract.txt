@@ -1,0 +1,37 @@
+```solidity
+// SPDX-License-Identifier: MIT
+pragma solidity 0.8.0;
+
+contract MedicareCoveragePolicy {
+    
+    struct Patient {
+        bool hasPrimaryImmuneDeficiency;
+        bool isIVIGMedicallyNecessary;
+    }
+    
+    // Set the Medicare coverage conditions
+    bool public coversIVIG = true;
+    bool public doesNotCoverOtherServices = true;
+
+    // Set the patient's conditions
+    mapping(address => Patient) public patients;
+
+    // Constructor
+    constructor() {
+        // Initialize the contract with default patient conditions
+        patients[msg.sender] = Patient(true, true);
+    }
+
+    // Update patient's conditions
+    function updatePatientConditions(bool _hasPrimaryImmuneDeficiency, bool _isIVIGMedicallyNecessary) public {
+        patients[msg.sender].hasPrimaryImmuneDeficiency = _hasPrimaryImmuneDeficiency;
+        patients[msg.sender].isIVIGMedicallyNecessary = _isIVIGMedicallyNecessary;
+    }
+
+    // Check if the patient meets the Medicare coverage policy
+    function checkCoveragePolicy() public view returns (bool) {
+        Patient memory patient = patients[msg.sender];
+        return (coversIVIG && doesNotCoverOtherServices && patient.hasPrimaryImmuneDeficiency && patient.isIVIGMedicallyNecessary);
+    }
+}
+```

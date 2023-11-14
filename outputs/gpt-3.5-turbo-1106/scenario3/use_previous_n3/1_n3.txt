@@ -1,0 +1,38 @@
+```
+# N3 Logic Rules for Medicare Insurance Policy
+
+# Rule 1: Medicare covers transplant drug therapy if Medicare helped pay for your organ transplant.
+transplantDrugTherapyCovered :- medicareHelpedPayForOrganTransplant.
+
+# Rule 2: You must have Part A at the time of the covered transplant.
+partAAtTimeOfTransplant :- coveredTransplant.
+
+# Rule 3: You must have Part B at the time you get immunosuppressive drugs.
+partBAtTimeOfImmunosuppressiveDrugs :- getImmunosuppressiveDrugs.
+
+# Rule 4: Medicare drug coverage (Part D) covers immunosuppressive drugs if Part B doesn’t cover them.
+partDCoversImmunosuppressiveDrugs :- not partBCoversImmunosuppressiveDrugs.
+
+# Rule 5: If you have Original Medicare, you may join a Medicare drug plan to get Medicare drug coverage.
+joinMedicareDrugPlan :- originalMedicare.
+
+# Rule 6: If you only have Medicare because of End-Stage Renal Disease (ESRD), your Medicare coverage, including immunosuppressive drug coverage, ends 36 months after a successful kidney transplant.
+coverageEndsAfter36Months :- onlyMedicareDueToESRD, successfulKidneyTransplant.
+
+# Rule 7: Medicare offers a benefit if you lose Part A coverage 36 months after a kidney transplant and don’t have certain types of other health coverage that covers immunosuppressive drugs.
+benefitOffered :- losePartACoverageAfter36Months, notHaveCertainHealthCoverage.
+
+# Rule 8: This benefit only covers your immunosuppressive drugs and no other items or services. It isn’t a substitute for full health coverage.
+benefitCoversOnlyImmunosuppressiveDrugs :- benefitOffered.
+
+# Rule 9: If you qualify for the benefit, you can sign up any time after your Part A coverage ends by calling Social Security at 1-877-465-0355. TTY users can call 1-800-325-0788.
+qualifyForBenefit :- benefitOffered.
+
+# Rule 10: In 2023, the monthly premium for the immunosuppressive drug benefit is $97.10* and there is a $226 deductible.
+monthlyPremiumIn2023($97.10) :- immunosuppressiveDrugBenefit.
+deductible($226) :- immunosuppressiveDrugBenefit.
+
+# Rule 11: Once the deductible is met, you'll pay 20% of the Medicare-approved amount for your immunosuppressive drugs.
+pay20PercentAfterDeductibleMet :- deductibleMet.
+
+```

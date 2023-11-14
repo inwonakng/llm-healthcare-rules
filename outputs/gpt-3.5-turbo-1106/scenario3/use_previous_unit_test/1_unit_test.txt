@@ -1,0 +1,64 @@
+```solidity
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+import "remix_tests.sol";
+import "./YourContract.sol";
+
+contract MedicareInsuranceTest {
+    // Test to check if Medicare covers transplant drug therapy if Medicare helped pay for the organ transplant
+    function testMedicareCoversTransplantDrugTherapy() public {
+        bool isCovered = YourContract.isTransplantDrugTherapyCovered(true);
+        Assert.equal(isCovered, true, "Medicare should cover transplant drug therapy if it helped pay for the organ transplant");
+    }
+
+    // Test to check if the patient must have Part A at the time of the covered transplant
+    function testPatientMustHavePartAAtTimeOfTransplant() public {
+        bool hasPartA = YourContract.hasPartAAtTransplant(true);
+        Assert.equal(hasPartA, true, "Patient must have Part A at the time of the covered transplant");
+    }
+
+    // Test to check if the patient must have Part B at the time of getting immunosuppressive drugs
+    function testPatientMustHavePartBAtTimeOfImmunosuppressiveDrugs() public {
+        bool hasPartB = YourContract.hasPartBAtImmunosuppressiveDrugs(true);
+        Assert.equal(hasPartB, true, "Patient must have Part B at the time of getting immunosuppressive drugs");
+    }
+
+    // Test to check if Medicare drug coverage (Part D) covers immunosuppressive drugs if Part B doesn’t cover them
+    function testMedicareDrugCoverageCoversImmunosuppressiveDrugs() public {
+        bool isCovered = YourContract.isMedicareDrugCoverage(true, false);
+        Assert.equal(isCovered, true, "Medicare drug coverage should cover immunosuppressive drugs if Part B doesn’t cover them");
+    }
+
+    // Test to check if a patient with Original Medicare can join a Medicare drug plan to get Medicare drug coverage
+    function testPatientCanJoinMedicareDrugPlan() public {
+        bool canJoin = YourContract.canJoinMedicareDrugPlan(true);
+        Assert.equal(canJoin, true, "Patient with Original Medicare should be able to join a Medicare drug plan to get Medicare drug coverage");
+    }
+
+    // Test to check if Medicare coverage, including immunosuppressive drug coverage, ends 36 months after a successful kidney transplant for ESRD patients
+    function testMedicareCoverageEndsAfter36MonthsForESRD() public {
+        bool coverageEnds = YourContract.doesMedicareCoverageEnd(true, true);
+        Assert.equal(coverageEnds, true, "Medicare coverage, including immunosuppressive drug coverage, should end 36 months after a successful kidney transplant for ESRD patients");
+    }
+
+    // Test to check if Medicare offers a benefit if the patient loses Part A coverage 36 months after a kidney transplant and doesn’t have certain types of other health coverage
+    function testMedicareOffersBenefitForLosingPartAAfter36Months() public {
+        bool offersBenefit = YourContract.doesMedicareOfferBenefit(true, false);
+        Assert.equal(offersBenefit, true, "Medicare should offer a benefit if the patient loses Part A coverage 36 months after a kidney transplant and doesn’t have certain types of other health coverage");
+    }
+
+    // Test to check if the monthly premium and deductible for the immunosuppressive drug benefit in 2023 are as expected
+    function testMonthlyPremiumAndDeductibleIn2023() public {
+        (uint256 monthlyPremium, uint256 deductible) = YourContract.getPremiumAndDeductible(2023);
+        Assert.equal(monthlyPremium, 9710, "Monthly premium for 2023 should be $97.10");
+        Assert.equal(deductible, 226, "Deductible for 2023 should be $226");
+    }
+
+    // Test to check if the patient pays 20% of the Medicare-approved amount for immunosuppressive drugs after meeting the deductible
+    function testPatientPays20PercentAfterDeductible() public {
+        uint256 amountToPay = YourContract.calculatePaymentAfterDeductible(500); // Assuming the deductible is already met
+        Assert.equal(amountToPay, 100, "Patient should pay 20% of the Medicare-approved amount after meeting the deductible");
+    }
+}
+```

@@ -1,0 +1,52 @@
+```cql
+library MedicareTransplantCoveragePolicy
+
+using FHIR version '4.0.1'
+
+// Requirement 1: Medicare covers transplant drug therapy if Medicare helped pay for your organ transplant.
+define coverageForTransplantTherapy:
+  exists([Condition: "organ transplant"]) and exists([Coverage: "Medicare"])
+
+// Requirement 2: You must have Part A at the time of the covered transplant.
+define hasPartAAtTransplantTime:
+  exists([Coverage: "Part A"]) during "transplant"
+
+// Requirement 3: You must have Part B at the time you get immunosuppressive drugs.
+define hasPartBAtDrugTime:
+  exists([Coverage: "Part B"]) during "immunosuppressive drugs"
+
+// Requirement 4: Medicare drug coverage (Part D) covers immunosuppressive drugs if Part B doesn’t cover them.
+define partDCoversImmunosuppressiveDrugs:
+  not exists([Coverage: "Part B"]) implies exists([Coverage: "Part D"])
+
+// Requirement 5: If you have Original Medicare, you may join a Medicare drug plan to get Medicare drug coverage.
+define joinMedicareDrugPlan:
+  exists([Coverage: "Original Medicare"]) implies exists([Plan: "Medicare drug plan"])
+
+// Requirement 6: If you only have Medicare because of End-Stage Renal Disease (ESRD), your Medicare coverage, including immunosuppressive drug coverage, ends 36 months after a successful kidney transplant.
+define endOfCoverageAfterKidneyTransplant:
+  exists([Condition: "ESRD"]) and exists([Coverage: "Medicare"]) and exists([Procedure: "successful kidney transplant"]) during 36 months
+
+// Requirement 7: Medicare offers a benefit if you lose Part A coverage 36 months after a kidney transplant and don’t have certain types of other health coverage. This benefit only covers your immunosuppressive drugs and no other items or services.
+define medicareBenefitAfterCoverageLoss:
+  not exists([Coverage: "Part A"]) during 36 months and not exists([Coverage: "other health coverage"]) implies exists([Benefit: "immunosuppressive drugs"])
+
+// Requirement 8: The benefit isn’t a substitute for full health coverage.
+define benefitNotSubstituteForFullCoverage:
+  not exists([Benefit: "immunosuppressive drugs"]) implies not exists([Coverage: "full health coverage"])
+
+// Requirement 9: If you qualify for the benefit, you can sign up any time after your Part A coverage ends by calling Social Security at 1-877-465-0355. TTY users can call 1-800-325-0788.
+define qualifyForBenefit:
+  exists([Benefit: "immunosuppressive drugs"]) implies exists([Contact: "Social Security"])
+
+// Requirement 10: In 2023, the monthly premium for the immunosuppressive drug benefit is $97.10* and there is a $226 deductible.
+define monthlyPremium:
+  exists([Benefit: "immunosuppressive drugs"]) and exists([Cost: "monthly premium"]) with value 97.10
+define deductibleAmount:
+  exists([Benefit: "immunosuppressive drugs"]) and exists([Cost: "deductible"]) with value 226
+
+// Requirement 11: Once the deductible is met, you’ll pay 20% of the Medicare-approved amount for your immunosuppressive drugs.
+define paymentAfterDeductible:
+  exists([Benefit: "immunosuppressive drugs"]) and exists([Cost: "20% of Medicare-approved amount"]) after [Cost: "deductible"]
+
+```

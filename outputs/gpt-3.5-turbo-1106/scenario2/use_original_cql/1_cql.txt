@@ -1,0 +1,20 @@
+```cql
+library InsurancePolicyDocument
+
+using FHIR version '4.0.1'
+
+-- Named expression for coverage of IVIG in home
+context Patient
+define "IVIGCoverageInHome":
+  exists(
+    [Condition: "http://snomed.info/sct" where code = '27900007' and subject = Patient]
+    such that
+    exists(
+      [Encounter: "http://hl7.org/fhir/StructureDefinition/encounter" where
+        period.start <= Today() and period.end >= Today() and
+        location.where(location = "http://terminology.hl7.org/CodeSystem/v3-RoleCode" and code = 'H') and
+        reasonReference = Condition
+      ]
+    )
+  )
+```

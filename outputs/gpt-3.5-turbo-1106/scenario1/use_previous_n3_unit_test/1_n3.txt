@@ -1,0 +1,35 @@
+```
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix ex: <http://example.com/insurance#> .
+
+ex:MedicareCoverage rdf:type rdf:Property ;
+    rdfs:label "Medicare Coverage" ;
+    rdfs:comment "Specifies the conditions for Medicare coverage of injectable osteoporosis drugs" .
+
+ex:womanWithOsteoporosis rdf:type rdf:Class ;
+    rdfs:label "Woman with Osteoporosis" ;
+    rdfs:comment "Represents a woman diagnosed with osteoporosis" .
+
+ex:meetsCriteriaForHomeHealthBenefit rdf:type rdf:Property ;
+    rdfs:label "Meets Criteria for Home Health Benefit" ;
+    rdfs:comment "Indicates whether the individual meets the criteria for the Medicare home health benefit" .
+
+ex:boneFractureRelatedToOsteoporosis rdf:type rdf:Property ;
+    rdfs:label "Bone Fracture Related to Osteoporosis" ;
+    rdfs:comment "Specifies that the bone fracture is related to post-menopausal osteoporosis" .
+
+ex:doctorCertifiesInabilityToSelfAdminister rdf:type rdf:Property ;
+    rdfs:label "Doctor Certifies Inability to Self-Administer" ;
+    rdfs:comment "Indicates that the doctor certifies the individual's inability to self-administer the injection or learn how to do so" .
+
+ex:familyOrCaregiversUnableOrUnwilling rdf:type rdf:Property ;
+    rdfs:label "Family or Caregivers Unable or Unwilling" ;
+    rdfs:comment "Specifies that the family or caregivers are unable or unwilling to administer the injection" .
+
+ex:homeHealthNurseOrAideProvidesInjection rdf:type rdf:Property ;
+    rdfs:label "Home Health Nurse or Aide Provides Injection" ;
+    rdfs:comment "Specifies that the home health nurse or aide will provide the injection" .
+
+ex:MedicareCoverage ex:womanWithOsteoporosis ex:meetsCriteriaForHomeHealthBenefit ex:boneFractureRelatedToOsteoporosis ex:doctorCertifiesInabilityToSelfAdminister ex:familyOrCaregiversUnableOrUnwilling ex:homeHealthNurseOrAideProvidesInjection.
+```

@@ -1,0 +1,35 @@
+```solidity
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+import "remix_tests.sol";
+import "./YourContract.sol";
+
+contract MedicareCoverageTest {
+    YourContract yourContract;
+
+    function beforeAll() public {
+        yourContract = new YourContract();
+    }
+
+    function checkPrimaryImmuneDeficiencyDisease() public {
+        bool hasPrimaryImmuneDeficiencyDisease = true;
+        Assert.equal(yourContract.isPrimaryImmuneDeficiencyDisease(hasPrimaryImmuneDeficiencyDisease), true, "Should return true for primary immune deficiency disease");
+    }
+
+    function checkMedicallyAppropriateForHomeIVIG() public {
+        bool isMedicallyAppropriate = true;
+        Assert.equal(yourContract.isMedicallyAppropriateForHomeIVIG(isMedicallyAppropriate), true, "Should return true for medically appropriate for home IVIG");
+    }
+
+    function checkMedicarePartBCoversIVIG() public {
+        bool isCovered = yourContract.isMedicarePartBCoveredIVIG();
+        Assert.equal(isCovered, true, "Should return true for Medicare Part B covering IVIG");
+    }
+
+    function checkMedicarePartBDoesNotCoverOtherServices() public {
+        bool isCovered = yourContract.isMedicarePartBDoesNotCoverOtherServices();
+        Assert.equal(isCovered, true, "Should return true for Medicare Part B not covering other services related to IVIG at home");
+    }
+}
+```

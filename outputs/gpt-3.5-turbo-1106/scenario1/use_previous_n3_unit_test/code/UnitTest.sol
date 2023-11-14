@@ -1,0 +1,36 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+import "./SmartContract.sol";
+import "./remix_tests.sol";
+
+
+contract MedicarePolicyTest {
+    // Test for condition 1
+    function testMeetsCriteriaForHomeHealthBenefit() public {
+        YourContract contractInstance = new YourContract();
+        bool meetsCriteria = contractInstance.meetsCriteriaForHomeHealthBenefit("osteoporosis", "female");
+        Assert.equal(meetsCriteria, true, "Should meet criteria for home health benefit");
+    }
+
+    // Test for condition 2
+    function testHasRelatedBoneFracture() public {
+        YourContract contractInstance = new YourContract();
+        bool hasRelatedFracture = contractInstance.hasRelatedBoneFracture("post-menopausal osteoporosis");
+        Assert.equal(hasRelatedFracture, true, "Should have a bone fracture related to post-menopausal osteoporosis");
+    }
+
+    // Test for condition 3
+    function testUnableToSelfAdminister() public {
+        YourContract contractInstance = new YourContract();
+        bool unableToAdminister = contractInstance.unableToSelfAdminister("osteoporosis");
+        Assert.equal(unableToAdminister, true, "Should be unable to self-administer the injection");
+    }
+
+    // Test for condition 4
+    function testCoverHomeHealthNurseIfFamilyUnableOrUnwilling() public {
+        YourContract contractInstance = new YourContract();
+        bool coverHomeHealthNurse = contractInstance.coverHomeHealthNurse("osteoporosis", "female", true);
+        Assert.equal(coverHomeHealthNurse, true, "Should cover home health nurse if family is unable or unwilling to administer the injection");
+    }
+}

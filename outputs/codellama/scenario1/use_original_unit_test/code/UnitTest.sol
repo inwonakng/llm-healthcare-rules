@@ -1,0 +1,152 @@
+pragma solidity ^0.8.0;
+
+import "./SmartContract.sol";
+import "./remix_tests.sol";
+
+
+contract OsteoporosisDrugCoverageTest {
+    // define the structs to encapsulate necessary parameters
+    struct Patient {
+        address patientAddress;
+        string name;
+        uint age;
+        bool isFemale;
+        bool hasOsteoporosis;
+        bool hasBoneFracture;
+        bool canGiveInjection;
+    }
+
+    struct Doctor {
+        address doctorAddress;
+        string name;
+        bool isCertified;
+    }
+
+    struct HomeHealthCare {
+        address caregiverAddress;
+        string name;
+        bool isAbleToGiveInjection;
+    }
+
+    // define the variables to store the patients, doctors, and home health care providers
+    Patient[] public patients;
+    Doctor[] public doctors;
+    HomeHealthCare[] public homeHealthCares;
+
+    // define the function to add a new patient
+    function addPatient(address patientAddress, string memory name, uint age, bool isFemale, bool hasOsteoporosis, bool hasBoneFracture, bool canGiveInjection) public {
+        patients.push(Patient(patientAddress, name, age, isFemale, hasOsteoporosis, hasBoneFracture, canGiveInjection));
+    }
+
+    // define the function to add a new doctor
+    function addDoctor(address doctorAddress, string memory name, bool isCertified) public {
+        doctors.push(Doctor(doctorAddress, name, isCertified));
+    }
+
+    // define the function to add a new home health care provider
+    function addHomeHealthCare(address caregiverAddress, string memory name, bool isAbleToGiveInjection) public {
+        homeHealthCares.push(HomeHealthCare(caregiverAddress, name, isAbleToGiveInjection));
+    }
+
+    // define the function to check if a patient is covered for injectable osteoporosis drugs
+    function isCovered(Patient memory patient) public view returns (bool) {
+        // check if the patient is a woman with osteoporosis who meets the criteria for the Medicare home health benefit
+        if (patient.isFemale && patient.hasOsteoporosis && patient.hasBoneFracture && !patient.canGiveInjection) {
+            // check if the patient has a doctor who is certified to administer the injection
+            for (uint i = 0; i < doctors.length; i++) {
+                if (doctors[i].isCertified) {
+                    // check if the patient has a home health care provider who is able to give the injection
+                    for (uint j = 0; j < homeHealthCares.length; j++) {
+                        if (homeHealthCares[j].isAbleToGiveInjection) {
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+        return false;
+    }
+}
+
+// define the unit tests for the OsteoporosisDrugCoverage contract
+contract OsteoporosisDrugCoverageTest {
+    // define the variables to store the patients, doctors, and home health care providers
+    Patient[] public patients;
+    Doctor[] public doctors;
+    HomeHealthCare[] public homeHealthCares;
+
+    // define the function to add a new patient
+    function addPatient(address patientAddress, string memory name, uint age, bool isFemale, bool hasOsteoporosis, bool hasBoneFracture, bool canGiveInjection) public {
+        patients.push(Patient(patientAddress, name, age, isFemale, hasOsteoporosis, hasBoneFracture, canGiveInjection));
+    }
+
+    // define the function to add a new doctor
+    function addDoctor(address doctorAddress, string memory name, bool isCertified) public {
+        doctors.push(Doctor(doctorAddress, name, isCertified));
+    }
+
+    // define the function to add a new home health care provider
+    function addHomeHealthCare(address caregiverAddress, string memory name, bool isAbleToGiveInjection) public {
+        homeHealthCares.push(HomeHealthCare(caregiverAddress, name, isAbleToGiveInjection));
+    }
+
+    // define the function to check if a patient is covered for injectable osteoporosis drugs
+    function isCovered(Patient memory patient) public view returns (bool) {
+        // check if the patient is a woman with osteoporosis who meets the criteria for the Medicare home health benefit
+        if (patient.isFemale && patient.hasOsteoporosis && patient.hasBoneFracture && !patient.canGiveInjection) {
+            // check if the patient has a doctor who is certified to administer the injection
+            for (uint i = 0; i < doctors.length; i++) {
+                if (doctors[i].isCertified) {
+                    // check if the patient has a home health care provider who is able to give the injection
+                    for (uint j = 0; j < homeHealthCares.length; j++) {
+                        if (homeHealthCares[j].isAbleToGiveInjection) {
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    // define the unit tests for the OsteoporosisDrugCoverage contract
+    function testIsCovered() public {
+        // create a patient who meets the criteria for the Medicare home health benefit
+        Patient memory patient = Patient(0x1234567890abcdef, "Alice", 65, true, true, true, false);
+        // create a doctor who is certified to administer the injection
+        Doctor memory doctor = Doctor(0x901234567890abcdef, "Dr. Smith", true);
+        // create a home health care provider who is able to give the injection
+        HomeHealthCare memory homeHealthCare = HomeHealthCare(0xabcdef1234567890, "Nurse Johnson", true);
+
+        // add the patient, doctor, and home health care provider to the contract
+        addPatient(patient.patientAddress, patient.name, patient.age, patient.isFemale, patient.hasOsteoporosis, patient.hasBoneFracture, patient.canGiveInjection);
+        addDoctor(doctor.doctorAddress, doctor.name, doctor.isCertified);
+        addHomeHealthCare(homeHealthCare.caregiverAddress, homeHealthCare.name, homeHealthCare.isAbleToGiveInjection);
+
+        // check if the patient is covered for injectable osteoporosis drugs
+        bool isCovered = isCovered(patient);
+
+        // assert that the patient is covered for injectable osteoporosis drugs
+        Assert.equal(isCovered, true, "Patient should be covered for injectable osteoporosis drugs");
+    }
+
+    function testIsNotCovered() public {
+        // create a patient who does not meet the criteria for the Medicare home health benefit
+        Patient memory patient = Patient(0x1234567890abcdef, "Bob", 65, false, false, false, true);
+        // create a doctor who is not certified to administer the injection
+        Doctor memory doctor = Doctor(0x901234567890abcdef, "Dr. Johnson", false);
+        // create a home health care provider who is not able to give the injection
+        HomeHealthCare memory homeHealthCare = HomeHealthCare(0xabcdef1234567890, "Nurse Smith", false);
+
+        // add the patient, doctor, and home health care provider to the contract
+        addPatient(patient.patientAddress, patient.name, patient.age, patient.isFemale, patient.hasOsteoporosis, patient.hasBoneFracture, patient.canGiveInjection);
+        addDoctor(doctor.doctorAddress, doctor.name, doctor.isCertified);
+        addHomeHealthCare(homeHealthCare.caregiverAddress, homeHealthCare.name, homeHealthCare.isAbleToGiveInjection);
+
+        // check if the patient is covered for injectable osteoporosis drugs
+        bool isCovered = isCovered(patient);
+
+        // assert that the patient is not covered for injectable osteoporosis drugs
+        Assert.equal(isCovered, false, "Patient should not be covered for injectable osteoporosis drugs");
+    }
+}

@@ -1,0 +1,22 @@
+```cql
+library MedicareCoveragePolicy
+
+using FHIR version '4.0.1'
+
+// Named expressions
+define hasPrimaryImmuneDeficiency: 
+  "Patient has a diagnosis of primary immune deficiency disease"
+
+define isIVIGMedicallyNecessary: 
+  "IVIG is medically appropriate for the patient to receive at home"
+
+define coversIVIG: 
+  "Medicare Part B covers the cost of Intravenous Immune Globulin (IVIG)"
+
+define doesNotCoverOtherServices: 
+  "Medicare Part B does not cover other items and services related to the patient receiving IVIG at home"
+
+// Final decision
+define IVIGCoverageDecision:
+  coversIVIG and hasPrimaryImmuneDeficiency and isIVIGMedicallyNecessary and doesNotCoverOtherServices
+```
