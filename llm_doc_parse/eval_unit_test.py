@@ -1,7 +1,11 @@
 from typing import Literal
+import re
 import shutil
 import yaml
 import click
+from collections import Counter
+import json
+import pandas as pd
 
 from .config.path import OUTPUT_DIR, TEMPLATES_DIR, HARDHAT_DIR, REPORT_DIR
 from .utils import (
@@ -9,6 +13,8 @@ from .utils import (
     parse_mode,
     parse_solidity,
     run_hardhat_compile,
+    count_warnings,
+    find_errors,
 )
 
 @click.command()
@@ -22,6 +28,9 @@ def run(
 ):
     # filter out ones that don't have unit_test in it
     modes_to_run = [m for m in parse_mode(mode) if 'unit_test' in m]
+
+    agg_report_file = OUTPUT_DIR/model/f'{doc_name}_aggregated.csv'
+    results = []
 
     with progress_bar() as progress:    
         run_task = progress.add_task(f'{model} -- {doc_name}', total=len(modes_to_run))
@@ -89,7 +98,7 @@ def run(
                             ut_stdout_msg, ut_stderr_msg = run_hardhat_compile()
                         except Exception as e:
                             parser_error_msg += f'{mode}: error parsing unit_test output.\ncheck {unit_test_output_file} for the original file.\n'
-                            parser_error_msg += 'Exception message:\n{e}\n'
+                            parser_error_msg += f'Exception detai:\n{e}\n'
                     else:
                         parser_error_msg += f'{mode}: unit_test output is empty.\ncheck {unit_test_output_file} for the original file.\n'
                 except Exception:
@@ -112,11 +121,30 @@ def run(
             if hardhat_unit_test_file.is_file():
                 hardhat_unit_test_file.unlink()
 
+            sc_warning_count = count_warnings(sc_stderr_msg)
+            sc_errors = find_errors(sc_stderr_msg)
+            ut_warning_count = count_warnings(ut_stderr_msg)
+            ut_errors = find_errors(ut_stderr_msg)
+            sc_compile_success = len(re.findall('Compiled.*success.*', sc_stdout_msg)) > 0
+            ut_compile_success = len(re.findall( 'Compiled.*success.*', ut_stdout_msg)) > 0
 
-            
+            results += [{
+                "Mode": mode,
+                "Smart Contract Compile Success": sc_compile_success,
+                "Smart Contract Compile Warning Count": sc_warning_count,
+                "Smart Contract Compile Error Count": len(sc_errors),
+                "Smart Contract Compile Error Types": json.dumps(dict(Counter(sc_errors).most_common())),
+                "Unit Test Compile Success": ut_compile_success,
+                "Unit Test Compile Warning Count": ut_warning_count,
+                "Unit Test Compile Error Count": len(ut_errors),
+                "Unit Test Compile Error Types": json.dumps(dict(Counter(ut_errors).most_common())),
+            }]
             
             progress.advance(run_task)
 
+        results = pd.DataFrame(results)
+        results.to_csv(agg_report_file, index=False)
+        print(f'Saved results to {agg_report_file}')
 
 if __name__ == "__main__":
     run()
