@@ -1,0 +1,9 @@
+TypeError: Member "isCovered" not found or not visible after argument-dependent lookup in function () view external returns (bool,bool).
+  --> contracts/UnitTest.sol:40:22:
+   |
+40 |         Assert.equal(medCoverage.ivigCoverage.isCovered, true, "IVIG should be covered");
+   |                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+Error HH600: Compilation failed
+For more info go to https://hardhat.org/HH600 or run Hardhat with --show-stack-traces

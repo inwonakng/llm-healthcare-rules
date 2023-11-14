@@ -1,0 +1,4 @@
+use_previous_n3_unit_test: error parsing smart_contract output.
+check /Users/inwon/Documents/research/llm-healthcare/outputs/gpt-3.5-turbo-1106/scenario2/use_previous_n3_unit_test/3_smart_contract.txt for the original file.
+Exception message:
+{e}

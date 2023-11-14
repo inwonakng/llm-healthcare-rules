@@ -1,0 +1,30 @@
+DeclarationError: Undeclared identifier.
+  --> contracts/UnitTest.sol:15:22:
+   |
+15 |         Assert.equal(hasPrimaryImmuneDeficiency(), true, "Patient should have a diagnosis of primary immune deficiency disease");
+   |                      ^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+DeclarationError: Undeclared identifier.
+  --> contracts/UnitTest.sol:21:22:
+   |
+21 |         Assert.equal(isIVIGMedicallyNecessary(), true, "IVIG should be medically necessary for the patient to receive at home");
+   |                      ^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+DeclarationError: Undeclared identifier.
+  --> contracts/UnitTest.sol:27:22:
+   |
+27 |         Assert.equal(coversIVIG(), true, "Medicare Part B should cover the cost of IVIG");
+   |                      ^^^^^^^^^^
+
+
+DeclarationError: Undeclared identifier.
+  --> contracts/UnitTest.sol:33:22:
+   |
+33 |         Assert.equal(doesNotCoverOtherServices(), true, "Medicare Part B should n ...
+   |                      ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+Error HH600: Compilation failed
+For more info go to https://hardhat.org/HH600 or run Hardhat with --show-stack-traces

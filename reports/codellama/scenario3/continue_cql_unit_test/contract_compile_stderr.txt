@@ -1,0 +1,89 @@
+Warning: SPDX license identifier not provided in source file. Before publishing, consider adding a comment containing "SPDX-License-Identifier: <SPDX-License>" to each source file. Use "SPDX-License-Identifier: UNLICENSED" for non-open-source code. Please see https://spdx.org for more information.
+--> contracts/SmartContract.sol
+
+
+Warning: This declaration shadows an existing declaration.
+  --> contracts/SmartContract.sol:22:53:
+   |
+22 |     function setPremiums(address[] memory patients, uint256[] memory premiums) public {
+   |                                                     ^^^^^^^^^^^^^^^^^^^^^^^^^
+Note: The shadowed declaration is here:
+ --> contracts/SmartContract.sol:6:5:
+  |
+6 |     mapping(address => uint256) private premiums;
+  |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+Warning: This declaration shadows an existing declaration.
+  --> contracts/SmartContract.sol:29:56:
+   |
+29 |     function setDeductibles(address[] memory patients, uint256[] memory deductibles) public {
+   |                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Note: The shadowed declaration is here:
+ --> contracts/SmartContract.sol:7:5:
+  |
+7 |     mapping(address => uint256) private deductibles;
+  |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+Warning: This declaration shadows an existing declaration.
+  --> contracts/SmartContract.sol:36:51:
+   |
+36 |     function setCopays(address[] memory patients, uint256[] memory copays) public {
+   |                                                   ^^^^^^^^^^^^^^^^^^^^^^^
+Note: The shadowed declaration is here:
+ --> contracts/SmartContract.sol:8:5:
+  |
+8 |     mapping(address => uint256) private copays;
+  |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+Warning: This declaration shadows an existing declaration.
+  --> contracts/SmartContract.sol:43:64:
+   |
+43 |     function setMaximumOutOfPockets(address[] memory patients, uint256[] memory maximumOutOfPockets) public {
+   |                                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Note: The shadowed declaration is here:
+ --> contracts/SmartContract.sol:9:5:
+  |
+9 |     mapping(address => uint256) private maximumOutOfPockets;
+  |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+Warning: Visibility for constructor is ignored. If you want the contract to be non-deployable, making it "abstract" is sufficient.
+  --> contracts/SmartContract.sol:11:5:
+   |
+11 |     constructor() public {
+   |     ^ (Relevant source part starts here and spans across multiple lines).
+
+
+TypeError: Type address is not implicitly convertible to expected type uint256.
+  --> contracts/SmartContract.sol:25:22:
+   |
+25 |             premiums[patients[i]] = premiums[i];
+   |                      ^^^^^^^^^^^
+
+
+TypeError: Type address is not implicitly convertible to expected type uint256.
+  --> contracts/SmartContract.sol:32:25:
+   |
+32 |             deductibles[patients[i]] = deductibles[i];
+   |                         ^^^^^^^^^^^
+
+
+TypeError: Type address is not implicitly convertible to expected type uint256.
+  --> contracts/SmartContract.sol:39:20:
+   |
+39 |             copays[patients[i]] = copays[i];
+   |                    ^^^^^^^^^^^
+
+
+TypeError: Type address is not implicitly convertible to expected type uint256.
+  --> contracts/SmartContract.sol:46:33:
+   |
+46 |             maximumOutOfPockets[patients[i]] = maximumOutOfPockets[i];
+   |                                 ^^^^^^^^^^^
+
+
+Error HH600: Compilation failed
+For more info go to https://hardhat.org/HH600 or run Hardhat with --show-stack-traces

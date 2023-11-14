@@ -1,0 +1,2 @@
+Error HH411: The library remix_tests.sol, imported from contracts/SmartContract.sol, is not installed. Try installing it using npm.
+For more info go to https://hardhat.org/HH411 or run Hardhat with --show-stack-traces

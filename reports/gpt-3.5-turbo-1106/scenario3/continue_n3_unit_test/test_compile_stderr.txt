@@ -1,0 +1,9 @@
+ParserError: Invalid character in string.
+  --> contracts/UnitTest.sol:36:36:
+   |
+36 |         Assert.equal(result, true, "Medicare drug coverage should cover immunosuppressive drugs if Part B doesn’t cover them");
+   |                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+Error HH600: Compilation failed
+For more info go to https://hardhat.org/HH600 or run Hardhat with --show-stack-traces

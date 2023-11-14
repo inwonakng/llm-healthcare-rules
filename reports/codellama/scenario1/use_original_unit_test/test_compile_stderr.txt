@@ -1,0 +1,53 @@
+Warning: SPDX license identifier not provided in source file. Before publishing, consider adding a comment containing "SPDX-License-Identifier: <SPDX-License>" to each source file. Use "SPDX-License-Identifier: UNLICENSED" for non-open-source code. Please see https://spdx.org for more information.
+--> contracts/SmartContract.sol
+
+
+Warning: SPDX license identifier not provided in source file. Before publishing, consider adding a comment containing "SPDX-License-Identifier: <SPDX-License>" to each source file. Use "SPDX-License-Identifier: UNLICENSED" for non-open-source code. Please see https://spdx.org for more information.
+--> contracts/UnitTest.sol
+
+
+DeclarationError: Identifier already declared.
+  --> contracts/UnitTest.sol:72:1:
+   |
+72 | contract OsteoporosisDrugCoverageTest {
+   | ^ (Relevant source part starts here and spans across multiple lines).
+Note: The previous declaration is here:
+ --> contracts/UnitTest.sol:7:1:
+  |
+7 | contract OsteoporosisDrugCoverageTest {
+  | ^ (Relevant source part starts here and spans across multiple lines).
+
+
+Warning: This declaration shadows an existing declaration.
+   --> contracts/UnitTest.sol:127:9:
+    |
+127 |         bool isCovered = isCovered(patient);
+    |         ^^^^^^^^^^^^^^
+Note: The shadowed declaration is here:
+  --> contracts/UnitTest.sol:94:5:
+   |
+94 |     function isCovered(Patient memory patient) public view returns (bool) {
+   |     ^ (Relevant source part starts here and spans across multiple lines).
+
+
+Warning: This declaration shadows an existing declaration.
+   --> contracts/UnitTest.sol:147:9:
+    |
+147 |         bool isCovered = isCovered(patient);
+    |         ^^^^^^^^^^^^^^
+Note: The shadowed declaration is here:
+  --> contracts/UnitTest.sol:94:5:
+   |
+94 |     function isCovered(Patient memory patient) public view returns (bool) {
+   |     ^ (Relevant source part starts here and spans across multiple lines).
+
+
+DeclarationError: Identifier not found or not unique.
+  --> contracts/UnitTest.sol:74:5:
+   |
+74 |     Patient[] public patients;
+   |     ^^^^^^^
+
+
+Error HH600: Compilation failed
+For more info go to https://hardhat.org/HH600 or run Hardhat with --show-stack-traces

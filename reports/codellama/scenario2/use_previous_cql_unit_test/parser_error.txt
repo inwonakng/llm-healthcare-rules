@@ -1,0 +1,2 @@
+use_previous_cql_unit_test: smart_contract output is empty.
+check /Users/inwon/Documents/research/llm-healthcare/outputs/codellama/scenario2/use_previous_cql_unit_test/3_smart_contract.txt for the original file.

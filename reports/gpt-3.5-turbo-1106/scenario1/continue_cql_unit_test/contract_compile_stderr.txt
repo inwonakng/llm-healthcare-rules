@@ -1,0 +1,7 @@
+Warning: Function state mutability can be restricted to pure
+  --> contracts/SmartContract.sol:14:5:
+   |
+14 |     function medicareCoversInjectableOsteoporosisDrugs(Patient memory patient) public view returns (bool) {
+   |     ^ (Relevant source part starts here and spans across multiple lines).
+
+

@@ -1,0 +1,9 @@
+TypeError: Type rational_const 1404 / 5 is not implicitly convertible to expected type uint256. Try converting to type ufixed16x1 or use an explicit conversion.
+  --> contracts/UnitTest.sol:86:9:
+   |
+86 |         uint expectedCost1 = 226 + ((500 - 226) * 20 / 100);
+   |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+Error HH600: Compilation failed
+For more info go to https://hardhat.org/HH600 or run Hardhat with --show-stack-traces

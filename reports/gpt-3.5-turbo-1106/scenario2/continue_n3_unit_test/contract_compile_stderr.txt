@@ -1,0 +1,12 @@
+Warning: This declaration shadows an existing declaration.
+  --> contracts/SmartContract.sol:19:39:
+   |
+19 |     function isCoveredByMedicarePartB(bool isCoveredForIVIG) public pure returns (bool) {
+   |                                       ^^^^^^^^^^^^^^^^^^^^^
+Note: The shadowed declaration is here:
+  --> contracts/SmartContract.sol:11:5:
+   |
+11 |     function isCoveredForIVIG(bool hasPrimaryImmuneDeficiencyDisease) public pure returns (bool) {
+   |     ^ (Relevant source part starts here and spans across multiple lines).
+
+

@@ -1,0 +1,46 @@
+Warning: SPDX license identifier not provided in source file. Before publishing, consider adding a comment containing "SPDX-License-Identifier: <SPDX-License>" to each source file. Use "SPDX-License-Identifier: UNLICENSED" for non-open-source code. Please see https://spdx.org for more information.
+--> contracts/SmartContract.sol
+
+
+DeclarationError: Identifier already declared.
+  --> contracts/SmartContract.sol:14:5:
+   |
+14 |     function isCovered() public view returns (bool) {
+   |     ^ (Relevant source part starts here and spans across multiple lines).
+Note: The previous declaration is here:
+ --> contracts/SmartContract.sol:6:5:
+  |
+6 |     bool public isCovered;
+  |     ^^^^^^^^^^^^^^^^^^^^^
+
+
+Warning: Visibility for constructor is ignored. If you want the contract to be non-deployable, making it "abstract" is sufficient.
+ --> contracts/SmartContract.sol:8:5:
+  |
+8 |     constructor(address _patient, string memory _diagnosis) public {
+  |     ^ (Relevant source part starts here and spans across multiple lines).
+
+
+TypeError: Operator == not compatible with types string storage ref and literal_string "primary immune deficiency disease"
+  --> contracts/SmartContract.sol:15:13:
+   |
+15 |         if (diagnosis == "primary immune deficiency disease") {
+   |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+TypeError: Operator == not compatible with types string storage ref and literal_string "primary immune deficiency disease"
+  --> contracts/SmartContract.sol:22:13:
+   |
+22 |         if (diagnosis == "primary immune deficiency disease" && patient.doctor.isMedicallyAppropriate(patient, "IVIG")) {
+   |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+TypeError: Member "doctor" not found or not visible after argument-dependent lookup in address.
+  --> contracts/SmartContract.sol:22:65:
+   |
+22 |         if (diagnosis == "primary immune deficiency disease" && patient.doctor.isMedicallyAppropriate(patient, "IVIG")) {
+   |                                                                 ^^^^^^^^^^^^^^
+
+
+Error HH600: Compilation failed
+For more info go to https://hardhat.org/HH600 or run Hardhat with --show-stack-traces

@@ -1,0 +1,65 @@
+Warning: SPDX license identifier not provided in source file. Before publishing, consider adding a comment containing "SPDX-License-Identifier: <SPDX-License>" to each source file. Use "SPDX-License-Identifier: UNLICENSED" for non-open-source code. Please see https://spdx.org for more information.
+--> contracts/SmartContract.sol
+
+
+Warning: SPDX license identifier not provided in source file. Before publishing, consider adding a comment containing "SPDX-License-Identifier: <SPDX-License>" to each source file. Use "SPDX-License-Identifier: UNLICENSED" for non-open-source code. Please see https://spdx.org for more information.
+--> contracts/UnitTest.sol
+
+
+Warning: This declaration shadows an existing declaration.
+  --> contracts/SmartContract.sol:22:53:
+   |
+22 |     function setPremiums(address[] memory patients, uint256[] memory premiums) public {
+   |                                                     ^^^^^^^^^^^^^^^^^^^^^^^^^
+Note: The shadowed declaration is here:
+ --> contracts/SmartContract.sol:6:5:
+  |
+6 |     mapping(address => uint256) private premiums;
+  |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+Warning: This declaration shadows an existing declaration.
+  --> contracts/SmartContract.sol:29:56:
+   |
+29 |     function setDeductibles(address[] memory patients, uint256[] memory deductibles) public {
+   |                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Note: The shadowed declaration is here:
+ --> contracts/SmartContract.sol:7:5:
+  |
+7 |     mapping(address => uint256) private deductibles;
+  |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+Warning: This declaration shadows an existing declaration.
+  --> contracts/SmartContract.sol:36:51:
+   |
+36 |     function setCopays(address[] memory patients, uint256[] memory copays) public {
+   |                                                   ^^^^^^^^^^^^^^^^^^^^^^^
+Note: The shadowed declaration is here:
+ --> contracts/SmartContract.sol:8:5:
+  |
+8 |     mapping(address => uint256) private copays;
+  |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+Warning: This declaration shadows an existing declaration.
+  --> contracts/SmartContract.sol:43:64:
+   |
+43 |     function setMaximumOutOfPockets(address[] memory patients, uint256[] memory maximumOutOfPockets) public {
+   |                                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Note: The shadowed declaration is here:
+ --> contracts/SmartContract.sol:9:5:
+  |
+9 |     mapping(address => uint256) private maximumOutOfPockets;
+  |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+DeclarationError: Identifier not found or not unique.
+  --> contracts/UnitTest.sol:11:32:
+   |
+11 |         benefit.setPatient(new Patient(1, "John Doe", "Male", "1990-01-01"));
+   |                                ^^^^^^^
+
+
+Error HH600: Compilation failed
+For more info go to https://hardhat.org/HH600 or run Hardhat with --show-stack-traces

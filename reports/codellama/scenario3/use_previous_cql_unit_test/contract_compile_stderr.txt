@@ -1,0 +1,20 @@
+Warning: SPDX license identifier not provided in source file. Before publishing, consider adding a comment containing "SPDX-License-Identifier: <SPDX-License>" to each source file. Use "SPDX-License-Identifier: UNLICENSED" for non-open-source code. Please see https://spdx.org for more information.
+--> contracts/SmartContract.sol
+
+
+TypeError: Return argument type tuple(rational_const 971 / 10,int_const 226) is not implicitly convertible to expected type tuple(uint256,uint256).
+  --> contracts/SmartContract.sol:47:16:
+   |
+47 |         return (97.10, 226);
+   |                ^^^^^^^^^^^^
+
+
+TypeError: Return argument type rational_const 1 / 5 is not implicitly convertible to expected type (type of first return variable) uint256.
+  --> contracts/SmartContract.sol:59:16:
+   |
+59 |         return 0.2;
+   |                ^^^
+
+
+Error HH600: Compilation failed
+For more info go to https://hardhat.org/HH600 or run Hardhat with --show-stack-traces

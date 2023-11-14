@@ -1,0 +1,7 @@
+Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+  --> contracts/SmartContract.sol:47:9:
+   |
+47 |         bool _boneFractureCertified,
+   |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+

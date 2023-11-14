@@ -1,0 +1,9 @@
+DeclarationError: Identifier not found or not unique.
+ --> contracts/UnitTest.sol:9:5:
+  |
+9 |     YourContract contractInstance;
+  |     ^^^^^^^^^^^^
+
+
+Error HH600: Compilation failed
+For more info go to https://hardhat.org/HH600 or run Hardhat with --show-stack-traces

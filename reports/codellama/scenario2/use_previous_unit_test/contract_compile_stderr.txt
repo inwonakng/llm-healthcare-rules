@@ -1,0 +1,20 @@
+Warning: SPDX license identifier not provided in source file. Before publishing, consider adding a comment containing "SPDX-License-Identifier: <SPDX-License>" to each source file. Use "SPDX-License-Identifier: UNLICENSED" for non-open-source code. Please see https://spdx.org for more information.
+--> contracts/SmartContract.sol
+
+
+TypeError: Operator == not compatible with types bytes32 and literal_string "Primary immune deficiency disease"
+  --> contracts/SmartContract.sol:14:13:
+   |
+14 |         if (diagnosis == "Primary immune deficiency disease") {
+   |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+TypeError: Operator == not compatible with types bytes32 and literal_string "IVIG is medically appropriate for patient"
+  --> contracts/SmartContract.sol:16:17:
+   |
+16 |             if (medicalJudgment == "IVIG is medically appropriate for patient") {
+   |                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+Error HH600: Compilation failed
+For more info go to https://hardhat.org/HH600 or run Hardhat with --show-stack-traces
