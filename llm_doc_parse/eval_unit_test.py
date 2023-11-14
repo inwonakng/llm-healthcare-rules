@@ -29,7 +29,7 @@ def run(
     # filter out ones that don't have unit_test in it
     modes_to_run = [m for m in parse_mode(mode) if 'unit_test' in m]
 
-    agg_report_file = OUTPUT_DIR/model/f'{doc_name}_aggregated.csv'
+    agg_report_file = REPORT_DIR/model/f'{doc_name}_aggregated.csv'
     results = []
 
     with progress_bar() as progress:    

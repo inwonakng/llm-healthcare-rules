@@ -1,8 +1,0 @@
-Mode,Smart Contract Compile Success,Smart Contract Compile Warning Count,Smart Contract Compile Error Count,Smart Contract Compile Error Types,Unit Test Compile Success,Unit Test Compile Warning Count,Unit Test Compile Error Count,Unit Test Compile Error Types
-continue_cql_unit_test,False,0,2,"{""TypeError"": 2}",False,0,3,"{""TypeError"": 3}"
-continue_n3_unit_test,True,0,0,{},False,0,1,"{""TypeError"": 1}"
-continue_unit_test,True,0,0,{},False,0,1,"{""TypeError"": 1}"
-use_original_unit_test,True,0,0,{},False,0,1,"{""DeclarationError"": 1}"
-use_previous_cql_unit_test,False,0,1,"{""ParserError"": 1}",False,0,2,"{""ParserError"": 2}"
-use_previous_n3_unit_test,True,0,0,{},False,0,1,"{""ParserError"": 1}"
-use_previous_unit_test,True,0,0,{},False,0,1,"{""TypeError"": 1}"
