@@ -48,7 +48,6 @@ def run(
             # prepare directories for saving 
             report_dir = REPORT_DIR/model/doc_name/mode
             report_dir.mkdir(parents=True, exist_ok=True)
-            shutil.rmtree(save_dir / 'code')
             code_save_dir = report_dir / 'code'
             code_save_dir.mkdir(parents=True, exist_ok=True)
             
