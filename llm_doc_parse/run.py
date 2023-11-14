@@ -13,7 +13,7 @@ from .utils import parse_mode, progress_bar
 @click.option('--mode', default='all')
 def run(
     doc_name: Literal['scenario1','scenario2', 'scenario3'],
-    model: Literal['gpt-3.5-turbo', 'gpt-4', 'gpt-4-1106-preview', 'codellama'],
+    model: Literal['gpt-3.5-turbo', 'gpt-3.5-turbo-1106', 'gpt-4', 'gpt-4-1106-preview', 'codellama'],
     mode: str = 'all',
 ):
     document = open(DOCS_DIR/f'{doc_name}.txt').read()

@@ -17,7 +17,7 @@ from .utils import (
 @click.option('--mode', default='all')
 def run(
     doc_name: Literal['scenario1','scenario2', 'scenario3'],
-    model: Literal['gpt-3.5-turbo', 'gpt-4', 'gpt-4-1106-preview', 'codellama'],
+    model: Literal['gpt-3.5-turbo', 'gpt-3.5-turbo-1106', 'gpt-4', 'gpt-4-1106-preview', 'codellama'],
     mode: str = 'all',
 ):
     # filter out ones that don't have unit_test in it
@@ -61,6 +61,7 @@ def run(
                     smart_contract_output_file = f
 
             sc_stdout_msg, sc_stderr_msg, ut_stdout_msg, ut_stderr_msg, parser_error_msg = '', '', '', '', ''
+
             if smart_contract_output:
                 try:
                     smart_contract_code = parse_solidity(
@@ -110,8 +111,12 @@ def run(
                 hardhat_smart_contract_file.unlink()
             if hardhat_unit_test_file.is_file():
                 hardhat_unit_test_file.unlink()
+
+
+            
             
             progress.advance(run_task)
+
 
 if __name__ == "__main__":
     run()
