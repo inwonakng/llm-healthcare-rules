@@ -1,0 +1,47 @@
+Certainly! Here is a basic Solidity smart contract that implements the functionality we discussed:
+```
+pragma solidity ^0.8.0;
+
+contract ImmunosuppressiveDrugBenefit {
+    address private owner;
+    uint256 private deductible;
+    uint256 private copay;
+
+    constructor(address _owner, uint256 _deductible, uint256 _copay) public {
+        owner = _owner;
+        deductible = _deductible;
+        copay = _copay;
+    }
+
+    function hasPartA() public view returns (bool) {
+        return owner.hasPartA();
+    }
+
+    function hasPartB() public view returns (bool) {
+        return owner.hasPartB();
+    }
+
+    function hasImmunosuppressiveDrugCoverage() public view returns (bool) {
+        return hasPartA() && hasPartB();
+    }
+
+    function getDeductible() public view returns (uint256) {
+        return deductible;
+    }
+
+    function getCopay() public view returns (uint256) {
+        return copay;
+    }
+}
+```
+This contract has the following functions:
+
+* `hasPartA()`: Returns `true` if the owner has Part A, `false` otherwise.
+* `hasPartB()`: Returns `true` if the owner has Part B, `false` otherwise.
+* `hasImmunosuppressiveDrugCoverage()`: Returns `true` if the owner has both Part A and Part B, `false` otherwise.
+* `getDeductible()`: Returns the deductible amount for the owner.
+* `getCopay()`: Returns the copay amount for the owner.
+
+The constructor takes in the owner's address, the deductible amount, and the copay amount as parameters. These values are stored in the contract and can be accessed using the `owner`, `deductible`, and `copay` variables.
+
+Note that this is just a basic example and may need to be modified to fit the specific requirements of your use case. Additionally, you will need to implement the `hasPartA()` and `hasPartB()` functions in the `owner` contract.

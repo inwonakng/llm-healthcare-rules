@@ -1,0 +1,63 @@
+Sure, here are some CQL named expressions based on the previous conversation:
+
+1. `IsTransplantPatient`:
+```
+define function IsTransplantPatient(): Boolean {
+  return this.hasCondition('Transplant')
+}
+```
+2. `HasPartA`:
+```
+define function HasPartA(): Boolean {
+  return this.hasCoverage('Part A')
+}
+```
+3. `HasPartB`:
+```
+define function HasPartB(): Boolean {
+  return this.hasCoverage('Part B')
+}
+```
+4. `HasMedicareDrugCoverage`:
+```
+define function HasMedicareDrugCoverage(): Boolean {
+  return this.hasCoverage('Medicare Drug')
+}
+```
+5. `HasOtherHealthCoverage`:
+```
+define function HasOtherHealthCoverage(): Boolean {
+  return this.hasCoverage('Other Health')
+}
+```
+6. `IsEligibleForImmunosuppressiveDrugBenefit`:
+```
+define function IsEligibleForImmunosuppressiveDrugBenefit(): Boolean {
+  return this.IsTransplantPatient() and this.HasPartA() and this.HasPartB() and not this.HasMedicareDrugCoverage() and not this.HasOtherHealthCoverage()
+}
+```
+7. `GetImmunosuppressiveDrugBenefitPremium`:
+```
+define function GetImmunosuppressiveDrugBenefitPremium(): Decimal {
+  return 97.10
+}
+```
+8. `GetImmunosuppressiveDrugBenefitDeductible`:
+```
+define function GetImmunosuppressiveDrugBenefitDeductible(): Decimal {
+  return 226
+}
+```
+9. `GetImmunosuppressiveDrugBenefitCopay`:
+```
+define function GetImmunosuppressiveDrugBenefitCopay(): Decimal {
+  return 20
+}
+```
+10. `GetImmunosuppressiveDrugBenefitMaximumOutOfPocket`:
+```
+define function GetImmunosuppressiveDrugBenefitMaximumOutOfPocket(): Decimal {
+  return 1000
+}
+```
+These named expressions can be used to calculate the eligibility for the immunosuppressive drug benefit, the premium, deductible, copay, and maximum out-of-pocket amount for the benefit.

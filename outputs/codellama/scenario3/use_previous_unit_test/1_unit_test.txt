@@ -1,0 +1,62 @@
+```
+pragma solidity ^0.8.0;
+
+import "remix_tests.sol"; // this import is automatically injected by Remix.
+
+contract MedicareImmunosuppressiveDrugBenefitTest {
+    function testPartACoverage() public {
+        // Test that the policyholder has Part A coverage at the time of the covered transplant
+        assertTrue(hasPartACoverage(), "Policyholder does not have Part A coverage");
+    }
+
+    function testPartBCoverage() public {
+        // Test that the policyholder has Part B coverage at the time of receiving immunosuppressive drugs
+        assertTrue(hasPartBCoverage(), "Policyholder does not have Part B coverage");
+    }
+
+    function testMedicareDrugCoverage() public {
+        // Test that the policyholder has Medicare drug coverage if they have Original Medicare
+        assertTrue(hasMedicareDrugCoverage(), "Policyholder does not have Medicare drug coverage");
+    }
+
+    function testESRDCoverageEnd() public {
+        // Test that the policyholder's Medicare coverage, including immunosuppressive drug coverage, ends 36 months after a successful kidney transplant
+        assertTrue(hasESRDCoverageEnded(), "Policyholder's Medicare coverage has not ended");
+    }
+
+    function testImmunosuppressiveDrugBenefit() public {
+        // Test that the policyholder is eligible for the immunosuppressive drug benefit
+        assertTrue(isEligibleForBenefit(), "Policyholder is not eligible for the immunosuppressive drug benefit");
+    }
+
+    function testBenefitSignUp() public {
+        // Test that the policyholder can sign up for the immunosuppressive drug benefit any time after their Part A coverage ends
+        assertTrue(canSignUpForBenefit(), "Policyholder cannot sign up for the immunosuppressive drug benefit");
+    }
+
+    function testBenefitPremium() public {
+        // Test that the policyholder pays a monthly premium of $97.10* and $226 deductible if they sign up for the immunosuppressive drug benefit
+        assertTrue(hasPaidPremiumAndDeductible(), "Policyholder has not paid the premium and deductible");
+    }
+
+    function testBenefitCoverage() public {
+        // Test that the immunosuppressive drug benefit only covers immunosuppressive drugs and no other items or services
+        assertTrue(hasImmunosuppressiveDrugCoverageOnly(), "Immunosuppressive drug benefit covers other items or services");
+    }
+
+    function testBenefitNotFullHealthCoverage() public {
+        // Test that the immunosuppressive drug benefit is not a substitute for full health coverage
+        assertTrue(isNotFullHealthCoverage(), "Immunosuppressive drug benefit is a substitute for full health coverage");
+    }
+
+    function testBenefitDeductible() public {
+        // Test that the policyholder has met the deductible for the immunosuppressive drug benefit
+        assertTrue(hasMetDeductible(), "Policyholder has not met the deductible");
+    }
+
+    function testBenefitCopay() public {
+        // Test that the policyholder pays 20% of the Medicare-approved amount for their immunosuppressive drugs once they have met the deductible
+        assertTrue(hasPaidCopay(), "Policyholder has not paid the copay");
+    }
+}
+```

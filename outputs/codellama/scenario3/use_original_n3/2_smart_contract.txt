@@ -1,0 +1,58 @@
+```
+pragma solidity ^0.8.0;
+
+contract MedicareTransplantDrugTherapy {
+    struct Patient {
+        address patientAddress;
+        bool hasPartA;
+        bool hasPartB;
+        bool hasOriginalMedicare;
+        bool hasESRD;
+        bool hasMedicareDrugCoverage;
+        bool hasOtherHealthCoverage;
+        bool hasSignedUpForBenefit;
+        uint256 premium;
+        uint256 deductible;
+        uint256 medicareApprovedAmount;
+        uint256 immunosuppressiveDrugCoverage;
+    }
+
+    mapping(address => Patient) public patients;
+
+    function signUpForBenefit(address patientAddress) public {
+        require(patients[patientAddress].hasPartA, "Patient must have Part A");
+        require(patients[patientAddress].hasPartB, "Patient must have Part B");
+        require(patients[patientAddress].hasOriginalMedicare, "Patient must have Original Medicare");
+        require(patients[patientAddress].hasESRD, "Patient must have ESRD");
+        require(!patients[patientAddress].hasMedicareDrugCoverage, "Patient must not have Medicare drug coverage");
+        require(!patients[patientAddress].hasOtherHealthCoverage, "Patient must not have other health coverage");
+        require(!patients[patientAddress].hasSignedUpForBenefit, "Patient has already signed up for benefit");
+
+        patients[patientAddress].hasSignedUpForBenefit = true;
+        patients[patientAddress].premium = 97.10;
+        patients[patientAddress].deductible = 226;
+        patients[patientAddress].immunosuppressiveDrugCoverage = 20;
+    }
+
+    function payPremium(address patientAddress) public {
+        require(patients[patientAddress].hasSignedUpForBenefit, "Patient has not signed up for benefit");
+        require(msg.value == patients[patientAddress].premium, "Incorrect premium amount");
+
+        patients[patientAddress].premium = 0;
+    }
+
+    function payDeductible(address patientAddress) public {
+        require(patients[patientAddress].hasSignedUpForBenefit, "Patient has not signed up for benefit");
+        require(msg.value == patients[patientAddress].deductible, "Incorrect deductible amount");
+
+        patients[patientAddress].deductible = 0;
+    }
+
+    function payImmunosuppressiveDrugCoverage(address patientAddress) public {
+        require(patients[patientAddress].hasSignedUpForBenefit, "Patient has not signed up for benefit");
+        require(msg.value == patients[patientAddress].immunosuppressiveDrugCoverage, "Incorrect immunosuppressive drug coverage amount");
+
+        patients[patientAddress].immunosuppressiveDrugCoverage = 0;
+    }
+}
+```

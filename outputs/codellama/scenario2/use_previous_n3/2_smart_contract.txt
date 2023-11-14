@@ -1,0 +1,45 @@
+Here is a sample Solidity smart contract that implements the requirements and logic rules described in the summary and N3 logic rules:
+```
+pragma solidity ^0.8.0;
+
+contract MedicareIVIG {
+    struct Patient {
+        address patientAddress;
+        string diagnosis;
+        bool doctorApproval;
+    }
+
+    mapping(address => Patient) public patients;
+
+    function addPatient(address patientAddress, string memory diagnosis, bool doctorApproval) public {
+        patients[patientAddress] = Patient(patientAddress, diagnosis, doctorApproval);
+    }
+
+    function isCovered(address patientAddress) public view returns (bool) {
+        Patient memory patient = patients[patientAddress];
+        if (patient.diagnosis == "primary immune deficiency disease" && patient.doctorApproval) {
+            return true;
+        }
+        return false;
+    }
+
+    function isNotCovered(address patientAddress) public view returns (bool) {
+        Patient memory patient = patients[patientAddress];
+        if (patient.diagnosis != "primary immune deficiency disease" || !patient.doctorApproval) {
+            return true;
+        }
+        return false;
+    }
+}
+```
+This contract defines a `Patient` struct to encapsulate the necessary parameters for a patient, including their address, diagnosis, and doctor approval. It also defines a mapping from patient addresses to `Patient` structs, which allows the contract to store and retrieve patient information.
+
+The contract has three functions:
+
+* `addPatient`: This function allows the contract owner to add a new patient to the contract. It takes the patient's address, diagnosis, and doctor approval as input and adds the patient to the mapping.
+* `isCovered`: This function checks whether a patient is covered by Medicare for IVIG provided in their home. It takes the patient's address as input and returns `true` if the patient has a diagnosis of "primary immune deficiency disease" and their doctor has approved IVIG for home use.
+* `isNotCovered`: This function checks whether a patient is not covered by Medicare for IVIG provided in their home. It takes the patient's address as input and returns `true` if the patient does not have a diagnosis of "primary immune deficiency disease" or their doctor has not approved IVIG for home use.
+
+The contract uses the `isCovered` and `isNotCovered` functions to determine whether a patient is covered by Medicare for IVIG provided in their home. If a patient is covered, the contract returns `true` for the `isCovered` function and `false` for the `isNotCovered` function. If a patient is not covered, the contract returns `false` for the `isCovered` function and `true` for the `isNotCovered` function.
+
+Note that this is just a sample contract and may need to be modified to fit the specific requirements of your use case. Additionally, it is important to review the policy document for the most up-to-date and accurate information on Medicare coverage of IVIG provided in the home.

@@ -1,0 +1,72 @@
+Here is a sample Solidity smart contract that implements the requirements described in the summary and unit tests:
+```
+pragma solidity ^0.8.0;
+
+contract MedicareImmunosuppressiveDrugBenefit {
+    struct Policyholder {
+        address policyholder;
+        bool hasPartACoverage;
+        bool hasPartBCoverage;
+        bool hasMedicareDrugCoverage;
+        bool hasESRDCoverageEnded;
+        bool isEligibleForBenefit;
+        bool canSignUpForBenefit;
+        bool hasPaidPremiumAndDeductible;
+        bool hasImmunosuppressiveDrugCoverageOnly;
+        bool isNotFullHealthCoverage;
+        bool hasMetDeductible;
+        bool hasPaidCopay;
+    }
+
+    mapping(address => Policyholder) policyholders;
+
+    function hasPartACoverage(address policyholder) public view returns (bool) {
+        return policyholders[policyholder].hasPartACoverage;
+    }
+
+    function hasPartBCoverage(address policyholder) public view returns (bool) {
+        return policyholders[policyholder].hasPartBCoverage;
+    }
+
+    function hasMedicareDrugCoverage(address policyholder) public view returns (bool) {
+        return policyholders[policyholder].hasMedicareDrugCoverage;
+    }
+
+    function hasESRDCoverageEnded(address policyholder) public view returns (bool) {
+        return policyholders[policyholder].hasESRDCoverageEnded;
+    }
+
+    function isEligibleForBenefit(address policyholder) public view returns (bool) {
+        return policyholders[policyholder].isEligibleForBenefit;
+    }
+
+    function canSignUpForBenefit(address policyholder) public view returns (bool) {
+        return policyholders[policyholder].canSignUpForBenefit;
+    }
+
+    function hasPaidPremiumAndDeductible(address policyholder) public view returns (bool) {
+        return policyholders[policyholder].hasPaidPremiumAndDeductible;
+    }
+
+    function hasImmunosuppressiveDrugCoverageOnly(address policyholder) public view returns (bool) {
+        return policyholders[policyholder].hasImmunosuppressiveDrugCoverageOnly;
+    }
+
+    function isNotFullHealthCoverage(address policyholder) public view returns (bool) {
+        return policyholders[policyholder].isNotFullHealthCoverage;
+    }
+
+    function hasMetDeductible(address policyholder) public view returns (bool) {
+        return policyholders[policyholder].hasMetDeductible;
+    }
+
+    function hasPaidCopay(address policyholder) public view returns (bool) {
+        return policyholders[policyholder].hasPaidCopay;
+    }
+}
+```
+This contract defines a `Policyholder` struct that contains all the necessary information for a policyholder, including their address, coverage status, and eligibility for the immunosuppressive drug benefit. The contract also defines several functions that can be used to check the policyholder's coverage and eligibility for the benefit.
+
+The `hasPartACoverage`, `hasPartBCoverage`, `hasMedicareDrugCoverage`, `hasESRDCoverageEnded`, `isEligibleForBenefit`, `canSignUpForBenefit`, `hasPaidPremiumAndDeductible`, `hasImmunosuppressiveDrugCoverageOnly`, `isNotFullHealthCoverage`, `hasMetDeductible`, and `hasPaidCopay` functions all return a boolean value indicating whether the policyholder meets the corresponding condition.
+
+The `policyholders` mapping is used to store the policyholder information, with the policyholder's address as the key and the `Policyholder` struct as the value. This allows the contract to easily retrieve the policyholder information and check their coverage and eligibility for the benefit.

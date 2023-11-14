@@ -1,0 +1,120 @@
+Here is a sample Solidity smart contract that implements the requirements described in the summary and CQL named expressions:
+```
+pragma solidity ^0.8.0;
+
+contract ImmunosuppressiveDrugBenefit {
+    // Define the Medicare codes
+    enum Medicare {
+        TransplantDrugTherapy,
+        PartA,
+        PartB,
+        PartD,
+        ESRD,
+        GroupHealthPlan,
+        TRICARE,
+        Medicaid
+    }
+
+    // Define the patient context
+    struct Patient {
+        Medicare medicare;
+        bool partA;
+        bool partB;
+        bool partD;
+        bool esrd;
+        bool groupHealthPlan;
+        bool tricare;
+        bool medicaid;
+    }
+
+    // Define the immunosuppressive drug benefit
+    struct ImmunosuppressiveDrugBenefit {
+        uint premium;
+        uint deductible;
+        uint coverage;
+        bool signUp;
+        bool callSocialSecurity;
+        bool ttyUsers;
+    }
+
+    // Define the premium and deductible amounts for 2023
+    uint immunosuppressiveDrugBenefitPremium2023 = 97.10;
+    uint immunosuppressiveDrugBenefitDeductible2023 = 226;
+
+    // Define the coverage amount for 2023
+    uint immunosuppressiveDrugBenefitCoverage2023 = 20;
+
+    // Define the sign-up and call Social Security functions
+    function signUp(Patient patient) public {
+        // Check if the patient has Part A and Part B coverage
+        if (patient.partA && patient.partB) {
+            // Check if the patient has ESRD
+            if (patient.esrd) {
+                // Check if the patient has a group health plan, TRICARE, or Medicaid coverage
+                if (patient.groupHealthPlan || patient.tricare || patient.medicaid) {
+                    // Check if the patient has met the deductible
+                    if (patient.deductible >= immunosuppressiveDrugBenefitDeductible2023) {
+                        // Calculate the coverage amount
+                        uint coverageAmount = immunosuppressiveDrugBenefitCoverage2023 * patient.deductible;
+
+                        // Return the coverage amount
+                        return coverageAmount;
+                    }
+                }
+            }
+        }
+
+        // Return 0 if the patient does not meet the requirements
+        return 0;
+    }
+
+    // Define the call Social Security function
+    function callSocialSecurity(Patient patient) public {
+        // Check if the patient has Part A and Part B coverage
+        if (patient.partA && patient.partB) {
+            // Check if the patient has ESRD
+            if (patient.esrd) {
+                // Check if the patient has a group health plan, TRICARE, or Medicaid coverage
+                if (patient.groupHealthPlan || patient.tricare || patient.medicaid) {
+                    // Check if the patient has met the deductible
+                    if (patient.deductible >= immunosuppressiveDrugBenefitDeductible2023) {
+                        // Calculate the coverage amount
+                        uint coverageAmount = immunosuppressiveDrugBenefitCoverage2023 * patient.deductible;
+
+                        // Return the coverage amount
+                        return coverageAmount;
+                    }
+                }
+            }
+        }
+
+        // Return 0 if the patient does not meet the requirements
+        return 0;
+    }
+
+    // Define the TTY users function
+    function ttyUsers(Patient patient) public {
+        // Check if the patient has Part A and Part B coverage
+        if (patient.partA && patient.partB) {
+            // Check if the patient has ESRD
+            if (patient.esrd) {
+                // Check if the patient has a group health plan, TRICARE, or Medicaid coverage
+                if (patient.groupHealthPlan || patient.tricare || patient.medicaid) {
+                    // Check if the patient has met the deductible
+                    if (patient.deductible >= immunosuppressiveDrugBenefitDeductible2023) {
+                        // Calculate the coverage amount
+                        uint coverageAmount = immunosuppressiveDrugBenefitCoverage2023 * patient.deductible;
+
+                        // Return the coverage amount
+                        return coverageAmount;
+                    }
+                }
+            }
+        }
+
+        // Return 0 if the patient does not meet the requirements
+        return 0;
+    }
+}
+```
+Note that this is just a sample implementation and may need to be modified to fit your specific use case. Additionally, this contract does not include any error handling or input validation, so you should add those features as needed.

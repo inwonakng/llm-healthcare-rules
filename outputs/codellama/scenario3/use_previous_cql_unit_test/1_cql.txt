@@ -1,0 +1,107 @@
+```
+library ImmunosuppressiveDrugBenefit version '1.0.0'
+
+using FHIR version '4.0.1'
+
+codesystem "Medicare": 'https://www.medicare.gov/coverage/transplant-drug-therapy'
+
+codesystem "PartA": 'https://www.medicare.gov/coverage/part-a'
+
+codesystem "PartB": 'https://www.medicare.gov/coverage/part-b'
+
+codesystem "PartD": 'https://www.medicare.gov/coverage/part-d'
+
+codesystem "ESRD": 'https://www.medicare.gov/coverage/end-stage-renal-disease'
+
+codesystem "GroupHealthPlan": 'https://www.medicare.gov/coverage/group-health-plan'
+
+codesystem "TRICARE": 'https://www.medicare.gov/coverage/tricare'
+
+codesystem "Medicaid": 'https://www.medicare.gov/coverage/medicaid'
+
+context Patient
+
+define TransplantDrugTherapy:
+  [Medicare] TransplantDrugTherapy
+
+define PartA:
+  [PartA] PartA
+
+define PartB:
+  [PartB] PartB
+
+define PartD:
+  [PartD] PartD
+
+define ESRD:
+  [ESRD] ESRD
+
+define GroupHealthPlan:
+  [GroupHealthPlan] GroupHealthPlan
+
+define TRICARE:
+  [TRICARE] TRICARE
+
+define Medicaid:
+  [Medicaid] Medicaid
+
+define ImmunosuppressiveDrugBenefit:
+  [Medicare] ImmunosuppressiveDrugBenefit
+
+define Premium:
+  [Medicare] Premium
+
+define Deductible:
+  [Medicare] Deductible
+
+define ImmunosuppressiveDrugCoverage:
+  [Medicare] ImmunosuppressiveDrugCoverage
+
+define FullHealthCoverage:
+  [Medicare] FullHealthCoverage
+
+define SignUp:
+  [Medicare] SignUp
+
+define CallSocialSecurity:
+  [Medicare] CallSocialSecurity
+
+define TTYUsers:
+  [Medicare] TTYUsers
+
+define ImmunosuppressiveDrugBenefitPremium:
+  [Medicare] ImmunosuppressiveDrugBenefitPremium
+
+define ImmunosuppressiveDrugBenefitDeductible:
+  [Medicare] ImmunosuppressiveDrugBenefitDeductible
+
+define ImmunosuppressiveDrugBenefitCoverage:
+  [Medicare] ImmunosuppressiveDrugBenefitCoverage
+
+define ImmunosuppressiveDrugBenefitSignUp:
+  [Medicare] ImmunosuppressiveDrugBenefitSignUp
+
+define ImmunosuppressiveDrugBenefitCallSocialSecurity:
+  [Medicare] ImmunosuppressiveDrugBenefitCallSocialSecurity
+
+define ImmunosuppressiveDrugBenefitTTYUsers:
+  [Medicare] ImmunosuppressiveDrugBenefitTTYUsers
+
+define ImmunosuppressiveDrugBenefitPremium2023:
+  [Medicare] ImmunosuppressiveDrugBenefitPremium2023
+
+define ImmunosuppressiveDrugBenefitDeductible2023:
+  [Medicare] ImmunosuppressiveDrugBenefitDeductible2023
+
+define ImmunosuppressiveDrugBenefitCoverage2023:
+  [Medicare] ImmunosuppressiveDrugBenefitCoverage2023
+
+define ImmunosuppressiveDrugBenefitSignUp2023:
+  [Medicare] ImmunosuppressiveDrugBenefitSignUp2023
+
+define ImmunosuppressiveDrugBenefitCallSocialSecurity2023:
+  [Medicare] ImmunosuppressiveDrugBenefitCallSocialSecurity2023
+
+define ImmunosuppressiveDrugBenefitTTYUsers2023:
+  [Medicare] ImmunosuppressiveDrugBenefitTTYUsers2023
+```

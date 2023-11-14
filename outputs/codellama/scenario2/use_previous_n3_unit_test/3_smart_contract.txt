@@ -1,0 +1,33 @@
+Here is an example of a Solidity smart contract that implements the requirements for Medicare coverage of Intravenous Immune Globulin (IVIG) provided in the home:
+```
+pragma solidity ^0.8.0;
+
+contract IVIGCoverage {
+    struct Patient {
+        address patient;
+        bytes32 diagnosis;
+        bytes32 medicalJudgment;
+    }
+
+    mapping(address => Patient) public patients;
+
+    function isCovered(address patient, bytes32 diagnosis, bytes32 medicalJudgment, bytes32 item) public view returns (bool) {
+        // Check if patient has primary immune deficiency disease
+        if (patients[patient].diagnosis == "Primary immune deficiency disease") {
+            // Check if patient's doctor determines IVIG is medically appropriate
+            if (patients[patient].medicalJudgment == "IVIG is medically appropriate for patient") {
+                // Check if Medicare covers IVIG itself, but not related items and services
+                if (item == "IVIG") {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        }
+        return false;
+    }
+}
+```
+This contract defines a struct `Patient` to encapsulate the necessary parameters for determining coverage, and a mapping `patients` to store the patient information. The `isCovered` function implements the logic rules described in the N3 logic rules and Solidity unit tests, and returns `true` if the patient is covered and `false` otherwise.
+
+Note that this is just an example implementation and may need to be modified to fit the specific requirements of the insurance policy document. It is important to review the policy document and consult with a qualified healthcare professional to ensure that the code is accurate and up-to-date.

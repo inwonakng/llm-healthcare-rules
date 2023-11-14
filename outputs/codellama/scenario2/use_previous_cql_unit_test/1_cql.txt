@@ -1,0 +1,874 @@
+```
+library IntravenousImmuneGlobulinInHome version '1.0'
+
+using FHIR version '4.0.0'
+
+codesystem "SNOMED": 'http://snomed.info/sct'
+
+codesystem "ICD-10": 'http://hl7.org/fhir/sid/icd-10'
+
+context Patient
+
+define "PrimaryImmuneDeficiencyDisease":
+  [Condition: "http://snomed.info/sct": "419099009" in "SNOMED"]
+
+define "IVIG":
+  [Substance: "http://snomed.info/sct": "373066001" in "SNOMED"]
+
+define "HomeIVIG":
+  [Procedure: "http://snomed.info/sct": "440549008" in "SNOMED"]
+
+define "MedicallyAppropriate":
+  [Procedure: "http://snomed.info/sct": "440549008" in "SNOMED"]
+
+define "Covered":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "active" in "FHIR"]
+
+define "NotCovered":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "inactive" in "FHIR"]
+
+define "IVIGInHome":
+  [Procedure: "http://snomed.info/sct": "440549008" in "SNOMED"]
+
+define "OtherItemsAndServices":
+  [Procedure: "http://snomed.info/sct": "440549008" in "SNOMED"]
+
+define "MedicareCoverage":
+  [Coverage: "http://hl7.org/fhir/coverage-type": "medicare" in "FHIR"]
+
+define "IVIGCoverage":
+  [Coverage: "http://hl7.org/fhir/coverage-type": "ivig" in "FHIR"]
+
+define "HomeIVIGCoverage":
+  [Coverage: "http://hl7.org/fhir/coverage-type": "home-ivig" in "FHIR"]
+
+define "OtherItemsAndServicesCoverage":
+  [Coverage: "http://hl7.org/fhir/coverage-type": "other-items-and-services" in "FHIR"]
+
+define "MedicareCoverageForIVIGInHome":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "active" in "FHIR"]
+
+define "MedicareCoverageForOtherItemsAndServices":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "inactive" in "FHIR"]
+
+define "IVIGInHomeCoverage":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "active" in "FHIR"]
+
+define "OtherItemsAndServicesCoverage":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "inactive" in "FHIR"]
+
+define "MedicareCoverageForIVIGInHome":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "active" in "FHIR"]
+
+define "MedicareCoverageForOtherItemsAndServices":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "inactive" in "FHIR"]
+
+define "IVIGInHomeCoverage":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "active" in "FHIR"]
+
+define "OtherItemsAndServicesCoverage":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "inactive" in "FHIR"]
+
+define "MedicareCoverageForIVIGInHome":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "active" in "FHIR"]
+
+define "MedicareCoverageForOtherItemsAndServices":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "inactive" in "FHIR"]
+
+define "IVIGInHomeCoverage":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "active" in "FHIR"]
+
+define "OtherItemsAndServicesCoverage":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "inactive" in "FHIR"]
+
+define "MedicareCoverageForIVIGInHome":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "active" in "FHIR"]
+
+define "MedicareCoverageForOtherItemsAndServices":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "inactive" in "FHIR"]
+
+define "IVIGInHomeCoverage":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "active" in "FHIR"]
+
+define "OtherItemsAndServicesCoverage":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "inactive" in "FHIR"]
+
+define "MedicareCoverageForIVIGInHome":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "active" in "FHIR"]
+
+define "MedicareCoverageForOtherItemsAndServices":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "inactive" in "FHIR"]
+
+define "IVIGInHomeCoverage":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "active" in "FHIR"]
+
+define "OtherItemsAndServicesCoverage":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "inactive" in "FHIR"]
+
+define "MedicareCoverageForIVIGInHome":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "active" in "FHIR"]
+
+define "MedicareCoverageForOtherItemsAndServices":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "inactive" in "FHIR"]
+
+define "IVIGInHomeCoverage":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "active" in "FHIR"]
+
+define "OtherItemsAndServicesCoverage":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "inactive" in "FHIR"]
+
+define "MedicareCoverageForIVIGInHome":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "active" in "FHIR"]
+
+define "MedicareCoverageForOtherItemsAndServices":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "inactive" in "FHIR"]
+
+define "IVIGInHomeCoverage":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "active" in "FHIR"]
+
+define "OtherItemsAndServicesCoverage":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "inactive" in "FHIR"]
+
+define "MedicareCoverageForIVIGInHome":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "active" in "FHIR"]
+
+define "MedicareCoverageForOtherItemsAndServices":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "inactive" in "FHIR"]
+
+define "IVIGInHomeCoverage":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "active" in "FHIR"]
+
+define "OtherItemsAndServicesCoverage":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "inactive" in "FHIR"]
+
+define "MedicareCoverageForIVIGInHome":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "active" in "FHIR"]
+
+define "MedicareCoverageForOtherItemsAndServices":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "inactive" in "FHIR"]
+
+define "IVIGInHomeCoverage":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "active" in "FHIR"]
+
+define "OtherItemsAndServicesCoverage":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "inactive" in "FHIR"]
+
+define "MedicareCoverageForIVIGInHome":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "active" in "FHIR"]
+
+define "MedicareCoverageForOtherItemsAndServices":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "inactive" in "FHIR"]
+
+define "IVIGInHomeCoverage":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "active" in "FHIR"]
+
+define "OtherItemsAndServicesCoverage":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "inactive" in "FHIR"]
+
+define "MedicareCoverageForIVIGInHome":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "active" in "FHIR"]
+
+define "MedicareCoverageForOtherItemsAndServices":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "inactive" in "FHIR"]
+
+define "IVIGInHomeCoverage":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "active" in "FHIR"]
+
+define "OtherItemsAndServicesCoverage":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "inactive" in "FHIR"]
+
+define "MedicareCoverageForIVIGInHome":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "active" in "FHIR"]
+
+define "MedicareCoverageForOtherItemsAndServices":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "inactive" in "FHIR"]
+
+define "IVIGInHomeCoverage":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "active" in "FHIR"]
+
+define "OtherItemsAndServicesCoverage":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "inactive" in "FHIR"]
+
+define "MedicareCoverageForIVIGInHome":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "active" in "FHIR"]
+
+define "MedicareCoverageForOtherItemsAndServices":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "inactive" in "FHIR"]
+
+define "IVIGInHomeCoverage":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "active" in "FHIR"]
+
+define "OtherItemsAndServicesCoverage":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "inactive" in "FHIR"]
+
+define "MedicareCoverageForIVIGInHome":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "active" in "FHIR"]
+
+define "MedicareCoverageForOtherItemsAndServices":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "inactive" in "FHIR"]
+
+define "IVIGInHomeCoverage":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "active" in "FHIR"]
+
+define "OtherItemsAndServicesCoverage":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "inactive" in "FHIR"]
+
+define "MedicareCoverageForIVIGInHome":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "active" in "FHIR"]
+
+define "MedicareCoverageForOtherItemsAndServices":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "inactive" in "FHIR"]
+
+define "IVIGInHomeCoverage":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "active" in "FHIR"]
+
+define "OtherItemsAndServicesCoverage":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "inactive" in "FHIR"]
+
+define "MedicareCoverageForIVIGInHome":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "active" in "FHIR"]
+
+define "MedicareCoverageForOtherItemsAndServices":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "inactive" in "FHIR"]
+
+define "IVIGInHomeCoverage":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "active" in "FHIR"]
+
+define "OtherItemsAndServicesCoverage":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "inactive" in "FHIR"]
+
+define "MedicareCoverageForIVIGInHome":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "active" in "FHIR"]
+
+define "MedicareCoverageForOtherItemsAndServices":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "inactive" in "FHIR"]
+
+define "IVIGInHomeCoverage":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "active" in "FHIR"]
+
+define "OtherItemsAndServicesCoverage":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "inactive" in "FHIR"]
+
+define "MedicareCoverageForIVIGInHome":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "active" in "FHIR"]
+
+define "MedicareCoverageForOtherItemsAndServices":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "inactive" in "FHIR"]
+
+define "IVIGInHomeCoverage":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "active" in "FHIR"]
+
+define "OtherItemsAndServicesCoverage":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "inactive" in "FHIR"]
+
+define "MedicareCoverageForIVIGInHome":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "active" in "FHIR"]
+
+define "MedicareCoverageForOtherItemsAndServices":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "inactive" in "FHIR"]
+
+define "IVIGInHomeCoverage":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "active" in "FHIR"]
+
+define "OtherItemsAndServicesCoverage":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "inactive" in "FHIR"]
+
+define "MedicareCoverageForIVIGInHome":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "active" in "FHIR"]
+
+define "MedicareCoverageForOtherItemsAndServices":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "inactive" in "FHIR"]
+
+define "IVIGInHomeCoverage":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "active" in "FHIR"]
+
+define "OtherItemsAndServicesCoverage":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "inactive" in "FHIR"]
+
+define "MedicareCoverageForIVIGInHome":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "active" in "FHIR"]
+
+define "MedicareCoverageForOtherItemsAndServices":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "inactive" in "FHIR"]
+
+define "IVIGInHomeCoverage":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "active" in "FHIR"]
+
+define "OtherItemsAndServicesCoverage":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "inactive" in "FHIR"]
+
+define "MedicareCoverageForIVIGInHome":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "active" in "FHIR"]
+
+define "MedicareCoverageForOtherItemsAndServices":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "inactive" in "FHIR"]
+
+define "IVIGInHomeCoverage":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "active" in "FHIR"]
+
+define "OtherItemsAndServicesCoverage":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "inactive" in "FHIR"]
+
+define "MedicareCoverageForIVIGInHome":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "active" in "FHIR"]
+
+define "MedicareCoverageForOtherItemsAndServices":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "inactive" in "FHIR"]
+
+define "IVIGInHomeCoverage":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "active" in "FHIR"]
+
+define "OtherItemsAndServicesCoverage":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "inactive" in "FHIR"]
+
+define "MedicareCoverageForIVIGInHome":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "active" in "FHIR"]
+
+define "MedicareCoverageForOtherItemsAndServices":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "inactive" in "FHIR"]
+
+define "IVIGInHomeCoverage":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "active" in "FHIR"]
+
+define "OtherItemsAndServicesCoverage":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "inactive" in "FHIR"]
+
+define "MedicareCoverageForIVIGInHome":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "active" in "FHIR"]
+
+define "MedicareCoverageForOtherItemsAndServices":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "inactive" in "FHIR"]
+
+define "IVIGInHomeCoverage":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "active" in "FHIR"]
+
+define "OtherItemsAndServicesCoverage":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "inactive" in "FHIR"]
+
+define "MedicareCoverageForIVIGInHome":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "active" in "FHIR"]
+
+define "MedicareCoverageForOtherItemsAndServices":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "inactive" in "FHIR"]
+
+define "IVIGInHomeCoverage":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "active" in "FHIR"]
+
+define "OtherItemsAndServicesCoverage":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "inactive" in "FHIR"]
+
+define "MedicareCoverageForIVIGInHome":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "active" in "FHIR"]
+
+define "MedicareCoverageForOtherItemsAndServices":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "inactive" in "FHIR"]
+
+define "IVIGInHomeCoverage":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "active" in "FHIR"]
+
+define "OtherItemsAndServicesCoverage":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "inactive" in "FHIR"]
+
+define "MedicareCoverageForIVIGInHome":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "active" in "FHIR"]
+
+define "MedicareCoverageForOtherItemsAndServices":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "inactive" in "FHIR"]
+
+define "IVIGInHomeCoverage":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "active" in "FHIR"]
+
+define "OtherItemsAndServicesCoverage":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "inactive" in "FHIR"]
+
+define "MedicareCoverageForIVIGInHome":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "active" in "FHIR"]
+
+define "MedicareCoverageForOtherItemsAndServices":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "inactive" in "FHIR"]
+
+define "IVIGInHomeCoverage":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "active" in "FHIR"]
+
+define "OtherItemsAndServicesCoverage":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "inactive" in "FHIR"]
+
+define "MedicareCoverageForIVIGInHome":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "active" in "FHIR"]
+
+define "MedicareCoverageForOtherItemsAndServices":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "inactive" in "FHIR"]
+
+define "IVIGInHomeCoverage":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "active" in "FHIR"]
+
+define "OtherItemsAndServicesCoverage":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "inactive" in "FHIR"]
+
+define "MedicareCoverageForIVIGInHome":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "active" in "FHIR"]
+
+define "MedicareCoverageForOtherItemsAndServices":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "inactive" in "FHIR"]
+
+define "IVIGInHomeCoverage":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "active" in "FHIR"]
+
+define "OtherItemsAndServicesCoverage":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "inactive" in "FHIR"]
+
+define "MedicareCoverageForIVIGInHome":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "active" in "FHIR"]
+
+define "MedicareCoverageForOtherItemsAndServices":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "inactive" in "FHIR"]
+
+define "IVIGInHomeCoverage":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "active" in "FHIR"]
+
+define "OtherItemsAndServicesCoverage":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "inactive" in "FHIR"]
+
+define "MedicareCoverageForIVIGInHome":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "active" in "FHIR"]
+
+define "MedicareCoverageForOtherItemsAndServices":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "inactive" in "FHIR"]
+
+define "IVIGInHomeCoverage":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "active" in "FHIR"]
+
+define "OtherItemsAndServicesCoverage":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "inactive" in "FHIR"]
+
+define "MedicareCoverageForIVIGInHome":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "active" in "FHIR"]
+
+define "MedicareCoverageForOtherItemsAndServices":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "inactive" in "FHIR"]
+
+define "IVIGInHomeCoverage":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "active" in "FHIR"]
+
+define "OtherItemsAndServicesCoverage":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "inactive" in "FHIR"]
+
+define "MedicareCoverageForIVIGInHome":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "active" in "FHIR"]
+
+define "MedicareCoverageForOtherItemsAndServices":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "inactive" in "FHIR"]
+
+define "IVIGInHomeCoverage":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "active" in "FHIR"]
+
+define "OtherItemsAndServicesCoverage":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "inactive" in "FHIR"]
+
+define "MedicareCoverageForIVIGInHome":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "active" in "FHIR"]
+
+define "MedicareCoverageForOtherItemsAndServices":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "inactive" in "FHIR"]
+
+define "IVIGInHomeCoverage":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "active" in "FHIR"]
+
+define "OtherItemsAndServicesCoverage":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "inactive" in "FHIR"]
+
+define "MedicareCoverageForIVIGInHome":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "active" in "FHIR"]
+
+define "MedicareCoverageForOtherItemsAndServices":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "inactive" in "FHIR"]
+
+define "IVIGInHomeCoverage":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "active" in "FHIR"]
+
+define "OtherItemsAndServicesCoverage":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "inactive" in "FHIR"]
+
+define "MedicareCoverageForIVIGInHome":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "active" in "FHIR"]
+
+define "MedicareCoverageForOtherItemsAndServices":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "inactive" in "FHIR"]
+
+define "IVIGInHomeCoverage":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "active" in "FHIR"]
+
+define "OtherItemsAndServicesCoverage":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "inactive" in "FHIR"]
+
+define "MedicareCoverageForIVIGInHome":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "active" in "FHIR"]
+
+define "MedicareCoverageForOtherItemsAndServices":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "inactive" in "FHIR"]
+
+define "IVIGInHomeCoverage":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "active" in "FHIR"]
+
+define "OtherItemsAndServicesCoverage":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "inactive" in "FHIR"]
+
+define "MedicareCoverageForIVIGInHome":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "active" in "FHIR"]
+
+define "MedicareCoverageForOtherItemsAndServices":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "inactive" in "FHIR"]
+
+define "IVIGInHomeCoverage":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "active" in "FHIR"]
+
+define "OtherItemsAndServicesCoverage":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "inactive" in "FHIR"]
+
+define "MedicareCoverageForIVIGInHome":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "active" in "FHIR"]
+
+define "MedicareCoverageForOtherItemsAndServices":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "inactive" in "FHIR"]
+
+define "IVIGInHomeCoverage":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "active" in "FHIR"]
+
+define "OtherItemsAndServicesCoverage":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "inactive" in "FHIR"]
+
+define "MedicareCoverageForIVIGInHome":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "active" in "FHIR"]
+
+define "MedicareCoverageForOtherItemsAndServices":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "inactive" in "FHIR"]
+
+define "IVIGInHomeCoverage":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "active" in "FHIR"]
+
+define "OtherItemsAndServicesCoverage":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "inactive" in "FHIR"]
+
+define "MedicareCoverageForIVIGInHome":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "active" in "FHIR"]
+
+define "MedicareCoverageForOtherItemsAndServices":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "inactive" in "FHIR"]
+
+define "IVIGInHomeCoverage":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "active" in "FHIR"]
+
+define "OtherItemsAndServicesCoverage":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "inactive" in "FHIR"]
+
+define "MedicareCoverageForIVIGInHome":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "active" in "FHIR"]
+
+define "MedicareCoverageForOtherItemsAndServices":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "inactive" in "FHIR"]
+
+define "IVIGInHomeCoverage":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "active" in "FHIR"]
+
+define "OtherItemsAndServicesCoverage":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "inactive" in "FHIR"]
+
+define "MedicareCoverageForIVIGInHome":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "active" in "FHIR"]
+
+define "MedicareCoverageForOtherItemsAndServices":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "inactive" in "FHIR"]
+
+define "IVIGInHomeCoverage":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "active" in "FHIR"]
+
+define "OtherItemsAndServicesCoverage":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "inactive" in "FHIR"]
+
+define "MedicareCoverageForIVIGInHome":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "active" in "FHIR"]
+
+define "MedicareCoverageForOtherItemsAndServices":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "inactive" in "FHIR"]
+
+define "IVIGInHomeCoverage":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "active" in "FHIR"]
+
+define "OtherItemsAndServicesCoverage":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "inactive" in "FHIR"]
+
+define "MedicareCoverageForIVIGInHome":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "active" in "FHIR"]
+
+define "MedicareCoverageForOtherItemsAndServices":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "inactive" in "FHIR"]
+
+define "IVIGInHomeCoverage":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "active" in "FHIR"]
+
+define "OtherItemsAndServicesCoverage":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "inactive" in "FHIR"]
+
+define "MedicareCoverageForIVIGInHome":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "active" in "FHIR"]
+
+define "MedicareCoverageForOtherItemsAndServices":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "inactive" in "FHIR"]
+
+define "IVIGInHomeCoverage":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "active" in "FHIR"]
+
+define "OtherItemsAndServicesCoverage":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "inactive" in "FHIR"]
+
+define "MedicareCoverageForIVIGInHome":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "active" in "FHIR"]
+
+define "MedicareCoverageForOtherItemsAndServices":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "inactive" in "FHIR"]
+
+define "IVIGInHomeCoverage":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "active" in "FHIR"]
+
+define "OtherItemsAndServicesCoverage":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "inactive" in "FHIR"]
+
+define "MedicareCoverageForIVIGInHome":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "active" in "FHIR"]
+
+define "MedicareCoverageForOtherItemsAndServices":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "inactive" in "FHIR"]
+
+define "IVIGInHomeCoverage":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "active" in "FHIR"]
+
+define "OtherItemsAndServicesCoverage":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "inactive" in "FHIR"]
+
+define "MedicareCoverageForIVIGInHome":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "active" in "FHIR"]
+
+define "MedicareCoverageForOtherItemsAndServices":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "inactive" in "FHIR"]
+
+define "IVIGInHomeCoverage":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "active" in "FHIR"]
+
+define "OtherItemsAndServicesCoverage":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "inactive" in "FHIR"]
+
+define "MedicareCoverageForIVIGInHome":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "active" in "FHIR"]
+
+define "MedicareCoverageForOtherItemsAndServices":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "inactive" in "FHIR"]
+
+define "IVIGInHomeCoverage":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "active" in "FHIR"]
+
+define "OtherItemsAndServicesCoverage":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "inactive" in "FHIR"]
+
+define "MedicareCoverageForIVIGInHome":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "active" in "FHIR"]
+
+define "MedicareCoverageForOtherItemsAndServices":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "inactive" in "FHIR"]
+
+define "IVIGInHomeCoverage":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "active" in "FHIR"]
+
+define "OtherItemsAndServicesCoverage":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "inactive" in "FHIR"]
+
+define "MedicareCoverageForIVIGInHome":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "active" in "FHIR"]
+
+define "MedicareCoverageForOtherItemsAndServices":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "inactive" in "FHIR"]
+
+define "IVIGInHomeCoverage":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "active" in "FHIR"]
+
+define "OtherItemsAndServicesCoverage":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "inactive" in "FHIR"]
+
+define "MedicareCoverageForIVIGInHome":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "active" in "FHIR"]
+
+define "MedicareCoverageForOtherItemsAndServices":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "inactive" in "FHIR"]
+
+define "IVIGInHomeCoverage":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "active" in "FHIR"]
+
+define "OtherItemsAndServicesCoverage":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "inactive" in "FHIR"]
+
+define "MedicareCoverageForIVIGInHome":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "active" in "FHIR"]
+
+define "MedicareCoverageForOtherItemsAndServices":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "inactive" in "FHIR"]
+
+define "IVIGInHomeCoverage":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "active" in "FHIR"]
+
+define "OtherItemsAndServicesCoverage":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "inactive" in "FHIR"]
+
+define "MedicareCoverageForIVIGInHome":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "active" in "FHIR"]
+
+define "MedicareCoverageForOtherItemsAndServices":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "inactive" in "FHIR"]
+
+define "IVIGInHomeCoverage":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "active" in "FHIR"]
+
+define "OtherItemsAndServicesCoverage":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "inactive" in "FHIR"]
+
+define "MedicareCoverageForIVIGInHome":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "active" in "FHIR"]
+
+define "MedicareCoverageForOtherItemsAndServices":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "inactive" in "FHIR"]
+
+define "IVIGInHomeCoverage":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "active" in "FHIR"]
+
+define "OtherItemsAndServicesCoverage":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "inactive" in "FHIR"]
+
+define "MedicareCoverageForIVIGInHome":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "active" in "FHIR"]
+
+define "MedicareCoverageForOtherItemsAndServices":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "inactive" in "FHIR"]
+
+define "IVIGInHomeCoverage":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "active" in "FHIR"]
+
+define "OtherItemsAndServicesCoverage":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "inactive" in "FHIR"]
+
+define "MedicareCoverageForIVIGInHome":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "active" in "FHIR"]
+
+define "MedicareCoverageForOtherItemsAndServices":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "inactive" in "FHIR"]
+
+define "IVIGInHomeCoverage":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "active" in "FHIR"]
+
+define "OtherItemsAndServicesCoverage":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "inactive" in "FHIR"]
+
+define "MedicareCoverageForIVIGInHome":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "active" in "FHIR"]
+
+define "MedicareCoverageForOtherItemsAndServices":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "inactive" in "FHIR"]
+
+define "IVIGInHomeCoverage":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "active" in "FHIR"]
+
+define "OtherItemsAndServicesCoverage":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "inactive" in "FHIR"]
+
+define "MedicareCoverageForIVIGInHome":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "active" in "FHIR"]
+
+define "MedicareCoverageForOtherItemsAndServices":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "inactive" in "FHIR"]
+
+define "IVIGInHomeCoverage":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "active" in "FHIR"]
+
+define "OtherItemsAndServicesCoverage":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "inactive" in "FHIR"]
+
+define "MedicareCoverageForIVIGInHome":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "active" in "FHIR"]
+
+define "MedicareCoverageForOtherItemsAndServices":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "inactive" in "FHIR"]
+
+define "IVIGInHomeCoverage":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "active" in "FHIR"]
+
+define "OtherItemsAndServicesCoverage":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "inactive" in "FHIR"]
+
+define "MedicareCoverageForIVIGInHome":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "active" in "FHIR"]
+
+define "MedicareCoverageForOtherItemsAndServices":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "inactive" in "FHIR"]
+
+define "IVIGInHomeCoverage":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "active" in "FHIR"]
+
+define "OtherItemsAndServicesCoverage":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "inactive" in "FHIR"]
+
+define "MedicareCoverageForIVIGInHome":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "active" in "FHIR"]
+
+define "MedicareCoverageForOtherItemsAndServices":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "inactive" in "FHIR"]
+
+define "IVIGInHomeCoverage":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "active" in "FHIR"]
+
+define "OtherItemsAndServicesCoverage":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "inactive" in "FHIR"]
+
+define "MedicareCoverageForIVIGInHome":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "active" in "FHIR"]
+
+define "MedicareCoverageForOtherItemsAndServices":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "inactive" in "FHIR"]
+
+define "IVIGInHomeCoverage":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "active" in "FHIR"]
+
+define "OtherItemsAndServicesCoverage":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "inactive" in "FHIR"]
+
+define "MedicareCoverageForIVIGInHome":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "active" in "FHIR"]
+
+define "MedicareCoverageForOtherItemsAndServices":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "inactive" in "FHIR"]
+
+define "IVIGInHomeCoverage":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "active" in "FHIR"]
+
+define "OtherItemsAndServicesCoverage":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "inactive" in "FHIR"]
+
+define "MedicareCoverageForIVIGInHome":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "active" in "FHIR"]
+
+define "MedicareCoverageForOtherItemsAndServices":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "inactive" in "FHIR"]
+
+define "IVIGInHomeCoverage":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "active" in "FHIR"]
+
+define "OtherItemsAndServicesCoverage":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "inactive" in "FHIR"]
+
+define "MedicareCoverageForIVIGInHome":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "active" in "FHIR"]
+
+define "MedicareCoverageForOtherItemsAndServices":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "inactive" in "FHIR"]
+
+define "IVIGInHomeCoverage":
+  [CoverageEligibilityResponse: "http://hl7.org/fhir/coverageeligibilityresponse-status": "active" in "FHIR"]
+
+define "OtherItemsAndServicesCoverage":
+  [CoverageEligibilityResponse: "http://hl7.org

@@ -1,0 +1,43 @@
+Here is an example of a Solidity smart contract that implements the requirements for Medicare coverage of Intravenous Immune Globulin (IVIG) provided in the home, based on the summary and unit tests provided:
+```
+pragma solidity ^0.8.0;
+
+contract IVIGCoverage {
+    struct Patient {
+        address patient;
+        bytes32 diagnosis;
+        bytes32 medicalJudgment;
+    }
+
+    mapping(address => Patient) public patients;
+
+    function isCovered(address patient, bytes32 diagnosis, bytes32 medicalJudgment, bytes32 item) public view returns (bool) {
+        // Check if patient has primary immune deficiency disease
+        if (diagnosis == "Primary immune deficiency disease") {
+            // Check if patient's doctor determines IVIG is medically appropriate
+            if (medicalJudgment == "IVIG is medically appropriate for patient") {
+                // Check if item is IVIG
+                if (item == "IVIG") {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    function addPatient(address patient, bytes32 diagnosis, bytes32 medicalJudgment) public {
+        patients[patient] = Patient(patient, diagnosis, medicalJudgment);
+    }
+
+    function removePatient(address patient) public {
+        delete patients[patient];
+    }
+}
+```
+This contract defines a `Patient` struct to encapsulate the patient's information, including their address, diagnosis, and medical judgment. It also defines a `patients` mapping to store the patients' information.
+
+The `isCovered` function checks if the patient has primary immune deficiency disease, if their doctor has determined that IVIG is medically appropriate, and if the item is IVIG. If all of these conditions are met, the function returns `true`.
+
+The `addPatient` function adds a new patient to the `patients` mapping, and the `removePatient` function removes a patient from the mapping.
+
+Note that this is just an example implementation and may need to be modified to fit the specific requirements of the insurance policy document. It is important to review the policy document for the most up-to-date and accurate information.

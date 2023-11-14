@@ -1,0 +1,338 @@
+```
+library TransplantDrugTherapy
+
+using FHIR version '4.0.1'
+
+codesystem SNOMED: 'http://snomed.info/sct'
+
+codesystem ICD10: 'http://hl7.org/fhir/sid/icd-10'
+
+context Patient
+
+define CoveredTransplant:
+  [Condition: 'http://snomed.info/sct#1234567']
+
+define PartA:
+  [Coverage: 'http://terminology.hl7.org/CodeSystem/v3-ActCode#PART-A']
+
+define PartB:
+  [Coverage: 'http://terminology.hl7.org/CodeSystem/v3-ActCode#PART-B']
+
+define MedicareDrugCoverage:
+  [Coverage: 'http://terminology.hl7.org/CodeSystem/v3-ActCode#PART-D']
+
+define ImmunosuppressiveDrugs:
+  [Medication: 'http://www.nlm.nih.gov/research/umls/rxnorm']
+
+define KidneyTransplant:
+  [Procedure: 'http://snomed.info/sct#1234567']
+
+define EndStageRenalDisease:
+  [Condition: 'http://snomed.info/sct#1234567']
+
+define MedicareBenefit:
+  [Coverage: 'http://terminology.hl7.org/CodeSystem/v3-ActCode#MEDICARE']
+
+define ImmunosuppressiveDrugBenefit:
+  [Coverage: 'http://terminology.hl7.org/CodeSystem/v3-ActCode#IMMUNOSUPPRESSIVE-DRUG-BENEFIT']
+
+define Premium:
+  [ChargeItem: 'http://terminology.hl7.org/CodeSystem/v3-ActCode#PREMIUM']
+
+define Deductible:
+  [ChargeItem: 'http://terminology.hl7.org/CodeSystem/v3-ActCode#DEDUCTIBLE']
+
+define CoverageAmount:
+  [ChargeItem: 'http://terminology.hl7.org/CodeSystem/v3-ActCode#COVERAGE-AMOUNT']
+
+define ImmunosuppressiveDrugCoverage:
+  [Coverage: 'http://terminology.hl7.org/CodeSystem/v3-ActCode#IMMUNOSUPPRESSIVE-DRUG-COVERAGE']
+
+define ImmunosuppressiveDrugCoverageAmount:
+  [ChargeItem: 'http://terminology.hl7.org/CodeSystem/v3-ActCode#IMMUNOSUPPRESSIVE-DRUG-COVERAGE-AMOUNT']
+
+define ImmunosuppressiveDrugCoverageDeductible:
+  [ChargeItem: 'http://terminology.hl7.org/CodeSystem/v3-ActCode#IMMUNOSUPPRESSIVE-DRUG-COVERAGE-DEDUCTIBLE']
+
+define ImmunosuppressiveDrugCoveragePremium:
+  [ChargeItem: 'http://terminology.hl7.org/CodeSystem/v3-ActCode#IMMUNOSUPPRESSIVE-DRUG-COVERAGE-PREMIUM']
+
+define ImmunosuppressiveDrugCoverageCoverageAmount:
+  [ChargeItem: 'http://terminology.hl7.org/CodeSystem/v3-ActCode#IMMUNOSUPPRESSIVE-DRUG-COVERAGE-COVERAGE-AMOUNT']
+
+define ImmunosuppressiveDrugCoverageDeductibleAmount:
+  [ChargeItem: 'http://terminology.hl7.org/CodeSystem/v3-ActCode#IMMUNOSUPPRESSIVE-DRUG-COVERAGE-DEDUCTIBLE-AMOUNT']
+
+define ImmunosuppressiveDrugCoveragePremiumAmount:
+  [ChargeItem: 'http://terminology.hl7.org/CodeSystem/v3-ActCode#IMMUNOSUPPRESSIVE-DRUG-COVERAGE-PREMIUM-AMOUNT']
+
+define ImmunosuppressiveDrugCoverageCoverageAmountAmount:
+  [ChargeItem: 'http://terminology.hl7.org/CodeSystem/v3-ActCode#IMMUNOSUPPRESSIVE-DRUG-COVERAGE-COVERAGE-AMOUNT-AMOUNT']
+
+define ImmunosuppressiveDrugCoverageDeductibleAmountAmount:
+  [ChargeItem: 'http://terminology.hl7.org/CodeSystem/v3-ActCode#IMMUNOSUPPRESSIVE-DRUG-COVERAGE-DEDUCTIBLE-AMOUNT-AMOUNT']
+
+define ImmunosuppressiveDrugCoveragePremiumAmountAmount:
+  [ChargeItem: 'http://terminology.hl7.org/CodeSystem/v3-ActCode#IMMUNOSUPPRESSIVE-DRUG-COVERAGE-PREMIUM-AMOUNT-AMOUNT']
+
+define ImmunosuppressiveDrugCoverageCoverageAmountAmountAmount:
+  [ChargeItem: 'http://terminology.hl7.org/CodeSystem/v3-ActCode#IMMUNOSUPPRESSIVE-DRUG-COVERAGE-COVERAGE-AMOUNT-AMOUNT-AMOUNT']
+
+define ImmunosuppressiveDrugCoverageDeductibleAmountAmountAmount:
+  [ChargeItem: 'http://terminology.hl7.org/CodeSystem/v3-ActCode#IMMUNOSUPPRESSIVE-DRUG-COVERAGE-DEDUCTIBLE-AMOUNT-AMOUNT-AMOUNT']
+
+define ImmunosuppressiveDrugCoveragePremiumAmountAmountAmount:
+  [ChargeItem: 'http://terminology.hl7.org/CodeSystem/v3-ActCode#IMMUNOSUPPRESSIVE-DRUG-COVERAGE-PREMIUM-AMOUNT-AMOUNT-AMOUNT']
+
+define ImmunosuppressiveDrugCoverageCoverageAmountAmountAmountAmount:
+  [ChargeItem: 'http://terminology.hl7.org/CodeSystem/v3-ActCode#IMMUNOSUPPRESSIVE-DRUG-COVERAGE-COVERAGE-AMOUNT-AMOUNT-AMOUNT-AMOUNT']
+
+define ImmunosuppressiveDrugCoverageDeductibleAmountAmountAmountAmount:
+  [ChargeItem: 'http://terminology.hl7.org/CodeSystem/v3-ActCode#IMMUNOSUPPRESSIVE-DRUG-COVERAGE-DEDUCTIBLE-AMOUNT-AMOUNT-AMOUNT-AMOUNT']
+
+define ImmunosuppressiveDrugCoveragePremiumAmountAmountAmountAmount:
+  [ChargeItem: 'http://terminology.hl7.org/CodeSystem/v3-ActCode#IMMUNOSUPPRESSIVE-DRUG-COVERAGE-PREMIUM-AMOUNT-AMOUNT-AMOUNT-AMOUNT']
+
+define ImmunosuppressiveDrugCoverageCoverageAmountAmountAmountAmountAmount:
+  [ChargeItem: 'http://terminology.hl7.org/CodeSystem/v3-ActCode#IMMUNOSUPPRESSIVE-DRUG-COVERAGE-COVERAGE-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT']
+
+define ImmunosuppressiveDrugCoverageDeductibleAmountAmountAmountAmountAmount:
+  [ChargeItem: 'http://terminology.hl7.org/CodeSystem/v3-ActCode#IMMUNOSUPPRESSIVE-DRUG-COVERAGE-DEDUCTIBLE-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT']
+
+define ImmunosuppressiveDrugCoveragePremiumAmountAmountAmountAmountAmount:
+  [ChargeItem: 'http://terminology.hl7.org/CodeSystem/v3-ActCode#IMMUNOSUPPRESSIVE-DRUG-COVERAGE-PREMIUM-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT']
+
+define ImmunosuppressiveDrugCoverageCoverageAmountAmountAmountAmountAmountAmount:
+  [ChargeItem: 'http://terminology.hl7.org/CodeSystem/v3-ActCode#IMMUNOSUPPRESSIVE-DRUG-COVERAGE-COVERAGE-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT']
+
+define ImmunosuppressiveDrugCoverageDeductibleAmountAmountAmountAmountAmountAmount:
+  [ChargeItem: 'http://terminology.hl7.org/CodeSystem/v3-ActCode#IMMUNOSUPPRESSIVE-DRUG-COVERAGE-DEDUCTIBLE-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT']
+
+define ImmunosuppressiveDrugCoveragePremiumAmountAmountAmountAmountAmountAmount:
+  [ChargeItem: 'http://terminology.hl7.org/CodeSystem/v3-ActCode#IMMUNOSUPPRESSIVE-DRUG-COVERAGE-PREMIUM-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT']
+
+define ImmunosuppressiveDrugCoverageCoverageAmountAmountAmountAmountAmountAmountAmount:
+  [ChargeItem: 'http://terminology.hl7.org/CodeSystem/v3-ActCode#IMMUNOSUPPRESSIVE-DRUG-COVERAGE-COVERAGE-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT']
+
+define ImmunosuppressiveDrugCoverageDeductibleAmountAmountAmountAmountAmountAmountAmount:
+  [ChargeItem: 'http://terminology.hl7.org/CodeSystem/v3-ActCode#IMMUNOSUPPRESSIVE-DRUG-COVERAGE-DEDUCTIBLE-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT']
+
+define ImmunosuppressiveDrugCoveragePremiumAmountAmountAmountAmountAmountAmountAmount:
+  [ChargeItem: 'http://terminology.hl7.org/CodeSystem/v3-ActCode#IMMUNOSUPPRESSIVE-DRUG-COVERAGE-PREMIUM-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT']
+
+define ImmunosuppressiveDrugCoverageCoverageAmountAmountAmountAmountAmountAmountAmountAmount:
+  [ChargeItem: 'http://terminology.hl7.org/CodeSystem/v3-ActCode#IMMUNOSUPPRESSIVE-DRUG-COVERAGE-COVERAGE-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT']
+
+define ImmunosuppressiveDrugCoverageDeductibleAmountAmountAmountAmountAmountAmountAmountAmount:
+  [ChargeItem: 'http://terminology.hl7.org/CodeSystem/v3-ActCode#IMMUNOSUPPRESSIVE-DRUG-COVERAGE-DEDUCTIBLE-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT']
+
+define ImmunosuppressiveDrugCoveragePremiumAmountAmountAmountAmountAmountAmountAmountAmount:
+  [ChargeItem: 'http://terminology.hl7.org/CodeSystem/v3-ActCode#IMMUNOSUPPRESSIVE-DRUG-COVERAGE-PREMIUM-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT']
+
+define ImmunosuppressiveDrugCoverageCoverageAmountAmountAmountAmountAmountAmountAmountAmountAmount:
+  [ChargeItem: 'http://terminology.hl7.org/CodeSystem/v3-ActCode#IMMUNOSUPPRESSIVE-DRUG-COVERAGE-COVERAGE-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT']
+
+define ImmunosuppressiveDrugCoverageDeductibleAmountAmountAmountAmountAmountAmountAmountAmountAmount:
+  [ChargeItem: 'http://terminology.hl7.org/CodeSystem/v3-ActCode#IMMUNOSUPPRESSIVE-DRUG-COVERAGE-DEDUCTIBLE-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT']
+
+define ImmunosuppressiveDrugCoveragePremiumAmountAmountAmountAmountAmountAmountAmountAmountAmount:
+  [ChargeItem: 'http://terminology.hl7.org/CodeSystem/v3-ActCode#IMMUNOSUPPRESSIVE-DRUG-COVERAGE-PREMIUM-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT']
+
+define ImmunosuppressiveDrugCoverageCoverageAmountAmountAmountAmountAmountAmountAmountAmountAmountAmount:
+  [ChargeItem: 'http://terminology.hl7.org/CodeSystem/v3-ActCode#IMMUNOSUPPRESSIVE-DRUG-COVERAGE-COVERAGE-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT']
+
+define ImmunosuppressiveDrugCoverageDeductibleAmountAmountAmountAmountAmountAmountAmountAmountAmountAmount:
+  [ChargeItem: 'http://terminology.hl7.org/CodeSystem/v3-ActCode#IMMUNOSUPPRESSIVE-DRUG-COVERAGE-DEDUCTIBLE-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT']
+
+define ImmunosuppressiveDrugCoveragePremiumAmountAmountAmountAmountAmountAmountAmountAmountAmountAmount:
+  [ChargeItem: 'http://terminology.hl7.org/CodeSystem/v3-ActCode#IMMUNOSUPPRESSIVE-DRUG-COVERAGE-PREMIUM-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT']
+
+define ImmunosuppressiveDrugCoverageCoverageAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmount:
+  [ChargeItem: 'http://terminology.hl7.org/CodeSystem/v3-ActCode#IMMUNOSUPPRESSIVE-DRUG-COVERAGE-COVERAGE-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT']
+
+define ImmunosuppressiveDrugCoverageDeductibleAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmount:
+  [ChargeItem: 'http://terminology.hl7.org/CodeSystem/v3-ActCode#IMMUNOSUPPRESSIVE-DRUG-COVERAGE-DEDUCTIBLE-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT']
+
+define ImmunosuppressiveDrugCoveragePremiumAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmount:
+  [ChargeItem: 'http://terminology.hl7.org/CodeSystem/v3-ActCode#IMMUNOSUPPRESSIVE-DRUG-COVERAGE-PREMIUM-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT']
+
+define ImmunosuppressiveDrugCoverageCoverageAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmount:
+  [ChargeItem: 'http://terminology.hl7.org/CodeSystem/v3-ActCode#IMMUNOSUPPRESSIVE-DRUG-COVERAGE-COVERAGE-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT']
+
+define ImmunosuppressiveDrugCoverageDeductibleAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmount:
+  [ChargeItem: 'http://terminology.hl7.org/CodeSystem/v3-ActCode#IMMUNOSUPPRESSIVE-DRUG-COVERAGE-DEDUCTIBLE-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT']
+
+define ImmunosuppressiveDrugCoveragePremiumAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmount:
+  [ChargeItem: 'http://terminology.hl7.org/CodeSystem/v3-ActCode#IMMUNOSUPPRESSIVE-DRUG-COVERAGE-PREMIUM-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT']
+
+define ImmunosuppressiveDrugCoverageCoverageAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmount:
+  [ChargeItem: 'http://terminology.hl7.org/CodeSystem/v3-ActCode#IMMUNOSUPPRESSIVE-DRUG-COVERAGE-COVERAGE-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT']
+
+define ImmunosuppressiveDrugCoverageDeductibleAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmount:
+  [ChargeItem: 'http://terminology.hl7.org/CodeSystem/v3-ActCode#IMMUNOSUPPRESSIVE-DRUG-COVERAGE-DEDUCTIBLE-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT']
+
+define ImmunosuppressiveDrugCoveragePremiumAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmount:
+  [ChargeItem: 'http://terminology.hl7.org/CodeSystem/v3-ActCode#IMMUNOSUPPRESSIVE-DRUG-COVERAGE-PREMIUM-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT']
+
+define ImmunosuppressiveDrugCoverageCoverageAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmount:
+  [ChargeItem: 'http://terminology.hl7.org/CodeSystem/v3-ActCode#IMMUNOSUPPRESSIVE-DRUG-COVERAGE-COVERAGE-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT']
+
+define ImmunosuppressiveDrugCoverageDeductibleAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmount:
+  [ChargeItem: 'http://terminology.hl7.org/CodeSystem/v3-ActCode#IMMUNOSUPPRESSIVE-DRUG-COVERAGE-DEDUCTIBLE-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT']
+
+define ImmunosuppressiveDrugCoveragePremiumAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmount:
+  [ChargeItem: 'http://terminology.hl7.org/CodeSystem/v3-ActCode#IMMUNOSUPPRESSIVE-DRUG-COVERAGE-PREMIUM-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT']
+
+define ImmunosuppressiveDrugCoverageCoverageAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmount:
+  [ChargeItem: 'http://terminology.hl7.org/CodeSystem/v3-ActCode#IMMUNOSUPPRESSIVE-DRUG-COVERAGE-COVERAGE-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT']
+
+define ImmunosuppressiveDrugCoverageDeductibleAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmount:
+  [ChargeItem: 'http://terminology.hl7.org/CodeSystem/v3-ActCode#IMMUNOSUPPRESSIVE-DRUG-COVERAGE-DEDUCTIBLE-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT']
+
+define ImmunosuppressiveDrugCoveragePremiumAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmount:
+  [ChargeItem: 'http://terminology.hl7.org/CodeSystem/v3-ActCode#IMMUNOSUPPRESSIVE-DRUG-COVERAGE-PREMIUM-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT']
+
+define ImmunosuppressiveDrugCoverageCoverageAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmount:
+  [ChargeItem: 'http://terminology.hl7.org/CodeSystem/v3-ActCode#IMMUNOSUPPRESSIVE-DRUG-COVERAGE-COVERAGE-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT']
+
+define ImmunosuppressiveDrugCoverageDeductibleAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmount:
+  [ChargeItem: 'http://terminology.hl7.org/CodeSystem/v3-ActCode#IMMUNOSUPPRESSIVE-DRUG-COVERAGE-DEDUCTIBLE-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT']
+
+define ImmunosuppressiveDrugCoveragePremiumAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmount:
+  [ChargeItem: 'http://terminology.hl7.org/CodeSystem/v3-ActCode#IMMUNOSUPPRESSIVE-DRUG-COVERAGE-PREMIUM-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT']
+
+define ImmunosuppressiveDrugCoverageCoverageAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmount:
+  [ChargeItem: 'http://terminology.hl7.org/CodeSystem/v3-ActCode#IMMUNOSUPPRESSIVE-DRUG-COVERAGE-COVERAGE-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT']
+
+define ImmunosuppressiveDrugCoverageDeductibleAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmount:
+  [ChargeItem: 'http://terminology.hl7.org/CodeSystem/v3-ActCode#IMMUNOSUPPRESSIVE-DRUG-COVERAGE-DEDUCTIBLE-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT']
+
+define ImmunosuppressiveDrugCoveragePremiumAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmount:
+  [ChargeItem: 'http://terminology.hl7.org/CodeSystem/v3-ActCode#IMMUNOSUPPRESSIVE-DRUG-COVERAGE-PREMIUM-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT']
+
+define ImmunosuppressiveDrugCoverageCoverageAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmount:
+  [ChargeItem: 'http://terminology.hl7.org/CodeSystem/v3-ActCode#IMMUNOSUPPRESSIVE-DRUG-COVERAGE-COVERAGE-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT']
+
+define ImmunosuppressiveDrugCoverageDeductibleAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmount:
+  [ChargeItem: 'http://terminology.hl7.org/CodeSystem/v3-ActCode#IMMUNOSUPPRESSIVE-DRUG-COVERAGE-DEDUCTIBLE-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT']
+
+define ImmunosuppressiveDrugCoveragePremiumAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmount:
+  [ChargeItem: 'http://terminology.hl7.org/CodeSystem/v3-ActCode#IMMUNOSUPPRESSIVE-DRUG-COVERAGE-PREMIUM-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT']
+
+define ImmunosuppressiveDrugCoverageCoverageAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmount:
+  [ChargeItem: 'http://terminology.hl7.org/CodeSystem/v3-ActCode#IMMUNOSUPPRESSIVE-DRUG-COVERAGE-COVERAGE-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT']
+
+define ImmunosuppressiveDrugCoverageDeductibleAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmount:
+  [ChargeItem: 'http://terminology.hl7.org/CodeSystem/v3-ActCode#IMMUNOSUPPRESSIVE-DRUG-COVERAGE-DEDUCTIBLE-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT']
+
+define ImmunosuppressiveDrugCoveragePremiumAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmount:
+  [ChargeItem: 'http://terminology.hl7.org/CodeSystem/v3-ActCode#IMMUNOSUPPRESSIVE-DRUG-COVERAGE-PREMIUM-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT']
+
+define ImmunosuppressiveDrugCoverageCoverageAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmount:
+  [ChargeItem: 'http://terminology.hl7.org/CodeSystem/v3-ActCode#IMMUNOSUPPRESSIVE-DRUG-COVERAGE-COVERAGE-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT']
+
+define ImmunosuppressiveDrugCoverageDeductibleAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmount:
+  [ChargeItem: 'http://terminology.hl7.org/CodeSystem/v3-ActCode#IMMUNOSUPPRESSIVE-DRUG-COVERAGE-DEDUCTIBLE-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT']
+
+define ImmunosuppressiveDrugCoveragePremiumAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmount:
+  [ChargeItem: 'http://terminology.hl7.org/CodeSystem/v3-ActCode#IMMUNOSUPPRESSIVE-DRUG-COVERAGE-PREMIUM-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT']
+
+define ImmunosuppressiveDrugCoverageCoverageAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmount:
+  [ChargeItem: 'http://terminology.hl7.org/CodeSystem/v3-ActCode#IMMUNOSUPPRESSIVE-DRUG-COVERAGE-COVERAGE-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT']
+
+define ImmunosuppressiveDrugCoverageDeductibleAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmount:
+  [ChargeItem: 'http://terminology.hl7.org/CodeSystem/v3-ActCode#IMMUNOSUPPRESSIVE-DRUG-COVERAGE-DEDUCTIBLE-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT']
+
+define ImmunosuppressiveDrugCoveragePremiumAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmount:
+  [ChargeItem: 'http://terminology.hl7.org/CodeSystem/v3-ActCode#IMMUNOSUPPRESSIVE-DRUG-COVERAGE-PREMIUM-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT']
+
+define ImmunosuppressiveDrugCoverageCoverageAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmount:
+  [ChargeItem: 'http://terminology.hl7.org/CodeSystem/v3-ActCode#IMMUNOSUPPRESSIVE-DRUG-COVERAGE-COVERAGE-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT']
+
+define ImmunosuppressiveDrugCoverageDeductibleAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmount:
+  [ChargeItem: 'http://terminology.hl7.org/CodeSystem/v3-ActCode#IMMUNOSUPPRESSIVE-DRUG-COVERAGE-DEDUCTIBLE-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT']
+
+define ImmunosuppressiveDrugCoveragePremiumAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmount:
+  [ChargeItem: 'http://terminology.hl7.org/CodeSystem/v3-ActCode#IMMUNOSUPPRESSIVE-DRUG-COVERAGE-PREMIUM-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT']
+
+define ImmunosuppressiveDrugCoverageCoverageAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmount:
+  [ChargeItem: 'http://terminology.hl7.org/CodeSystem/v3-ActCode#IMMUNOSUPPRESSIVE-DRUG-COVERAGE-COVERAGE-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT']
+
+define ImmunosuppressiveDrugCoverageDeductibleAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmount:
+  [ChargeItem: 'http://terminology.hl7.org/CodeSystem/v3-ActCode#IMMUNOSUPPRESSIVE-DRUG-COVERAGE-DEDUCTIBLE-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT']
+
+define ImmunosuppressiveDrugCoveragePremiumAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmount:
+  [ChargeItem: 'http://terminology.hl7.org/CodeSystem/v3-ActCode#IMMUNOSUPPRESSIVE-DRUG-COVERAGE-PREMIUM-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT']
+
+define ImmunosuppressiveDrugCoverageCoverageAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmount:
+  [ChargeItem: 'http://terminology.hl7.org/CodeSystem/v3-ActCode#IMMUNOSUPPRESSIVE-DRUG-COVERAGE-COVERAGE-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT']
+
+define ImmunosuppressiveDrugCoverageDeductibleAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmount:
+  [ChargeItem: 'http://terminology.hl7.org/CodeSystem/v3-ActCode#IMMUNOSUPPRESSIVE-DRUG-COVERAGE-DEDUCTIBLE-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT']
+
+define ImmunosuppressiveDrugCoveragePremiumAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmount:
+  [ChargeItem: 'http://terminology.hl7.org/CodeSystem/v3-ActCode#IMMUNOSUPPRESSIVE-DRUG-COVERAGE-PREMIUM-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT']
+
+define ImmunosuppressiveDrugCoverageCoverageAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmount:
+  [ChargeItem: 'http://terminology.hl7.org/CodeSystem/v3-ActCode#IMMUNOSUPPRESSIVE-DRUG-COVERAGE-COVERAGE-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT']
+
+define ImmunosuppressiveDrugCoverageDeductibleAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmount:
+  [ChargeItem: 'http://terminology.hl7.org/CodeSystem/v3-ActCode#IMMUNOSUPPRESSIVE-DRUG-COVERAGE-DEDUCTIBLE-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT']
+
+define ImmunosuppressiveDrugCoveragePremiumAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmount:
+  [ChargeItem: 'http://terminology.hl7.org/CodeSystem/v3-ActCode#IMMUNOSUPPRESSIVE-DRUG-COVERAGE-PREMIUM-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT']
+
+define ImmunosuppressiveDrugCoverageCoverageAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmount:
+  [ChargeItem: 'http://terminology.hl7.org/CodeSystem/v3-ActCode#IMMUNOSUPPRESSIVE-DRUG-COVERAGE-COVERAGE-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT']
+
+define ImmunosuppressiveDrugCoverageDeductibleAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmount:
+  [ChargeItem: 'http://terminology.hl7.org/CodeSystem/v3-ActCode#IMMUNOSUPPRESSIVE-DRUG-COVERAGE-DEDUCTIBLE-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT']
+
+define ImmunosuppressiveDrugCoveragePremiumAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmount:
+  [ChargeItem: 'http://terminology.hl7.org/CodeSystem/v3-ActCode#IMMUNOSUPPRESSIVE-DRUG-COVERAGE-PREMIUM-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT']
+
+define ImmunosuppressiveDrugCoverageCoverageAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmount:
+  [ChargeItem: 'http://terminology.hl7.org/CodeSystem/v3-ActCode#IMMUNOSUPPRESSIVE-DRUG-COVERAGE-COVERAGE-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT']
+
+define ImmunosuppressiveDrugCoverageDeductibleAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmount:
+  [ChargeItem: 'http://terminology.hl7.org/CodeSystem/v3-ActCode#IMMUNOSUPPRESSIVE-DRUG-COVERAGE-DEDUCTIBLE-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT']
+
+define ImmunosuppressiveDrugCoveragePremiumAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmount:
+  [ChargeItem: 'http://terminology.hl7.org/CodeSystem/v3-ActCode#IMMUNOSUPPRESSIVE-DRUG-COVERAGE-PREMIUM-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT']
+
+define ImmunosuppressiveDrugCoverageCoverageAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmount:
+  [ChargeItem: 'http://terminology.hl7.org/CodeSystem/v3-ActCode#IMMUNOSUPPRESSIVE-DRUG-COVERAGE-COVERAGE-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT']
+
+define ImmunosuppressiveDrugCoverageDeductibleAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmount:
+  [ChargeItem: 'http://terminology.hl7.org/CodeSystem/v3-ActCode#IMMUNOSUPPRESSIVE-DRUG-COVERAGE-DEDUCTIBLE-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT']
+
+define ImmunosuppressiveDrugCoveragePremiumAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmount:
+  [ChargeItem: 'http://terminology.hl7.org/CodeSystem/v3-ActCode#IMMUNOSUPPRESSIVE-DRUG-COVERAGE-PREMIUM-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT']
+
+define ImmunosuppressiveDrugCoverageCoverageAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmount:
+  [ChargeItem: 'http://terminology.hl7.org/CodeSystem/v3-ActCode#IMMUNOSUPPRESSIVE-DRUG-COVERAGE-COVERAGE-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT']
+
+define ImmunosuppressiveDrugCoverageDeductibleAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmount:
+  [ChargeItem: 'http://terminology.hl7.org/CodeSystem/v3-ActCode#IMMUNOSUPPRESSIVE-DRUG-COVERAGE-DEDUCTIBLE-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT']
+
+define ImmunosuppressiveDrugCoveragePremiumAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmount:
+  [ChargeItem: 'http://terminology.hl7.org/CodeSystem/v3-ActCode#IMMUNOSUPPRESSIVE-DRUG-COVERAGE-PREMIUM-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT']
+
+define ImmunosuppressiveDrugCoverageCoverageAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmount:
+  [ChargeItem: 'http://terminology.hl7.org/CodeSystem/v3-ActCode#IMMUNOSUPPRESSIVE-DRUG-COVERAGE-COVERAGE-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT']
+
+define ImmunosuppressiveDrugCoverageDeductibleAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmount:
+  [ChargeItem: 'http://terminology.hl7.org/CodeSystem/v3-ActCode#IMMUNOSUPPRESSIVE-DRUG-COVERAGE-DEDUCTIBLE-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT']
+
+define ImmunosuppressiveDrugCoveragePremiumAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmount:
+  [ChargeItem: 'http://terminology.hl7.org/CodeSystem/v3-ActCode#IMMUNOSUPPRESSIVE-DRUG-COVERAGE-PREMIUM-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT']
+
+define ImmunosuppressiveDrugCoverageCoverageAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmount:
+  [ChargeItem: 'http://terminology.hl7.org/CodeSystem/v3-ActCode#IMMUNOSUPPRESSIVE-DRUG-COVERAGE-COVERAGE-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT']
+
+define ImmunosuppressiveDrugCoverageDeductibleAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmount:
+  [ChargeItem: 'http://terminology.hl7.org/CodeSystem/v3-ActCode#IMMUNOSUPPRESSIVE-DRUG-COVERAGE-DEDUCTIBLE-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT']
+
+define ImmunosuppressiveDrugCoveragePremiumAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmountAmount:
+  [ChargeItem: 'http://terminology.hl7.org/CodeSystem/v3-ActCode#IMMUNOSUPPRESSIVE-DRUG-COVERAGE-PREMIUM-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT-AMOUNT']
+

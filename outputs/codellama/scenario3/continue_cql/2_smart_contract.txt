@@ -1,0 +1,43 @@
+Sure, here is an example of a Solidity smart contract that implements the logic we discussed:
+```
+pragma solidity ^0.8.0;
+
+contract ImmunosuppressiveDrugBenefit {
+    address public owner;
+    uint public premium;
+    uint public deductible;
+    uint public copay;
+    uint public maximumOutOfPocket;
+
+    constructor(address _owner, uint _premium, uint _deductible, uint _copay, uint _maximumOutOfPocket) public {
+        owner = _owner;
+        premium = _premium;
+        deductible = _deductible;
+        copay = _copay;
+        maximumOutOfPocket = _maximumOutOfPocket;
+    }
+
+    function isEligibleForBenefit(address patient) public view returns (bool) {
+        return patient.hasCondition('Transplant') && patient.hasCoverage('Part A') && patient.hasCoverage('Part B') && !patient.hasCoverage('Medicare Drug') && !patient.hasCoverage('Other Health');
+    }
+
+    function getBenefitPremium() public view returns (uint) {
+        return premium;
+    }
+
+    function getBenefitDeductible() public view returns (uint) {
+        return deductible;
+    }
+
+    function getBenefitCopay() public view returns (uint) {
+        return copay;
+    }
+
+    function getBenefitMaximumOutOfPocket() public view returns (uint) {
+        return maximumOutOfPocket;
+    }
+}
+```
+This contract has a constructor that sets the owner, premium, deductible, copay, and maximum out-of-pocket amount for the benefit. It also has a function `isEligibleForBenefit` that checks if a patient is eligible for the benefit based on the conditions we discussed. Additionally, it has functions to get the premium, deductible, copay, and maximum out-of-pocket amount for the benefit.
+
+Please note that this is just an example and you should adjust the code to fit your specific use case. Also, you should test the contract thoroughly before deploying it to the mainnet.

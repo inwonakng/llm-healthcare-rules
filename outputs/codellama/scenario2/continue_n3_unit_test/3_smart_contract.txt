@@ -1,0 +1,37 @@
+Certainly! Here is a basic Solidity smart contract that implements the logic we discussed earlier:
+```
+pragma solidity ^0.8.0;
+
+contract Medicare {
+    address public patient;
+    string public diagnosis;
+    bool public isCovered;
+
+    constructor(address _patient, string memory _diagnosis) public {
+        patient = _patient;
+        diagnosis = _diagnosis;
+        isCovered = false;
+    }
+
+    function isCovered() public view returns (bool) {
+        if (diagnosis == "primary immune deficiency disease") {
+            return true;
+        }
+        return false;
+    }
+
+    function isCoveredAtHome() public view returns (bool) {
+        if (diagnosis == "primary immune deficiency disease" && patient.doctor.isMedicallyAppropriate(patient, "IVIG")) {
+            return true;
+        }
+        return false;
+    }
+}
+```
+This contract has three functions:
+
+* The constructor function takes in the patient's address and diagnosis as input and sets the `patient` and `diagnosis` variables accordingly. It also sets the `isCovered` variable to `false` initially.
+* The `isCovered` function checks if the patient has a diagnosis of "primary immune deficiency disease" and returns `true` if they do.
+* The `isCoveredAtHome` function checks if the patient has a diagnosis of "primary immune deficiency disease" and if their doctor has determined that it is medically appropriate for them to receive IVIG at home. If both conditions are met, it returns `true`.
+
+Note that this is just a basic example and may need to be modified to fit your specific use case. Additionally, you will need to have a doctor's contract that can be called from the `isCoveredAtHome` function to determine if the patient's doctor has determined that it is medically appropriate for them to receive IVIG at home.

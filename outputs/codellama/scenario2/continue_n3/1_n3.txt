@@ -1,0 +1,7 @@
+Sure, here is a set of N3 logic rules based on the previous conversation:
+
+1. If the patient has a diagnosis of primary immune deficiency disease, then Medicare covers IVIG.
+2. If the patient's doctor determines that it is medically appropriate for the patient to receive IVIG in their home, then Medicare covers IVIG.
+3. If the patient receives IVIG in their home, then Medicare does not cover other items and services related to the patient receiving IVIG at home.
+
+Note: These rules are based on the information provided in the previous conversation and may not be a comprehensive set of rules for all situations. It is important to review the policy document for the most up-to-date and accurate information.

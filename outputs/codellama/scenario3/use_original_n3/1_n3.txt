@@ -1,0 +1,1378 @@
+```
+@prefix : <https://www.example.com/> .
+
+:Medicare a :HealthcareProvider .
+:TransplantDrugTherapy a :MedicalService .
+:PartA a :HealthInsurancePlan .
+:PartB a :HealthInsurancePlan .
+:PartD a :HealthInsurancePlan .
+:ESRD a :MedicalCondition .
+:KidneyTransplant a :MedicalProcedure .
+:ImmunosuppressiveDrugs a :MedicalService .
+:MedicareDrugCoverage a :HealthInsurancePlan .
+:Benefit a :HealthInsurancePlan .
+:FullHealthCoverage a :HealthInsurancePlan .
+:SocialSecurity a :GovernmentAgency .
+
+:Medicare :covers :TransplantDrugTherapy .
+:Medicare :covers :ImmunosuppressiveDrugs .
+:Medicare :covers :MedicareDrugCoverage .
+:Medicare :covers :Benefit .
+:Medicare :covers :FullHealthCoverage .
+
+:PartA :helpsPayFor :KidneyTransplant .
+:PartB :helpsPayFor :ImmunosuppressiveDrugs .
+:PartD :covers :ImmunosuppressiveDrugs .
+:ESRD :causesLossOf :PartA .
+:KidneyTransplant :causesLossOf :PartA .
+:Benefit :helpsCover :ImmunosuppressiveDrugs .
+:FullHealthCoverage :covers :ImmunosuppressiveDrugs .
+
+:MedicareDrugCoverage :covers :ImmunosuppressiveDrugs .
+:Benefit :covers :ImmunosuppressiveDrugs .
+:FullHealthCoverage :covers :ImmunosuppressiveDrugs .
+
+:Medicare :hasPremium :Premium .
+:Medicare :hasDeductible :Deductible .
+:MedicareDrugCoverage :hasPremium :Premium .
+:MedicareDrugCoverage :hasDeductible :Deductible .
+:Benefit :hasPremium :Premium .
+:Benefit :hasDeductible :Deductible .
+:FullHealthCoverage :hasPremium :Premium .
+:FullHealthCoverage :hasDeductible :Deductible .
+
+:Premium a :Amount .
+:Deductible a :Amount .
+
+:Premium :hasValue "97.10"^^xsd:float .
+:Deductible :hasValue "226"^^xsd:float .
+
+:Medicare :hasCoverageStartDate :CoverageStartDate .
+:Medicare :hasCoverageEndDate :CoverageEndDate .
+:MedicareDrugCoverage :hasCoverageStartDate :CoverageStartDate .
+:MedicareDrugCoverage :hasCoverageEndDate :CoverageEndDate .
+:Benefit :hasCoverageStartDate :CoverageStartDate .
+:Benefit :hasCoverageEndDate :CoverageEndDate .
+:FullHealthCoverage :hasCoverageStartDate :CoverageStartDate .
+:FullHealthCoverage :hasCoverageEndDate :CoverageEndDate .
+
+:CoverageStartDate a :Date .
+:CoverageEndDate a :Date .
+
+:CoverageStartDate :hasValue "2023-01-01"^^xsd:date .
+:CoverageEndDate :hasValue "2023-12-31"^^xsd:date .
+
+:Medicare :hasCoveragePercentage :CoveragePercentage .
+:MedicareDrugCoverage :hasCoveragePercentage :CoveragePercentage .
+:Benefit :hasCoveragePercentage :CoveragePercentage .
+:FullHealthCoverage :hasCoveragePercentage :CoveragePercentage .
+
+:CoveragePercentage a :Percentage .
+
+:CoveragePercentage :hasValue "20"^^xsd:float .
+
+:Medicare :hasCoverageLimit :CoverageLimit .
+:MedicareDrugCoverage :hasCoverageLimit :CoverageLimit .
+:Benefit :hasCoverageLimit :CoverageLimit .
+:FullHealthCoverage :hasCoverageLimit :CoverageLimit .
+
+:CoverageLimit a :Amount .
+
+:CoverageLimit :hasValue "10000"^^xsd:float .
+
+:Medicare :hasCoverageExclusions :CoverageExclusions .
+:MedicareDrugCoverage :hasCoverageExclusions :CoverageExclusions .
+:Benefit :hasCoverageExclusions :CoverageExclusions .
+:FullHealthCoverage :hasCoverageExclusions :CoverageExclusions .
+
+:CoverageExclusions a :List .
+
+:CoverageExclusions :hasItem :Exclusion1 .
+:CoverageExclusions :hasItem :Exclusion2 .
+:CoverageExclusions :hasItem :Exclusion3 .
+
+:Exclusion1 a :Exclusion .
+:Exclusion2 a :Exclusion .
+:Exclusion3 a :Exclusion .
+
+:Exclusion1 :hasDescription "Exclusion 1" .
+:Exclusion2 :hasDescription "Exclusion 2" .
+:Exclusion3 :hasDescription "Exclusion 3" .
+
+:Medicare :hasCoverageConditions :CoverageConditions .
+:MedicareDrugCoverage :hasCoverageConditions :CoverageConditions .
+:Benefit :hasCoverageConditions :CoverageConditions .
+:FullHealthCoverage :hasCoverageConditions :CoverageConditions .
+
+:CoverageConditions a :List .
+
+:CoverageConditions :hasItem :Condition1 .
+:CoverageConditions :hasItem :Condition2 .
+:CoverageConditions :hasItem :Condition3 .
+
+:Condition1 a :Condition .
+:Condition2 a :Condition .
+:Condition3 a :Condition .
+
+:Condition1 :hasDescription "Condition 1" .
+:Condition2 :hasDescription "Condition 2" .
+:Condition3 :hasDescription "Condition 3" .
+
+:Medicare :hasCoverageExceptions :CoverageExceptions .
+:MedicareDrugCoverage :hasCoverageExceptions :CoverageExceptions .
+:Benefit :hasCoverageExceptions :CoverageExceptions .
+:FullHealthCoverage :hasCoverageExceptions :CoverageExceptions .
+
+:CoverageExceptions a :List .
+
+:CoverageExceptions :hasItem :Exception1 .
+:CoverageExceptions :hasItem :Exception2 .
+:CoverageExceptions :hasItem :Exception3 .
+
+:Exception1 a :Exception .
+:Exception2 a :Exception .
+:Exception3 a :Exception .
+
+:Exception1 :hasDescription "Exception 1" .
+:Exception2 :hasDescription "Exception 2" .
+:Exception3 :hasDescription "Exception 3" .
+
+:Medicare :hasCoverageLimits :CoverageLimits .
+:MedicareDrugCoverage :hasCoverageLimits :CoverageLimits .
+:Benefit :hasCoverageLimits :CoverageLimits .
+:FullHealthCoverage :hasCoverageLimits :CoverageLimits .
+
+:CoverageLimits a :List .
+
+:CoverageLimits :hasItem :Limit1 .
+:CoverageLimits :hasItem :Limit2 .
+:CoverageLimits :hasItem :Limit3 .
+
+:Limit1 a :Limit .
+:Limit2 a :Limit .
+:Limit3 a :Limit .
+
+:Limit1 :hasDescription "Limit 1" .
+:Limit2 :hasDescription "Limit 2" .
+:Limit3 :hasDescription "Limit 3" .
+
+:Medicare :hasCoverageExclusions :CoverageExclusions .
+:MedicareDrugCoverage :hasCoverageExclusions :CoverageExclusions .
+:Benefit :hasCoverageExclusions :CoverageExclusions .
+:FullHealthCoverage :hasCoverageExclusions :CoverageExclusions .
+
+:CoverageExclusions a :List .
+
+:CoverageExclusions :hasItem :Exclusion1 .
+:CoverageExclusions :hasItem :Exclusion2 .
+:CoverageExclusions :hasItem :Exclusion3 .
+
+:Exclusion1 a :Exclusion .
+:Exclusion2 a :Exclusion .
+:Exclusion3 a :Exclusion .
+
+:Exclusion1 :hasDescription "Exclusion 1" .
+:Exclusion2 :hasDescription "Exclusion 2" .
+:Exclusion3 :hasDescription "Exclusion 3" .
+
+:Medicare :hasCoverageConditions :CoverageConditions .
+:MedicareDrugCoverage :hasCoverageConditions :CoverageConditions .
+:Benefit :hasCoverageConditions :CoverageConditions .
+:FullHealthCoverage :hasCoverageConditions :CoverageConditions .
+
+:CoverageConditions a :List .
+
+:CoverageConditions :hasItem :Condition1 .
+:CoverageConditions :hasItem :Condition2 .
+:CoverageConditions :hasItem :Condition3 .
+
+:Condition1 a :Condition .
+:Condition2 a :Condition .
+:Condition3 a :Condition .
+
+:Condition1 :hasDescription "Condition 1" .
+:Condition2 :hasDescription "Condition 2" .
+:Condition3 :hasDescription "Condition 3" .
+
+:Medicare :hasCoverageExceptions :CoverageExceptions .
+:MedicareDrugCoverage :hasCoverageExceptions :CoverageExceptions .
+:Benefit :hasCoverageExceptions :CoverageExceptions .
+:FullHealthCoverage :hasCoverageExceptions :CoverageExceptions .
+
+:CoverageExceptions a :List .
+
+:CoverageExceptions :hasItem :Exception1 .
+:CoverageExceptions :hasItem :Exception2 .
+:CoverageExceptions :hasItem :Exception3 .
+
+:Exception1 a :Exception .
+:Exception2 a :Exception .
+:Exception3 a :Exception .
+
+:Exception1 :hasDescription "Exception 1" .
+:Exception2 :hasDescription "Exception 2" .
+:Exception3 :hasDescription "Exception 3" .
+
+:Medicare :hasCoverageLimits :CoverageLimits .
+:MedicareDrugCoverage :hasCoverageLimits :CoverageLimits .
+:Benefit :hasCoverageLimits :CoverageLimits .
+:FullHealthCoverage :hasCoverageLimits :CoverageLimits .
+
+:CoverageLimits a :List .
+
+:CoverageLimits :hasItem :Limit1 .
+:CoverageLimits :hasItem :Limit2 .
+:CoverageLimits :hasItem :Limit3 .
+
+:Limit1 a :Limit .
+:Limit2 a :Limit .
+:Limit3 a :Limit .
+
+:Limit1 :hasDescription "Limit 1" .
+:Limit2 :hasDescription "Limit 2" .
+:Limit3 :hasDescription "Limit 3" .
+
+:Medicare :hasCoverageExclusions :CoverageExclusions .
+:MedicareDrugCoverage :hasCoverageExclusions :CoverageExclusions .
+:Benefit :hasCoverageExclusions :CoverageExclusions .
+:FullHealthCoverage :hasCoverageExclusions :CoverageExclusions .
+
+:CoverageExclusions a :List .
+
+:CoverageExclusions :hasItem :Exclusion1 .
+:CoverageExclusions :hasItem :Exclusion2 .
+:CoverageExclusions :hasItem :Exclusion3 .
+
+:Exclusion1 a :Exclusion .
+:Exclusion2 a :Exclusion .
+:Exclusion3 a :Exclusion .
+
+:Exclusion1 :hasDescription "Exclusion 1" .
+:Exclusion2 :hasDescription "Exclusion 2" .
+:Exclusion3 :hasDescription "Exclusion 3" .
+
+:Medicare :hasCoverageConditions :CoverageConditions .
+:MedicareDrugCoverage :hasCoverageConditions :CoverageConditions .
+:Benefit :hasCoverageConditions :CoverageConditions .
+:FullHealthCoverage :hasCoverageConditions :CoverageConditions .
+
+:CoverageConditions a :List .
+
+:CoverageConditions :hasItem :Condition1 .
+:CoverageConditions :hasItem :Condition2 .
+:CoverageConditions :hasItem :Condition3 .
+
+:Condition1 a :Condition .
+:Condition2 a :Condition .
+:Condition3 a :Condition .
+
+:Condition1 :hasDescription "Condition 1" .
+:Condition2 :hasDescription "Condition 2" .
+:Condition3 :hasDescription "Condition 3" .
+
+:Medicare :hasCoverageExceptions :CoverageExceptions .
+:MedicareDrugCoverage :hasCoverageExceptions :CoverageExceptions .
+:Benefit :hasCoverageExceptions :CoverageExceptions .
+:FullHealthCoverage :hasCoverageExceptions :CoverageExceptions .
+
+:CoverageExceptions a :List .
+
+:CoverageExceptions :hasItem :Exception1 .
+:CoverageExceptions :hasItem :Exception2 .
+:CoverageExceptions :hasItem :Exception3 .
+
+:Exception1 a :Exception .
+:Exception2 a :Exception .
+:Exception3 a :Exception .
+
+:Exception1 :hasDescription "Exception 1" .
+:Exception2 :hasDescription "Exception 2" .
+:Exception3 :hasDescription "Exception 3" .
+
+:Medicare :hasCoverageLimits :CoverageLimits .
+:MedicareDrugCoverage :hasCoverageLimits :CoverageLimits .
+:Benefit :hasCoverageLimits :CoverageLimits .
+:FullHealthCoverage :hasCoverageLimits :CoverageLimits .
+
+:CoverageLimits a :List .
+
+:CoverageLimits :hasItem :Limit1 .
+:CoverageLimits :hasItem :Limit2 .
+:CoverageLimits :hasItem :Limit3 .
+
+:Limit1 a :Limit .
+:Limit2 a :Limit .
+:Limit3 a :Limit .
+
+:Limit1 :hasDescription "Limit 1" .
+:Limit2 :hasDescription "Limit 2" .
+:Limit3 :hasDescription "Limit 3" .
+
+:Medicare :hasCoverageExclusions :CoverageExclusions .
+:MedicareDrugCoverage :hasCoverageExclusions :CoverageExclusions .
+:Benefit :hasCoverageExclusions :CoverageExclusions .
+:FullHealthCoverage :hasCoverageExclusions :CoverageExclusions .
+
+:CoverageExclusions a :List .
+
+:CoverageExclusions :hasItem :Exclusion1 .
+:CoverageExclusions :hasItem :Exclusion2 .
+:CoverageExclusions :hasItem :Exclusion3 .
+
+:Exclusion1 a :Exclusion .
+:Exclusion2 a :Exclusion .
+:Exclusion3 a :Exclusion .
+
+:Exclusion1 :hasDescription "Exclusion 1" .
+:Exclusion2 :hasDescription "Exclusion 2" .
+:Exclusion3 :hasDescription "Exclusion 3" .
+
+:Medicare :hasCoverageConditions :CoverageConditions .
+:MedicareDrugCoverage :hasCoverageConditions :CoverageConditions .
+:Benefit :hasCoverageConditions :CoverageConditions .
+:FullHealthCoverage :hasCoverageConditions :CoverageConditions .
+
+:CoverageConditions a :List .
+
+:CoverageConditions :hasItem :Condition1 .
+:CoverageConditions :hasItem :Condition2 .
+:CoverageConditions :hasItem :Condition3 .
+
+:Condition1 a :Condition .
+:Condition2 a :Condition .
+:Condition3 a :Condition .
+
+:Condition1 :hasDescription "Condition 1" .
+:Condition2 :hasDescription "Condition 2" .
+:Condition3 :hasDescription "Condition 3" .
+
+:Medicare :hasCoverageExceptions :CoverageExceptions .
+:MedicareDrugCoverage :hasCoverageExceptions :CoverageExceptions .
+:Benefit :hasCoverageExceptions :CoverageExceptions .
+:FullHealthCoverage :hasCoverageExceptions :CoverageExceptions .
+
+:CoverageExceptions a :List .
+
+:CoverageExceptions :hasItem :Exception1 .
+:CoverageExceptions :hasItem :Exception2 .
+:CoverageExceptions :hasItem :Exception3 .
+
+:Exception1 a :Exception .
+:Exception2 a :Exception .
+:Exception3 a :Exception .
+
+:Exception1 :hasDescription "Exception 1" .
+:Exception2 :hasDescription "Exception 2" .
+:Exception3 :hasDescription "Exception 3" .
+
+:Medicare :hasCoverageLimits :CoverageLimits .
+:MedicareDrugCoverage :hasCoverageLimits :CoverageLimits .
+:Benefit :hasCoverageLimits :CoverageLimits .
+:FullHealthCoverage :hasCoverageLimits :CoverageLimits .
+
+:CoverageLimits a :List .
+
+:CoverageLimits :hasItem :Limit1 .
+:CoverageLimits :hasItem :Limit2 .
+:CoverageLimits :hasItem :Limit3 .
+
+:Limit1 a :Limit .
+:Limit2 a :Limit .
+:Limit3 a :Limit .
+
+:Limit1 :hasDescription "Limit 1" .
+:Limit2 :hasDescription "Limit 2" .
+:Limit3 :hasDescription "Limit 3" .
+
+:Medicare :hasCoverageExclusions :CoverageExclusions .
+:MedicareDrugCoverage :hasCoverageExclusions :CoverageExclusions .
+:Benefit :hasCoverageExclusions :CoverageExclusions .
+:FullHealthCoverage :hasCoverageExclusions :CoverageExclusions .
+
+:CoverageExclusions a :List .
+
+:CoverageExclusions :hasItem :Exclusion1 .
+:CoverageExclusions :hasItem :Exclusion2 .
+:CoverageExclusions :hasItem :Exclusion3 .
+
+:Exclusion1 a :Exclusion .
+:Exclusion2 a :Exclusion .
+:Exclusion3 a :Exclusion .
+
+:Exclusion1 :hasDescription "Exclusion 1" .
+:Exclusion2 :hasDescription "Exclusion 2" .
+:Exclusion3 :hasDescription "Exclusion 3" .
+
+:Medicare :hasCoverageConditions :CoverageConditions .
+:MedicareDrugCoverage :hasCoverageConditions :CoverageConditions .
+:Benefit :hasCoverageConditions :CoverageConditions .
+:FullHealthCoverage :hasCoverageConditions :CoverageConditions .
+
+:CoverageConditions a :List .
+
+:CoverageConditions :hasItem :Condition1 .
+:CoverageConditions :hasItem :Condition2 .
+:CoverageConditions :hasItem :Condition3 .
+
+:Condition1 a :Condition .
+:Condition2 a :Condition .
+:Condition3 a :Condition .
+
+:Condition1 :hasDescription "Condition 1" .
+:Condition2 :hasDescription "Condition 2" .
+:Condition3 :hasDescription "Condition 3" .
+
+:Medicare :hasCoverageExceptions :CoverageExceptions .
+:MedicareDrugCoverage :hasCoverageExceptions :CoverageExceptions .
+:Benefit :hasCoverageExceptions :CoverageExceptions .
+:FullHealthCoverage :hasCoverageExceptions :CoverageExceptions .
+
+:CoverageExceptions a :List .
+
+:CoverageExceptions :hasItem :Exception1 .
+:CoverageExceptions :hasItem :Exception2 .
+:CoverageExceptions :hasItem :Exception3 .
+
+:Exception1 a :Exception .
+:Exception2 a :Exception .
+:Exception3 a :Exception .
+
+:Exception1 :hasDescription "Exception 1" .
+:Exception2 :hasDescription "Exception 2" .
+:Exception3 :hasDescription "Exception 3" .
+
+:Medicare :hasCoverageLimits :CoverageLimits .
+:MedicareDrugCoverage :hasCoverageLimits :CoverageLimits .
+:Benefit :hasCoverageLimits :CoverageLimits .
+:FullHealthCoverage :hasCoverageLimits :CoverageLimits .
+
+:CoverageLimits a :List .
+
+:CoverageLimits :hasItem :Limit1 .
+:CoverageLimits :hasItem :Limit2 .
+:CoverageLimits :hasItem :Limit3 .
+
+:Limit1 a :Limit .
+:Limit2 a :Limit .
+:Limit3 a :Limit .
+
+:Limit1 :hasDescription "Limit 1" .
+:Limit2 :hasDescription "Limit 2" .
+:Limit3 :hasDescription "Limit 3" .
+
+:Medicare :hasCoverageExclusions :CoverageExclusions .
+:MedicareDrugCoverage :hasCoverageExclusions :CoverageExclusions .
+:Benefit :hasCoverageExclusions :CoverageExclusions .
+:FullHealthCoverage :hasCoverageExclusions :CoverageExclusions .
+
+:CoverageExclusions a :List .
+
+:CoverageExclusions :hasItem :Exclusion1 .
+:CoverageExclusions :hasItem :Exclusion2 .
+:CoverageExclusions :hasItem :Exclusion3 .
+
+:Exclusion1 a :Exclusion .
+:Exclusion2 a :Exclusion .
+:Exclusion3 a :Exclusion .
+
+:Exclusion1 :hasDescription "Exclusion 1" .
+:Exclusion2 :hasDescription "Exclusion 2" .
+:Exclusion3 :hasDescription "Exclusion 3" .
+
+:Medicare :hasCoverageConditions :CoverageConditions .
+:MedicareDrugCoverage :hasCoverageConditions :CoverageConditions .
+:Benefit :hasCoverageConditions :CoverageConditions .
+:FullHealthCoverage :hasCoverageConditions :CoverageConditions .
+
+:CoverageConditions a :List .
+
+:CoverageConditions :hasItem :Condition1 .
+:CoverageConditions :hasItem :Condition2 .
+:CoverageConditions :hasItem :Condition3 .
+
+:Condition1 a :Condition .
+:Condition2 a :Condition .
+:Condition3 a :Condition .
+
+:Condition1 :hasDescription "Condition 1" .
+:Condition2 :hasDescription "Condition 2" .
+:Condition3 :hasDescription "Condition 3" .
+
+:Medicare :hasCoverageExceptions :CoverageExceptions .
+:MedicareDrugCoverage :hasCoverageExceptions :CoverageExceptions .
+:Benefit :hasCoverageExceptions :CoverageExceptions .
+:FullHealthCoverage :hasCoverageExceptions :CoverageExceptions .
+
+:CoverageExceptions a :List .
+
+:CoverageExceptions :hasItem :Exception1 .
+:CoverageExceptions :hasItem :Exception2 .
+:CoverageExceptions :hasItem :Exception3 .
+
+:Exception1 a :Exception .
+:Exception2 a :Exception .
+:Exception3 a :Exception .
+
+:Exception1 :hasDescription "Exception 1" .
+:Exception2 :hasDescription "Exception 2" .
+:Exception3 :hasDescription "Exception 3" .
+
+:Medicare :hasCoverageLimits :CoverageLimits .
+:MedicareDrugCoverage :hasCoverageLimits :CoverageLimits .
+:Benefit :hasCoverageLimits :CoverageLimits .
+:FullHealthCoverage :hasCoverageLimits :CoverageLimits .
+
+:CoverageLimits a :List .
+
+:CoverageLimits :hasItem :Limit1 .
+:CoverageLimits :hasItem :Limit2 .
+:CoverageLimits :hasItem :Limit3 .
+
+:Limit1 a :Limit .
+:Limit2 a :Limit .
+:Limit3 a :Limit .
+
+:Limit1 :hasDescription "Limit 1" .
+:Limit2 :hasDescription "Limit 2" .
+:Limit3 :hasDescription "Limit 3" .
+
+:Medicare :hasCoverageExclusions :CoverageExclusions .
+:MedicareDrugCoverage :hasCoverageExclusions :CoverageExclusions .
+:Benefit :hasCoverageExclusions :CoverageExclusions .
+:FullHealthCoverage :hasCoverageExclusions :CoverageExclusions .
+
+:CoverageExclusions a :List .
+
+:CoverageExclusions :hasItem :Exclusion1 .
+:CoverageExclusions :hasItem :Exclusion2 .
+:CoverageExclusions :hasItem :Exclusion3 .
+
+:Exclusion1 a :Exclusion .
+:Exclusion2 a :Exclusion .
+:Exclusion3 a :Exclusion .
+
+:Exclusion1 :hasDescription "Exclusion 1" .
+:Exclusion2 :hasDescription "Exclusion 2" .
+:Exclusion3 :hasDescription "Exclusion 3" .
+
+:Medicare :hasCoverageConditions :CoverageConditions .
+:MedicareDrugCoverage :hasCoverageConditions :CoverageConditions .
+:Benefit :hasCoverageConditions :CoverageConditions .
+:FullHealthCoverage :hasCoverageConditions :CoverageConditions .
+
+:CoverageConditions a :List .
+
+:CoverageConditions :hasItem :Condition1 .
+:CoverageConditions :hasItem :Condition2 .
+:CoverageConditions :hasItem :Condition3 .
+
+:Condition1 a :Condition .
+:Condition2 a :Condition .
+:Condition3 a :Condition .
+
+:Condition1 :hasDescription "Condition 1" .
+:Condition2 :hasDescription "Condition 2" .
+:Condition3 :hasDescription "Condition 3" .
+
+:Medicare :hasCoverageExceptions :CoverageExceptions .
+:MedicareDrugCoverage :hasCoverageExceptions :CoverageExceptions .
+:Benefit :hasCoverageExceptions :CoverageExceptions .
+:FullHealthCoverage :hasCoverageExceptions :CoverageExceptions .
+
+:CoverageExceptions a :List .
+
+:CoverageExceptions :hasItem :Exception1 .
+:CoverageExceptions :hasItem :Exception2 .
+:CoverageExceptions :hasItem :Exception3 .
+
+:Exception1 a :Exception .
+:Exception2 a :Exception .
+:Exception3 a :Exception .
+
+:Exception1 :hasDescription "Exception 1" .
+:Exception2 :hasDescription "Exception 2" .
+:Exception3 :hasDescription "Exception 3" .
+
+:Medicare :hasCoverageLimits :CoverageLimits .
+:MedicareDrugCoverage :hasCoverageLimits :CoverageLimits .
+:Benefit :hasCoverageLimits :CoverageLimits .
+:FullHealthCoverage :hasCoverageLimits :CoverageLimits .
+
+:CoverageLimits a :List .
+
+:CoverageLimits :hasItem :Limit1 .
+:CoverageLimits :hasItem :Limit2 .
+:CoverageLimits :hasItem :Limit3 .
+
+:Limit1 a :Limit .
+:Limit2 a :Limit .
+:Limit3 a :Limit .
+
+:Limit1 :hasDescription "Limit 1" .
+:Limit2 :hasDescription "Limit 2" .
+:Limit3 :hasDescription "Limit 3" .
+
+:Medicare :hasCoverageExclusions :CoverageExclusions .
+:MedicareDrugCoverage :hasCoverageExclusions :CoverageExclusions .
+:Benefit :hasCoverageExclusions :CoverageExclusions .
+:FullHealthCoverage :hasCoverageExclusions :CoverageExclusions .
+
+:CoverageExclusions a :List .
+
+:CoverageExclusions :hasItem :Exclusion1 .
+:CoverageExclusions :hasItem :Exclusion2 .
+:CoverageExclusions :hasItem :Exclusion3 .
+
+:Exclusion1 a :Exclusion .
+:Exclusion2 a :Exclusion .
+:Exclusion3 a :Exclusion .
+
+:Exclusion1 :hasDescription "Exclusion 1" .
+:Exclusion2 :hasDescription "Exclusion 2" .
+:Exclusion3 :hasDescription "Exclusion 3" .
+
+:Medicare :hasCoverageConditions :CoverageConditions .
+:MedicareDrugCoverage :hasCoverageConditions :CoverageConditions .
+:Benefit :hasCoverageConditions :CoverageConditions .
+:FullHealthCoverage :hasCoverageConditions :CoverageConditions .
+
+:CoverageConditions a :List .
+
+:CoverageConditions :hasItem :Condition1 .
+:CoverageConditions :hasItem :Condition2 .
+:CoverageConditions :hasItem :Condition3 .
+
+:Condition1 a :Condition .
+:Condition2 a :Condition .
+:Condition3 a :Condition .
+
+:Condition1 :hasDescription "Condition 1" .
+:Condition2 :hasDescription "Condition 2" .
+:Condition3 :hasDescription "Condition 3" .
+
+:Medicare :hasCoverageExceptions :CoverageExceptions .
+:MedicareDrugCoverage :hasCoverageExceptions :CoverageExceptions .
+:Benefit :hasCoverageExceptions :CoverageExceptions .
+:FullHealthCoverage :hasCoverageExceptions :CoverageExceptions .
+
+:CoverageExceptions a :List .
+
+:CoverageExceptions :hasItem :Exception1 .
+:CoverageExceptions :hasItem :Exception2 .
+:CoverageExceptions :hasItem :Exception3 .
+
+:Exception1 a :Exception .
+:Exception2 a :Exception .
+:Exception3 a :Exception .
+
+:Exception1 :hasDescription "Exception 1" .
+:Exception2 :hasDescription "Exception 2" .
+:Exception3 :hasDescription "Exception 3" .
+
+:Medicare :hasCoverageLimits :CoverageLimits .
+:MedicareDrugCoverage :hasCoverageLimits :CoverageLimits .
+:Benefit :hasCoverageLimits :CoverageLimits .
+:FullHealthCoverage :hasCoverageLimits :CoverageLimits .
+
+:CoverageLimits a :List .
+
+:CoverageLimits :hasItem :Limit1 .
+:CoverageLimits :hasItem :Limit2 .
+:CoverageLimits :hasItem :Limit3 .
+
+:Limit1 a :Limit .
+:Limit2 a :Limit .
+:Limit3 a :Limit .
+
+:Limit1 :hasDescription "Limit 1" .
+:Limit2 :hasDescription "Limit 2" .
+:Limit3 :hasDescription "Limit 3" .
+
+:Medicare :hasCoverageExclusions :CoverageExclusions .
+:MedicareDrugCoverage :hasCoverageExclusions :CoverageExclusions .
+:Benefit :hasCoverageExclusions :CoverageExclusions .
+:FullHealthCoverage :hasCoverageExclusions :CoverageExclusions .
+
+:CoverageExclusions a :List .
+
+:CoverageExclusions :hasItem :Exclusion1 .
+:CoverageExclusions :hasItem :Exclusion2 .
+:CoverageExclusions :hasItem :Exclusion3 .
+
+:Exclusion1 a :Exclusion .
+:Exclusion2 a :Exclusion .
+:Exclusion3 a :Exclusion .
+
+:Exclusion1 :hasDescription "Exclusion 1" .
+:Exclusion2 :hasDescription "Exclusion 2" .
+:Exclusion3 :hasDescription "Exclusion 3" .
+
+:Medicare :hasCoverageConditions :CoverageConditions .
+:MedicareDrugCoverage :hasCoverageConditions :CoverageConditions .
+:Benefit :hasCoverageConditions :CoverageConditions .
+:FullHealthCoverage :hasCoverageConditions :CoverageConditions .
+
+:CoverageConditions a :List .
+
+:CoverageConditions :hasItem :Condition1 .
+:CoverageConditions :hasItem :Condition2 .
+:CoverageConditions :hasItem :Condition3 .
+
+:Condition1 a :Condition .
+:Condition2 a :Condition .
+:Condition3 a :Condition .
+
+:Condition1 :hasDescription "Condition 1" .
+:Condition2 :hasDescription "Condition 2" .
+:Condition3 :hasDescription "Condition 3" .
+
+:Medicare :hasCoverageExceptions :CoverageExceptions .
+:MedicareDrugCoverage :hasCoverageExceptions :CoverageExceptions .
+:Benefit :hasCoverageExceptions :CoverageExceptions .
+:FullHealthCoverage :hasCoverageExceptions :CoverageExceptions .
+
+:CoverageExceptions a :List .
+
+:CoverageExceptions :hasItem :Exception1 .
+:CoverageExceptions :hasItem :Exception2 .
+:CoverageExceptions :hasItem :Exception3 .
+
+:Exception1 a :Exception .
+:Exception2 a :Exception .
+:Exception3 a :Exception .
+
+:Exception1 :hasDescription "Exception 1" .
+:Exception2 :hasDescription "Exception 2" .
+:Exception3 :hasDescription "Exception 3" .
+
+:Medicare :hasCoverageLimits :CoverageLimits .
+:MedicareDrugCoverage :hasCoverageLimits :CoverageLimits .
+:Benefit :hasCoverageLimits :CoverageLimits .
+:FullHealthCoverage :hasCoverageLimits :CoverageLimits .
+
+:CoverageLimits a :List .
+
+:CoverageLimits :hasItem :Limit1 .
+:CoverageLimits :hasItem :Limit2 .
+:CoverageLimits :hasItem :Limit3 .
+
+:Limit1 a :Limit .
+:Limit2 a :Limit .
+:Limit3 a :Limit .
+
+:Limit1 :hasDescription "Limit 1" .
+:Limit2 :hasDescription "Limit 2" .
+:Limit3 :hasDescription "Limit 3" .
+
+:Medicare :hasCoverageExclusions :CoverageExclusions .
+:MedicareDrugCoverage :hasCoverageExclusions :CoverageExclusions .
+:Benefit :hasCoverageExclusions :CoverageExclusions .
+:FullHealthCoverage :hasCoverageExclusions :CoverageExclusions .
+
+:CoverageExclusions a :List .
+
+:CoverageExclusions :hasItem :Exclusion1 .
+:CoverageExclusions :hasItem :Exclusion2 .
+:CoverageExclusions :hasItem :Exclusion3 .
+
+:Exclusion1 a :Exclusion .
+:Exclusion2 a :Exclusion .
+:Exclusion3 a :Exclusion .
+
+:Exclusion1 :hasDescription "Exclusion 1" .
+:Exclusion2 :hasDescription "Exclusion 2" .
+:Exclusion3 :hasDescription "Exclusion 3" .
+
+:Medicare :hasCoverageConditions :CoverageConditions .
+:MedicareDrugCoverage :hasCoverageConditions :CoverageConditions .
+:Benefit :hasCoverageConditions :CoverageConditions .
+:FullHealthCoverage :hasCoverageConditions :CoverageConditions .
+
+:CoverageConditions a :List .
+
+:CoverageConditions :hasItem :Condition1 .
+:CoverageConditions :hasItem :Condition2 .
+:CoverageConditions :hasItem :Condition3 .
+
+:Condition1 a :Condition .
+:Condition2 a :Condition .
+:Condition3 a :Condition .
+
+:Condition1 :hasDescription "Condition 1" .
+:Condition2 :hasDescription "Condition 2" .
+:Condition3 :hasDescription "Condition 3" .
+
+:Medicare :hasCoverageExceptions :CoverageExceptions .
+:MedicareDrugCoverage :hasCoverageExceptions :CoverageExceptions .
+:Benefit :hasCoverageExceptions :CoverageExceptions .
+:FullHealthCoverage :hasCoverageExceptions :CoverageExceptions .
+
+:CoverageExceptions a :List .
+
+:CoverageExceptions :hasItem :Exception1 .
+:CoverageExceptions :hasItem :Exception2 .
+:CoverageExceptions :hasItem :Exception3 .
+
+:Exception1 a :Exception .
+:Exception2 a :Exception .
+:Exception3 a :Exception .
+
+:Exception1 :hasDescription "Exception 1" .
+:Exception2 :hasDescription "Exception 2" .
+:Exception3 :hasDescription "Exception 3" .
+
+:Medicare :hasCoverageLimits :CoverageLimits .
+:MedicareDrugCoverage :hasCoverageLimits :CoverageLimits .
+:Benefit :hasCoverageLimits :CoverageLimits .
+:FullHealthCoverage :hasCoverageLimits :CoverageLimits .
+
+:CoverageLimits a :List .
+
+:CoverageLimits :hasItem :Limit1 .
+:CoverageLimits :hasItem :Limit2 .
+:CoverageLimits :hasItem :Limit3 .
+
+:Limit1 a :Limit .
+:Limit2 a :Limit .
+:Limit3 a :Limit .
+
+:Limit1 :hasDescription "Limit 1" .
+:Limit2 :hasDescription "Limit 2" .
+:Limit3 :hasDescription "Limit 3" .
+
+:Medicare :hasCoverageExclusions :CoverageExclusions .
+:MedicareDrugCoverage :hasCoverageExclusions :CoverageExclusions .
+:Benefit :hasCoverageExclusions :CoverageExclusions .
+:FullHealthCoverage :hasCoverageExclusions :CoverageExclusions .
+
+:CoverageExclusions a :List .
+
+:CoverageExclusions :hasItem :Exclusion1 .
+:CoverageExclusions :hasItem :Exclusion2 .
+:CoverageExclusions :hasItem :Exclusion3 .
+
+:Exclusion1 a :Exclusion .
+:Exclusion2 a :Exclusion .
+:Exclusion3 a :Exclusion .
+
+:Exclusion1 :hasDescription "Exclusion 1" .
+:Exclusion2 :hasDescription "Exclusion 2" .
+:Exclusion3 :hasDescription "Exclusion 3" .
+
+:Medicare :hasCoverageConditions :CoverageConditions .
+:MedicareDrugCoverage :hasCoverageConditions :CoverageConditions .
+:Benefit :hasCoverageConditions :CoverageConditions .
+:FullHealthCoverage :hasCoverageConditions :CoverageConditions .
+
+:CoverageConditions a :List .
+
+:CoverageConditions :hasItem :Condition1 .
+:CoverageConditions :hasItem :Condition2 .
+:CoverageConditions :hasItem :Condition3 .
+
+:Condition1 a :Condition .
+:Condition2 a :Condition .
+:Condition3 a :Condition .
+
+:Condition1 :hasDescription "Condition 1" .
+:Condition2 :hasDescription "Condition 2" .
+:Condition3 :hasDescription "Condition 3" .
+
+:Medicare :hasCoverageExceptions :CoverageExceptions .
+:MedicareDrugCoverage :hasCoverageExceptions :CoverageExceptions .
+:Benefit :hasCoverageExceptions :CoverageExceptions .
+:FullHealthCoverage :hasCoverageExceptions :CoverageExceptions .
+
+:CoverageExceptions a :List .
+
+:CoverageExceptions :hasItem :Exception1 .
+:CoverageExceptions :hasItem :Exception2 .
+:CoverageExceptions :hasItem :Exception3 .
+
+:Exception1 a :Exception .
+:Exception2 a :Exception .
+:Exception3 a :Exception .
+
+:Exception1 :hasDescription "Exception 1" .
+:Exception2 :hasDescription "Exception 2" .
+:Exception3 :hasDescription "Exception 3" .
+
+:Medicare :hasCoverageLimits :CoverageLimits .
+:MedicareDrugCoverage :hasCoverageLimits :CoverageLimits .
+:Benefit :hasCoverageLimits :CoverageLimits .
+:FullHealthCoverage :hasCoverageLimits :CoverageLimits .
+
+:CoverageLimits a :List .
+
+:CoverageLimits :hasItem :Limit1 .
+:CoverageLimits :hasItem :Limit2 .
+:CoverageLimits :hasItem :Limit3 .
+
+:Limit1 a :Limit .
+:Limit2 a :Limit .
+:Limit3 a :Limit .
+
+:Limit1 :hasDescription "Limit 1" .
+:Limit2 :hasDescription "Limit 2" .
+:Limit3 :hasDescription "Limit 3" .
+
+:Medicare :hasCoverageExclusions :CoverageExclusions .
+:MedicareDrugCoverage :hasCoverageExclusions :CoverageExclusions .
+:Benefit :hasCoverageExclusions :CoverageExclusions .
+:FullHealthCoverage :hasCoverageExclusions :CoverageExclusions .
+
+:CoverageExclusions a :List .
+
+:CoverageExclusions :hasItem :Exclusion1 .
+:CoverageExclusions :hasItem :Exclusion2 .
+:CoverageExclusions :hasItem :Exclusion3 .
+
+:Exclusion1 a :Exclusion .
+:Exclusion2 a :Exclusion .
+:Exclusion3 a :Exclusion .
+
+:Exclusion1 :hasDescription "Exclusion 1" .
+:Exclusion2 :hasDescription "Exclusion 2" .
+:Exclusion3 :hasDescription "Exclusion 3" .
+
+:Medicare :hasCoverageConditions :CoverageConditions .
+:MedicareDrugCoverage :hasCoverageConditions :CoverageConditions .
+:Benefit :hasCoverageConditions :CoverageConditions .
+:FullHealthCoverage :hasCoverageConditions :CoverageConditions .
+
+:CoverageConditions a :List .
+
+:CoverageConditions :hasItem :Condition1 .
+:CoverageConditions :hasItem :Condition2 .
+:CoverageConditions :hasItem :Condition3 .
+
+:Condition1 a :Condition .
+:Condition2 a :Condition .
+:Condition3 a :Condition .
+
+:Condition1 :hasDescription "Condition 1" .
+:Condition2 :hasDescription "Condition 2" .
+:Condition3 :hasDescription "Condition 3" .
+
+:Medicare :hasCoverageExceptions :CoverageExceptions .
+:MedicareDrugCoverage :hasCoverageExceptions :CoverageExceptions .
+:Benefit :hasCoverageExceptions :CoverageExceptions .
+:FullHealthCoverage :hasCoverageExceptions :CoverageExceptions .
+
+:CoverageExceptions a :List .
+
+:CoverageExceptions :hasItem :Exception1 .
+:CoverageExceptions :hasItem :Exception2 .
+:CoverageExceptions :hasItem :Exception3 .
+
+:Exception1 a :Exception .
+:Exception2 a :Exception .
+:Exception3 a :Exception .
+
+:Exception1 :hasDescription "Exception 1" .
+:Exception2 :hasDescription "Exception 2" .
+:Exception3 :hasDescription "Exception 3" .
+
+:Medicare :hasCoverageLimits :CoverageLimits .
+:MedicareDrugCoverage :hasCoverageLimits :CoverageLimits .
+:Benefit :hasCoverageLimits :CoverageLimits .
+:FullHealthCoverage :hasCoverageLimits :CoverageLimits .
+
+:CoverageLimits a :List .
+
+:CoverageLimits :hasItem :Limit1 .
+:CoverageLimits :hasItem :Limit2 .
+:CoverageLimits :hasItem :Limit3 .
+
+:Limit1 a :Limit .
+:Limit2 a :Limit .
+:Limit3 a :Limit .
+
+:Limit1 :hasDescription "Limit 1" .
+:Limit2 :hasDescription "Limit 2" .
+:Limit3 :hasDescription "Limit 3" .
+
+:Medicare :hasCoverageExclusions :CoverageExclusions .
+:MedicareDrugCoverage :hasCoverageExclusions :CoverageExclusions .
+:Benefit :hasCoverageExclusions :CoverageExclusions .
+:FullHealthCoverage :hasCoverageExclusions :CoverageExclusions .
+
+:CoverageExclusions a :List .
+
+:CoverageExclusions :hasItem :Exclusion1 .
+:CoverageExclusions :hasItem :Exclusion2 .
+:CoverageExclusions :hasItem :Exclusion3 .
+
+:Exclusion1 a :Exclusion .
+:Exclusion2 a :Exclusion .
+:Exclusion3 a :Exclusion .
+
+:Exclusion1 :hasDescription "Exclusion 1" .
+:Exclusion2 :hasDescription "Exclusion 2" .
+:Exclusion3 :hasDescription "Exclusion 3" .
+
+:Medicare :hasCoverageConditions :CoverageConditions .
+:MedicareDrugCoverage :hasCoverageConditions :CoverageConditions .
+:Benefit :hasCoverageConditions :CoverageConditions .
+:FullHealthCoverage :hasCoverageConditions :CoverageConditions .
+
+:CoverageConditions a :List .
+
+:CoverageConditions :hasItem :Condition1 .
+:CoverageConditions :hasItem :Condition2 .
+:CoverageConditions :hasItem :Condition3 .
+
+:Condition1 a :Condition .
+:Condition2 a :Condition .
+:Condition3 a :Condition .
+
+:Condition1 :hasDescription "Condition 1" .
+:Condition2 :hasDescription "Condition 2" .
+:Condition3 :hasDescription "Condition 3" .
+
+:Medicare :hasCoverageExceptions :CoverageExceptions .
+:MedicareDrugCoverage :hasCoverageExceptions :CoverageExceptions .
+:Benefit :hasCoverageExceptions :CoverageExceptions .
+:FullHealthCoverage :hasCoverageExceptions :CoverageExceptions .
+
+:CoverageExceptions a :List .
+
+:CoverageExceptions :hasItem :Exception1 .
+:CoverageExceptions :hasItem :Exception2 .
+:CoverageExceptions :hasItem :Exception3 .
+
+:Exception1 a :Exception .
+:Exception2 a :Exception .
+:Exception3 a :Exception .
+
+:Exception1 :hasDescription "Exception 1" .
+:Exception2 :hasDescription "Exception 2" .
+:Exception3 :hasDescription "Exception 3" .
+
+:Medicare :hasCoverageLimits :CoverageLimits .
+:MedicareDrugCoverage :hasCoverageLimits :CoverageLimits .
+:Benefit :hasCoverageLimits :CoverageLimits .
+:FullHealthCoverage :hasCoverageLimits :CoverageLimits .
+
+:CoverageLimits a :List .
+
+:CoverageLimits :hasItem :Limit1 .
+:CoverageLimits :hasItem :Limit2 .
+:CoverageLimits :hasItem :Limit3 .
+
+:Limit1 a :Limit .
+:Limit2 a :Limit .
+:Limit3 a :Limit .
+
+:Limit1 :hasDescription "Limit 1" .
+:Limit2 :hasDescription "Limit 2" .
+:Limit3 :hasDescription "Limit 3" .
+
+:Medicare :hasCoverageExclusions :CoverageExclusions .
+:MedicareDrugCoverage :hasCoverageExclusions :CoverageExclusions .
+:Benefit :hasCoverageExclusions :CoverageExclusions .
+:FullHealthCoverage :hasCoverageExclusions :CoverageExclusions .
+
+:CoverageExclusions a :List .
+
+:CoverageExclusions :hasItem :Exclusion1 .
+:CoverageExclusions :hasItem :Exclusion2 .
+:CoverageExclusions :hasItem :Exclusion3 .
+
+:Exclusion1 a :Exclusion .
+:Exclusion2 a :Exclusion .
+:Exclusion3 a :Exclusion .
+
+:Exclusion1 :hasDescription "Exclusion 1" .
+:Exclusion2 :hasDescription "Exclusion 2" .
+:Exclusion3 :hasDescription "Exclusion 3" .
+
+:Medicare :hasCoverageConditions :CoverageConditions .
+:MedicareDrugCoverage :hasCoverageConditions :CoverageConditions .
+:Benefit :hasCoverageConditions :CoverageConditions .
+:FullHealthCoverage :hasCoverageConditions :CoverageConditions .
+
+:CoverageConditions a :List .
+
+:CoverageConditions :hasItem :Condition1 .
+:CoverageConditions :hasItem :Condition2 .
+:CoverageConditions :hasItem :Condition3 .
+
+:Condition1 a :Condition .
+:Condition2 a :Condition .
+:Condition3 a :Condition .
+
+:Condition1 :hasDescription "Condition 1" .
+:Condition2 :hasDescription "Condition 2" .
+:Condition3 :hasDescription "Condition 3" .
+
+:Medicare :hasCoverageExceptions :CoverageExceptions .
+:MedicareDrugCoverage :hasCoverageExceptions :CoverageExceptions .
+:Benefit :hasCoverageExceptions :CoverageExceptions .
+:FullHealthCoverage :hasCoverageExceptions :CoverageExceptions .
+
+:CoverageExceptions a :List .
+
+:CoverageExceptions :hasItem :Exception1 .
+:CoverageExceptions :hasItem :Exception2 .
+:CoverageExceptions :hasItem :Exception3 .
+
+:Exception1 a :Exception .
+:Exception2 a :Exception .
+:Exception3 a :Exception .
+
+:Exception1 :hasDescription "Exception 1" .
+:Exception2 :hasDescription "Exception 2" .
+:Exception3 :hasDescription "Exception 3" .
+
+:Medicare :hasCoverageLimits :CoverageLimits .
+:MedicareDrugCoverage :hasCoverageLimits :CoverageLimits .
+:Benefit :hasCoverageLimits :CoverageLimits .
+:FullHealthCoverage :hasCoverageLimits :CoverageLimits .
+
+:CoverageLimits a :List .
+
+:CoverageLimits :hasItem :Limit1 .
+:CoverageLimits :hasItem :Limit2 .
+:CoverageLimits :hasItem :Limit3 .
+
+:Limit1 a :Limit .
+:Limit2 a :Limit .
+:Limit3 a :Limit .
+
+:Limit1 :hasDescription "Limit 1" .
+:Limit2 :hasDescription "Limit 2" .
+:Limit3 :hasDescription "Limit 3" .
+
+:Medicare :hasCoverageExclusions :CoverageExclusions .
+:MedicareDrugCoverage :hasCoverageExclusions :CoverageExclusions .
+:Benefit :hasCoverageExclusions :CoverageExclusions .
+:FullHealthCoverage :hasCoverageExclusions :CoverageExclusions .
+
+:CoverageExclusions a :List .
+
+:CoverageExclusions :hasItem :Exclusion1 .
+:CoverageExclusions :hasItem :Exclusion2 .
+:CoverageExclusions :hasItem :Exclusion3 .
+
+:Exclusion1 a :Exclusion .
+:Exclusion2 a :Exclusion .
+:Exclusion3 a :Exclusion .
+
+:Exclusion1 :hasDescription "Exclusion 1" .
+:Exclusion2 :hasDescription "Exclusion 2" .
+:Exclusion3 :hasDescription "Exclusion 3" .
+
+:Medicare :hasCoverageConditions :CoverageConditions .
+:MedicareDrugCoverage :hasCoverageConditions :CoverageConditions .
+:Benefit :hasCoverageConditions :CoverageConditions .
+:FullHealthCoverage :hasCoverageConditions :CoverageConditions .
+
+:CoverageConditions a :List .
+
+:CoverageConditions :hasItem :Condition1 .
+:CoverageConditions :hasItem :Condition2 .
+:CoverageConditions :hasItem :Condition3 .
+
+:Condition1 a :Condition .
+:Condition2 a :Condition .
+:Condition3 a :Condition .
+
+:Condition1 :hasDescription "Condition 1" .
+:Condition2 :hasDescription "Condition 2" .
+:Condition3 :hasDescription "Condition 3" .
+
+:Medicare :hasCoverageExceptions :CoverageExceptions .
+:MedicareDrugCoverage :hasCoverageExceptions :CoverageExceptions .
+:Benefit :hasCoverageExceptions :CoverageExceptions .
+:FullHealthCoverage :hasCoverageExceptions :CoverageExceptions .
+
+:CoverageExceptions a :List .
+
+:CoverageExceptions :hasItem :Exception1 .
+:CoverageExceptions :hasItem :Exception2 .
+:CoverageExceptions :hasItem :Exception3 .
+
+:Exception1 a :Exception .
+:Exception2 a :Exception .
+:Exception3 a :Exception .
+
+:Exception1 :hasDescription "Exception 1" .
+:Exception2 :hasDescription "Exception 2" .
+:Exception3 :hasDescription "Exception 3" .
+
+:Medicare :hasCoverageLimits :CoverageLimits .
+:MedicareDrugCoverage :hasCoverageLimits :CoverageLimits .
+:Benefit :hasCoverageLimits :CoverageLimits .
+:FullHealthCoverage :hasCoverageLimits :CoverageLimits .
+
+:CoverageLimits a :List .
+
+:CoverageLimits :hasItem :Limit1 .
+:CoverageLimits :hasItem :Limit2 .
+:CoverageLimits :hasItem :Limit3 .
+
+:Limit1 a :Limit .
+:Limit2 a :Limit .
+:Limit3 a :Limit .
+
+:Limit1 :hasDescription "Limit 1" .
+:Limit2 :hasDescription "Limit 2" .
+:Limit3 :hasDescription "Limit 3" .
+
+:Medicare :hasCoverageExclusions :CoverageExclusions .
+:MedicareDrugCoverage :hasCoverageExclusions :CoverageExclusions .
+:Benefit :hasCoverageExclusions :CoverageExclusions .
+:FullHealthCoverage :hasCoverageExclusions :CoverageExclusions .
+
+:CoverageExclusions a :List .
+
+:CoverageExclusions :hasItem :Exclusion1 .
+:CoverageExclusions :hasItem :Exclusion2 .
+:CoverageExclusions :hasItem :Exclusion3 .
+
+:Exclusion1 a :Exclusion .
+:Exclusion2 a :Exclusion .
+:Exclusion3 a :Exclusion .
+
+:Exclusion1 :hasDescription "Exclusion 1" .
+:Exclusion2 :hasDescription "Exclusion 2" .
+:Exclusion3 :hasDescription "Exclusion 3" .
+
+:Medicare :hasCoverageConditions :CoverageConditions .
+:MedicareDrugCoverage :hasCoverageConditions :CoverageConditions .
+:Benefit :hasCoverageConditions :CoverageConditions .
+:FullHealthCoverage :hasCoverageConditions :CoverageConditions .
+
+:CoverageConditions a :List .
+
+:CoverageConditions :hasItem :Condition1 .
+:CoverageConditions :hasItem :Condition2 .
+:CoverageConditions :hasItem :Condition3 .
+
+:Condition1 a :Condition .
+:Condition2 a :Condition .
+:Condition3 a :Condition .
+
+:Condition1 :hasDescription "Condition 1" .
+:Condition2 :hasDescription "Condition 2" .
+:Condition3 :hasDescription "Condition 3" .
+
+:Medicare :hasCoverageExceptions :CoverageExceptions .
+:MedicareDrugCoverage :hasCoverageExceptions :CoverageExceptions .
+:Benefit :hasCoverageExceptions :CoverageExceptions .
+:FullHealthCoverage :hasCoverageExceptions :CoverageExceptions .
+
+:CoverageExceptions a :List .
+
+:CoverageExceptions :hasItem :Exception1 .
+:CoverageExceptions :hasItem :Exception2 .
+:CoverageExceptions :hasItem :Exception3 .
+
+:Exception1 a :Exception .
+:Exception2 a :Exception .
+:Exception3 a :Exception .
+
+:Exception1 :hasDescription "Exception 1" .
+:Exception2 :hasDescription "Exception 2" .
+:Exception3 :hasDescription "Exception 3" .
+
+:Medicare :hasCoverageLimits :CoverageLimits .
+:MedicareDrugCoverage :hasCoverageLimits :CoverageLimits .
+:Benefit :hasCoverageLimits :CoverageLimits .
+:FullHealthCoverage :hasCoverageLimits :CoverageLimits .
+
+:CoverageLimits a :List .
+
+:CoverageLimits :hasItem :Limit1 .
+:CoverageLimits :hasItem :Limit2 .
+:CoverageLimits :hasItem :Limit3 .
+
+:Limit1 a :Limit .
+:Limit2 a :Limit .
+:Limit3 a :Limit .
+
+:Limit1 :hasDescription "Limit 1" .
+:Limit2 :hasDescription "Limit 2" .
+:Limit3 :hasDescription "Limit 3" .
+
+:Medicare :hasCoverageExclusions :CoverageExclusions .
+:MedicareDrugCoverage :hasCoverageExclusions :CoverageExclusions .
+:Benefit :hasCoverageExclusions :CoverageExclusions .
+:FullHealthCoverage :hasCoverageExclusions :CoverageExclusions .
+
+:CoverageExclusions a :List .
+
+:CoverageExclusions :hasItem :Exclusion1 .
+:CoverageExclusions :hasItem :Exclusion2 .
+:CoverageExclusions :hasItem :Exclusion3 .
+
+:Exclusion1 a :Exclusion .
+:Exclusion2 a :Exclusion .
+:Exclusion3 a :Exclusion .
+
+:Exclusion1 :hasDescription "Exclusion 1" .
+:Exclusion2 :hasDescription "Exclusion 2" .
+:Exclusion3 :hasDescription "Exclusion 3" .
+
+:Medicare :hasCoverageConditions :CoverageConditions .
+:MedicareDrugCoverage :hasCoverageConditions :CoverageConditions .
+:Benefit :hasCoverageConditions :CoverageConditions .
+:FullHealthCoverage :hasCoverageConditions :CoverageConditions .
+
+:CoverageConditions a :List .
+
+:CoverageConditions :hasItem :Condition1 .
+:CoverageConditions :hasItem :Condition2 .
+:CoverageConditions :hasItem :Condition3 .
+
+:Condition1 a :Condition .
+:Condition2 a :Condition .
+:Condition3 a :Condition .
+
+:Condition1 :hasDescription "Condition 1" .
+:Condition2 :hasDescription "Condition 2" .
+:Condition3 :hasDescription "Condition 3" .
+
+:Medicare :hasCoverageExceptions :CoverageExceptions .
+:MedicareDrugCoverage :hasCoverageExceptions :CoverageExceptions .
+:Benefit :hasCoverageExceptions :CoverageExceptions .
+:FullHealthCoverage :hasCoverageExceptions :CoverageExceptions .
+
+:CoverageExceptions a :List .
+
+:CoverageExceptions :hasItem :Exception1 .
+:CoverageExceptions :hasItem :Exception2 .
+:CoverageExceptions :hasItem :Exception3 .
+
+:Exception1 a :Exception .
+:Exception2 a :Exception .
+:Exception3 a :Exception .
+
+:Exception1 :hasDescription "Exception 1" .
+:Exception2 :hasDescription "Exception 2" .
+:Exception3 :hasDescription "Exception 3" .
+
+:Medicare :hasCoverageLimits :CoverageLimits .
+:MedicareDrugCoverage :hasCoverageLimits :CoverageLimits .
+:Benefit :hasCoverageLimits :CoverageLimits .
+:FullHealthCoverage :hasCoverageLimits :CoverageLimits .
+
+:CoverageLimits a :List .
+
+:CoverageLimits :hasItem :Limit1 .
+:CoverageLimits :hasItem :Limit2 .
+:CoverageLimits :hasItem :Limit3 .
+
+:Limit1 a :Limit .
+:Limit2 a :Limit .
+:Limit3 a :Limit .
+
+:Limit1 :hasDescription "Limit 1" .
+:Limit2 :hasDescription "Limit 2" .
+:Limit3 :hasDescription "Limit 3" .
+
+:Medicare :hasCoverageExclusions :CoverageExclusions .
+:MedicareDrugCoverage :hasCoverageExclusions :CoverageExclusions .
+:Benefit :hasCoverageExclusions :CoverageExclusions .
+:FullHealthCoverage :hasCoverageExclus

@@ -1,0 +1,144 @@
+Certainly! Here is a set of Solidity unit tests based on the previous conversation:
+```
+pragma solidity ^0.8.0;
+
+import "remix_tests.sol"; // import the Remix unit testing library
+
+contract ImmunosuppressiveDrugBenefitTest {
+    function testPatientHasPartA() public {
+        // Arrange
+        Patient patient = new Patient();
+        patient.setPartA(true);
+
+        // Act
+        bool result = patient.hasPartA();
+
+        // Assert
+        assertTrue(result, "Patient should have Part A");
+    }
+
+    function testPatientDoesNotHavePartA() public {
+        // Arrange
+        Patient patient = new Patient();
+        patient.setPartA(false);
+
+        // Act
+        bool result = patient.hasPartA();
+
+        // Assert
+        assertFalse(result, "Patient should not have Part A");
+    }
+
+    function testPatientHasPartB() public {
+        // Arrange
+        Patient patient = new Patient();
+        patient.setPartB(true);
+
+        // Act
+        bool result = patient.hasPartB();
+
+        // Assert
+        assertTrue(result, "Patient should have Part B");
+    }
+
+    function testPatientDoesNotHavePartB() public {
+        // Arrange
+        Patient patient = new Patient();
+        patient.setPartB(false);
+
+        // Act
+        bool result = patient.hasPartB();
+
+        // Assert
+        assertFalse(result, "Patient should not have Part B");
+    }
+
+    function testPatientHasImmunosuppressiveDrugCoverage() public {
+        // Arrange
+        Patient patient = new Patient();
+        patient.setPartA(true);
+        patient.setPartB(true);
+
+        // Act
+        bool result = patient.hasImmunosuppressiveDrugCoverage();
+
+        // Assert
+        assertTrue(result, "Patient should have immunosuppressive drug coverage");
+    }
+
+    function testPatientDoesNotHaveImmunosuppressiveDrugCoverage() public {
+        // Arrange
+        Patient patient = new Patient();
+        patient.setPartA(false);
+        patient.setPartB(false);
+
+        // Act
+        bool result = patient.hasImmunosuppressiveDrugCoverage();
+
+        // Assert
+        assertFalse(result, "Patient should not have immunosuppressive drug coverage");
+    }
+
+    function testPatientHasDeductible() public {
+        // Arrange
+        Patient patient = new Patient();
+        patient.setPartA(true);
+        patient.setPartB(true);
+
+        // Act
+        uint256 result = patient.getDeductible();
+
+        // Assert
+        assertEquals(result, 226, "Patient should have a deductible of 226");
+    }
+
+    function testPatientDoesNotHaveDeductible() public {
+        // Arrange
+        Patient patient = new Patient();
+        patient.setPartA(false);
+        patient.setPartB(false);
+
+        // Act
+        uint256 result = patient.getDeductible();
+
+        // Assert
+        assertEquals(result, 0, "Patient should not have a deductible");
+    }
+
+    function testPatientHasCopay() public {
+        // Arrange
+        Patient patient = new Patient();
+        patient.setPartA(true);
+        patient.setPartB(true);
+
+        // Act
+        uint256 result = patient.getCopay();
+
+        // Assert
+        assertEquals(result, 97.10, "Patient should have a copay of 97.10");
+    }
+
+    function testPatientDoesNotHaveCopay() public {
+        // Arrange
+        Patient patient = new Patient();
+        patient.setPartA(false);
+        patient.setPartB(false);
+
+        // Act
+        uint256 result = patient.getCopay();
+
+        // Assert
+        assertEquals(result, 0, "Patient should not have a copay");
+    }
+}
+```
+These tests cover the following scenarios:
+
+1. A patient has Part A and Part B, and therefore has immunosuppressive drug coverage.
+2. A patient does not have Part A and Part B, and therefore does not have immunosuppressive drug coverage.
+3. A patient has a deductible of $226.
+4. A patient does not have a deductible.
+5. A patient has a copay of $97.10.
+6. A patient does not have a copay.
+
+Note that these tests are just examples and may need to be modified to fit the specific requirements of your smart contract. Additionally, you may want to consider adding more tests to cover additional scenarios and edge cases.

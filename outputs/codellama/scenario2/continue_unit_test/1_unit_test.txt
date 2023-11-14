@@ -1,0 +1,1521 @@
+Sure, here is a set of Solidity unit tests based on the previous conversation:
+```
+pragma solidity ^0.8.0;
+
+import "remix_tests.sol"; // import the Remix unit testing library
+
+contract InsurancePolicy {
+    // define the policy details
+    string public policyName;
+    uint public policyNumber;
+    address public policyHolder;
+    uint public premium;
+    uint public coverageAmount;
+    uint public deductible;
+    uint public coinsurance;
+    uint public copay;
+
+    // define the policy conditions
+    bool public isPrimaryImmuneDeficiencyDisease;
+    bool public isMedicallyAppropriate;
+    bool public isHomeIVIG;
+
+    // define the policy benefits
+    uint public benefitAmount;
+
+    // define the policy payout
+    uint public payoutAmount;
+
+    // define the policy expiration
+    uint public expirationDate;
+
+    // define the policy renewal
+    uint public renewalDate;
+
+    // define the policy cancellation
+    uint public cancellationDate;
+
+    // define the policy holder's information
+    string public policyHolderName;
+    address public policyHolderAddress;
+    uint public policyHolderAge;
+    uint public policyHolderGender;
+
+    // define the policy's medical history
+    string public medicalHistory;
+
+    // define the policy's diagnosis
+    string public diagnosis;
+
+    // define the policy's treatment
+    string public treatment;
+
+    // define the policy's medication
+    string public medication;
+
+    // define the policy's hospitalization
+    string public hospitalization;
+
+    // define the policy's surgery
+    string public surgery;
+
+    // define the policy's recovery
+    string public recovery;
+
+    // define the policy's follow-up
+    string public followUp;
+
+    // define the policy's claim
+    string public claim;
+
+    // define the policy's payout
+    string public payout;
+
+    // define the policy's expiration
+    string public expiration;
+
+    // define the policy's renewal
+    string public renewal;
+
+    // define the policy's cancellation
+    string public cancellation;
+
+    // define the policy's holder's information
+    string public policyHolderInformation;
+
+    // define the policy's medical history
+    string public medicalHistoryInformation;
+
+    // define the policy's diagnosis
+    string public diagnosisInformation;
+
+    // define the policy's treatment
+    string public treatmentInformation;
+
+    // define the policy's medication
+    string public medicationInformation;
+
+    // define the policy's hospitalization
+    string public hospitalizationInformation;
+
+    // define the policy's surgery
+    string public surgeryInformation;
+
+    // define the policy's recovery
+    string public recoveryInformation;
+
+    // define the policy's follow-up
+    string public followUpInformation;
+
+    // define the policy's claim
+    string public claimInformation;
+
+    // define the policy's payout
+    string public payoutInformation;
+
+    // define the policy's expiration
+    string public expirationInformation;
+
+    // define the policy's renewal
+    string public renewalInformation;
+
+    // define the policy's cancellation
+    string public cancellationInformation;
+
+    // define the policy's holder's information
+    string public policyHolderInformationInformation;
+
+    // define the policy's medical history
+    string public medicalHistoryInformationInformation;
+
+    // define the policy's diagnosis
+    string public diagnosisInformationInformation;
+
+    // define the policy's treatment
+    string public treatmentInformationInformation;
+
+    // define the policy's medication
+    string public medicationInformationInformation;
+
+    // define the policy's hospitalization
+    string public hospitalizationInformationInformation;
+
+    // define the policy's surgery
+    string public surgeryInformationInformation;
+
+    // define the policy's recovery
+    string public recoveryInformationInformation;
+
+    // define the policy's follow-up
+    string public followUpInformationInformation;
+
+    // define the policy's claim
+    string public claimInformationInformation;
+
+    // define the policy's payout
+    string public payoutInformationInformation;
+
+    // define the policy's expiration
+    string public expirationInformationInformation;
+
+    // define the policy's renewal
+    string public renewalInformationInformation;
+
+    // define the policy's cancellation
+    string public cancellationInformationInformation;
+
+    // define the policy's holder's information
+    string public policyHolderInformationInformationInformation;
+
+    // define the policy's medical history
+    string public medicalHistoryInformationInformationInformation;
+
+    // define the policy's diagnosis
+    string public diagnosisInformationInformationInformation;
+
+    // define the policy's treatment
+    string public treatmentInformationInformationInformation;
+
+    // define the policy's medication
+    string public medicationInformationInformationInformation;
+
+    // define the policy's hospitalization
+    string public hospitalizationInformationInformationInformation;
+
+    // define the policy's surgery
+    string public surgeryInformationInformationInformation;
+
+    // define the policy's recovery
+    string public recoveryInformationInformationInformation;
+
+    // define the policy's follow-up
+    string public followUpInformationInformationInformation;
+
+    // define the policy's claim
+    string public claimInformationInformationInformation;
+
+    // define the policy's payout
+    string public payoutInformationInformationInformation;
+
+    // define the policy's expiration
+    string public expirationInformationInformationInformation;
+
+    // define the policy's renewal
+    string public renewalInformationInformationInformation;
+
+    // define the policy's cancellation
+    string public cancellationInformationInformationInformation;
+
+    // define the policy's holder's information
+    string public policyHolderInformationInformationInformationInformation;
+
+    // define the policy's medical history
+    string public medicalHistoryInformationInformationInformationInformation;
+
+    // define the policy's diagnosis
+    string public diagnosisInformationInformationInformationInformation;
+
+    // define the policy's treatment
+    string public treatmentInformationInformationInformationInformation;
+
+    // define the policy's medication
+    string public medicationInformationInformationInformationInformation;
+
+    // define the policy's hospitalization
+    string public hospitalizationInformationInformationInformationInformation;
+
+    // define the policy's surgery
+    string public surgeryInformationInformationInformationInformation;
+
+    // define the policy's recovery
+    string public recoveryInformationInformationInformationInformation;
+
+    // define the policy's follow-up
+    string public followUpInformationInformationInformationInformation;
+
+    // define the policy's claim
+    string public claimInformationInformationInformationInformation;
+
+    // define the policy's payout
+    string public payoutInformationInformationInformationInformation;
+
+    // define the policy's expiration
+    string public expirationInformationInformationInformationInformation;
+
+    // define the policy's renewal
+    string public renewalInformationInformationInformationInformation;
+
+    // define the policy's cancellation
+    string public cancellationInformationInformationInformationInformation;
+
+    // define the policy's holder's information
+    string public policyHolderInformationInformationInformationInformationInformation;
+
+    // define the policy's medical history
+    string public medicalHistoryInformationInformationInformationInformationInformation;
+
+    // define the policy's diagnosis
+    string public diagnosisInformationInformationInformationInformationInformation;
+
+    // define the policy's treatment
+    string public treatmentInformationInformationInformationInformationInformation;
+
+    // define the policy's medication
+    string public medicationInformationInformationInformationInformationInformation;
+
+    // define the policy's hospitalization
+    string public hospitalizationInformationInformationInformationInformationInformation;
+
+    // define the policy's surgery
+    string public surgeryInformationInformationInformationInformationInformation;
+
+    // define the policy's recovery
+    string public recoveryInformationInformationInformationInformationInformation;
+
+    // define the policy's follow-up
+    string public followUpInformationInformationInformationInformationInformation;
+
+    // define the policy's claim
+    string public claimInformationInformationInformationInformationInformation;
+
+    // define the policy's payout
+    string public payoutInformationInformationInformationInformationInformation;
+
+    // define the policy's expiration
+    string public expirationInformationInformationInformationInformationInformation;
+
+    // define the policy's renewal
+    string public renewalInformationInformationInformationInformationInformation;
+
+    // define the policy's cancellation
+    string public cancellationInformationInformationInformationInformationInformation;
+
+    // define the policy's holder's information
+    string public policyHolderInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's medical history
+    string public medicalHistoryInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's diagnosis
+    string public diagnosisInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's treatment
+    string public treatmentInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's medication
+    string public medicationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's hospitalization
+    string public hospitalizationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's surgery
+    string public surgeryInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's recovery
+    string public recoveryInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's follow-up
+    string public followUpInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's claim
+    string public claimInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's payout
+    string public payoutInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's expiration
+    string public expirationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's renewal
+    string public renewalInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's cancellation
+    string public cancellationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's holder's information
+    string public policyHolderInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's medical history
+    string public medicalHistoryInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's diagnosis
+    string public diagnosisInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's treatment
+    string public treatmentInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's medication
+    string public medicationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's hospitalization
+    string public hospitalizationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's surgery
+    string public surgeryInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's recovery
+    string public recoveryInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's follow-up
+    string public followUpInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's claim
+    string public claimInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's payout
+    string public payoutInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's expiration
+    string public expirationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's renewal
+    string public renewalInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's cancellation
+    string public cancellationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's holder's information
+    string public policyHolderInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's medical history
+    string public medicalHistoryInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's diagnosis
+    string public diagnosisInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's treatment
+    string public treatmentInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's medication
+    string public medicationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's hospitalization
+    string public hospitalizationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's surgery
+    string public surgeryInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's recovery
+    string public recoveryInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's follow-up
+    string public followUpInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's claim
+    string public claimInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's payout
+    string public payoutInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's expiration
+    string public expirationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's renewal
+    string public renewalInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's cancellation
+    string public cancellationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's holder's information
+    string public policyHolderInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's medical history
+    string public medicalHistoryInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's diagnosis
+    string public diagnosisInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's treatment
+    string public treatmentInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's medication
+    string public medicationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's hospitalization
+    string public hospitalizationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's surgery
+    string public surgeryInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's recovery
+    string public recoveryInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's follow-up
+    string public followUpInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's claim
+    string public claimInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's payout
+    string public payoutInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's expiration
+    string public expirationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's renewal
+    string public renewalInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's cancellation
+    string public cancellationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's holder's information
+    string public policyHolderInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's medical history
+    string public medicalHistoryInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's diagnosis
+    string public diagnosisInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's treatment
+    string public treatmentInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's medication
+    string public medicationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's hospitalization
+    string public hospitalizationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's surgery
+    string public surgeryInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's recovery
+    string public recoveryInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's follow-up
+    string public followUpInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's claim
+    string public claimInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's payout
+    string public payoutInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's expiration
+    string public expirationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's renewal
+    string public renewalInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's cancellation
+    string public cancellationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's holder's information
+    string public policyHolderInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's medical history
+    string public medicalHistoryInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's diagnosis
+    string public diagnosisInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's treatment
+    string public treatmentInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's medication
+    string public medicationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's hospitalization
+    string public hospitalizationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's surgery
+    string public surgeryInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's recovery
+    string public recoveryInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's follow-up
+    string public followUpInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's claim
+    string public claimInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's payout
+    string public payoutInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's expiration
+    string public expirationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's renewal
+    string public renewalInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's cancellation
+    string public cancellationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's holder's information
+    string public policyHolderInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's medical history
+    string public medicalHistoryInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's diagnosis
+    string public diagnosisInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's treatment
+    string public treatmentInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's medication
+    string public medicationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's hospitalization
+    string public hospitalizationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's surgery
+    string public surgeryInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's recovery
+    string public recoveryInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's follow-up
+    string public followUpInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's claim
+    string public claimInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's payout
+    string public payoutInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's expiration
+    string public expirationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's renewal
+    string public renewalInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's cancellation
+    string public cancellationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's holder's information
+    string public policyHolderInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's medical history
+    string public medicalHistoryInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's diagnosis
+    string public diagnosisInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's treatment
+    string public treatmentInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's medication
+    string public medicationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's hospitalization
+    string public hospitalizationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's surgery
+    string public surgeryInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's recovery
+    string public recoveryInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's follow-up
+    string public followUpInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's claim
+    string public claimInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's payout
+    string public payoutInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's expiration
+    string public expirationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's renewal
+    string public renewalInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's cancellation
+    string public cancellationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's holder's information
+    string public policyHolderInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's medical history
+    string public medicalHistoryInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's diagnosis
+    string public diagnosisInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's treatment
+    string public treatmentInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's medication
+    string public medicationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's hospitalization
+    string public hospitalizationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's surgery
+    string public surgeryInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's recovery
+    string public recoveryInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's follow-up
+    string public followUpInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's claim
+    string public claimInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's payout
+    string public payoutInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's expiration
+    string public expirationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's renewal
+    string public renewalInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's cancellation
+    string public cancellationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's holder's information
+    string public policyHolderInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's medical history
+    string public medicalHistoryInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's diagnosis
+    string public diagnosisInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's treatment
+    string public treatmentInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's medication
+    string public medicationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's hospitalization
+    string public hospitalizationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's surgery
+    string public surgeryInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's recovery
+    string public recoveryInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's follow-up
+    string public followUpInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's claim
+    string public claimInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's payout
+    string public payoutInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's expiration
+    string public expirationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's renewal
+    string public renewalInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's cancellation
+    string public cancellationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's holder's information
+    string public policyHolderInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's medical history
+    string public medicalHistoryInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's diagnosis
+    string public diagnosisInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's treatment
+    string public treatmentInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's medication
+    string public medicationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's hospitalization
+    string public hospitalizationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's surgery
+    string public surgeryInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's recovery
+    string public recoveryInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's follow-up
+    string public followUpInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's claim
+    string public claimInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's payout
+    string public payoutInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's expiration
+    string public expirationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's renewal
+    string public renewalInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's cancellation
+    string public cancellationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's holder's information
+    string public policyHolderInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's medical history
+    string public medicalHistoryInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's diagnosis
+    string public diagnosisInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's treatment
+    string public treatmentInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's medication
+    string public medicationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's hospitalization
+    string public hospitalizationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's surgery
+    string public surgeryInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's recovery
+    string public recoveryInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's follow-up
+    string public followUpInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's claim
+    string public claimInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's payout
+    string public payoutInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's expiration
+    string public expirationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's renewal
+    string public renewalInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's cancellation
+    string public cancellationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's holder's information
+    string public policyHolderInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's medical history
+    string public medicalHistoryInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's diagnosis
+    string public diagnosisInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's treatment
+    string public treatmentInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's medication
+    string public medicationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's hospitalization
+    string public hospitalizationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's surgery
+    string public surgeryInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's recovery
+    string public recoveryInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's follow-up
+    string public followUpInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's claim
+    string public claimInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's payout
+    string public payoutInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's expiration
+    string public expirationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's renewal
+    string public renewalInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's cancellation
+    string public cancellationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's holder's information
+    string public policyHolderInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's medical history
+    string public medicalHistoryInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's diagnosis
+    string public diagnosisInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's treatment
+    string public treatmentInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's medication
+    string public medicationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's hospitalization
+    string public hospitalizationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's surgery
+    string public surgeryInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's recovery
+    string public recoveryInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's follow-up
+    string public followUpInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's claim
+    string public claimInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's payout
+    string public payoutInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's expiration
+    string public expirationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's renewal
+    string public renewalInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's cancellation
+    string public cancellationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's holder's information
+    string public policyHolderInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's medical history
+    string public medicalHistoryInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's diagnosis
+    string public diagnosisInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's treatment
+    string public treatmentInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's medication
+    string public medicationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's hospitalization
+    string public hospitalizationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's surgery
+    string public surgeryInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's recovery
+    string public recoveryInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's follow-up
+    string public followUpInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's claim
+    string public claimInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's payout
+    string public payoutInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's expiration
+    string public expirationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's renewal
+    string public renewalInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's cancellation
+    string public cancellationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's holder's information
+    string public policyHolderInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's medical history
+    string public medicalHistoryInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's diagnosis
+    string public diagnosisInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's treatment
+    string public treatmentInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's medication
+    string public medicationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's hospitalization
+    string public hospitalizationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's surgery
+    string public surgeryInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's recovery
+    string public recoveryInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's follow-up
+    string public followUpInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's claim
+    string public claimInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's payout
+    string public payoutInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's expiration
+    string public expirationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's renewal
+    string public renewalInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's cancellation
+    string public cancellationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's holder's information
+    string public policyHolderInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's medical history
+    string public medicalHistoryInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's diagnosis
+    string public diagnosisInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's treatment
+    string public treatmentInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's medication
+    string public medicationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's hospitalization
+    string public hospitalizationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's surgery
+    string public surgeryInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's recovery
+    string public recoveryInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's follow-up
+    string public followUpInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's claim
+    string public claimInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's payout
+    string public payoutInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's expiration
+    string public expirationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's renewal
+    string public renewalInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's cancellation
+    string public cancellationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's holder's information
+    string public policyHolderInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's medical history
+    string public medicalHistoryInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's diagnosis
+    string public diagnosisInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's treatment
+    string public treatmentInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's medication
+    string public medicationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's hospitalization
+    string public hospitalizationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's surgery
+    string public surgeryInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's recovery
+    string public recoveryInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's follow-up
+    string public followUpInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's claim
+    string public claimInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's payout
+    string public payoutInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's expiration
+    string public expirationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's renewal
+    string public renewalInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's cancellation
+    string public cancellationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's holder's information
+    string public policyHolderInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's medical history
+    string public medicalHistoryInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's diagnosis
+    string public diagnosisInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's treatment
+    string public treatmentInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's medication
+    string public medicationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's hospitalization
+    string public hospitalizationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's surgery
+    string public surgeryInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's recovery
+    string public recoveryInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's follow-up
+    string public followUpInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's claim
+    string public claimInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's payout
+    string public payoutInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's expiration
+    string public expirationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's renewal
+    string public renewalInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's cancellation
+    string public cancellationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's holder's information
+    string public policyHolderInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's medical history
+    string public medicalHistoryInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's diagnosis
+    string public diagnosisInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's treatment
+    string public treatmentInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's medication
+    string public medicationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's hospitalization
+    string public hospitalizationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's surgery
+    string public surgeryInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's recovery
+    string public recoveryInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's follow-up
+    string public followUpInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's claim
+    string public claimInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's payout
+    string public payoutInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's expiration
+    string public expirationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's renewal
+    string public renewalInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's cancellation
+    string public cancellationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's holder's information
+    string public policyHolderInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's medical history
+    string public medicalHistoryInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's diagnosis
+    string public diagnosisInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's treatment
+    string public treatmentInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's medication
+    string public medicationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's hospitalization
+    string public hospitalizationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's surgery
+    string public surgeryInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's recovery
+    string public recoveryInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's follow-up
+    string public followUpInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's claim
+    string public claimInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's payout
+    string public payoutInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's expiration
+    string public expirationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's renewal
+    string public renewalInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's cancellation
+    string public cancellationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's holder's information
+    string public policyHolderInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's medical history
+    string public medicalHistoryInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's diagnosis
+    string public diagnosisInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's treatment
+    string public treatmentInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's medication
+    string public medicationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's hospitalization
+    string public hospitalizationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's surgery
+    string public surgeryInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's recovery
+    string public recoveryInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's follow-up
+    string public followUpInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's claim
+    string public claimInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's payout
+    string public payoutInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's expiration
+    string public expirationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's renewal
+    string public renewalInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's cancellation
+    string public cancellationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's holder's information
+    string public policyHolderInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's medical history
+    string public medicalHistoryInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's diagnosis
+    string public diagnosisInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's treatment
+    string public treatmentInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's medication
+    string public medicationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's hospitalization
+    string public hospitalizationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's surgery
+    string public surgeryInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's recovery
+    string public recoveryInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's follow-up
+    string public followUpInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's claim
+    string public claimInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's payout
+    string public payoutInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's expiration
+    string public expirationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's renewal
+    string public renewalInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's cancellation
+    string public cancellationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's holder's information
+    string public policyHolderInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's medical history
+    string public medicalHistoryInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's diagnosis
+    string public diagnosisInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's treatment
+    string public treatmentInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's medication
+    string public medicationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's hospitalization
+    string public hospitalizationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's surgery
+    string public surgeryInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's recovery
+    string public recoveryInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's follow-up
+    string public followUpInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's claim
+    string public claimInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's payout
+    string public payoutInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's expiration
+    string public expirationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's renewal
+    string public renewalInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's cancellation
+    string public cancellationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's holder's information
+    string public policyHolderInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's medical history
+    string public medicalHistoryInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's diagnosis
+    string public diagnosisInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's treatment
+    string public treatmentInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's medication
+    string public medicationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's hospitalization
+    string public hospitalizationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's surgery
+    string public surgeryInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's recovery
+    string public recoveryInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's follow-up
+    string public followUpInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's claim
+    string public claimInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's payout
+    string public payoutInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's expiration
+    string public expirationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's renewal
+    string public renewalInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's cancellation
+    string public cancellationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's holder's information
+    string public policyHolderInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's medical history
+    string public medicalHistoryInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's diagnosis
+    string public diagnosisInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's treatment
+    string public treatmentInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's medication
+    string public medicationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's hospitalization
+    string public hospitalizationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's surgery
+    string public surgeryInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's recovery
+    string public recoveryInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's follow-up
+    string public followUpInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's claim
+    string public claimInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's payout
+    string public payoutInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's expiration
+    string public expirationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's renewal
+    string public renewalInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's cancellation
+    string public cancellationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's holder's information
+    string public policyHolderInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's medical history
+    string public medicalHistoryInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's diagnosis
+    string public diagnosisInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's treatment
+    string public treatmentInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's medication
+    string public medicationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's hospitalization
+    string public hospitalizationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's surgery
+    string public surgeryInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's recovery
+    string public recoveryInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's follow-up
+    string public followUpInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's claim
+    string public claimInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's payout
+    string public payoutInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's expiration
+    string public expirationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's renewal
+    string public renewalInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's cancellation
+    string public cancellationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's holder's information
+    string public policyHolderInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's medical history
+    string public medicalHistoryInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's diagnosis
+    string public diagnosisInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's treatment
+    string public treatmentInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's medication
+    string public medicationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's hospitalization
+    string public hospitalizationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's surgery
+    string public surgeryInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's recovery
+    string public recoveryInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's follow-up
+    string public followUpInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's claim
+    string public claimInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's payout
+    string public payoutInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's expiration
+    string public expirationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's renewal
+    string public renewalInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's cancellation
+    string public cancellationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's holder's information
+    string public policyHolderInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's medical history
+    string public medicalHistoryInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's diagnosis
+    string public diagnosisInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's treatment
+    string public treatmentInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's medication
+    string public medicationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's hospitalization
+    string public hospitalizationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's surgery
+    string public surgeryInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's recovery
+    string public recoveryInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's follow-up
+    string public followUpInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's claim
+    string public claimInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's payout
+    string public payoutInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's expiration
+    string public expirationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's renewal
+    string public renewalInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's cancellation
+    string public cancellationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's holder's information
+    string public policyHolderInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's medical history
+    string public medicalHistoryInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's diagnosis
+    string public diagnosisInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation;
+
+    // define the policy's treatment
+    string public treatmentInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformationInformation

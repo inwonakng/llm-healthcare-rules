@@ -1,0 +1,23 @@
+Sure, here is a set of Solidity unit tests based on the previous conversation:
+```
+pragma solidity ^0.8.0;
+
+import "remix_tests.sol"; // injected by Remix
+
+contract MyContract {
+    function myFunction() public {
+        // ...
+    }
+}
+
+contract TestMyContract {
+    function testMyFunction() public {
+        MyContract myContract = new MyContract();
+        myContract.myFunction();
+        // ...
+    }
+}
+```
+This is just a basic example of how you can write unit tests for a Solidity contract using the `remix_tests.sol` library. You can add more tests as needed to cover all the functionality of your contract.
+
+Note: This code is for illustration purposes only and has not been tested or audited. It is not intended for use in a production environment.
