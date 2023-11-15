@@ -3,7 +3,7 @@ from collections import Counter
 import json
 
 from .config.path import REPORT_DIR
-from .config.models import OPENAI_MODELS, TEXTGEN_MODELS, MODEL_PRETTY_NAMES
+from .config.models import OPENAI_MODELS, TEXTGEN_MODELS, PRETTY_MODEL_NAMES
 
 models = [*OPENAI_MODELS, *TEXTGEN_MODELS]
 scenarios = ['scenario1', 'scenario2', 'scenario3']
@@ -72,8 +72,8 @@ sc_stats.to_csv(REPORT_DIR/'sc_report.csv', index=False)
 
 sc_table = pd.DataFrame([
     {
-        'Model': m,
-        'Scenario': s,
+        'Model': PRETTY_MODEL_NAMES[m],
+        'Scenario': s.replace('scenario','Scenario '),
         'Compile Success': str(by_scenario['Compile Success'].values.sum()) + '/' + str(len(by_scenario)),
         **{
             cc: by_scenario[cc].sum()
@@ -85,7 +85,6 @@ sc_table = pd.DataFrame([
 ])
 
 sc_table.to_csv(REPORT_DIR/'sc_table.csv', index=False)
-
 
 ut_stats = []
 for m, by_model in ut_report.groupby("Model"):
@@ -115,8 +114,8 @@ ut_stats.to_csv(REPORT_DIR/'ut_report.csv', index=False)
 
 ut_table = pd.DataFrame([
     {
-        'Model': m,
-        'Scenario': s,
+        'Model': PRETTY_MODEL_NAMES[m],
+        'Scenario': s.replace('scenario','Scenario '),
         'Compile Success': str(by_scenario['Compile Success'].values.sum()) + '/' + str(len(by_scenario)),
         **{
             cc: by_scenario[cc].sum()

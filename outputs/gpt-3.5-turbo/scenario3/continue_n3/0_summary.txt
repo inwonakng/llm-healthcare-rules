@@ -14,5 +14,5 @@ Summary of Insurance Policy Document:
 11. To sign up, call Social Security at 1-877-465-0355. TTY users can call 1-800-325-0788.
 12. In 2023, the monthly premium for the immunosuppressive drug benefit is $97.10*.
 13. In 2023, there is a $226 deductible for the immunosuppressive drug benefit.
-14. Once you've met the deductible, you'll pay 20% of the Medicare-approved amount for your immunosuppressive drugs.
+14. Once the deductible is met, you'll pay 20% of the Medicare-approved amount for your immunosuppressive drugs.
 ```

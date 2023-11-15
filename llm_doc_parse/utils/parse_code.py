@@ -1,18 +1,25 @@
 import re
 
-def extract_codeblock(string):
-    match = re.findall(
-        r'```(?:\w+)?\s*([\s\S]+?)\s*```',
-        string,
-    )
-    if match:
-        return '\n'.join([
-            line
-            for line in match[0].strip().split('\n')
-            if not '```' in line
-        ])
-    else:
-        raise Exception('No codeblock found!')
+def extract_codeblock(text):
+    prev_is_delim = False
+    codeblock_found = False
+    codeblock = []
+    for line in text.split('\n'):
+        if not codeblock_found:
+            # Logic for fiding the beginning of the codeblock
+            if '```' in line:
+                prev_is_delim = True
+            elif prev_is_delim:
+                # if previous line was a delimitor and this line is not, then we found the beginning of the codeblock
+                codeblock_found = True
+                codeblock += [line]
+        else:
+            if '```' in line:
+                # if we found the end of the codeblock, then we are done
+                break
+            else:
+                codeblock += [line]
+    return '\n'.join(codeblock)
 
 def remove_imports_solidity(code: str) -> str:
     return re.sub(

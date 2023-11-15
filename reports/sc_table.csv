@@ -1,16 +1,16 @@
 Model,Scenario,Compile Success,Warnings,CompilerError,DeclarationError,Error,ParserError,TypeError,Total
-codellama,scenario1,6/11,11,0,1,0,0,10,11
-codellama,scenario2,5/10,4,0,1,0,0,9,10
-codellama,scenario3,2/13,26,0,0,0,0,23,23
-gpt-3.5-turbo,scenario1,8/13,2,0,0,0,1,3,4
-gpt-3.5-turbo,scenario2,10/13,0,0,0,0,1,2,3
-gpt-3.5-turbo,scenario3,4/13,3,4,0,0,2,1,7
-gpt-3.5-turbo-1106,scenario1,12/13,4,0,1,0,0,0,1
-gpt-3.5-turbo-1106,scenario2,12/13,2,0,0,0,0,0,0
-gpt-3.5-turbo-1106,scenario3,9/13,4,0,0,0,0,3,3
-gpt-4,scenario1,13/13,0,0,0,0,0,0,0
-gpt-4,scenario2,13/13,0,0,0,0,0,0,0
-gpt-4,scenario3,8/13,5,2,1,0,2,0,5
-gpt-4-1106-preview,scenario1,13/13,0,0,0,0,0,0,0
-gpt-4-1106-preview,scenario2,13/13,2,0,0,0,0,0,0
-gpt-4-1106-preview,scenario3,9/13,0,3,0,0,1,0,4
+CodeLLaMA,Scenario 1,6/11,11,0,1,0,0,10,11
+CodeLLaMA,Scenario 2,5/10,4,0,1,0,0,9,10
+CodeLLaMA,Scenario 3,2/13,26,0,0,0,0,23,23
+GPT-3.5 Turbo,Scenario 1,8/13,2,0,0,0,1,3,4
+GPT-3.5 Turbo,Scenario 2,10/13,0,0,0,0,1,2,3
+GPT-3.5 Turbo,Scenario 3,4/13,3,4,0,0,2,1,7
+GPT-3.5 Turbo-16K,Scenario 1,12/13,4,0,1,0,0,0,1
+GPT-3.5 Turbo-16K,Scenario 2,12/13,2,0,0,0,0,0,0
+GPT-3.5 Turbo-16K,Scenario 3,9/13,4,0,0,0,0,3,3
+GPT-4,Scenario 1,13/13,0,0,0,0,0,0,0
+GPT-4,Scenario 2,13/13,0,0,0,0,0,0,0
+GPT-4,Scenario 3,8/13,5,2,1,0,2,0,5
+GPT-4 Turbo,Scenario 1,13/13,0,0,0,0,0,0,0
+GPT-4 Turbo,Scenario 2,13/13,2,0,0,0,0,0,0
+GPT-4 Turbo,Scenario 3,9/13,0,3,0,0,1,0,4
