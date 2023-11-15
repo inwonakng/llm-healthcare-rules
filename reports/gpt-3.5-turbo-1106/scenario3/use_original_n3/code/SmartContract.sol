@@ -1,0 +1,78 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+contract MedicareInsurance {
+    
+    struct TransplantCoverage {
+        bool partAAtTransplantTime;
+        bool partBAtDrugTime;
+        bool partDForDrugs;
+        bool originalMedicare;
+        bool esrdMedicare;
+        bool lostPartAAfterTransplant;
+        bool certainHealthCoverage;
+    }
+    
+    struct PremiumDetails {
+        uint monthlyPremium;
+        uint deductible;
+        uint coinsurancePercentage;
+    }
+    
+    mapping(address => TransplantCoverage) public memberCoverage;
+    mapping(address => PremiumDetails) public memberPremiums;
+    
+    function enrollTransplantCoverage(
+        address member,
+        bool _partAAtTransplantTime,
+        bool _partBAtDrugTime,
+        bool _partDForDrugs,
+        bool _originalMedicare,
+        bool _esrdMedicare,
+        bool _lostPartAAfterTransplant,
+        bool _certainHealthCoverage
+    ) external {
+        memberCoverage[member] = TransplantCoverage(
+            _partAAtTransplantTime,
+            _partBAtDrugTime,
+            _partDForDrugs,
+            _originalMedicare,
+            _esrdMedicare,
+            _lostPartAAfterTransplant,
+            _certainHealthCoverage
+        );
+    }
+    
+    function setPremiumDetails(
+        address member,
+        uint _monthlyPremium,
+        uint _deductible,
+        uint _coinsurancePercentage
+    ) external {
+        memberPremiums[member] = PremiumDetails(
+            _monthlyPremium,
+            _deductible,
+            _coinsurancePercentage
+        );
+    }
+    
+    function calculateDrugCost(
+        address member,
+        uint drugCost
+    ) external view returns (uint) {
+        require(memberCoverage[member].partAAtTransplantTime, "Must have Part A at transplant time");
+        require(memberCoverage[member].partBAtDrugTime, "Must have Part B at drug time");
+        
+        if (memberCoverage[member].partDForDrugs) {
+            return drugCost * (100 - memberPremiums[member].coinsurancePercentage) / 100;
+        } else {
+            if (memberCoverage[member].originalMedicare || memberCoverage[member].esrdMedicare) {
+                if (memberCoverage[member].lostPartAAfterTransplant && !memberCoverage[member].certainHealthCoverage) {
+                    return drugCost * (100 - memberPremiums[member].coinsurancePercentage) / 100;
+                }
+            }
+        }
+        
+        revert("Not eligible for drug coverage");
+    }
+}

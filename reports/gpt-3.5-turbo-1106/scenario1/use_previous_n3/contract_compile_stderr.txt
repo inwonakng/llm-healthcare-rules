@@ -1,0 +1,7 @@
+Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+  --> contracts/SmartContract.sol:20:48:
+   |
+20 |     function meetsCriteriaForHomeHealthBenefit(Patient memory patient) pure internal returns (bool) {
+   |                                                ^^^^^^^^^^^^^^^^^^^^^^
+
+

@@ -1,0 +1,54 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+contract MedicareCoverageContract {
+    
+    struct Patient {
+        bool hasMedicareCoverageForTransplantTherapy;
+        bool hasPartAAtTransplantTime;
+        bool hasPartBAtImmunosuppressiveDrugTime;
+        bool hasOriginalMedicare;
+        bool hasMedicareDueToESRD;
+        bool losesPartACoverageAfter36Months;
+    }
+    
+    struct Medicare {
+        bool coversTransplantDrugTherapy;
+        bool coversImmunosuppressiveDrugs;
+        bool medicarePartD;
+        bool medicareCoverageEndsAfter36Months;
+        bool offersBenefit;
+        bool medicareBenefitCoversImmunosuppressiveDrugs;
+        bool medicareBenefitNotSubstituteForFullCoverage;
+    }
+    
+    struct Premium {
+        uint256 premiumAmount;
+        uint256 deductibleAmount;
+    }
+    
+    function checkMedicareCoverage(Patient memory patient, Medicare memory medicare, Premium memory premium) public view returns (bool) {
+        if (patient.hasMedicareCoverageForTransplantTherapy && patient.hasPartAAtTransplantTime) {
+            return medicare.coversTransplantDrugTherapy;
+        }
+        if (patient.hasPartBAtImmunosuppressiveDrugTime) {
+            if (medicare.medicarePartD) {
+                return medicare.coversImmunosuppressiveDrugs;
+            } else {
+                return true; // Implement logic for joining Medicare drug plan
+            }
+        }
+        if (patient.hasMedicareDueToESRD) {
+            return medicare.medicareCoverageEndsAfter36Months;
+        }
+        if (patient.losesPartACoverageAfter36Months) {
+            if (!medicare.offersBenefit) {
+                return false;
+            }
+            if (premium.premiumAmount == 97.10 && premium.deductibleAmount == 226) {
+                return true;
+            }
+        }
+        return medicare.medicareBenefitCoversImmunosuppressiveDrugs && medicare.medicareBenefitNotSubstituteForFullCoverage;
+    }
+}

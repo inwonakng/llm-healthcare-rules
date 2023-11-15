@@ -1,0 +1,51 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+contract OsteoporosisInsurance {
+
+    struct Patient {
+        bool isWoman;
+        bool meetsHomeHealthBenefitCriteria;
+        bool hasPostMenopausalOsteoporosis;
+        bool hasCertifiedFracture;
+        bool unableToSelfAdminister;
+    }
+
+    mapping(address => Patient) public patients;
+
+    function applyForInsurance(
+        bool _isWoman,
+        bool _meetsHomeHealthBenefitCriteria,
+        bool _hasPostMenopausalOsteoporosis,
+        bool _hasCertifiedFracture,
+        bool _unableToSelfAdminister
+    ) external {
+        patients[msg.sender] = Patient(_isWoman, _meetsHomeHealthBenefitCriteria, _hasPostMenopausalOsteoporosis, _hasCertifiedFracture, _unableToSelfAdminister);
+    }
+
+    function isEligible(address patientAddress) external view returns (bool) {
+        Patient memory patient = patients[patientAddress];
+        if (patient.isWoman &&
+            patient.meetsHomeHealthBenefitCriteria &&
+            patient.hasPostMenopausalOsteoporosis &&
+            patient.hasCertifiedFracture &&
+            patient.unableToSelfAdminister) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    function provideInjection(address patientAddress, bool familyOrCaregiversUnableOrUnwilling) external view returns (string memory) {
+        Patient memory patient = patients[patientAddress];
+        if (isEligible(patientAddress)) {
+            if (familyOrCaregiversUnableOrUnwilling) {
+                return "Home health nurse or aide will provide the injection";
+            } else {
+                return "Family or caregivers are able and willing to provide the injection";
+            }
+        } else {
+            return "Patient is not eligible for coverage";
+        }
+    }
+}

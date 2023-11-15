@@ -1,0 +1,56 @@
+pragma solidity ^0.8.0;
+
+contract InjectableOsteoporosisDrugCoverage {
+    enum Gender { Male, Female }
+    enum Diagnosis { None, Osteoporosis, PostMenopausalOsteoporosisFracture }
+    enum MedicareStatus { NotQualified, Qualified }
+    enum SelfAdminStatus { CanAdminister, CannotAdminister }
+    enum CaregiverStatus { CanAdminister, CannotAdminister }
+
+    struct Patient {
+        Gender gender;
+        Diagnosis diagnosis;
+        MedicareStatus medicareStatus;
+        SelfAdminStatus selfAdminStatus;
+        CaregiverStatus caregiverStatus;
+    }
+
+    mapping(address => Patient) public patients;
+
+    function registerPatient(
+        address _patient,
+        Gender _gender,
+        Diagnosis _diagnosis,
+        MedicareStatus _medicareStatus,
+        SelfAdminStatus _selfAdminStatus,
+        CaregiverStatus _caregiverStatus
+    ) public {
+        patients[_patient] = Patient(_gender, _diagnosis, _medicareStatus, _selfAdminStatus, _caregiverStatus);
+    }
+
+    function isEligibleForCoverage(address _patient) public view returns (bool) {
+        Patient memory patient = patients[_patient];
+
+        if (patient.gender != Gender.Female) {
+            return false;
+        }
+
+        if (patient.diagnosis != Diagnosis.Osteoporosis && patient.diagnosis != Diagnosis.PostMenopausalOsteoporosisFracture) {
+            return false;
+        }
+
+        if (patient.medicareStatus != MedicareStatus.Qualified) {
+            return false;
+        }
+
+        if (patient.selfAdminStatus != SelfAdminStatus.CannotAdminister) {
+            return false;
+        }
+
+        if (patient.caregiverStatus != CaregiverStatus.CannotAdminister) {
+            return false;
+        }
+
+        return true;
+    }
+}

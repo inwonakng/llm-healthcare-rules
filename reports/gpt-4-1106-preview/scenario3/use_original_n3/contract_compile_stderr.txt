@@ -1,0 +1,9 @@
+ParserError: Expected ';' but got identifier
+  --> contracts/SmartContract.sol:22:57:
+   |
+22 |     uint256 public constant ESRD_COVERAGE_DURATION = 36 months;
+   |                                                         ^^^^^^
+
+
+Error HH600: Compilation failed
+For more info go to https://hardhat.org/HH600 or run Hardhat with --show-stack-traces

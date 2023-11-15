@@ -1,0 +1,2 @@
+Error HH404: File ./SmartContract.sol, imported from contracts/UnitTest.sol, not found.
+For more info go to https://hardhat.org/HH404 or run Hardhat with --show-stack-traces

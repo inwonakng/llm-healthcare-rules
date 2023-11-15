@@ -1,0 +1,69 @@
+Warning: SPDX license identifier not provided in source file. Before publishing, consider adding a comment containing "SPDX-License-Identifier: <SPDX-License>" to each source file. Use "SPDX-License-Identifier: UNLICENSED" for non-open-source code. Please see https://spdx.org for more information.
+--> contracts/SmartContract.sol
+
+
+TypeError: Data location must be "memory" or "calldata" for parameter in function, but none was given.
+  --> contracts/SmartContract.sol:16:24:
+   |
+16 |     function isCovered(Coverage coverage) public view returns (bool) {
+   |                        ^^^^^^^^^^^^^^^^^
+
+
+TypeError: Data location must be "memory" or "calldata" for parameter in function, but none was given.
+  --> contracts/SmartContract.sol:20:22:
+   |
+20 |     function isWoman(Coverage coverage) public view returns (bool) {
+   |                      ^^^^^^^^^^^^^^^^^
+
+
+TypeError: Data location must be "memory" or "calldata" for parameter in function, but none was given.
+  --> contracts/SmartContract.sol:24:30:
+   |
+24 |     function hasOsteoporosis(Coverage coverage) public view returns (bool) {
+   |                              ^^^^^^^^^^^^^^^^^
+
+
+TypeError: Data location must be "memory" or "calldata" for parameter in function, but none was given.
+  --> contracts/SmartContract.sol:28:45:
+   |
+28 |     function meetsHomeHealthBenefitCriteria(Coverage coverage) public view returns (bool) {
+   |                                             ^^^^^^^^^^^^^^^^^
+
+
+TypeError: Data location must be "memory" or "calldata" for parameter in function, but none was given.
+  --> contracts/SmartContract.sol:32:26:
+   |
+32 |     function hasFracture(Coverage coverage) public view returns (bool) {
+   |                          ^^^^^^^^^^^^^^^^^
+
+
+TypeError: Data location must be "memory" or "calldata" for parameter in function, but none was given.
+  --> contracts/SmartContract.sol:36:52:
+   |
+36 |     function isRelatedToPostMenopausalOsteoporosis(Coverage coverage) public view returns (bool) {
+   |                                                    ^^^^^^^^^^^^^^^^^
+
+
+TypeError: Data location must be "memory" or "calldata" for parameter in function, but none was given.
+  --> contracts/SmartContract.sol:40:31:
+   |
+40 |     function hasCertification(Coverage coverage) public view returns (bool) {
+   |                               ^^^^^^^^^^^^^^^^^
+
+
+TypeError: Data location must be "memory" or "calldata" for parameter in function, but none was given.
+  --> contracts/SmartContract.sol:44:34:
+   |
+44 |     function canNotGiveInjection(Coverage coverage) public view returns (bool) {
+   |                                  ^^^^^^^^^^^^^^^^^
+
+
+TypeError: Data location must be "memory" or "calldata" for parameter in function, but none was given.
+  --> contracts/SmartContract.sol:48:35:
+   |
+48 |     function canNotLearnInjection(Coverage coverage) public view returns (bool) {
+   |                                   ^^^^^^^^^^^^^^^^^
+
+
+Error HH600: Compilation failed
+For more info go to https://hardhat.org/HH600 or run Hardhat with --show-stack-traces

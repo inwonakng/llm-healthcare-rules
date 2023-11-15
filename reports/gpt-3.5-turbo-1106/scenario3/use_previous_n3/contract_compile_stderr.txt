@@ -1,0 +1,9 @@
+TypeError: Member "benefitOffered" not found or not visible after argument-dependent lookup in struct MedicareInsurancePolicy.Patient memory.
+  --> contracts/SmartContract.sol:49:16:
+   |
+49 |         return patient.benefitOffered;
+   |                ^^^^^^^^^^^^^^^^^^^^^^
+
+
+Error HH600: Compilation failed
+For more info go to https://hardhat.org/HH600 or run Hardhat with --show-stack-traces

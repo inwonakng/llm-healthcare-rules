@@ -1,102 +1,115 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-contract MedicareInsurancePolicy {
-    
-    struct Person {
-        bool isMedicareBeneficiary;
-        bool hadOrganTransplant;
-        bool receivedMedicareCoverage;
-        bool hasPartA;
-        bool hasPartB;
-        bool receivedImmunosuppressiveDrugs;
-        bool hasPartD;
-        bool hasOriginalMedicare;
-        bool hasESRD;
-        bool hadSuccessfulKidneyTransplant;
-        uint monthsSinceTransplant;
-        bool lostPartACoverage;
-        uint monthsSinceKidneyTransplant;
-        bool hasCertainHealthCoverage;
-        bool eligibleForTransplantDrugTherapy;
-        bool eligibleForMedicareDrugCoverage;
-        bool immunosuppressiveDrugCoverageEnds;
-        bool eligibleForImmunosuppressiveDrugBenefit;
-        bool canSignUpForBenefit;
-        uint signUpYear;
-        uint monthlyPremium;
-        uint deductible;
-        bool metDeductible;
-        uint paysPercentage;
+import "remix_tests.sol";
+
+// Define a struct to represent the Medicare coverage details
+struct MedicareCoverage {
+    bool partAAtTransplant;
+    bool partBAtDrugTime;
+    bool partDCoversDrugs;
+    bool originalMedicareJoinPlan;
+    bool esrdCoverageEnds;
+    bool partALossBenefit;
+    uint monthlyPremium;
+    uint deductible;
+    uint coinsurancePercentage;
+}
+
+// The smart contract that will implement the Medicare coverage logic
+contract MedicareCoverageContract {
+    MedicareCoverage public coverage;
+
+    // Function to set the Medicare coverage details
+    function setMedicareCoverage(
+        bool _partAAtTransplant,
+        bool _partBAtDrugTime,
+        bool _partDCoversDrugs,
+        bool _originalMedicareJoinPlan,
+        bool _esrdCoverageEnds,
+        bool _partALossBenefit,
+        uint _monthlyPremium,
+        uint _deductible,
+        uint _coinsurancePercentage
+    ) public {
+        coverage = MedicareCoverage(
+            _partAAtTransplant,
+            _partBAtDrugTime,
+            _partDCoversDrugs,
+            _originalMedicareJoinPlan,
+            _esrdCoverageEnds,
+            _partALossBenefit,
+            _monthlyPremium,
+            _deductible,
+            _coinsurancePercentage
+        );
     }
-    
-    mapping(address => Person) public persons;
-    
-    function applyForMedicareCoverage(
-        bool _hadOrganTransplant,
-        bool _receivedMedicareCoverage,
-        bool _hasPartA,
-        bool _hasPartB,
-        bool _receivedImmunosuppressiveDrugs,
-        bool _hasPartD,
-        bool _hasOriginalMedicare,
-        bool _hasESRD,
-        bool _hadSuccessfulKidneyTransplant,
-        uint _monthsSinceTransplant,
-        bool _lostPartACoverage,
-        uint _monthsSinceKidneyTransplant,
-        bool _hasCertainHealthCoverage
-    ) external {
-        Person storage person = persons[msg.sender];
-        person.isMedicareBeneficiary = true;
-        person.hadOrganTransplant = _hadOrganTransplant;
-        person.receivedMedicareCoverage = _receivedMedicareCoverage;
-        person.hasPartA = _hasPartA;
-        person.hasPartB = _hasPartB;
-        person.receivedImmunosuppressiveDrugs = _receivedImmunosuppressiveDrugs;
-        person.hasPartD = _hasPartD;
-        person.hasOriginalMedicare = _hasOriginalMedicare;
-        person.hasESRD = _hasESRD;
-        person.hadSuccessfulKidneyTransplant = _hadSuccessfulKidneyTransplant;
-        person.monthsSinceTransplant = _monthsSinceTransplant;
-        person.lostPartACoverage = _lostPartACoverage;
-        person.monthsSinceKidneyTransplant = _monthsSinceKidneyTransplant;
-        person.hasCertainHealthCoverage = _hasCertainHealthCoverage;
-        
-        // Apply N3 logic rules
-        if (person.hadOrganTransplant && person.receivedMedicareCoverage) {
-            person.eligibleForTransplantDrugTherapy = true;
-        }
-        if (person.hadOrganTransplant && person.hasPartA) {
-            person.eligibleForTransplantDrugTherapy = true;
-        }
-        if (person.receivedImmunosuppressiveDrugs && person.hasPartB) {
-            person.eligibleForTransplantDrugTherapy = true;
-        }
-        if (person.receivedImmunosuppressiveDrugs && !person.hasPartB && person.hasPartD) {
-            person.eligibleForTransplantDrugTherapy = true;
-        }
-        if (person.hasOriginalMedicare) {
-            person.eligibleForMedicareDrugCoverage = true;
-        }
-        if (person.hasESRD && person.hadSuccessfulKidneyTransplant && person.monthsSinceTransplant == 36) {
-            person.immunosuppressiveDrugCoverageEnds = true;
-        }
-        if (person.lostPartACoverage && person.monthsSinceKidneyTransplant == 36 && !person.hasCertainHealthCoverage) {
-            person.eligibleForImmunosuppressiveDrugBenefit = true;
-        }
-        if (person.eligibleForImmunosuppressiveDrugBenefit) {
-            person.canSignUpForBenefit = true;
-        }
-        if (person.signUpYear == 2023 && person.monthlyPremium == 97.10 && person.deductible == 226) {
-            person.eligibleForImmunosuppressiveDrugBenefit = true;
-        }
-        if (person.metDeductible && person.paysPercentage == 20) {
-            person.eligibleForImmunosuppressiveDrugBenefit = true;
-        }
+
+    // Function to check if Medicare covers transplant drug therapy
+    function isTransplantDrugTherapyCovered() public view returns (bool) {
+        return coverage.partAAtTransplant;
     }
-    
-    function signUpForBenefit() external view returns (bool) {
-        return persons[msg.sender].canSignUpForBenefit;
+
+    // Function to check if Part D covers immunosuppressive drugs
+    function isPartDCoveringDrugs() public view returns (bool) {
+        return coverage.partDCoversDrugs;
+    }
+
+    // Function to check if Medicare offers a benefit if Part A coverage is lost after 36 months of kidney transplant
+    function isPartALossBenefitOffered() public view returns (bool) {
+        return coverage.partALossBenefit;
+    }
+
+    // Function to get the monthly premium for the immunosuppressive drug benefit
+    function getMonthlyPremium() public view returns (uint) {
+        return coverage.monthlyPremium;
+    }
+
+    // Function to get the deductible for the immunosuppressive drug benefit
+    function getDeductible() public view returns (uint) {
+        return coverage.deductible;
+    }
+
+    // Function to get the coinsurance percentage for the immunosuppressive drug benefit
+    function getCoinsurancePercentage() public view returns (uint) {
+        return coverage.coinsurancePercentage;
+    }
+}
+
+contract MedicareCoverageContractTest {
+    MedicareCoverageContract coverageContract;
+
+    function beforeAll() public {
+        coverageContract = new MedicareCoverageContract();
+    }
+
+    function testTransplantDrugTherapyCoverage() public {
+        coverageContract.setMedicareCoverage(true, false, false, false, false, false, 0, 0, 0);
+        Assert.equal(coverageContract.isTransplantDrugTherapyCovered(), true, "Transplant drug therapy should be covered");
+    }
+
+    function testPartDCoversDrugs() public {
+        coverageContract.setMedicareCoverage(false, false, true, false, false, false, 0, 0, 0);
+        Assert.equal(coverageContract.isPartDCoveringDrugs(), true, "Part D should cover immunosuppressive drugs");
+    }
+
+    function testPartALossBenefitOffered() public {
+        coverageContract.setMedicareCoverage(false, false, false, false, false, true, 0, 0, 0);
+        Assert.equal(coverageContract.isPartALossBenefitOffered(), true, "Part A loss benefit should be offered");
+    }
+
+    function testMonthlyPremium() public {
+        coverageContract.setMedicareCoverage(false, false, false, false, false, false, 9710, 0, 0);
+        Assert.equal(coverageContract.getMonthlyPremium(), 9710, "Monthly premium should be 9710");
+    }
+
+    function testDeductible() public {
+        coverageContract.setMedicareCoverage(false, false, false, false, false, false, 0, 226, 0);
+        Assert.equal(coverageContract.getDeductible(), 226, "Deductible should be 226");
+    }
+
+    function testCoinsurancePercentage() public {
+        coverageContract.setMedicareCoverage(false, false, false, false, false, false, 0, 0, 20);
+        Assert.equal(coverageContract.getCoinsurancePercentage(), 20, "Coinsurance percentage should be 20");
     }
 }

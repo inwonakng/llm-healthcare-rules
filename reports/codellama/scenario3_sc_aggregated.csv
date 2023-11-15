@@ -1,0 +1,14 @@
+Mode,Compile Success,Compile Warning Count,Compile Error Count,Compile Error Types
+continue_cql,False,1,1,"{""TypeError"": 1}"
+continue_cql_unit_test,False,5,4,"{""TypeError"": 4}"
+continue_n3,True,1,0,{}
+continue_n3_unit_test,False,1,1,"{""TypeError"": 1}"
+continue_unit_test,False,1,7,"{""TypeError"": 7}"
+use_original_cql,False,0,1,"{""TypeError"": 1}"
+use_original_n3,False,0,1,"{""TypeError"": 1}"
+use_original_unit_test,False,0,1,"{""TypeError"": 1}"
+use_previous_cql,False,1,3,"{""TypeError"": 3}"
+use_previous_cql_unit_test,False,0,2,"{""TypeError"": 2}"
+use_previous_n3,False,16,1,"{""TypeError"": 1}"
+use_previous_n3_unit_test,False,0,1,"{""TypeError"": 1}"
+use_previous_unit_test,True,0,0,{}

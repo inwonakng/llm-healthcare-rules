@@ -1,0 +1,20 @@
+Warning: SPDX license identifier not provided in source file. Before publishing, consider adding a comment containing "SPDX-License-Identifier: <SPDX-License>" to each source file. Use "SPDX-License-Identifier: UNLICENSED" for non-open-source code. Please see https://spdx.org for more information.
+--> contracts/SmartContract.sol
+
+
+TypeError: Operator == not compatible with types string memory and literal_string "primary immune deficiency disease"
+  --> contracts/SmartContract.sol:18:13:
+   |
+18 |         if (patient.diagnosis == "primary immune deficiency disease" && patient.doctorApproval) {
+   |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+TypeError: Operator != not compatible with types string memory and literal_string "primary immune deficiency disease"
+  --> contracts/SmartContract.sol:26:13:
+   |
+26 |         if (patient.diagnosis != "primary immune deficiency disease" || !patient.doctorApproval) {
+   |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+Error HH600: Compilation failed
+For more info go to https://hardhat.org/HH600 or run Hardhat with --show-stack-traces

@@ -1,0 +1,9 @@
+TypeError: Operator && not compatible with types bool and tuple()
+  --> contracts/SmartContract.sol:64:16:
+   |
+64 |         return (block.timestamp == patient.benefitSignUpDate) && (/* logic for premium amount */);
+   |                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+Error HH600: Compilation failed
+For more info go to https://hardhat.org/HH600 or run Hardhat with --show-stack-traces

@@ -1,2 +1,0 @@
-continue_unit_test: smart_contract output is empty.
-check /Users/inwon/Documents/research/llm-healthcare/outputs/codellama/scenario2/continue_unit_test/2_smart_contract.txt for the original file.

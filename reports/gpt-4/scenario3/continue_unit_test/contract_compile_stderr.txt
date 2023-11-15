@@ -1,8 +1,8 @@
-ParserError: Expected pragma, import directive or contract/interface/library/struct/enum/constant/function definition.
- --> contracts/SmartContract.sol:1:1:
-  |
-1 | ```solidity
-  | ^
+ParserError: Expected ',' but got identifier
+  --> contracts/SmartContract.sol:40:105:
+   |
+40 |         return patients[_patient].hasESRD && (block.timestamp - patients[_patient].transplantTime >= 36 months);
+   |                                                                                                         ^^^^^^
 
 
 Error HH600: Compilation failed

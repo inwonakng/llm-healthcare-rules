@@ -4,6 +4,7 @@ import json
 import click
 
 from .config.path import OUTPUT_DIR, TEMPLATES_DIR, DOCS_DIR
+from .config.models import OPENAI_MODELS, TEXTGEN_MODELS, ModelNamesType
 from .prompt import Prompt
 from .utils import parse_mode, progress_bar
 
@@ -13,7 +14,7 @@ from .utils import parse_mode, progress_bar
 @click.option('--mode', default='all')
 def run(
     doc_name: Literal['scenario1','scenario2', 'scenario3'],
-    model: Literal['gpt-3.5-turbo', 'gpt-3.5-turbo-1106', 'gpt-4', 'gpt-4-1106-preview', 'codellama'],
+    model: ModelNamesType,
     mode: str = 'all',
 ):
     document = open(DOCS_DIR/f'{doc_name}.txt').read()

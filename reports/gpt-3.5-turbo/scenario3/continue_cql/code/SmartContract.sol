@@ -1,0 +1,58 @@
+pragma solidity ^0.8.0;
+
+contract InsurancePolicyContract {
+    
+    struct InsurancePolicy {
+        bool medicareCoversTransplantDrugTherapy;
+        bool hasPartAAtTransplant;
+        bool hasPartBAtImmunosuppressiveDrugs;
+        bool partDCoversImmunosuppressiveDrugs;
+        bool canJoinMedicareDrugPlan;
+        bool medicareCoverageEndsAfter36Months;
+        bool medicareBenefitForLostPartACoverage;
+        bool benefitCoversOnlyImmunosuppressiveDrugs;
+        bool benefitNotSubstituteForFullCoverage;
+        bool canSignUpForBenefitAfterPartACoverageEnds;
+        uint256 monthlyPremiumIn2023;
+        uint256 deductibleIn2023;
+        uint256 paymentPercentageAfterDeductible;
+    }
+    
+    InsurancePolicy public policy;
+    
+    constructor() {
+        policy = InsurancePolicy(
+            true,   // medicareCoversTransplantDrugTherapy
+            true,   // hasPartAAtTransplant
+            true,   // hasPartBAtImmunosuppressiveDrugs
+            true,   // partDCoversImmunosuppressiveDrugs
+            true,   // canJoinMedicareDrugPlan
+            true,   // medicareCoverageEndsAfter36Months
+            true,   // medicareBenefitForLostPartACoverage
+            true,   // benefitCoversOnlyImmunosuppressiveDrugs
+            true,   // benefitNotSubstituteForFullCoverage
+            true,   // canSignUpForBenefitAfterPartACoverageEnds
+            9710,   // monthlyPremiumIn2023
+            226,    // deductibleIn2023
+            20      // paymentPercentageAfterDeductible
+        );
+    }
+    
+    function meetsInsurancePolicyRequirements() public view returns (bool) {
+        return (
+            policy.medicareCoversTransplantDrugTherapy &&
+            policy.hasPartAAtTransplant &&
+            policy.hasPartBAtImmunosuppressiveDrugs &&
+            policy.partDCoversImmunosuppressiveDrugs &&
+            policy.canJoinMedicareDrugPlan &&
+            policy.medicareCoverageEndsAfter36Months &&
+            policy.medicareBenefitForLostPartACoverage &&
+            policy.benefitCoversOnlyImmunosuppressiveDrugs &&
+            policy.benefitNotSubstituteForFullCoverage &&
+            policy.canSignUpForBenefitAfterPartACoverageEnds &&
+            policy.monthlyPremiumIn2023 == 9710 &&
+            policy.deductibleIn2023 == 226 &&
+            policy.paymentPercentageAfterDeductible == 20
+        );
+    }
+}

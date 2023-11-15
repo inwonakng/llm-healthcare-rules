@@ -1,15 +1,37 @@
-ParserError: Expected pragma, import directive or contract/interface/library/struct/enum/constant/function definition.
- --> contracts/SmartContract.sol:1:1:
-  |
-1 | ```solidity
-  | ^
+Warning: SPDX license identifier not provided in source file. Before publishing, consider adding a comment containing "SPDX-License-Identifier: <SPDX-License>" to each source file. Use "SPDX-License-Identifier: UNLICENSED" for non-open-source code. Please see https://spdx.org for more information.
+--> contracts/SmartContract.sol
 
 
-ParserError: Expected pragma, import directive or contract/interface/library/struct/enum/constant/function definition.
- --> contracts/UnitTest.sol:1:1:
-  |
-1 | ```solidity
-  | ^
+Warning: SPDX license identifier not provided in source file. Before publishing, consider adding a comment containing "SPDX-License-Identifier: <SPDX-License>" to each source file. Use "SPDX-License-Identifier: UNLICENSED" for non-open-source code. Please see https://spdx.org for more information.
+--> contracts/UnitTest.sol
+
+
+TypeError: Wrong argument count for function call: 3 arguments given but expected 1.
+  --> contracts/UnitTest.sol:15:23:
+   |
+15 |         bool result = insurancePolicy.checkCoverage(true, true, true);
+   |                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+TypeError: Wrong argument count for function call: 3 arguments given but expected 1.
+  --> contracts/UnitTest.sol:20:23:
+   |
+20 |         bool result = insurancePolicy.checkCoverage(true, false, true);
+   |                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+TypeError: Wrong argument count for function call: 3 arguments given but expected 1.
+  --> contracts/UnitTest.sol:25:23:
+   |
+25 |         bool result = insurancePolicy.checkCoverage(true, true, false);
+   |                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+TypeError: Wrong argument count for function call: 3 arguments given but expected 1.
+  --> contracts/UnitTest.sol:30:23:
+   |
+30 |         bool result = insurancePolicy.checkCoverage(false, true, true);
+   |                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 
 Error HH600: Compilation failed

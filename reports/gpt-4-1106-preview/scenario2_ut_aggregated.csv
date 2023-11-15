@@ -1,0 +1,8 @@
+Mode,Compile Success,Compile Warning Count,Compile Error Count,Compile Error Types
+continue_cql_unit_test,True,0,0,{}
+continue_n3_unit_test,True,0,0,{}
+continue_unit_test,True,0,0,{}
+use_original_unit_test,False,0,1,"{""DeclarationError"": 1}"
+use_previous_cql_unit_test,False,1,1,"{""TypeError"": 1}"
+use_previous_n3_unit_test,True,2,0,{}
+use_previous_unit_test,True,1,0,{}

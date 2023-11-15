@@ -1,0 +1,7 @@
+Warning: Function state mutability can be restricted to pure
+  --> contracts/SmartContract.sol:19:5:
+   |
+19 |     function getIVIGCoverageDecision(Patient memory patient, MedicareCoverage memory medicareCoverage) public view returns (bool) {
+   |     ^ (Relevant source part starts here and spans across multiple lines).
+
+

@@ -1,33 +1,17 @@
 ```n3
-# Logic rules based on the insurance policy document and its summary
+# Insurance Policy Document
+# Medicare covers IVIG if the patient has a diagnosis of primary immune deficiency disease, and the doctor determines that IVIG at home is medically necessary. Part B covers the IVIG itself, but not other related items and services.
 
-# Rule 1: Medicare covers IVIG if the patient has a diagnosis of primary immune deficiency disease.
-{?patient a :Person ;
-         :hasDiagnosis :primaryImmuneDeficiencyDisease .
-} => {
-    ?patient :isCovered true .
-}.
+# Logic Rules
+# Rule 1: IVIG is covered by Medicare if the patient has a diagnosis of primary immune deficiency disease.
+{?patient a :Person; :hasDiagnosis :primaryImmuneDeficiencyDisease.} => {?patient :isCoveredByMedicare true.}
 
-# Rule 2: The patient's doctor must determine that it is medically appropriate for the patient to receive the IVIG in their home.
-{?patient :hasDoctor ?doctor .
- ?doctor :determinesMedicalAppropriateness true .
-} => {
-    ?patient :isCovered true .
-}.
+# Rule 2: IVIG at home is covered if the doctor determines it is medically necessary.
+{?patient :isCoveredByMedicare true; :hasDoctor ?doctor. ?doctor :determinesMedicalNecessity true.} => {?patient :isCoveredForIVIGAtHome true.}
 
 # Rule 3: Medicare Part B covers the cost of the IVIG itself.
-{?patient :isCovered true .
- ?insuranceCoverage :providedByMedicarePartB true .
-} => {
-    ?patient :isCovered true .
-    ?patient :hasCoverage ?insuranceCoverage .
-}.
+{?patient :isCoveredByMedicare true.} => {?patient :isCoveredByMedicarePartB true.}
 
-# Rule 4: Medicare Part B does not cover other items and services related to the patient receiving the IVIG at home.
-{?patient :isCovered true .
- ?insuranceCoverage :providedByMedicarePartB true .
- ?otherItemsServices :relatedToIVIG true .
-} => {
-    ?patient :isCovered false .
-}.
+# Rule 4: Medicare Part B does not cover other items and services related to the patient receiving IVIG at home.
+{?patient :isCoveredByMedicarePartB true.} => {?patient :isCoveredForOtherServices false.}
 ```

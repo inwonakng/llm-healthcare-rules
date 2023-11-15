@@ -1,0 +1,41 @@
+// Solidity Smart Contract
+pragma solidity ^0.8.0;
+
+contract MedicareCoverage {
+    struct Patient {
+        bool isCoveredByMedicare;
+        bool isCoveredForIVIGAtHome;
+        bool isCoveredByMedicarePartB;
+        bool isCoveredForOtherServices;
+        address doctor;
+        bool hasDiagnosis;
+    }
+
+    mapping(address => Patient) public patients;
+
+    function addPatient(address _patient, address _doctor, bool _hasDiagnosis) external {
+        patients[_patient].doctor = _doctor;
+        patients[_patient].hasDiagnosis = _hasDiagnosis;
+    }
+
+    function determineIVIGCoverage(address _patient) external {
+        Patient storage patient = patients[_patient];
+        if (patient.hasDiagnosis && patient.isCoveredByMedicare) {
+            patient.isCoveredForIVIGAtHome = true;
+        }
+    }
+
+    function determineMedicarePartBCoverage(address _patient) external {
+        Patient storage patient = patients[_patient];
+        if (patient.isCoveredByMedicare) {
+            patient.isCoveredByMedicarePartB = true;
+        }
+    }
+
+    function determineOtherServicesCoverage(address _patient) external {
+        Patient storage patient = patients[_patient];
+        if (patient.isCoveredByMedicarePartB) {
+            patient.isCoveredForOtherServices = false;
+        }
+    }
+}

@@ -4,6 +4,7 @@ from pathlib import Path
 import rich.progress
 
 from .api import generate
+from .config.models import ModelNamesType
 
 VOWELS = 'aeiou'
 
@@ -56,7 +57,7 @@ class Prompt:
 
     def execute(
         self, 
-        model: str,
+        model: ModelNamesType,
         configs: list[dict[str,str|list[str]]], 
         document: str,
         continue_conversation: bool = False,

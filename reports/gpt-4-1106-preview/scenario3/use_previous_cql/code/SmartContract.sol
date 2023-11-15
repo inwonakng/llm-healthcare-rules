@@ -1,0 +1,112 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+contract MedicareTransplantDrugCoverage {
+    // Define a struct to encapsulate patient coverage information
+    struct Coverage {
+        bool hasPartA;
+        bool hasPartB;
+        bool hasPartD;
+        uint256 transplantDate; // Unix timestamp
+        bool medicareContributionForTransplant;
+        bool esrd; // End-Stage Renal Disease
+        uint256 esrdOnsetDate; // Unix timestamp
+    }
+
+    // Define a struct to encapsulate the benefit information
+    struct Benefit {
+        uint256 monthlyPremium;
+        uint256 deductible;
+        uint256 coinsuranceRate; // Represented as a percentage (e.g., 20 for 20%)
+    }
+
+    // Define a struct to encapsulate the patient's payment information
+    struct PaymentInfo {
+        uint256 medicareApprovedAmount;
+        uint256 amountPaid;
+    }
+
+    // State variables
+    Benefit public benefit;
+    mapping(address => Coverage) public coverages;
+    mapping(address => PaymentInfo) public paymentInfos;
+
+    // Events
+    event CoverageUpdated(address indexed patient, Coverage coverage);
+    event PaymentInfoUpdated(address indexed patient, PaymentInfo paymentInfo);
+    event BenefitEnrolled(address indexed patient);
+
+    // Constructor to initialize the benefit
+    constructor() {
+        benefit = Benefit({
+            monthlyPremium: 97.10 ether, // Assuming ether is used as a placeholder for stablecoin
+            deductible: 226 ether,
+            coinsuranceRate: 20 // 20%
+        });
+    }
+
+    // Function to update patient coverage
+    function updateCoverage(address patient, Coverage memory _coverage) public {
+        coverages[patient] = _coverage;
+        emit CoverageUpdated(patient, _coverage);
+    }
+
+    // Function to update patient payment information
+    function updatePaymentInfo(address patient, PaymentInfo memory _paymentInfo) public {
+        paymentInfos[patient] = _paymentInfo;
+        emit PaymentInfoUpdated(patient, _paymentInfo);
+    }
+
+    // Function to check if Medicare contributed to the payment for the organ transplant
+    function medicareContributionForTransplant(address patient) public view returns (bool) {
+        return coverages[patient].medicareContributionForTransplant;
+    }
+
+    // Function to check if the patient had Part A at the time of the transplant
+    function hasPartAAtTransplant(address patient) public view returns (bool) {
+        return coverages[patient].hasPartA && coverages[patient].transplantDate > 0;
+    }
+
+    // Function to check if the patient has Part B when receiving immunosuppressive drugs
+    function hasPartBForImmunosuppressiveDrugs(address patient) public view returns (bool) {
+        return coverages[patient].hasPartB;
+    }
+
+    // Function to check if the patient has Part D for immunosuppressive drugs when Part B does not cover
+    function hasPartDForImmunosuppressiveDrugs(address patient) public view returns (bool) {
+        return coverages[patient].hasPartD;
+    }
+
+    // Function to check if the patient's Medicare coverage ends 36 months after a successful kidney transplant
+    function esrdCoverageEnds(address patient) public view returns (bool) {
+        return coverages[patient].esrd && (block.timestamp - coverages[patient].esrdOnsetDate > 36 * 30 days);
+    }
+
+    // Function to check if the patient is eligible for the immunosuppressive drug benefit
+    function eligibleForImmunosuppressiveDrugBenefit(address patient) public view returns (bool) {
+        return esrdCoverageEnds(patient) && !hasPartAAtTransplant(patient) && !hasPartBForImmunosuppressiveDrugs(patient);
+    }
+
+    // Function to enroll in the immunosuppressive drug benefit
+    function enrollInBenefit(address patient) public {
+        require(eligibleForImmunosuppressiveDrugBenefit(patient), "Not eligible for benefit");
+        emit BenefitEnrolled(patient);
+    }
+
+    // Function to calculate the amount payable by the patient after meeting the deductible
+    function payableAfterDeductible(address patient) public view returns (uint256) {
+        PaymentInfo memory info = paymentInfos[patient];
+        if (info.medicareApprovedAmount > benefit.deductible) {
+            return (info.medicareApprovedAmount - benefit.deductible) * benefit.coinsuranceRate / 100;
+        } else {
+            return 0;
+        }
+    }
+
+    // Function to make a final coverage decision
+    function finalCoverageDecision(address patient) public view returns (bool) {
+        return medicareContributionForTransplant(patient) &&
+               (hasPartAAtTransplant(patient) || hasPartBForImmunosuppressiveDrugs(patient) || hasPartDForImmunosuppressiveDrugs(patient)) &&
+               (!esrdCoverageEnds(patient) || eligibleForImmunosuppressiveDrugBenefit(patient));
+    }
+}

@@ -1,0 +1,9 @@
+DeclarationError: Undeclared identifier. "isEligible" is not (or not yet) visible at this point.
+  --> contracts/SmartContract.sol:41:13:
+   |
+41 |         if (isEligible(patientAddress)) {
+   |             ^^^^^^^^^^
+
+
+Error HH600: Compilation failed
+For more info go to https://hardhat.org/HH600 or run Hardhat with --show-stack-traces

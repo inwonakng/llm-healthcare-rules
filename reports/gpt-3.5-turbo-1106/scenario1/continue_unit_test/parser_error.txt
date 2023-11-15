@@ -1,4 +1,0 @@
-continue_unit_test: error parsing unit_test output.
-check /Users/inwon/Documents/research/llm-healthcare/outputs/gpt-3.5-turbo-1106/scenario1/continue_unit_test/1_unit_test.txt for the original file.
-Exception detai:
-No codeblock found!

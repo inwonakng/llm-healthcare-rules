@@ -4,6 +4,7 @@ from requests.packages import urllib3
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 from .config.api import load_api_config
+from .config.models import OPENAI_MODELS, TEXTGEN_MODELS, ModelNamesType
 
 OpenAIMessageType = list[dict[str,str]]
 
@@ -18,7 +19,7 @@ DEFAULT_ARGS = {
 }
 
 def generate(
-    model: str,
+    model: ModelNamesType
     messages: OpenAIMessageType,
 ):
     conf = load_api_config(model)
@@ -30,7 +31,7 @@ def generate(
     data = DEFAULT_ARGS
     data['messages'] = messages
 
-    if model in ['gpt-4', 'gpt-4-1106-preview', 'gpt-3.5-turbo-1106', 'gpt-3.5-turbo']:
+    if model in OPENAI_MODELS):
         data['model'] = model
     else:
         data.update(CODELLAMA_ARGS)

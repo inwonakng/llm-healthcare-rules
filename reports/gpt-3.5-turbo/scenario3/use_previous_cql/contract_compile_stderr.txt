@@ -1,0 +1,5 @@
+CompilerError: Stack too deep when compiling inline assembly: Variable dataEnd is 2 slot(s) too deep inside the stack.
+
+
+Error HH600: Compilation failed
+For more info go to https://hardhat.org/HH600 or run Hardhat with --show-stack-traces

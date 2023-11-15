@@ -1,0 +1,28 @@
+Warning: Function state mutability can be restricted to pure
+  --> contracts/SmartContract.sol:36:5:
+   |
+36 |     function coverageForTransplantTherapy(Coverage memory coverage, Condition memory condition) public view returns (bool) {
+   |     ^ (Relevant source part starts here and spans across multiple lines).
+
+
+Warning: Function state mutability can be restricted to pure
+  --> contracts/SmartContract.sol:40:5:
+   |
+40 |     function hasPartAAtTransplantTime(Coverage memory coverage, Procedure memory procedure) public view returns (bool) {
+   |     ^ (Relevant source part starts here and spans across multiple lines).
+
+
+Warning: Function state mutability can be restricted to pure
+  --> contracts/SmartContract.sol:46:5:
+   |
+46 |     function qualifyForBenefit(Benefit memory benefit, bool isRecipient) public view returns (bool) {
+   |     ^ (Relevant source part starts here and spans across multiple lines).
+
+
+Warning: Function state mutability can be restricted to pure
+  --> contracts/SmartContract.sol:50:5:
+   |
+50 |     function signForBenefit(Contact memory contact, bool qualify) public view returns (string memory) {
+   |     ^ (Relevant source part starts here and spans across multiple lines).
+
+

@@ -1,0 +1,56 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+contract MedicarePolicy {
+    struct Patient {
+        bool hasDiagnosis;
+        bool canReceiveIVIGAtHome;
+    }
+
+    struct IVIG {
+        bool isCovered;
+        bool isCoveredByMedicarePartB;
+    }
+
+    struct ItemOrService {
+        bool relatedToIVIGAtHome;
+        bool isCovered;
+        bool isCoveredByMedicarePartB;
+    }
+
+    mapping(address => Patient) public patients;
+    mapping(address => IVIG) public ivigs;
+    mapping(address => ItemOrService) public itemsOrServices;
+
+    function setDiagnosis(address patient, bool hasDiagnosis) external {
+        patients[patient].hasDiagnosis = hasDiagnosis;
+    }
+
+    function determineMedicallyNecessaryIVIG(address patient, bool canReceiveIVIGAtHome) external {
+        patients[patient].canReceiveIVIGAtHome = canReceiveIVIGAtHome;
+    }
+
+    function setIVIGCoverage(address ivig, bool isCovered, bool isCoveredByMedicarePartB) external {
+        ivigs[ivig] = IVIG(isCovered, isCoveredByMedicarePartB);
+    }
+
+    function setItemOrServiceCoverage(address itemOrService, bool relatedToIVIGAtHome, bool isCovered, bool isCoveredByMedicarePartB) external {
+        itemsOrServices[itemOrService] = ItemOrService(relatedToIVIGAtHome, isCovered, isCoveredByMedicarePartB);
+    }
+
+    function isIVIGCovered(address patient) external view returns (bool) {
+        return patients[patient].hasDiagnosis;
+    }
+
+    function isIVIGCoveredAtHome(address patient) external view returns (bool) {
+        return patients[patient].canReceiveIVIGAtHome;
+    }
+
+    function isIVIGCostCoveredByMedicarePartB(address ivig) external view returns (bool) {
+        return ivigs[ivig].isCovered && ivigs[ivig].isCoveredByMedicarePartB;
+    }
+
+    function isOtherItemsNotCovered(address itemOrService) external view returns (bool) {
+        return itemsOrServices[itemOrService].relatedToIVIGAtHome && !itemsOrServices[itemOrService].isCovered && itemsOrServices[itemOrService].isCoveredByMedicarePartB;
+    }
+}

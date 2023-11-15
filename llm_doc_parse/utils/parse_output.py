@@ -12,6 +12,14 @@ def count_warnings(output: str) -> int:
 
 def find_errors(output: str) -> list[str]:
     # ignore compile fail error
-    errors = '\n'.join(line for line in remove_ansi(output).split('\n') if 'error' in line.lower() and not 'compilation failed' in line.lower())
+    errors = '\n'.join(
+        line 
+        for line in remove_ansi(output).split('\n') 
+        if(
+            'error' in line.lower() 
+            and not 'compilation failed' in line.lower()
+            and not 'using npm' in line.lower()
+        )
+    )
     error_types = re.findall(r'\b\w*Error\w*\b', errors)
     return error_types

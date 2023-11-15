@@ -1,9 +1,2 @@
-TypeError: Operator == not compatible with types uint256 and rational_const 971 / 10
-  --> contracts/SmartContract.sol:91:42:
-   |
-91 |         if (person.signUpYear == 2023 && person.monthlyPremium == 97.10 && person.deductible == 226) {
-   |                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-
-Error HH600: Compilation failed
-For more info go to https://hardhat.org/HH600 or run Hardhat with --show-stack-traces
+Error HH411: The library remix_tests.sol, imported from contracts/SmartContract.sol, is not installed. Try installing it using npm.
+For more info go to https://hardhat.org/HH411 or run Hardhat with --show-stack-traces

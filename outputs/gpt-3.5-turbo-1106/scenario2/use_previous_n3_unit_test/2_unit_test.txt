@@ -6,32 +6,32 @@ import "remix_tests.sol";
 import "./YourContract.sol";
 
 contract MedicarePolicyTest {
-    // Test for coverage of IVIG if patient has a diagnosis of primary immune deficiency disease
-    function testIVIGCoverage() public {
+    // Test for coverage of IVIG with diagnosis of primary immune deficiency disease
+    function testIVIGCoverageWithDiagnosis() public {
         YourContract contractInstance = new YourContract();
-        bool hasCoverage = contractInstance.hasIVIGCoverage("primary immune deficiency disease");
-        Assert.equal(hasCoverage, true, "IVIG coverage should be available for primary immune deficiency disease");
+        bool isCovered = contractInstance.isIVIGCovered(true);
+        Assert.equal(isCovered, true, "IVIG should be covered with diagnosis");
     }
 
-    // Test for doctor's determination of medical appropriateness for patient to receive IVIG in their home
-    function testMedicalAppropriateness() public {
+    // Test for coverage of IVIG at home if medically necessary
+    function testIVIGCoverageAtHome() public {
         YourContract contractInstance = new YourContract();
-        bool isMedicallyAppropriate = contractInstance.isIVIGMedicallyAppropriate("patientAddress");
-        Assert.equal(isMedicallyAppropriate, true, "IVIG should be medically appropriate for the patient to receive in their home");
+        bool isCovered = contractInstance.isIVIGCoveredAtHome(true);
+        Assert.equal(isCovered, true, "IVIG should be covered at home if medically necessary");
     }
 
-    // Test for Medicare Part B coverage of IVIG cost
-    function testPartBCoverage() public {
+    // Test for coverage of IVIG cost by Medicare Part B
+    function testIVIGCostCoverageByMedicarePartB() public {
         YourContract contractInstance = new YourContract();
-        bool hasPartBCoverage = contractInstance.hasPartBCoverage("IVIG");
-        Assert.equal(hasPartBCoverage, true, "Medicare Part B should cover the cost of IVIG");
+        bool isCovered = contractInstance.isIVIGCostCoveredByMedicarePartB(true);
+        Assert.equal(isCovered, true, "IVIG cost should be covered by Medicare Part B");
     }
 
-    // Test for non-coverage of other items and services related to patient receiving IVIG at home
-    function testNonCoverage() public {
+    // Test for non-coverage of other items and services related to IVIG at home by Medicare Part B
+    function testNonCoverageOfOtherItemsByMedicarePartB() public {
         YourContract contractInstance = new YourContract();
-        bool hasNonCoverage = contractInstance.hasNonCoverage("IVIG");
-        Assert.equal(hasNonCoverage, true, "Medicare Part B should not cover other items and services related to patient receiving IVIG at home");
+        bool isCovered = contractInstance.isOtherItemsNotCovered(true);
+        Assert.equal(isCovered, true, "Other items and services related to IVIG at home should not be covered by Medicare Part B");
     }
 }
 ```

@@ -1,0 +1,67 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+contract InsurancePolicy {
+    
+    struct Condition {
+        string name;
+        string categoryCoding;
+        string system;
+    }
+    
+    struct ProcedureRequest {
+        string name;
+        string intent;
+        bool doNotPerform;
+    }
+    
+    struct Coverage {
+        string name;
+        string typeCoding;
+        string system;
+    }
+    
+    function coverageForPrimaryImmuneDeficiency(Condition memory condition) public pure returns (bool) {
+        if (keccak256(abi.encodePacked(condition.name)) == keccak256(abi.encodePacked("Primary Immune Deficiency Disease")) &&
+            keccak256(abi.encodePacked(condition.categoryCoding)) == keccak256(abi.encodePacked("439401001")) &&
+            keccak256(abi.encodePacked(condition.system)) == keccak256(abi.encodePacked("http://snomed.info/sct"))) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    function ivigMedicallyAppropriateInHome(ProcedureRequest memory procedureRequest) public pure returns (bool) {
+        if (keccak256(abi.encodePacked(procedureRequest.name)) == keccak256(abi.encodePacked("Intravenous Immune Globulin")) &&
+            keccak256(abi.encodePacked(procedureRequest.intent)) == keccak256(abi.encodePacked("order")) &&
+            procedureRequest.doNotPerform == false) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    function medicarePartBCoversIVIG(Coverage memory coverage) public pure returns (bool) {
+        if (keccak256(abi.encodePacked(coverage.name)) == keccak256(abi.encodePacked("Medicare Part B")) &&
+            keccak256(abi.encodePacked(coverage.typeCoding)) == keccak256(abi.encodePacked("PartB")) &&
+            keccak256(abi.encodePacked(coverage.system)) == keccak256(abi.encodePacked("http://hl7.org/fhir/coverage-type"))) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    function nonCoverageOfOtherItemsAndServices(Coverage memory coverage) public pure returns (bool) {
+        if (keccak256(abi.encodePacked(coverage.name)) == keccak256(abi.encodePacked("Other Items and Services")) &&
+            keccak256(abi.encodePacked(coverage.typeCoding)) == keccak256(abi.encodePacked("OtherItemsAndServices")) &&
+            keccak256(abi.encodePacked(coverage.system)) == keccak256(abi.encodePacked("http://hl7.org/fhir/coverage-type"))) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+    
+    function finalDecision(Condition memory condition, ProcedureRequest memory procedureRequest, Coverage memory coverage) public pure returns (bool) {
+        return coverageForPrimaryImmuneDeficiency(condition) && ivigMedicallyAppropriateInHome(procedureRequest) && medicarePartBCoversIVIG(coverage) && nonCoverageOfOtherItemsAndServices(coverage);
+    }
+}

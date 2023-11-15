@@ -1,1 +1,1 @@
-
+Compiled 1 Solidity file successfully (evm target: istanbul).

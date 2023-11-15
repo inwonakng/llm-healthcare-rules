@@ -1,15 +1,23 @@
-ParserError: Expected pragma, import directive or contract/interface/library/struct/enum/constant/function definition.
- --> contracts/SmartContract.sol:1:1:
-  |
-1 | ```
-  | ^
+Warning: SPDX license identifier not provided in source file. Before publishing, consider adding a comment containing "SPDX-License-Identifier: <SPDX-License>" to each source file. Use "SPDX-License-Identifier: UNLICENSED" for non-open-source code. Please see https://spdx.org for more information.
+--> contracts/SmartContract.sol
 
 
-ParserError: Expected pragma, import directive or contract/interface/library/struct/enum/constant/function definition.
- --> contracts/UnitTest.sol:1:1:
-  |
-1 | ```
-  | ^
+Warning: SPDX license identifier not provided in source file. Before publishing, consider adding a comment containing "SPDX-License-Identifier: <SPDX-License>" to each source file. Use "SPDX-License-Identifier: UNLICENSED" for non-open-source code. Please see https://spdx.org for more information.
+--> contracts/UnitTest.sol
+
+
+TypeError: Wrong argument count for function call: 4 arguments given but expected 6.
+  --> contracts/UnitTest.sol:21:9:
+   |
+21 |         insurancePolicy.setPatientDetails(patient, hasPrimaryImmuneDeficiency, medicallyAppropriateForIVIGAtHome, IVIGProvidedAtHome);
+   |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+TypeError: Wrong argument count for function call: 3 arguments given but expected 6.
+  --> contracts/UnitTest.sol:32:9:
+   |
+32 |         insurancePolicy.setPatientDetails(patient, receivesIVIGAtHome, associatedWithOtherItemsAndServices);
+   |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 
 Error HH600: Compilation failed

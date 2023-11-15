@@ -1,0 +1,9 @@
+ParserError: Invalid character in string.
+  --> contracts/SmartContract.sol:24:20:
+   |
+24 |             return "Medicare drug coverage (Part D) covers immunosuppressive drugs if Part B doesn’t cover them.";
+   |                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+Error HH600: Compilation failed
+For more info go to https://hardhat.org/HH600 or run Hardhat with --show-stack-traces

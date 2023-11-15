@@ -1,20 +1,38 @@
 ```
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix : <http://example.org/policy#> .
+@prefix med: <http://example.com/medicare#>.
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
 
-:MedicareCoverage a :Policy ;
-    :covers :IVIG ;
-    :requiresDiagnosisOf :PrimaryImmuneDeficiencyDisease ;
-    :requiresMedicalAppropriatenessFor :IVIGInHome ;
-    :coversCost :IVIGItself ;
-    :doesNotCover :OtherItemsAndServices .
+med:PrimaryImmuneDeficiencyDisease a med:Diagnosis.
 
-:IVIGItself a :MedicalItem .
+{
+  ?patient a med:Patient.
+  ?patient med:hasDiagnosis med:PrimaryImmuneDeficiencyDisease.
+} => {
+  ?patient med:isCoveredForIVIG med:Medicare.
+}.
 
-:PrimaryImmuneDeficiencyDisease a :Diagnosis .
+{
+  ?patient a med:Patient.
+  ?doctor a med:Doctor.
+  ?patient med:hasDoctor ?doctor.
+  ?doctor med:determinesMedicallyNecessary ?ivig.
+} => {
+  ?patient med:canReceiveIVIGAtHome true.
+}.
 
-:IVIGInHome a :MedicalSetting .
+{
+  ?ivig a med:IVIG.
+} => {
+  ?ivig med:isCovered true.
+  ?ivig med:isCoveredBy med:MedicarePartB.
+}.
 
-:OtherItemsAndServices a :NonCoveredItems .
+{
+  ?item a med:ItemOrService.
+  ?item med:relatedToIVIGAtHome true.
+} => {
+  ?item med:isCovered false.
+  ?item med:isCoveredBy med:MedicarePartB.
+}.
 ```

@@ -1,65 +1,38 @@
 ```
-# N3 Logic Rules for Medicare Insurance Policy
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix : <http://example.org/policy#> .
 
-# Rule 1
-{?person a :MedicareBeneficiary.
- ?person :hadOrganTransplant true.
- ?person :receivedMedicareCoverage true.
-} => {?person :eligibleForTransplantDrugTherapy true}.
+:MedicareCoverageTransplantDrugTherapy rdf:type rdf:Property ;
+    rdfs:comment "Medicare covers transplant drug therapy if Medicare helped pay for your organ transplant." .
 
-# Rule 2
-{?person a :MedicareBeneficiary.
- ?person :hadOrganTransplant true.
- ?person :hasPartA true.
-} => {?person :eligibleForTransplantDrugTherapy true}.
+:PartARequiredAtTransplant rdf:type rdf:Property ;
+    rdfs:comment "You must have Part A at the time of the covered transplant." .
 
-# Rule 3
-{?person a :MedicareBeneficiary.
- ?person :receivedImmunosuppressiveDrugs true.
- ?person :hasPartB true.
-} => {?person :eligibleForTransplantDrugTherapy true}.
+:PartBRequiredAtImmunosuppressiveDrugs rdf:type rdf:Property ;
+    rdfs:comment "You must have Part B at the time you get immunosuppressive drugs." .
 
-# Rule 4
-{?person a :MedicareBeneficiary.
- ?person :receivedImmunosuppressiveDrugs true.
- ?person :hasPartB false.
- ?person :hasPartD true.
-} => {?person :eligibleForTransplantDrugTherapy true}.
+:PartDCoversImmunosuppressiveDrugs rdf:type rdf:Property ;
+    rdfs:comment "Medicare drug coverage (Part D) covers immunosuppressive drugs if Part B doesn’t cover them." .
 
-# Rule 5
-{?person a :MedicareBeneficiary.
- ?person :hasOriginalMedicare true.
-} => {?person :eligibleForMedicareDrugCoverage true}.
+:JoinMedicareDrugPlan rdf:type rdf:Property ;
+    rdfs:comment "If you have Original Medicare, you may join a Medicare drug plan to get Medicare drug coverage." .
 
-# Rule 6
-{?person a :MedicareBeneficiary.
- ?person :hasESRD true.
- ?person :hadSuccessfulKidneyTransplant true.
- ?person :monthsSinceTransplant 36.
-} => {?person :immunosuppressiveDrugCoverageEnds true}.
+:MedicareCoverageEndsAfterKidneyTransplant rdf:type rdf:Property ;
+    rdfs:comment "If you only have Medicare because of End-Stage Renal Disease (ESRD), your Medicare coverage, including immunosuppressive drug coverage, ends 36 months after a successful kidney transplant." .
 
-# Rule 7
-{?person a :MedicareBeneficiary.
- ?person :lostPartACoverage true.
- ?person :monthsSinceKidneyTransplant 36.
- ?person :hasCertainHealthCoverage false.
-} => {?person :eligibleForImmunosuppressiveDrugBenefit true}.
+:MedicareBenefitAfterLosingPartA rdf:type rdf:Property ;
+    rdfs:comment "Medicare offers a benefit if you lose Part A coverage 36 months after a kidney transplant and don’t have certain types of other health coverage. This benefit only covers your immunosuppressive drugs and no other items or services. It isn’t a substitute for full health coverage." .
 
-# Rule 8
-{?person a :MedicareBeneficiary.
- ?person :eligibleForImmunosuppressiveDrugBenefit true.
-} => {?person :canSignUpForBenefit true}.
+:SignUpForMedicareBenefit rdf:type rdf:Property ;
+    rdfs:comment "If you qualify for the benefit mentioned in requirement 7, you can sign up for this benefit any time after your Part A coverage ends by calling Social Security at 1-877-465-0355. TTY users can call 1-800-325-0788." .
 
-# Rule 9
-{?person a :MedicareBeneficiary.
- ?person :signUpYear 2023.
- ?person :monthlyPremium 97.10.
- ?person :deductible 226.
-} => {?person :eligibleForImmunosuppressiveDrugBenefit true}.
+:MonthlyPremium2023 rdf:type rdf:Property ;
+    rdfs:comment "In 2023, the monthly premium for the immunosuppressive drug benefit is $97.10*." .
 
-# Rule 10
-{?person a :MedicareBeneficiary.
- ?person :metDeductible true.
- ?person :paysPercentage 20.
-} => {?person :eligibleForImmunosuppressiveDrugBenefit true}.
+:Deductible2023 rdf:type rdf:Property ;
+    rdfs:comment "In 2023, there is a $226 deductible for the immunosuppressive drug benefit." .
+
+:PaymentAfterDeductible rdf:type rdf:Property ;
+    rdfs:comment "Once the deductible is met, you’ll pay 20% of the Medicare-approved amount for your immunosuppressive drugs." .
 ```

@@ -1,0 +1,9 @@
+ParserError: Expected ';' but got 'contract'
+  --> contracts/UnitTest.sol:12:22:
+   |
+12 |         YourContract contract = new YourContract();
+   |                      ^^^^^^^^
+
+
+Error HH600: Compilation failed
+For more info go to https://hardhat.org/HH600 or run Hardhat with --show-stack-traces

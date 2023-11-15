@@ -6,24 +6,18 @@ contract OsteoporosisInsurance {
 
     struct Patient {
         bool meetsCriteriaForHomeHealthBenefit;
-        bool hasPostMenopausalOsteoporosis;
-        bool hasCertifiedFracture;
+        bool hasFracture;
         bool unableToSelfAdminister;
-        bool familyOrCaregiversUnableOrUnwilling;
+        bool familyOrCaregiversAvailable;
     }
 
-    function meetsCriteriaForCoverage(
+    function isCoveredForOsteoporosisDrugs(
         bool meetsCriteriaForHomeHealthBenefit,
-        bool hasPostMenopausalOsteoporosis,
-        bool hasCertifiedFracture,
+        bool hasFracture,
         bool unableToSelfAdminister,
-        bool familyOrCaregiversUnableOrUnwilling
-    ) external pure returns (bool) {
-        if (meetsCriteriaForHomeHealthBenefit &&
-            hasPostMenopausalOsteoporosis &&
-            hasCertifiedFracture &&
-            unableToSelfAdminister &&
-            familyOrCaregiversUnableOrUnwilling) {
+        bool familyOrCaregiversAvailable
+    ) public pure returns (bool) {
+        if (meetsCriteriaForHomeHealthBenefit && hasFracture && unableToSelfAdminister && !familyOrCaregiversAvailable) {
             return true;
         } else {
             return false;

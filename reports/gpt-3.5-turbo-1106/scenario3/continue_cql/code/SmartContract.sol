@@ -1,0 +1,57 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+contract MedicareTransplantCoveragePolicy {
+    
+    struct Coverage {
+        string coverageType;
+        uint timePeriod; // in months
+    }
+    
+    struct Benefit {
+        string benefitType;
+        uint monthlyPremium;
+        uint deductibleAmount;
+        uint coinsurancePercentage;
+    }
+    
+    struct Condition {
+        string conditionType;
+    }
+    
+    struct Plan {
+        string planType;
+    }
+    
+    struct Procedure {
+        string procedureType;
+    }
+    
+    struct Contact {
+        string contactType;
+    }
+    
+    mapping(address => bool) public isBenefitRecipient;
+    
+    function coverageForTransplantTherapy(Coverage memory coverage, Condition memory condition) public view returns (bool) {
+        return keccak256(abi.encodePacked(condition.conditionType)) == keccak256(abi.encodePacked("organ transplant")) && keccak256(abi.encodePacked(coverage.coverageType)) == keccak256(abi.encodePacked("Medicare"));
+    }
+    
+    function hasPartAAtTransplantTime(Coverage memory coverage, Procedure memory procedure) public view returns (bool) {
+        return keccak256(abi.encodePacked(coverage.coverageType)) == keccak256(abi.encodePacked("Part A")) && keccak256(abi.encodePacked(procedure.procedureType)) == keccak256(abi.encodePacked("transplant"));
+    }
+    
+    // Other functions for each named expression can be added similarly
+    
+    function qualifyForBenefit(Benefit memory benefit, bool isRecipient) public view returns (bool) {
+        return isRecipient && keccak256(abi.encodePacked(benefit.benefitType)) == keccak256(abi.encodePacked("immunosuppressive drugs"));
+    }
+    
+    function signForBenefit(Contact memory contact, bool qualify) public view returns (string memory) {
+        if (qualify) {
+            return string(abi.encodePacked("Call ", contact.contactType));
+        } else {
+            return "You do not qualify for the benefit.";
+        }
+    }
+}

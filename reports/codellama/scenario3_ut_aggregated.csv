@@ -1,0 +1,8 @@
+Mode,Compile Success,Compile Warning Count,Compile Error Count,Compile Error Types
+continue_cql_unit_test,False,4,1,"{""DeclarationError"": 1}"
+continue_n3_unit_test,False,0,1,"{""DeclarationError"": 1}"
+continue_unit_test,False,1,7,"{""TypeError"": 7}"
+use_original_unit_test,False,0,8,"{""DeclarationError"": 8}"
+use_previous_cql_unit_test,False,0,18,"{""DeclarationError"": 18}"
+use_previous_n3_unit_test,False,0,20,"{""DeclarationError"": 20}"
+use_previous_unit_test,False,0,22,"{""DeclarationError"": 22}"

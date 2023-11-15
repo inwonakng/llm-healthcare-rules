@@ -6,7 +6,11 @@ def extract_codeblock(string):
         string,
     )
     if match:
-        return match[0].strip()
+        return '\n'.join([
+            line
+            for line in match[0].strip().split('\n')
+            if not '```' in line
+        ])
     else:
         raise Exception('No codeblock found!')
 
