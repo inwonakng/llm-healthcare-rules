@@ -1,0 +1,9 @@
+ParserError: Expected '(' but got end of source
+  --> contracts/SmartContract.sol:79:49:
+   |
+79 |     function getDeductible() public pure returns
+   |                                                 ^
+
+
+Error HH600: Compilation failed
+For more info go to https://hardhat.org/HH600 or run Hardhat with --show-stack-traces

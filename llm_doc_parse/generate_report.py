@@ -74,9 +74,9 @@ sc_table = pd.DataFrame([
     {
         'Model': PRETTY_MODEL_NAMES[m],
         'Scenario': s.replace('scenario','Scenario '),
-        'Compile Success': str(by_scenario['Compile Success'].values.sum()) + '/' + str(len(by_scenario)),
+        'Success': str(by_scenario['Compile Success'].values.sum()) + '/' + str(len(by_scenario)),
         **{
-            cc: by_scenario[cc].sum()
+            cc.replace('Error',""): by_scenario[cc].sum()
             for cc in ["Warnings"] + all_errors + ["Total"]
         }
     }
@@ -116,9 +116,9 @@ ut_table = pd.DataFrame([
     {
         'Model': PRETTY_MODEL_NAMES[m],
         'Scenario': s.replace('scenario','Scenario '),
-        'Compile Success': str(by_scenario['Compile Success'].values.sum()) + '/' + str(len(by_scenario)),
+        'Success': str(by_scenario['Compile Success'].values.sum()) + '/' + str(len(by_scenario)),
         **{
-            cc: by_scenario[cc].sum()
+            cc.replace('Error',''): by_scenario[cc].sum()
             for cc in ["Warnings"] + all_errors + ["Total"]
         }
     }
