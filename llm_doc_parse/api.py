@@ -31,7 +31,7 @@ def generate(
     data = DEFAULT_ARGS
     data['messages'] = messages
 
-    if model in OPENAI_MODELS):
+    if model in OPENAI_MODELS:
         data['model'] = model
     else:
         data.update(CODELLAMA_ARGS)
