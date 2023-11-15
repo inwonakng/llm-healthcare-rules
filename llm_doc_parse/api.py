@@ -19,7 +19,7 @@ DEFAULT_ARGS = {
 }
 
 def generate(
-    model: ModelNamesType
+    model: ModelNamesType,
     messages: OpenAIMessageType,
 ):
     conf = load_api_config(model)
