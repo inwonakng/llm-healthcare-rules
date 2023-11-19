@@ -42,7 +42,7 @@ def run(
                 for i, raw_conf in enumerate(configs)
             ]
             if not all(f.is_file() for f in output_files):
-                print(f'{mode} is not complete, skipping..')
+                print(f'{doc_name} -- {mode} is not complete, skipping..')
                 continue
 
             # prepare directories for saving 
@@ -78,9 +78,9 @@ def run(
                     # Compile just the smart contract
                     shutil.copy(smart_contract_file, hardhat_smart_contract_file)
                     stdout_msg, stderr_msg = run_hardhat_compile()
-                except Exception:
-                    parser_error_msg += f'{mode}: error parsing smart_contract output.\ncheck {smart_contract_output_file} for the original file.\n'
-                    parser_error_msg += 'Exception message:\n{e}\n'
+                except Exception as e:
+                    parser_error_msg += f'{doc_name} -- {mode}: error parsing smart_contract output.\ncheck {smart_contract_output_file} for the original file.\n'
+                    parser_error_msg += f'Exception message:\n{e}\n'
                     
                 open(report_dir / 'contract_compile_stdout.txt', 'w').write(stdout_msg)
                 open(report_dir / 'contract_compile_stderr.txt', 'w').write(stderr_msg)
@@ -121,7 +121,7 @@ def run(
                             shutil.copy(unit_test_file, hardhat_unit_test_file)
                             stdout_msg, stderr_msg = run_hardhat_compile()
                         except Exception as e:
-                            parser_error_msg += f'{mode}: error parsing unit_test output.\ncheck {unit_test_output_file} for the original file.\n'
+                            parser_error_msg += f'{doc_name} -- {mode}: error parsing unit_test output.\ncheck {unit_test_output_file} for the original file.\n'
                             parser_error_msg += f'Exception detai:\n{e}\n'
                         open(report_dir / 'test_compile_stdout.txt', 'w').write(stdout_msg)
                         open(report_dir / 'test_compile_stderr.txt', 'w').write(stderr_msg)
@@ -139,15 +139,14 @@ def run(
                         }]
 
                     else:
-                        parser_error_msg += f'{mode}: unit_test output is empty.\ncheck {unit_test_output_file} for the original file.\n'
+                        parser_error_msg += f'{doc_name} -- {mode}: unit_test output is empty.\ncheck {unit_test_output_file} for the original file.\n'
 
             else:
-                parser_error_msg += f'{mode}: smart_contract output is empty.\ncheck {smart_contract_output_file} for the original file.\n'
+                parser_error_msg += f'{doc_name} -- {mode}: smart_contract output is empty.\ncheck {smart_contract_output_file} for the original file.\n'
 
             
             if parser_error_msg:
                 print(parser_error_msg)
-            (report_dir / 'parser_error.txt').unlink()
 
             # Clean up
             if hardhat_remix_test_file.is_file():
